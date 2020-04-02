@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates the attributes of a token. Doesn't manage required attributes
  * very well. The only reason we factored this out was because RemoveForeignElements
@@ -7,7 +9,6 @@
  */
 class HTMLPurifier_AttrValidator
 {
-
     /**
      * Validates the attributes of a token, mutating it as necessary.
      * that has valid tokens
@@ -15,7 +16,7 @@ class HTMLPurifier_AttrValidator
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
      * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
      */
-    public function validateToken($token, $config, $context)
+    public function validateToken(HTMLPurifier_Token $token, HTMLPurifier_Config $config, HTMLPurifier_Context $context): void
     {
         $definition = $config->getHTMLDefinition();
         $e =& $context->get('ErrorCollector', true);
@@ -50,10 +51,8 @@ class HTMLPurifier_AttrValidator
         // nothing currently utilizes this
         foreach ($definition->info_attr_transform_pre as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e) {
-                if ($attr != $o) {
-                    $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
-                }
+            if ($e && $attr !== $o) {
+                $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
             }
         }
 
@@ -61,10 +60,8 @@ class HTMLPurifier_AttrValidator
         // ex. <p align="right"> to <p style="text-align:right;">
         foreach ($definition->info[$token->name]->attr_transform_pre as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e) {
-                if ($attr != $o) {
-                    $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
-                }
+            if ($e && $attr !== $o) {
+                $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
             }
         }
 
@@ -146,20 +143,16 @@ class HTMLPurifier_AttrValidator
         // global (error reporting untested)
         foreach ($definition->info_attr_transform_post as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e) {
-                if ($attr != $o) {
-                    $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
-                }
+            if ($e && $attr !== $o) {
+                $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
             }
         }
 
         // local (error reporting untested)
         foreach ($definition->info[$token->name]->attr_transform_post as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e) {
-                if ($attr != $o) {
-                    $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
-                }
+            if ($e && $attr !== $o) {
+                $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
             }
         }
 
@@ -169,10 +162,5 @@ class HTMLPurifier_AttrValidator
         if (!$current_token) {
             $context->destroy('CurrentToken');
         }
-
     }
-
-
 }
-
-// vim: et sw=4 sts=4

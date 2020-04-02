@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 class HTMLPurifier_HTMLModuleManager
 {
-
     /**
      * @type HTMLPurifier_DoctypeRegistry
      */
@@ -10,6 +11,7 @@ class HTMLPurifier_HTMLModuleManager
 
     /**
      * Instance of current doctype.
+     *
      * @type string
      */
     public $doctype;
@@ -22,38 +24,43 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Active instances of modules for the specified doctype are
      * indexed, by name, in this array.
+     *
      * @type HTMLPurifier_HTMLModule[]
      */
-    public $modules = array();
+    public $modules = [];
 
     /**
      * Array of recognized HTMLPurifier_HTMLModule instances,
      * indexed by module's class name. This array is usually lazy loaded, but a
      * user can overload a module by pre-emptively registering it.
+     *
      * @type HTMLPurifier_HTMLModule[]
      */
-    public $registeredModules = array();
+    public $registeredModules = [];
 
     /**
      * List of extra modules that were added by the user
      * using addModule(). These get unconditionally merged into the current doctype, whatever
      * it may be.
+     *
      * @type HTMLPurifier_HTMLModule[]
      */
-    public $userModules = array();
+    public $userModules = [];
 
     /**
      * Associative array of element name to list of modules that have
      * definitions for the element; this array is dynamically filled.
+     *
      * @type array
      */
-    public $elementLookup = array();
+    public $elementLookup = [];
 
     /**
      * List of prefixes we should use for registering small names.
+     *
      * @type array
      */
-    public $prefixes = array('HTMLPurifier_HTMLModule_');
+    public $prefixes = ['HTMLPurifier_HTMLModule_'];
 
     /**
      * @type HTMLPurifier_ContentSets
@@ -67,6 +74,7 @@ class HTMLPurifier_HTMLModuleManager
 
     /**
      * If set to true, unsafe elements and attributes will be allowed.
+     *
      * @type bool
      */
     public $trusted = false;
@@ -75,10 +83,10 @@ class HTMLPurifier_HTMLModuleManager
     {
         // editable internal objects
         $this->attrTypes = new HTMLPurifier_AttrTypes();
-        $this->doctypes  = new HTMLPurifier_DoctypeRegistry();
+        $this->doctypes = new HTMLPurifier_DoctypeRegistry();
 
         // setup basic modules
-        $common = array(
+        $common = [
             'CommonAttributes', 'Text', 'Hypertext', 'List',
             'Presentation', 'Edit', 'Bdo', 'Tables', 'Image',
             'StyleAttribute',
@@ -86,18 +94,19 @@ class HTMLPurifier_HTMLModuleManager
             'Scripting', 'Object', 'Forms',
             // Sorta legacy, but present in strict:
             'Name',
-        );
-        $transitional = array('Legacy', 'Target', 'Iframe');
-        $xml = array('XMLCommonAttributes');
-        $non_xml = array('NonXMLCommonAttributes');
+        ];
+
+        $transitional = ['Legacy', 'Target', 'Iframe'];
+        $xml = ['XMLCommonAttributes'];
+        $non_xml = ['NonXMLCommonAttributes'];
 
         // setup basic doctypes
         $this->doctypes->register(
             'HTML 4.01 Transitional',
             false,
             array_merge($common, $transitional, $non_xml),
-            array('Tidy_Transitional', 'Tidy_Proprietary'),
-            array(),
+            ['Tidy_Transitional', 'Tidy_Proprietary'],
+            [],
             '-//W3C//DTD HTML 4.01 Transitional//EN',
             'http://www.w3.org/TR/html4/loose.dtd'
         );
@@ -106,8 +115,8 @@ class HTMLPurifier_HTMLModuleManager
             'HTML 4.01 Strict',
             false,
             array_merge($common, $non_xml),
-            array('Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'),
-            array(),
+            ['Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'],
+            [],
             '-//W3C//DTD HTML 4.01//EN',
             'http://www.w3.org/TR/html4/strict.dtd'
         );
@@ -116,8 +125,8 @@ class HTMLPurifier_HTMLModuleManager
             'XHTML 1.0 Transitional',
             true,
             array_merge($common, $transitional, $xml, $non_xml),
-            array('Tidy_Transitional', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Name'),
-            array(),
+            ['Tidy_Transitional', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Name'],
+            [],
             '-//W3C//DTD XHTML 1.0 Transitional//EN',
             'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'
         );
@@ -126,8 +135,8 @@ class HTMLPurifier_HTMLModuleManager
             'XHTML 1.0 Strict',
             true,
             array_merge($common, $xml, $non_xml),
-            array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'),
-            array(),
+            ['Tidy_Strict', 'Tidy_XHTML', 'Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'],
+            [],
             '-//W3C//DTD XHTML 1.0 Strict//EN',
             'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'
         );
@@ -137,24 +146,25 @@ class HTMLPurifier_HTMLModuleManager
             true,
             // Iframe is a real XHTML 1.1 module, despite being
             // "transitional"!
-            array_merge($common, $xml, array('Ruby', 'Iframe')),
-            array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Strict', 'Tidy_Name'), // Tidy_XHTML1_1
-            array(),
+            array_merge($common, $xml, ['Ruby', 'Iframe']),
+            ['Tidy_Strict', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Strict', 'Tidy_Name'], // Tidy_XHTML1_1
+            [],
             '-//W3C//DTD XHTML 1.1//EN',
             'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
         );
-
     }
 
     /**
      * Registers a module to the recognized module list, useful for
      * overloading pre-existing modules.
-     * @param $module Mixed: string module name, with or without
-     *                HTMLPurifier_HTMLModule prefix, or instance of
-     *                subclass of HTMLPurifier_HTMLModule.
+     *
+     * @param $module   Mixed: string module name, with or without
+     *                  HTMLPurifier_HTMLModule prefix, or instance of
+     *                  subclass of HTMLPurifier_HTMLModule.
      * @param $overload Boolean whether or not to overload previous modules.
      *                  If this is not set, and you do overload a module,
      *                  HTML Purifier will complain with a warning.
+     *
      * @note This function will not call autoload, you must instantiate
      *       (and thus invoke) autoload outside the method.
      * @note If a string is passed as a module name, different variants
@@ -167,7 +177,7 @@ class HTMLPurifier_HTMLModuleManager
      *       your module manually. All modules must have been included
      *       externally: registerModule will not perform inclusions for you!
      */
-    public function registerModule($module, $overload = false)
+    public function registerModule($module, bool $overload = false)
     {
         if (is_string($module)) {
             // attempt to load the module
@@ -180,6 +190,7 @@ class HTMLPurifier_HTMLModuleManager
                     break;
                 }
             }
+
             if (!$ok) {
                 $module = $original_module;
                 if (!class_exists($module)) {
@@ -187,18 +198,24 @@ class HTMLPurifier_HTMLModuleManager
                         $original_module . ' module does not exist',
                         E_USER_ERROR
                     );
+
                     return;
                 }
             }
+
             $module = new $module();
         }
+
         if (empty($module->name)) {
             trigger_error('Module instance of ' . get_class($module) . ' must have name');
+
             return;
         }
+
         if (!$overload && isset($this->registeredModules[$module->name])) {
             trigger_error('Overloading ' . $module->name . ' without explicit overload parameter', E_USER_WARNING);
         }
+
         $this->registeredModules[$module->name] = $module;
     }
 
@@ -209,9 +226,11 @@ class HTMLPurifier_HTMLModuleManager
     public function addModule($module)
     {
         $this->registerModule($module);
+
         if (is_object($module)) {
             $module = $module->name;
         }
+
         $this->userModules[] = $module;
     }
 
@@ -227,9 +246,12 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Performs processing on modules, after being called you may
      * use getElement() and getElements()
+     *
      * @param HTMLPurifier_Config $config
+     *
+     * @throws HTMLPurifier_Exception
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config)
     {
         $this->trusted = $config->get('HTML.Trusted');
 
@@ -256,26 +278,33 @@ class HTMLPurifier_HTMLModuleManager
         if ($config->get('HTML.Proprietary')) {
             $modules[] = 'Proprietary';
         }
+
         if ($config->get('HTML.SafeObject')) {
             $modules[] = 'SafeObject';
         }
+
         if ($config->get('HTML.SafeEmbed')) {
             $modules[] = 'SafeEmbed';
         }
-        if ($config->get('HTML.SafeScripting') !== array()) {
+
+        if ($config->get('HTML.SafeScripting') !== []) {
             $modules[] = 'SafeScripting';
         }
+
         if ($config->get('HTML.Nofollow')) {
             $modules[] = 'Nofollow';
         }
+
         if ($config->get('HTML.TargetBlank')) {
             $modules[] = 'TargetBlank';
         }
+
         // NB: HTML.TargetNoreferrer and HTML.TargetNoopener must be AFTER HTML.TargetBlank
         // so that its post-attr-transform gets run afterwards.
         if ($config->get('HTML.TargetNoreferrer')) {
             $modules[] = 'TargetNoreferrer';
         }
+
         if ($config->get('HTML.TargetNoopener')) {
             $modules[] = 'TargetNoopener';
         }
@@ -295,7 +324,7 @@ class HTMLPurifier_HTMLModuleManager
 
         // prepare any injectors
         foreach ($this->modules as $module) {
-            $n = array();
+            $n = [];
             foreach ($module->info_injector as $injector) {
                 if (!is_object($injector)) {
                     $class = "HTMLPurifier_Injector_$injector";
@@ -310,7 +339,7 @@ class HTMLPurifier_HTMLModuleManager
         foreach ($this->modules as $module) {
             foreach ($module->info as $name => $def) {
                 if (!isset($this->elementLookup[$name])) {
-                    $this->elementLookup[$name] = array();
+                    $this->elementLookup[$name] = [];
                 }
                 $this->elementLookup[$name][] = $module->name;
             }
@@ -318,10 +347,11 @@ class HTMLPurifier_HTMLModuleManager
 
         // note the different choice
         $this->contentSets = new HTMLPurifier_ContentSets(
-            // content set assembly deals with all possible modules,
-            // not just ones deemed to be "safe"
+        // content set assembly deals with all possible modules,
+        // not just ones deemed to be "safe"
             $this->modules
         );
+
         $this->attrCollections = new HTMLPurifier_AttrCollections(
             $this->attrTypes,
             // there is no way to directly disable a global attribute,
@@ -340,16 +370,18 @@ class HTMLPurifier_HTMLModuleManager
         if (!isset($this->registeredModules[$module]) || is_object($module)) {
             $this->registerModule($module);
         }
+
         $this->modules[$module] = $this->registeredModules[$module];
     }
 
     /**
      * Retrieves merged element definitions.
-     * @return Array of HTMLPurifier_ElementDef
+     *
+     * @return HTMLPurifier_ElementDef[]
      */
     public function getElements()
     {
-        $elements = array();
+        $elements = [];
         foreach ($this->modules as $module) {
             if (!$this->trusted && !$module->safe) {
                 continue;
@@ -371,20 +403,21 @@ class HTMLPurifier_HTMLModuleManager
         }
 
         return $elements;
-
     }
 
     /**
      * Retrieves a single merged element definition
-     * @param string $name Name of element
-     * @param bool $trusted Boolean trusted overriding parameter: set to true
-     *                 if you want the full version of an element
+     *
+     * @param string $name    Name of element
+     * @param bool   $trusted Boolean trusted overriding parameter: set to true
+     *                        if you want the full version of an element
+     *
      * @return HTMLPurifier_ElementDef Merged HTMLPurifier_ElementDef
      * @note You may notice that modules are getting iterated over twice (once
      *       in getElements() and once here). This
      *       is because
      */
-    public function getElement($name, $trusted = null)
+    public function getElement(string $name, bool $trusted = null)
     {
         if (!isset($this->elementLookup[$name])) {
             return false;
@@ -438,11 +471,12 @@ class HTMLPurifier_HTMLModuleManager
 
             // descendants_are_inline, for ChildDef_Chameleon
             if (is_string($def->content_model) &&
-                strpos($def->content_model, 'Inline') !== false) {
-                if ($name != 'del' && $name != 'ins') {
-                    // this is for you, ins/del
-                    $def->descendants_are_inline = true;
-                }
+                $name !== 'del' &&
+                $name !== 'ins' &&
+                strpos($def->content_model, 'Inline') !== false
+            ) {
+                // this is for you, ins/del
+                $def->descendants_are_inline = true;
             }
 
             $this->contentSets->generateChildDef($def, $module);
@@ -460,8 +494,7 @@ class HTMLPurifier_HTMLModuleManager
                 $def->required_attr[] = $attr_name;
             }
         }
+
         return $def;
     }
 }
-
-// vim: et sw=4 sts=4

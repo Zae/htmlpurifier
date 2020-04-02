@@ -50,7 +50,7 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
         }
     }
 
-    protected function doSetup($config)
+    protected function doSetup(HTMLPurifier_Config $config)
     {
         $this->setupMemberVariables($config);
         $this->setupFilters($config);

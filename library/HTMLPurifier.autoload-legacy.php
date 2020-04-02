@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @file
  * Legacy autoloader for systems lacking spl_autoload_register

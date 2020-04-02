@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Base class for all validating attribute definitions.
  *
@@ -12,7 +14,6 @@
 
 abstract class HTMLPurifier_AttrDef
 {
-
     /**
      * Tells us whether or not an HTML attribute is minimized.
      * Has no meaning in other contexts.
@@ -57,10 +58,11 @@ abstract class HTMLPurifier_AttrDef
      *          parsing XML, thus, this behavior may still be correct. We
      *          assume that newlines have been normalized.
      */
-    public function parseCDATA($string)
+    public function parseCDATA(string $string)
     {
         $string = trim($string);
-        $string = str_replace(array("\n", "\t", "\r"), ' ', $string);
+        $string = str_replace(["\n", "\t", "\r"], ' ', $string);
+
         return $string;
     }
 
@@ -69,7 +71,7 @@ abstract class HTMLPurifier_AttrDef
      * @param string $string String construction info
      * @return HTMLPurifier_AttrDef Created AttrDef object corresponding to $string
      */
-    public function make($string)
+    public function make(string $string)
     {
         // default implementation, return a flyweight of this object.
         // If $string has an effect on the returned object (i.e. you
@@ -84,7 +86,7 @@ abstract class HTMLPurifier_AttrDef
      * @param string $string a CSS colour definition
      * @return string
      */
-    protected function mungeRgb($string)
+    protected function mungeRgb(string $string): string
     {
         $p = '\s*(\d+(\.\d+)?([%]?))\s*';
 
@@ -99,7 +101,7 @@ abstract class HTMLPurifier_AttrDef
      * Parses a possibly escaped CSS string and returns the "pure"
      * version of it.
      */
-    protected function expandCSSEscape($string)
+    protected function expandCSSEscape(string $string): string
     {
         // flexibly parse it
         $ret = '';
@@ -140,5 +142,3 @@ abstract class HTMLPurifier_AttrDef
         return $ret;
     }
 }
-
-// vim: et sw=4 sts=4

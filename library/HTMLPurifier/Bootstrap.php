@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 // constants are slow, so we use as few as possible
 if (!defined('HTMLPURIFIER_PREFIX')) {
-    define('HTMLPURIFIER_PREFIX', realpath(dirname(__FILE__) . '/..'));
+    define('HTMLPURIFIER_PREFIX', dirname(__DIR__) . '');
 }
 
 // accomodations for versions earlier than 5.0.2
@@ -29,7 +31,6 @@ if (!defined('PHP_EOL')) {
  */
 class HTMLPurifier_Bootstrap
 {
-
     /**
      * Autoload function for HTML Purifier
      * @param string $class Class to load
@@ -37,7 +38,7 @@ class HTMLPurifier_Bootstrap
      */
     public static function autoload($class)
     {
-        $file = HTMLPurifier_Bootstrap::getPath($class);
+        $file = static::getPath($class);
         if (!$file) {
             return false;
         }
@@ -53,13 +54,14 @@ class HTMLPurifier_Bootstrap
     /**
      * Returns the path for a specific class.
      * @param string $class Class path to get
-     * @return string
+     * @return string|bool
      */
-    public static function getPath($class)
+    public static function getPath(string $class)
     {
         if (strncmp('HTMLPurifier', $class, 12) !== 0) {
             return false;
         }
+
         // Custom implementations
         if (strncmp('HTMLPurifier_Language_', $class, 22) === 0) {
             $code = str_replace('_', '-', substr($class, 22));
@@ -67,28 +69,33 @@ class HTMLPurifier_Bootstrap
         } else {
             $file = str_replace('_', '/', $class) . '.php';
         }
+
         if (!file_exists(HTMLPURIFIER_PREFIX . '/' . $file)) {
             return false;
         }
+
         return $file;
     }
 
     /**
      * "Pre-registers" our autoloader on the SPL stack.
+     *
+     * @throws ReflectionException
      */
-    public static function registerAutoload()
+    public static function registerAutoload(): void
     {
-        $autoload = array('HTMLPurifier_Bootstrap', 'autoload');
+        $autoload = ['HTMLPurifier_Bootstrap', 'autoload'];
+
         if (($funcs = spl_autoload_functions()) === false) {
             spl_autoload_register($autoload);
         } elseif (function_exists('spl_autoload_unregister')) {
-            if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
+            if (PHP_VERSION_ID >= 50300) {
                 // prepend flag exists, no need for shenanigans
                 spl_autoload_register($autoload, true, true);
             } else {
-                $buggy  = version_compare(PHP_VERSION, '5.2.11', '<');
-                $compat = version_compare(PHP_VERSION, '5.1.2', '<=') &&
-                          version_compare(PHP_VERSION, '5.1.0', '>=');
+                $buggy  = PHP_VERSION_ID < 50211;
+                $compat = PHP_VERSION_ID <= 50102 &&
+                          PHP_VERSION_ID >= 50100;
                 foreach ($funcs as $func) {
                     if ($buggy && is_array($func)) {
                         // :TRICKY: There are some compatibility issues and some
@@ -112,6 +119,7 @@ class HTMLPurifier_Bootstrap
                     }
                     spl_autoload_unregister($func);
                 }
+
                 spl_autoload_register($autoload);
                 foreach ($funcs as $func) {
                     spl_autoload_register($func);
@@ -120,5 +128,3 @@ class HTMLPurifier_Bootstrap
         }
     }
 }
-
-// vim: et sw=4 sts=4

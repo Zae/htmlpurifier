@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Defines allowed child nodes and validates nodes against it.
  */
@@ -25,7 +27,7 @@ abstract class HTMLPurifier_ChildDef
      * Lookup array of all elements that this definition could possibly allow.
      * @type array
      */
-    public $elements = array();
+    public $elements = [];
 
     /**
      * Get lookup of tag names that should not close this element automatically.
@@ -33,7 +35,7 @@ abstract class HTMLPurifier_ChildDef
      * @param HTMLPurifier_Config $config HTMLPurifier_Config object
      * @return array
      */
-    public function getAllowedElements($config)
+    public function getAllowedElements(HTMLPurifier_Config $config)
     {
         return $this->elements;
     }
@@ -48,5 +50,3 @@ abstract class HTMLPurifier_ChildDef
      */
     abstract public function validateChildren($children, $config, $context);
 }
-
-// vim: et sw=4 sts=4

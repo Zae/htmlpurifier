@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Defines common attribute collections that modules reference
  */
 
 class HTMLPurifier_AttrCollections
 {
-
     /**
      * Associative array of attribute collections, indexed by name.
      * @type array
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Performs all expansions on internal data for use by other inclusions
@@ -25,14 +26,19 @@ class HTMLPurifier_AttrCollections
         $this->doConstruct($attr_types, $modules);
     }
 
-    public function doConstruct($attr_types, $modules)
+    /**
+     * @param $attr_types
+     * @param $modules
+     */
+    public function doConstruct($attr_types, array $modules): void
     {
         // load extensions from the modules
         foreach ($modules as $module) {
             foreach ($module->attr_collections as $coll_i => $coll) {
                 if (!isset($this->info[$coll_i])) {
-                    $this->info[$coll_i] = array();
+                    $this->info[$coll_i] = [];
                 }
+
                 foreach ($coll as $attr_i => $attr) {
                     if ($attr_i === 0 && isset($this->info[$coll_i][$attr_i])) {
                         // merge in includes
@@ -42,10 +48,12 @@ class HTMLPurifier_AttrCollections
                         );
                         continue;
                     }
+
                     $this->info[$coll_i][$attr_i] = $attr;
                 }
             }
         }
+
         // perform internal expansions and inclusions
         foreach ($this->info as $name => $attr) {
             // merge attribute collections that include others
@@ -60,34 +68,41 @@ class HTMLPurifier_AttrCollections
      * all inclusions specified by the zero index.
      * @param array &$attr Reference to attribute array
      */
-    public function performInclusions(&$attr)
+    public function performInclusions(array &$attr)
     {
         if (!isset($attr[0])) {
             return;
         }
+
         $merge = $attr[0];
-        $seen  = array(); // recursion guard
+        $seen  = []; // recursion guard
         // loop through all the inclusions
         for ($i = 0; isset($merge[$i]); $i++) {
             if (isset($seen[$merge[$i]])) {
                 continue;
             }
+
             $seen[$merge[$i]] = true;
+
             // foreach attribute of the inclusion, copy it over
             if (!isset($this->info[$merge[$i]])) {
                 continue;
             }
+
             foreach ($this->info[$merge[$i]] as $key => $value) {
                 if (isset($attr[$key])) {
                     continue;
                 } // also catches more inclusions
+
                 $attr[$key] = $value;
             }
+
             if (isset($this->info[$merge[$i]][0])) {
                 // recursion
                 $merge = array_merge($merge, $this->info[$merge[$i]][0]);
             }
         }
+
         unset($attr[0]);
     }
 
@@ -97,11 +112,11 @@ class HTMLPurifier_AttrCollections
      * @param array &$attr Reference to attribute array
      * @param HTMLPurifier_AttrTypes $attr_types HTMLPurifier_AttrTypes instance
      */
-    public function expandIdentifiers(&$attr, $attr_types)
+    public function expandIdentifiers(array &$attr, HTMLPurifier_AttrTypes $attr_types)
     {
         // because foreach will process new elements we add, make sure we
         // skip duplicates
-        $processed = array();
+        $processed = [];
 
         foreach ($attr as $def_i => $def) {
             // skip inclusions
@@ -144,5 +159,3 @@ class HTMLPurifier_AttrCollections
         }
     }
 }
-
-// vim: et sw=4 sts=4

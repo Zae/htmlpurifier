@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*! @mainpage
  *
  * HTML Purifier is an HTML filter that will take an arbitrary snippet of
@@ -56,6 +58,7 @@ class HTMLPurifier
 
     /**
      * Version of HTML Purifier.
+     *
      * @type string
      */
     public $version = '4.13.0';
@@ -67,6 +70,7 @@ class HTMLPurifier
 
     /**
      * Global configuration object.
+     *
      * @type HTMLPurifier_Config
      */
     public $config;
@@ -74,12 +78,14 @@ class HTMLPurifier
     /**
      * Array of extra filter objects to run on HTML,
      * for backwards compatibility.
+     *
      * @type HTMLPurifier_Filter[]
      */
-    private $filters = array();
+    private $filters = [];
 
     /**
      * Single instance of HTML Purifier.
+     *
      * @type HTMLPurifier
      */
     private static $instance;
@@ -97,6 +103,7 @@ class HTMLPurifier
     /**
      * Resultant context of last run purification.
      * Is an array of contexts if the last called method was purifyArray().
+     *
      * @type HTMLPurifier_Context
      */
     public $context;
@@ -105,11 +112,11 @@ class HTMLPurifier
      * Initializes the purifier.
      *
      * @param HTMLPurifier_Config|mixed $config Optional HTMLPurifier_Config object
-     *                for all instances of the purifier, if omitted, a default
-     *                configuration is supplied (which can be overridden on a
-     *                per-use basis).
-     *                The parameter can also be any type that
-     *                HTMLPurifier_Config::create() supports.
+     *                                          for all instances of the purifier, if omitted, a default
+     *                                          configuration is supplied (which can be overridden on a
+     *                                          per-use basis).
+     *                                          The parameter can also be any type that
+     *                                          HTMLPurifier_Config::create() supports.
      */
     public function __construct($config = null)
     {
@@ -122,28 +129,30 @@ class HTMLPurifier
      *
      * @param HTMLPurifier_Filter $filter HTMLPurifier_Filter object
      */
-    public function addFilter($filter)
+    public function addFilter($filter): void
     {
         trigger_error(
             'HTMLPurifier->addFilter() is deprecated, use configuration directives' .
             ' in the Filter namespace or Filter.Custom',
             E_USER_WARNING
         );
+
         $this->filters[] = $filter;
     }
 
     /**
      * Filters an HTML snippet/document to be XSS-free and standards-compliant.
      *
-     * @param string $html String of HTML to purify
+     * @param string              $html   String of HTML to purify
      * @param HTMLPurifier_Config $config Config object for this operation,
-     *                if omitted, defaults to the config object specified during this
-     *                object's construction. The parameter can also be any type
-     *                that HTMLPurifier_Config::create() supports.
+     *                                    if omitted, defaults to the config object specified during this
+     *                                    object's construction. The parameter can also be any type
+     *                                    that HTMLPurifier_Config::create() supports.
      *
      * @return string Purified HTML
+     * @throws HTMLPurifier_Exception
      */
-    public function purify($html, $config = null)
+    public function purify(string $html, ?HTMLPurifier_Config $config = null): ?string
     {
         // :TODO: make the config merge in, instead of replace
         $config = $config ? HTMLPurifier_Config::create($config) : $this->config;
@@ -180,7 +189,7 @@ class HTMLPurifier
         $filter_flags = $config->getBatch('Filter');
         $custom_filters = $filter_flags['Custom'];
         unset($filter_flags['Custom']);
-        $filters = array();
+        $filters = [];
         foreach ($filter_flags as $filter => $flag) {
             if (!$flag) {
                 continue;
@@ -198,18 +207,19 @@ class HTMLPurifier
         $filters = array_merge($filters, $this->filters);
         // maybe prepare(), but later
 
-        for ($i = 0, $filter_size = count($filters); $i < $filter_size; $i++) {
-            $html = $filters[$i]->preFilter($html, $config, $context);
+        $filter_size = count($filters);
+        foreach ($filters as $filter) {
+            $html = $filter->preFilter($html, $config, $context);
         }
 
         // purified HTML
         $html =
             $this->generator->generateFromTokens(
-                // list of tokens
+            // list of tokens
                 $this->strategy->execute(
-                    // list of un-purified tokens
+                // list of un-purified tokens
                     $lexer->tokenizeHTML(
-                        // un-purified HTML
+                    // un-purified HTML
                         $html,
                         $config,
                         $context
@@ -225,23 +235,26 @@ class HTMLPurifier
 
         $html = HTMLPurifier_Encoder::convertFromUTF8($html, $config, $context);
         $this->context =& $context;
+
         return $html;
     }
 
     /**
      * Filters an array of HTML snippets
      *
-     * @param string[] $array_of_html Array of html snippets
-     * @param HTMLPurifier_Config $config Optional config object for this operation.
-     *                See HTMLPurifier::purify() for more details.
+     * @param string[]            $array_of_html Array of html snippets
+     * @param HTMLPurifier_Config $config        Optional config object for this operation.
+     *                                           See HTMLPurifier::purify() for more details.
      *
      * @return string[] Array of purified HTML
+     * @throws HTMLPurifier_Exception
      */
-    public function purifyArray($array_of_html, $config = null)
+    public function purifyArray(array $array_of_html, ?HTMLPurifier_Config $config = null): array
     {
-        $context_array = array();
-        $array = array();
-        foreach($array_of_html as $key=>$value){
+        $context_array = [];
+        $array = [];
+
+        foreach ($array_of_html as $key => $value) {
             if (is_array($value)) {
                 $array[$key] = $this->purifyArray($value, $config);
             } else {
@@ -249,7 +262,9 @@ class HTMLPurifier
             }
             $context_array[$key] = $this->context;
         }
+
         $this->context = $context_array;
+
         return $array;
     }
 
@@ -257,23 +272,24 @@ class HTMLPurifier
      * Singleton for enforcing just one HTML Purifier in your system
      *
      * @param HTMLPurifier|HTMLPurifier_Config $prototype Optional prototype
-     *                   HTMLPurifier instance to overload singleton with,
-     *                   or HTMLPurifier_Config instance to configure the
-     *                   generated version with.
+     *                                                    HTMLPurifier instance to overload singleton with,
+     *                                                    or HTMLPurifier_Config instance to configure the
+     *                                                    generated version with.
      *
      * @return HTMLPurifier
      */
-    public static function instance($prototype = null)
+    public static function instance($prototype = null): HTMLPurifier
     {
         if (!self::$instance || $prototype) {
-            if ($prototype instanceof HTMLPurifier) {
+            if ($prototype instanceof static) {
                 self::$instance = $prototype;
             } elseif ($prototype) {
-                self::$instance = new HTMLPurifier($prototype);
+                self::$instance = new static($prototype);
             } else {
-                self::$instance = new HTMLPurifier();
+                self::$instance = new static();
             }
         }
+
         return self::$instance;
     }
 
@@ -281,17 +297,15 @@ class HTMLPurifier
      * Singleton for enforcing just one HTML Purifier in your system
      *
      * @param HTMLPurifier|HTMLPurifier_Config $prototype Optional prototype
-     *                   HTMLPurifier instance to overload singleton with,
-     *                   or HTMLPurifier_Config instance to configure the
-     *                   generated version with.
+     *                                                    HTMLPurifier instance to overload singleton with,
+     *                                                    or HTMLPurifier_Config instance to configure the
+     *                                                    generated version with.
      *
      * @return HTMLPurifier
      * @note Backwards compatibility, see instance()
      */
-    public static function getInstance($prototype = null)
+    public static function getInstance($prototype = null): HTMLPurifier
     {
-        return HTMLPurifier::instance($prototype);
+        return static::instance($prototype);
     }
 }
-
-// vim: et sw=4 sts=4

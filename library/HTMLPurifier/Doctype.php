@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Represents a document type, contains information on which modules
  * need to be loaded.
@@ -19,13 +21,13 @@ class HTMLPurifier_Doctype
      * that this doctype uses
      * @type array
      */
-    public $modules = array();
+    public $modules = [];
 
     /**
      * List of modules to use for tidying up code
      * @type array
      */
-    public $tidyModules = array();
+    public $tidyModules = [];
 
     /**
      * Is the language derived from XML (i.e. XHTML)?
@@ -37,7 +39,7 @@ class HTMLPurifier_Doctype
      * List of aliases for this doctype
      * @type array
      */
-    public $aliases = array();
+    public $aliases = [];
 
     /**
      * Public DTD identifier
@@ -51,12 +53,23 @@ class HTMLPurifier_Doctype
      */
     public $dtdSystem;
 
+    /**
+     * HTMLPurifier_Doctype constructor.
+     *
+     * @param null  $name
+     * @param bool  $xml
+     * @param array $modules
+     * @param array $tidyModules
+     * @param array $aliases
+     * @param null  $dtd_public
+     * @param null  $dtd_system
+     */
     public function __construct(
         $name = null,
         $xml = true,
-        $modules = array(),
-        $tidyModules = array(),
-        $aliases = array(),
+        $modules = [],
+        $tidyModules = [],
+        $aliases = [],
         $dtd_public = null,
         $dtd_system = null
     ) {
@@ -69,5 +82,3 @@ class HTMLPurifier_Doctype
         $this->dtdSystem    = $dtd_system;
     }
 }
-
-// vim: et sw=4 sts=4
