@@ -13,14 +13,15 @@
 class HTMLPurifier_Lexer_PH5P extends HTMLPurifier_Lexer_DOMLex
 {
     /**
-     * @param string $html
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return HTMLPurifier_Token[]
      */
-    public function tokenizeHTML($html, $config, $context)
+    public function tokenizeHTML($string, $config, $context): array
     {
-        $new_html = $this->normalize($html, $config, $context);
+        $new_html = $this->normalize($string, $config, $context);
         $new_html = $this->wrapHTML($new_html, $config, $context, false /* no div */);
         try {
             $parser = new HTML5($new_html);
@@ -29,7 +30,7 @@ class HTMLPurifier_Lexer_PH5P extends HTMLPurifier_Lexer_DOMLex
             // Uh oh, it failed. Punt to DirectLex.
             $lexer = new HTMLPurifier_Lexer_DirectLex();
             $context->register('PH5PError', $e); // save the error, so we can detect it
-            return $lexer->tokenizeHTML($html, $config, $context); // use original HTML
+            return $lexer->tokenizeHTML($string, $config, $context); // use original HTML
         }
         $tokens = array();
         $this->tokenizeDOM(

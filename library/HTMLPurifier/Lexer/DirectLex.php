@@ -34,25 +34,26 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
     }
 
     /**
-     * @param String $html
-     * @param HTMLPurifier_Config $config
+     * @param String               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array|HTMLPurifier_Token[]
      */
-    public function tokenizeHTML($html, $config, $context)
+    public function tokenizeHTML($string, $config, $context): array
     {
         // special normalization for script tags without any armor
         // our "armor" heurstic is a < sign any number of whitespaces after
         // the first script tag
         if ($config->get('HTML.Trusted')) {
-            $html = preg_replace_callback(
+            $string = preg_replace_callback(
                 '#(<script[^>]*>)(\s*[^<].+?)(</script>)#si',
                 array($this, 'scriptCallback'),
-                $html
+                $string
             );
         }
 
-        $html = $this->normalize($html, $config, $context);
+        $string = $this->normalize($string, $config, $context);
 
         $cursor = 0; // our location in the text
         $inside_tag = false; // whether or not we're parsing the inside of a tag
@@ -70,7 +71,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         if ($maintain_line_numbers) {
             $current_line = 1;
             $current_col = 0;
-            $length = strlen($html);
+            $length = strlen($string);
         } else {
             $current_line = false;
             $current_col = false;
@@ -104,19 +105,19 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 // We're interested at the *end* of the newline string, so
                 // we need to add strlen($nl) == 1 to $nl_pos before subtracting it
                 // from our "rcursor" position.
-                $nl_pos = strrpos($html, $nl, $rcursor - $length);
+                $nl_pos = strrpos($string, $nl, $rcursor - $length);
                 $current_col = $rcursor - (is_bool($nl_pos) ? 0 : $nl_pos + 1);
 
                 // recalculate lines
                 if ($synchronize_interval && // synchronization is on
                     $cursor > 0 && // cursor is further than zero
                     $loops % $synchronize_interval === 0) { // time to synchronize!
-                    $current_line = 1 + $this->substrCount($html, $nl, 0, $cursor);
+                    $current_line = 1 + $this->substrCount($string, $nl, 0, $cursor);
                 }
             }
 
-            $position_next_lt = strpos($html, '<', $cursor);
-            $position_next_gt = strpos($html, '>', $cursor);
+            $position_next_lt = strpos($string, '<', $cursor);
+            $position_next_gt = strpos($string, '>', $cursor);
 
             // triggers on "<b>asdf</b>" but not "asdf <b></b>"
             // special case to set up context
@@ -131,7 +132,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 HTMLPurifier_Token_Text(
                     $this->parseText(
                         substr(
-                            $html,
+                            $string,
                             $cursor,
                             $position_next_lt - $cursor
                         ), $config
@@ -139,7 +140,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 );
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);
-                    $current_line += $this->substrCount($html, $nl, $cursor, $position_next_lt - $cursor);
+                    $current_line += $this->substrCount($string, $nl, $cursor, $position_next_lt - $cursor);
                 }
                 $array[] = $token;
                 $cursor = $position_next_lt + 1;
@@ -148,7 +149,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             } elseif (!$inside_tag) {
                 // We are not inside tag but there are no more tags
                 // If we're already at the end, break
-                if ($cursor === strlen($html)) {
+                if ($cursor === strlen($string)) {
                     break;
                 }
                 // Create Text of rest of string
@@ -156,7 +157,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 HTMLPurifier_Token_Text(
                     $this->parseText(
                         substr(
-                            $html,
+                            $string,
                             $cursor
                         ), $config
                     )
@@ -178,7 +179,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     continue;
                 }
 
-                $segment = substr($html, $cursor, $strlen_segment);
+                $segment = substr($string, $cursor, $strlen_segment);
 
                 if ($segment === false) {
                     // somehow, we attempted to access beyond the end of
@@ -189,7 +190,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 // Check if it's a comment
                 if (substr($segment, 0, 3) === '!--') {
                     // re-determine segment length, looking for -->
-                    $position_comment_end = strpos($html, '-->', $cursor);
+                    $position_comment_end = strpos($string, '-->', $cursor);
                     if ($position_comment_end === false) {
                         // uh oh, we have a comment that extends to
                         // infinity. Can't be helped: set comment
@@ -197,13 +198,13 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                         if ($e) {
                             $e->send(E_WARNING, 'Lexer: Unclosed comment');
                         }
-                        $position_comment_end = strlen($html);
+                        $position_comment_end = strlen($string);
                         $end = true;
                     } else {
                         $end = false;
                     }
                     $strlen_segment = $position_comment_end - $cursor;
-                    $segment = substr($html, $cursor, $strlen_segment);
+                    $segment = substr($string, $cursor, $strlen_segment);
                     $token = new
                     HTMLPurifier_Token_Comment(
                         substr(
@@ -214,7 +215,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     );
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
-                        $current_line += $this->substrCount($html, $nl, $cursor, $strlen_segment);
+                        $current_line += $this->substrCount($string, $nl, $cursor, $strlen_segment);
                     }
                     $array[] = $token;
                     $cursor = $end ? $position_comment_end : $position_comment_end + 3;
@@ -229,7 +230,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $token = new HTMLPurifier_Token_End($type);
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
-                        $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
+                        $current_line += $this->substrCount($string, $nl, $cursor, $position_next_gt - $cursor);
                     }
                     $array[] = $token;
                     $inside_tag = false;
@@ -248,7 +249,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $token = new HTMLPurifier_Token_Text('<');
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
-                        $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
+                        $current_line += $this->substrCount($string, $nl, $cursor, $position_next_gt - $cursor);
                     }
                     $array[] = $token;
                     $inside_tag = false;
@@ -276,7 +277,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     }
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
-                        $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
+                        $current_line += $this->substrCount($string, $nl, $cursor, $position_next_gt - $cursor);
                     }
                     $array[] = $token;
                     $inside_tag = false;
@@ -310,7 +311,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 }
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);
-                    $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
+                    $current_line += $this->substrCount($string, $nl, $cursor, $position_next_gt - $cursor);
                 }
                 $array[] = $token;
                 $cursor = $position_next_gt + 1;
@@ -325,7 +326,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 HTMLPurifier_Token_Text(
                     '<' .
                     $this->parseText(
-                        substr($html, $cursor), $config
+                        substr($string, $cursor), $config
                     )
                 );
                 if ($maintain_line_numbers) {

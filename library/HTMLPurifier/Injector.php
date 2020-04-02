@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Injects tokens into the document while parsing for well-formedness.
  * This enables "formatter-like" functionality such as auto-paragraphing,
@@ -15,7 +17,6 @@
  */
 abstract class HTMLPurifier_Injector
 {
-
     /**
      * Advisory name of injector, this is for friendly error messages.
      * @type string
@@ -52,7 +53,7 @@ abstract class HTMLPurifier_Injector
      * array('element' => array('attr', 'attr2'), 'element2')
      * @type array
      */
-    public $needed = array();
+    public $needed = [];
 
     /**
      * Number of elements to rewind backwards (relative).
@@ -82,6 +83,7 @@ abstract class HTMLPurifier_Injector
     {
         $r = $this->rewindOffset;
         $this->rewindOffset = false;
+
         return $r;
     }
 
@@ -90,13 +92,17 @@ abstract class HTMLPurifier_Injector
      * this allows references to important variables to be made within
      * the injector. This function also checks if the HTML environment
      * will work with the Injector (see checkNeeded()).
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
+     * @throws HTMLPurifier_Exception
      */
-    public function prepare($config, $context)
+    public function prepare(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $this->htmlDefinition = $config->getHTMLDefinition();
+
         // Even though this might fail, some unit tests ignore this and
         // still test checkNeeded, so be careful. Maybe get rid of that
         // dependency.
@@ -104,9 +110,11 @@ abstract class HTMLPurifier_Injector
         if ($result !== false) {
             return $result;
         }
+
         $this->currentNesting =& $context->get('CurrentNesting');
         $this->currentToken   =& $context->get('CurrentToken');
         $this->inputZipper    =& $context->get('InputZipper');
+
         return false;
     }
 
@@ -114,28 +122,35 @@ abstract class HTMLPurifier_Injector
      * This function checks if the HTML environment
      * will work with the Injector: if p tags are not allowed, the
      * Auto-Paragraphing injector should not be enabled.
+     *
      * @param HTMLPurifier_Config $config
+     *
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
+     * @throws HTMLPurifier_Exception
      */
-    public function checkNeeded($config)
+    public function checkNeeded(HTMLPurifier_Config $config)
     {
         $def = $config->getHTMLDefinition();
         foreach ($this->needed as $element => $attributes) {
             if (is_int($element)) {
                 $element = $attributes;
             }
+
             if (!isset($def->info[$element])) {
                 return $element;
             }
+
             if (!is_array($attributes)) {
                 continue;
             }
+
             foreach ($attributes as $name) {
                 if (!isset($def->info[$element]->attr[$name])) {
                     return "$element.$name";
                 }
             }
         }
+
         return false;
     }
 
@@ -144,7 +159,7 @@ abstract class HTMLPurifier_Injector
      * @param string $name Name of element to test for
      * @return bool True if element is allowed, false if it is not
      */
-    public function allowsElement($name)
+    public function allowsElement(string $name)
     {
         if (!empty($this->currentNesting)) {
             $parent_token = array_pop($this->currentNesting);
@@ -153,19 +168,23 @@ abstract class HTMLPurifier_Injector
         } else {
             $parent = $this->htmlDefinition->info_parent_def;
         }
+
         if (!isset($parent->child->elements[$name]) || isset($parent->excludes[$name])) {
             return false;
         }
+
         // check for exclusion
         if (!empty($this->currentNesting)) {
             for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
                 $def  = $this->htmlDefinition->info[$node->name];
+
                 if (isset($def->excludes[$name])) {
                     return false;
                 }
             }
         }
+
         return true;
     }
 
@@ -179,17 +198,20 @@ abstract class HTMLPurifier_Injector
      *          Do NOT use $token, as that variable is also a reference
      * @return bool
      */
-    protected function forward(&$i, &$current)
+    protected function forward(?int &$i, ?HTMLPurifier_Token &$current): bool
     {
         if ($i === null) {
             $i = count($this->inputZipper->back) - 1;
         } else {
             $i--;
         }
+
         if ($i < 0) {
             return false;
         }
+
         $current = $this->inputZipper->back[$i];
+
         return true;
     }
 
@@ -203,23 +225,28 @@ abstract class HTMLPurifier_Injector
      * @param int $nesting
      * @return bool
      */
-    protected function forwardUntilEndToken(&$i, &$current, &$nesting)
+    protected function forwardUntilEndToken(?int &$i, ?HTMLPurifier_Token &$current, ?int &$nesting): bool
     {
         $result = $this->forward($i, $current);
+
         if (!$result) {
             return false;
         }
+
         if ($nesting === null) {
             $nesting = 0;
         }
+
         if ($current instanceof HTMLPurifier_Token_Start) {
             $nesting++;
         } elseif ($current instanceof HTMLPurifier_Token_End) {
             if ($nesting <= 0) {
                 return false;
             }
+
             $nesting--;
         }
+
         return true;
     }
 
@@ -233,17 +260,20 @@ abstract class HTMLPurifier_Injector
      *          Do NOT use $token, as that variable is also a reference
      * @return bool
      */
-    protected function backward(&$i, &$current)
+    protected function backward(?int &$i, ?HTMLPurifier_Token &$current): bool
     {
         if ($i === null) {
             $i = count($this->inputZipper->front) - 1;
         } else {
             $i--;
         }
+
         if ($i < 0) {
             return false;
         }
+
         $current = $this->inputZipper->front[$i];
+
         return true;
     }
 
@@ -279,5 +309,3 @@ abstract class HTMLPurifier_Injector
     {
     }
 }
-
-// vim: et sw=4 sts=4

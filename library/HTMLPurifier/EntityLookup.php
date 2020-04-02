@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Object that provides entity lookup table from entity name to character
  */
@@ -18,11 +20,12 @@ class HTMLPurifier_EntityLookup
      *       using the maintenance script generate_entity_file.php
      * @warning This is not in constructor to help enforce the Singleton
      */
-    public function setup($file = false)
+    public function setup(bool $file = false)
     {
         if (!$file) {
             $file = HTMLPURIFIER_PREFIX . '/HTMLPurifier/EntityLookup/entities.ser';
         }
+
         $this->table = unserialize(file_get_contents($file));
     }
 
@@ -31,18 +34,17 @@ class HTMLPurifier_EntityLookup
      * @param bool|HTMLPurifier_EntityLookup $prototype Optional prototype of custom lookup table to overload with.
      * @return HTMLPurifier_EntityLookup
      */
-    public static function instance($prototype = false)
+    public static function instance($prototype = false): HTMLPurifier_EntityLookup
     {
         // no references, since PHP doesn't copy unless modified
         static $instance = null;
         if ($prototype) {
             $instance = $prototype;
         } elseif (!$instance) {
-            $instance = new HTMLPurifier_EntityLookup();
+            $instance = new static();
             $instance->setup();
         }
+
         return $instance;
     }
 }
-
-// vim: et sw=4 sts=4

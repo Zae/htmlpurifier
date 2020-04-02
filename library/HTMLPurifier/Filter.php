@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Represents a pre or post processing filter on HTML Purifier's output
  *
@@ -21,7 +23,6 @@
 
 class HTMLPurifier_Filter
 {
-
     /**
      * Name of the filter for identification purposes.
      * @type string
@@ -35,7 +36,7 @@ class HTMLPurifier_Filter
      * @param HTMLPurifier_Context $context
      * @return string
      */
-    public function preFilter($html, $config, $context)
+    public function preFilter(string $html, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         return $html;
     }
@@ -47,10 +48,8 @@ class HTMLPurifier_Filter
      * @param HTMLPurifier_Context $context
      * @return string
      */
-    public function postFilter($html, $config, $context)
+    public function postFilter(string $html, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         return $html;
     }
 }
-
-// vim: et sw=4 sts=4

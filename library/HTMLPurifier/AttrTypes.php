@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Provides lookup array of attribute types to HTMLPurifier_AttrDef objects
  */
@@ -9,7 +11,7 @@ class HTMLPurifier_AttrTypes
      * Lookup array of attribute string identifiers to concrete implementations.
      * @type HTMLPurifier_AttrDef[]
      */
-    protected $info = array();
+    protected $info = [];
 
     /**
      * Constructs the info array, supplying default implementations for attribute
@@ -56,7 +58,7 @@ class HTMLPurifier_AttrTypes
         $this->info['Number']   = new HTMLPurifier_AttrDef_Integer(false, false, true);
     }
 
-    private static function makeEnum($in)
+    private static function makeEnum($in): HTMLPurifier_AttrDef_Clone
     {
         return new HTMLPurifier_AttrDef_Clone(new HTMLPurifier_AttrDef_Enum(explode(',', $in)));
     }
@@ -66,19 +68,20 @@ class HTMLPurifier_AttrTypes
      * @param string $type String type name
      * @return HTMLPurifier_AttrDef Object AttrDef for type
      */
-    public function get($type)
+    public function get(string $type)
     {
         // determine if there is any extra info tacked on
         if (strpos($type, '#') !== false) {
-            list($type, $string) = explode('#', $type, 2);
+            [$type, $string] = explode('#', $type, 2);
         } else {
             $string = '';
         }
 
         if (!isset($this->info[$type])) {
             trigger_error('Cannot retrieve undefined attribute type ' . $type, E_USER_ERROR);
-            return;
+            return null;
         }
+
         return $this->info[$type]->make($string);
     }
 
@@ -87,10 +90,8 @@ class HTMLPurifier_AttrTypes
      * @param string $type String type name
      * @param HTMLPurifier_AttrDef $impl Object AttrDef for type
      */
-    public function set($type, $impl)
+    public function set(string $type, HTMLPurifier_AttrDef $impl)
     {
         $this->info[$type] = $impl;
     }
 }
-
-// vim: et sw=4 sts=4

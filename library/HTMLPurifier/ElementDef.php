@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Structure that stores an HTML element definition. Used by
  * HTMLPurifier_HTMLDefinition and HTMLPurifier_HTMLModule.
@@ -29,7 +31,7 @@ class HTMLPurifier_ElementDef
      *       see HTMLPurifier_AttrTypes on how they are expanded during
      *       HTMLPurifier_HTMLDefinition->setup() processing.
      */
-    public $attr = array();
+    public $attr = [];
 
     // XXX: Design note: currently, it's not possible to override
     // previously defined AttrTransforms without messing around with
@@ -47,13 +49,13 @@ class HTMLPurifier_ElementDef
      * List of tags HTMLPurifier_AttrTransform to be done before validation.
      * @type array
      */
-    public $attr_transform_pre = array();
+    public $attr_transform_pre = [];
 
     /**
      * List of tags HTMLPurifier_AttrTransform to be done after validation.
      * @type array
      */
-    public $attr_transform_post = array();
+    public $attr_transform_post = [];
 
     /**
      * HTMLPurifier_ChildDef of this tag.
@@ -95,7 +97,7 @@ class HTMLPurifier_ElementDef
      * Dynamically populated by HTMLPurifier_HTMLDefinition::getElement()
      * @type array
      */
-    public $required_attr = array();
+    public $required_attr = [];
 
     /**
      * Lookup table of tags excluded from all descendants of this tag.
@@ -109,13 +111,13 @@ class HTMLPurifier_ElementDef
      *       Modularization Abstract Modules are blithely unaware of such
      *       distinctions.
      */
-    public $excludes = array();
+    public $excludes = [];
 
     /**
      * This tag is explicitly auto-closed by the following tags.
      * @type array
      */
-    public $autoclose = array();
+    public $autoclose = [];
 
     /**
      * If a foreign element is found in this element, test if it is
@@ -134,10 +136,16 @@ class HTMLPurifier_ElementDef
 
     /**
      * Low-level factory constructor for creating new standalone element defs
+     *
+     * @param string|null $content_model
+     * @param string|null $content_model_type
+     * @param array       $attr
+     *
+     * @return HTMLPurifier_ElementDef
      */
-    public static function create($content_model, $content_model_type, $attr)
+    public static function create(?string $content_model, ?string $content_model_type, array $attr)
     {
-        $def = new HTMLPurifier_ElementDef();
+        $def = new static();
         $def->content_model = $content_model;
         $def->content_model_type = $content_model_type;
         $def->attr = $attr;
@@ -150,7 +158,7 @@ class HTMLPurifier_ElementDef
      * not mergeable.
      * @param HTMLPurifier_ElementDef $def
      */
-    public function mergeIn($def)
+    public function mergeIn(HTMLPurifier_ElementDef $def)
     {
         // later keys takes precedence
         foreach ($def->attr as $k => $v) {
@@ -160,35 +168,43 @@ class HTMLPurifier_ElementDef
                 foreach ($v as $v2) {
                     $this->attr[0][] = $v2;
                 }
+
                 continue;
             }
+
             if ($v === false) {
                 if (isset($this->attr[$k])) {
                     unset($this->attr[$k]);
                 }
+
                 continue;
             }
+
             $this->attr[$k] = $v;
         }
+
         $this->_mergeAssocArray($this->excludes, $def->excludes);
         $this->attr_transform_pre = array_merge($this->attr_transform_pre, $def->attr_transform_pre);
         $this->attr_transform_post = array_merge($this->attr_transform_post, $def->attr_transform_post);
 
         if (!empty($def->content_model)) {
-            $this->content_model =
-                str_replace("#SUPER", $this->content_model, $def->content_model);
+            $this->content_model = str_replace('#SUPER', $this->content_model, $def->content_model);
             $this->child = false;
         }
+
         if (!empty($def->content_model_type)) {
             $this->content_model_type = $def->content_model_type;
             $this->child = false;
         }
-        if (!is_null($def->child)) {
+
+        if ($def->child !== null) {
             $this->child = $def->child;
         }
-        if (!is_null($def->formatting)) {
+
+        if ($def->formatting !== null) {
             $this->formatting = $def->formatting;
         }
+
         if ($def->descendants_are_inline) {
             $this->descendants_are_inline = $def->descendants_are_inline;
         }
@@ -196,10 +212,10 @@ class HTMLPurifier_ElementDef
 
     /**
      * Merges one array into another, removes values which equal false
-     * @param $a1 Array by reference that is merged into
-     * @param $a2 Array that merges into $a1
+     * @param array $a1 by reference that is merged into
+     * @param array $a2 that merges into $a1
      */
-    private function _mergeAssocArray(&$a1, $a2)
+    private function _mergeAssocArray(array &$a1, array $a2): void
     {
         foreach ($a2 as $k => $v) {
             if ($v === false) {
@@ -208,9 +224,8 @@ class HTMLPurifier_ElementDef
                 }
                 continue;
             }
+
             $a1[$k] = $v;
         }
     }
 }
-
-// vim: et sw=4 sts=4

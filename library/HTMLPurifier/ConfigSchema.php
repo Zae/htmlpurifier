@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Configuration definition, defines directives and their defaults.
  */
@@ -10,7 +12,7 @@ class HTMLPurifier_ConfigSchema
      * @type array
      * @note This shares the exact same structure as HTMLPurifier_Config::$conf
      */
-    public $defaults = array();
+    public $defaults = [];
 
     /**
      * The default property list. Do not edit this property list.
@@ -49,7 +51,7 @@ class HTMLPurifier_ConfigSchema
      * which uses more memory but has much richer information.
      * @type array
      */
-    public $info = array();
+    public $info = [];
 
     /**
      * Application-wide singleton
@@ -66,7 +68,7 @@ class HTMLPurifier_ConfigSchema
      * Unserializes the default ConfigSchema.
      * @return HTMLPurifier_ConfigSchema
      */
-    public static function makeFromSerial()
+    public static function makeFromSerial(): self
     {
         $contents = file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/ConfigSchema/schema.ser');
         $r = unserialize($contents);
@@ -74,6 +76,7 @@ class HTMLPurifier_ConfigSchema
             $hash = sha1($contents);
             trigger_error("Unserialization of configuration schema failed, sha1 of file was $hash", E_USER_ERROR);
         }
+
         return $r;
     }
 
@@ -82,14 +85,15 @@ class HTMLPurifier_ConfigSchema
      * @param HTMLPurifier_ConfigSchema $prototype
      * @return HTMLPurifier_ConfigSchema
      */
-    public static function instance($prototype = null)
+    public static function instance(?self $prototype = null): self
     {
         if ($prototype !== null) {
-            HTMLPurifier_ConfigSchema::$singleton = $prototype;
-        } elseif (HTMLPurifier_ConfigSchema::$singleton === null || $prototype === true) {
-            HTMLPurifier_ConfigSchema::$singleton = HTMLPurifier_ConfigSchema::makeFromSerial();
+            static::$singleton = $prototype;
+        } elseif (static::$singleton === null || $prototype === true) {
+            static::$singleton = static::makeFromSerial();
         }
-        return HTMLPurifier_ConfigSchema::$singleton;
+
+        return static::$singleton;
     }
 
     /**
@@ -99,17 +103,19 @@ class HTMLPurifier_ConfigSchema
      *          define() static method! Beware!
      * @param string $key Name of directive
      * @param mixed $default Default value of directive
-     * @param string $type Allowed type of the directive. See
+     * @param string|int $type Allowed type of the directive. See
      *      HTMLPurifier_VarParser::$types for allowed values
      * @param bool $allow_null Whether or not to allow null values
      */
-    public function add($key, $default, $type, $allow_null)
+    public function add(string $key, $default, $type, bool $allow_null): void
     {
         $obj = new stdClass();
         $obj->type = is_int($type) ? $type : HTMLPurifier_VarParser::$types[$type];
+        
         if ($allow_null) {
             $obj->allow_null = true;
         }
+
         $this->info[$key] = $obj;
         $this->defaults[$key] = $default;
         $this->defaultPlist->set($key, $default);
@@ -123,11 +129,12 @@ class HTMLPurifier_ConfigSchema
      * @param string $key Name of Directive
      * @param array $aliases Hash of aliased values to the real alias
      */
-    public function addValueAliases($key, $aliases)
+    public function addValueAliases(string $key, array $aliases): void
     {
         if (!isset($this->info[$key]->aliases)) {
-            $this->info[$key]->aliases = array();
+            $this->info[$key]->aliases = [];
         }
+
         foreach ($aliases as $alias => $real) {
             $this->info[$key]->aliases[$alias] = $real;
         }
@@ -140,7 +147,7 @@ class HTMLPurifier_ConfigSchema
      * @param string $key Name of directive
      * @param array $allowed Lookup array of allowed values
      */
-    public function addAllowedValues($key, $allowed)
+    public function addAllowedValues(string $key, array $allowed): void
     {
         $this->info[$key]->allowed = $allowed;
     }
@@ -150,7 +157,7 @@ class HTMLPurifier_ConfigSchema
      * @param string $key Directive that will be aliased
      * @param string $new_key Directive that the alias will be to
      */
-    public function addAlias($key, $new_key)
+    public function addAlias(string $key, string $new_key): void
     {
         $obj = new stdClass;
         $obj->key = $new_key;
@@ -161,16 +168,14 @@ class HTMLPurifier_ConfigSchema
     /**
      * Replaces any stdClass that only has the type property with type integer.
      */
-    public function postProcess()
+    public function postProcess(): void
     {
         foreach ($this->info as $key => $v) {
-            if (count((array) $v) == 1) {
+            if (count((array) $v) === 1) {
                 $this->info[$key] = $v->type;
-            } elseif (count((array) $v) == 2 && isset($v->allow_null)) {
+            } elseif (isset($v->allow_null) && count((array) $v) === 2) {
                 $this->info[$key] = -$v->type;
             }
         }
     }
 }
-
-// vim: et sw=4 sts=4
