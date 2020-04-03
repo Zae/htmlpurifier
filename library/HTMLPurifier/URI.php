@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * HTML Purifier's internal representation of a URI.
  * @note
@@ -55,8 +57,15 @@ class HTMLPurifier_URI
      * @param string $fragment
      * @note Automatically normalizes scheme and port
      */
-    public function __construct($scheme, $userinfo, $host, $port, $path, $query, $fragment)
-    {
+    public function __construct(
+        ?string $scheme,
+        ?string $userinfo,
+        ?string $host,
+        ?int $port,
+        ?string $path,
+        ?string $query,
+        ?string $fragment
+    ) {
         $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
@@ -68,11 +77,14 @@ class HTMLPurifier_URI
 
     /**
      * Retrieves a scheme object corresponding to the URI's scheme/default
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
-     * @return HTMLPurifier_URIScheme Scheme object appropriate for validating this URI
+     *
+     * @return HTMLPurifier_URIScheme|bool Scheme object appropriate for validating this URI
+     * @throws HTMLPurifier_Exception
      */
-    public function getSchemeObj($config, $context)
+    public function getSchemeObj(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $registry = HTMLPurifier_URISchemeRegistry::instance();
         if ($this->scheme !== null) {
@@ -95,21 +107,24 @@ class HTMLPurifier_URI
                 return false;
             }
         }
+
         return $scheme_obj;
     }
 
     /**
      * Generic validation method applicable for all schemes. May modify
      * this URI in order to get it into a compliant form.
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool True if validation/filtering succeeds, false if failure
+     * @throws HTMLPurifier_Exception
      */
-    public function validate($config, $context)
+    public function validate(HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
     {
         // ABNF definitions from RFC 3986
         $chars_sub_delims = '!$&\'()*+,;=';
-        $chars_gen_delims = ':/?#[]@';
         $chars_pchar = $chars_sub_delims . ':@';
 
         // validate host
@@ -127,7 +142,7 @@ class HTMLPurifier_URI
         // URI that we don't allow into one we do.  So instead, we just
         // check if the scheme can be dropped because there is no host
         // and it is our default scheme.
-        if (!is_null($this->scheme) && is_null($this->host) || $this->host === '') {
+        if ($this->host === '' || (!is_null($this->scheme) && is_null($this->host))) {
             // support for relative paths is pretty abysmal when the
             // scheme is present, so axe it when possible
             $def = $config->getDefinition('URI');
@@ -209,6 +224,7 @@ class HTMLPurifier_URI
         if (!is_null($this->fragment)) {
             $this->fragment = $qf_encoder->encode($this->fragment);
         }
+
         return true;
     }
 
@@ -216,18 +232,21 @@ class HTMLPurifier_URI
      * Convert URI back to string
      * @return string URI appropriate for output
      */
-    public function toString()
+    public function toString(): string
     {
         // reconstruct authority
         $authority = null;
+
         // there is a rendering difference between a null authority
         // (http:foo-bar) and an empty string authority
         // (http:///foo-bar).
         if (!is_null($this->host)) {
             $authority = '';
+
             if (!is_null($this->userinfo)) {
                 $authority .= $this->userinfo . '@';
             }
+
             $authority .= $this->host;
             if (!is_null($this->port)) {
                 $authority .= ':' . $this->port;
@@ -244,13 +263,16 @@ class HTMLPurifier_URI
         if (!is_null($this->scheme)) {
             $result .= $this->scheme . ':';
         }
+
         if (!is_null($authority)) {
             $result .= '//' . $authority;
         }
+
         $result .= $this->path;
         if (!is_null($this->query)) {
             $result .= '?' . $this->query;
         }
+
         if (!is_null($this->fragment)) {
             $result .= '#' . $this->fragment;
         }
@@ -266,20 +288,21 @@ class HTMLPurifier_URI
      * Note that this does not do any scheme checking, so it is mostly
      * only appropriate for metadata that doesn't care about protocol
      * security.  isBenign is probably what you actually want.
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     *
+     * @param HTMLPurifier_Config  $config
+     *
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
-    public function isLocal($config, $context)
+    public function isLocal(HTMLPurifier_Config $config): bool
     {
         if ($this->host === null) {
             return true;
         }
+
         $uri_def = $config->getDefinition('URI');
-        if ($uri_def->host === $this->host) {
-            return true;
-        }
-        return false;
+
+        return $uri_def->host === $this->host;
     }
 
     /**
@@ -288,13 +311,16 @@ class HTMLPurifier_URI
      *
      *      - It is a local URL (isLocal), and
      *      - It has a equal or better level of security
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
-    public function isBenign($config, $context)
+    public function isBenign(HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
     {
-        if (!$this->isLocal($config, $context)) {
+        if (!$this->isLocal($config)) {
             return false;
         }
 
@@ -304,13 +330,11 @@ class HTMLPurifier_URI
         } // conservative approach
 
         $current_scheme_obj = $config->getDefinition('URI')->getDefaultScheme($config, $context);
-        if ($current_scheme_obj->secure) {
-            if (!$scheme_obj->secure) {
-                return false;
-            }
+
+        if ($current_scheme_obj->secure && !$scheme_obj->secure) {
+            return false;
         }
+
         return true;
     }
 }
-
-// vim: et sw=4 sts=4

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * A simple array-backed queue, based off of the classic Okasaki
  * persistent amortized queue.  The basic idea is to maintain two
@@ -17,40 +19,54 @@
  * behaviour caused by repeatedly shuffling data from the input stack
  * to the output stack and back.
  */
-class HTMLPurifier_Queue {
+class HTMLPurifier_Queue
+{
     private $input;
     private $output;
 
-    public function __construct($input = array()) {
+    /**
+     * HTMLPurifier_Queue constructor.
+     *
+     * @param array $input
+     */
+    public function __construct(array $input = [])
+    {
         $this->input = $input;
-        $this->output = array();
+        $this->output = [];
     }
 
     /**
      * Shifts an element off the front of the queue.
      */
-    public function shift() {
+    public function shift()
+    {
         if (empty($this->output)) {
             $this->output = array_reverse($this->input);
-            $this->input = array();
+            $this->input = [];
         }
+
         if (empty($this->output)) {
-            return NULL;
+            return null;
         }
+
         return array_pop($this->output);
     }
 
     /**
      * Pushes an element onto the front of the queue.
+     *
+     * @param $x
      */
-    public function push($x) {
-        array_push($this->input, $x);
+    public function push($x): void
+    {
+        $this->input[] = $x;
     }
 
     /**
      * Checks if it's empty.
      */
-    public function isEmpty() {
+    public function isEmpty(): bool
+    {
         return empty($this->input) && empty($this->output);
     }
 }

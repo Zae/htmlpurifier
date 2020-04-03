@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Parses string hash files. File format is as such:
  *
@@ -27,7 +29,6 @@
  */
 class HTMLPurifier_StringHashParser
 {
-
     /**
      * @type string
      */
@@ -35,102 +36,124 @@ class HTMLPurifier_StringHashParser
 
     /**
      * Parses a file that contains a single string-hash.
+     *
      * @param string $file
-     * @return array
+     *
+     * @return array|bool
      */
-    public function parseFile($file)
+    public function parseFile(string $file)
     {
         if (!file_exists($file)) {
             return false;
         }
-        $fh = fopen($file, 'r');
+
+        $fh = fopen($file, 'rb');
         if (!$fh) {
             return false;
         }
+
         $ret = $this->parseHandle($fh);
         fclose($fh);
+
         return $ret;
     }
 
     /**
      * Parses a file that contains multiple string-hashes delimited by '----'
+     *
      * @param string $file
-     * @return array
+     *
+     * @return array|bool
      */
-    public function parseMultiFile($file)
+    public function parseMultiFile(string $file)
     {
         if (!file_exists($file)) {
             return false;
         }
-        $ret = array();
-        $fh = fopen($file, 'r');
+
+        $ret = [];
+        $fh = fopen($file, 'rb');
         if (!$fh) {
             return false;
         }
+
         while (!feof($fh)) {
             $ret[] = $this->parseHandle($fh);
         }
+
         fclose($fh);
+
         return $ret;
     }
 
     /**
-     * Internal parser that acepts a file handle.
+     * Internal parser that accepts a file handle.
+     *
      * @note While it's possible to simulate in-memory parsing by using
      *       custom stream wrappers, if such a use-case arises we should
      *       factor out the file handle into its own class.
+     *
      * @param resource $fh File handle with pointer at start of valid string-hash
-     *            block.
+     *                     block.
+     *
      * @return array
      */
-    protected function parseHandle($fh)
+    protected function parseHandle($fh): array
     {
-        $state   = false;
-        $single  = false;
-        $ret     = array();
+        $state = false;
+        $single = false;
+        $ret = [];
+
         do {
             $line = fgets($fh);
             if ($line === false) {
                 break;
             }
+
             $line = rtrim($line, "\n\r");
             if (!$state && $line === '') {
                 continue;
             }
+
             if ($line === '----') {
                 break;
             }
+
             if (strncmp('--#', $line, 3) === 0) {
                 // Comment
                 continue;
-            } elseif (strncmp('--', $line, 2) === 0) {
+            }
+
+            if (strncmp('--', $line, 2) === 0) {
                 // Multiline declaration
                 $state = trim($line, '- ');
                 if (!isset($ret[$state])) {
                     $ret[$state] = '';
                 }
                 continue;
-            } elseif (!$state) {
+            }
+
+            if (!$state) {
                 $single = true;
                 if (strpos($line, ':') !== false) {
                     // Single-line declaration
-                    list($state, $line) = explode(':', $line, 2);
+                    [$state, $line] = explode(':', $line, 2);
                     $line = trim($line);
                 } else {
                     // Use default declaration
-                    $state  = $this->default;
+                    $state = $this->default;
                 }
             }
+
             if ($single) {
                 $ret[$state] = $line;
                 $single = false;
-                $state  = false;
+                $state = false;
             } else {
                 $ret[$state] .= "$line\n";
             }
         } while (!feof($fh));
+
         return $ret;
     }
 }
-
-// vim: et sw=4 sts=4
