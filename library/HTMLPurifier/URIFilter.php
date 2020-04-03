@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Chainable filters for custom URI processing.
  *
@@ -27,15 +29,16 @@
  */
 abstract class HTMLPurifier_URIFilter
 {
-
     /**
      * Unique identifier of filter.
+     *
      * @type string
      */
     public $name;
 
     /**
      * True if this filter should be run after scheme validation.
+     *
      * @type bool
      */
     public $post = false;
@@ -44,6 +47,7 @@ abstract class HTMLPurifier_URIFilter
      * True if this filter should always be loaded.
      * This permits a filter to be named Foo without the corresponding
      * %URI.Foo directive existing.
+     *
      * @type bool
      */
     public $always_load = false;
@@ -51,24 +55,26 @@ abstract class HTMLPurifier_URIFilter
     /**
      * Performs initialization for the filter.  If the filter returns
      * false, this means that it shouldn't be considered active.
+     *
      * @param HTMLPurifier_Config $config
+     *
      * @return bool
      */
-    public function prepare($config)
+    public function prepare(HTMLPurifier_Config $config)
     {
         return true;
     }
 
     /**
      * Filter a URI object
-     * @param HTMLPurifier_URI $uri Reference to URI object variable
-     * @param HTMLPurifier_Config $config
+     *
+     * @param HTMLPurifier_URI     $uri Reference to URI object variable
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool Whether or not to continue processing: false indicates
      *         URL is no good, true indicates continue processing. Note that
      *         all changes are committed directly on the URI object
      */
-    abstract public function filter(&$uri, $config, $context);
+    abstract public function filter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
 }
-
-// vim: et sw=4 sts=4

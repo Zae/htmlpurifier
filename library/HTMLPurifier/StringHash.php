@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This is in almost every respect equivalent to an array except
  * that it keeps track of which keys were accessed.
@@ -13,24 +15,28 @@ class HTMLPurifier_StringHash extends ArrayObject
     /**
      * @type array
      */
-    protected $accessed = array();
+    protected $accessed = [];
 
     /**
      * Retrieves a value, and logs the access.
+     *
      * @param mixed $index
+     *
      * @return mixed
      */
     public function offsetGet($index)
     {
         $this->accessed[$index] = true;
+
         return parent::offsetGet($index);
     }
 
     /**
      * Returns a lookup array of all array indexes that have been accessed.
+     *
      * @return array in form array($index => true).
      */
-    public function getAccessed()
+    public function getAccessed(): array
     {
         return $this->accessed;
     }
@@ -38,10 +44,8 @@ class HTMLPurifier_StringHash extends ArrayObject
     /**
      * Resets the access array.
      */
-    public function resetAccessed()
+    public function resetAccessed(): void
     {
-        $this->accessed = array();
+        $this->accessed = [];
     }
 }
-
-// vim: et sw=4 sts=4

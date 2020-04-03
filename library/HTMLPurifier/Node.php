@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -46,5 +47,3 @@ abstract class HTMLPurifier_Node
      */
     abstract public function toTokenPair();
 }
-
-// vim: et sw=4 sts=4
