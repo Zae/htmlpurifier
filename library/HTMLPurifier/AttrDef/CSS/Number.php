@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a number as defined by the CSS spec.
  */
 class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
 {
-
     /**
      * Indicates whether or not only positive values are allowed.
+     *
      * @type bool
      */
     protected $non_negative = false;
@@ -21,9 +23,10 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $number
-     * @param HTMLPurifier_Config $config
+     * @param string               $number
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return string|bool
      * @warning Some contexts do not pass $config, $context. These
      *          variables should not be used without checking HTMLPurifier_Length
@@ -35,6 +38,7 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
         if ($number === '') {
             return false;
         }
+
         if ($number === '0') {
             return '0';
         }
@@ -52,6 +56,7 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
 
         if (ctype_digit($number)) {
             $number = ltrim($number, '0');
+
             return $number ? $sign . $number : '0';
         }
 
@@ -60,17 +65,18 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
             return false;
         }
 
-        list($left, $right) = explode('.', $number, 2);
+        [$left, $right] = explode('.', $number, 2);
 
         if ($left === '' && $right === '') {
             return false;
         }
+
         if ($left !== '' && !ctype_digit($left)) {
             return false;
         }
 
         // Remove leading zeros until positive number or a zero stays left
-        if (ltrim($left, '0') != '') {
+        if (ltrim($left, '0') !== '') {
             $left = ltrim($left, '0');
         } else {
             $left = '0';
@@ -80,11 +86,12 @@ class HTMLPurifier_AttrDef_CSS_Number extends HTMLPurifier_AttrDef
 
         if ($right === '') {
             return $left ? $sign . $left : '0';
-        } elseif (!ctype_digit($right)) {
+        }
+
+        if (!ctype_digit($right)) {
             return false;
         }
+
         return $sign . $left . '.' . $right;
     }
 }
-
-// vim: et sw=4 sts=4

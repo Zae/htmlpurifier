@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a color according to the HTML spec.
  */
 class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
 {
-
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -28,6 +31,7 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
         if (isset($colors[$lower])) {
             return $colors[$lower];
         }
+
         if ($string[0] === '#') {
             $hex = substr($string, 1);
         } else {
@@ -38,14 +42,15 @@ class HTMLPurifier_AttrDef_HTML_Color extends HTMLPurifier_AttrDef
         if ($length !== 3 && $length !== 6) {
             return false;
         }
+
         if (!ctype_xdigit($hex)) {
             return false;
         }
+
         if ($length === 3) {
             $hex = $hex[0] . $hex[0] . $hex[1] . $hex[1] . $hex[2] . $hex[2];
         }
+
         return "#$hex";
     }
 }
-
-// vim: et sw=4 sts=4

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a URI in CSS syntax, which uses url('http://example.com')
- * @note While theoretically speaking a URI in a CSS document could
+ *
+ * @note    While theoretically speaking a URI in a CSS document could
  *       be non-embedded, as of CSS2 there is no such usage so we're
  *       generalizing it. This may need to be changed in the future.
  * @warning Since HTMLPurifier_AttrDef_CSS blindly uses semicolons as
@@ -11,16 +14,16 @@
  */
 class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
 {
-
     public function __construct()
     {
         parent::__construct(true); // always embedded
     }
 
     /**
-     * @param string $uri_string
-     * @param HTMLPurifier_Config $config
+     * @param string               $uri_string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($uri_string, $config, $context)
@@ -33,21 +36,24 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
             return false;
         }
         $uri_string = substr($uri_string, 4);
-        if (strlen($uri_string) == 0) {
+        if ($uri_string === '') {
             return false;
         }
+
         $new_length = strlen($uri_string) - 1;
         if ($uri_string[$new_length] != ')') {
             return false;
         }
+
         $uri = trim(substr($uri_string, 0, $new_length));
 
-        if (!empty($uri) && ($uri[0] == "'" || $uri[0] == '"')) {
+        if (!empty($uri) && ($uri[0] === "'" || $uri[0] === '"')) {
             $quote = $uri[0];
             $new_length = strlen($uri) - 1;
             if ($uri[$new_length] !== $quote) {
                 return false;
             }
+
             $uri = substr($uri, 1, $new_length - 1);
         }
 
@@ -60,7 +66,7 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
         }
 
         // extra sanity check; should have been done by URI
-        $result = str_replace(array('"', "\\", "\n", "\x0c", "\r"), "", $result);
+        $result = str_replace(['"', "\\", "\n", "\x0c", "\r"], '', $result);
 
         // suspicious characters are ()'; we're going to percent encode
         // them for safety.
@@ -73,5 +79,3 @@ class HTMLPurifier_AttrDef_CSS_URI extends HTMLPurifier_AttrDef_URI
         return "url(\"$result\")";
     }
 }
-
-// vim: et sw=4 sts=4

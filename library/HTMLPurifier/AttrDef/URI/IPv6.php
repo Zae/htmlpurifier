@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates an IPv6 address.
+ *
  * @author Feyd @ forums.devnetwork.net (public domain)
- * @note This function requires brackets to have been removed from address
+ * @note   This function requires brackets to have been removed from address
  *       in URI.
  */
 class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
 {
-
     /**
-     * @param string $aIP
-     * @param HTMLPurifier_Config $config
+     * @param string               $aIP
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($aIP, $config, $context)
@@ -23,8 +26,6 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
 
         $original = $aIP;
 
-        $hex = '[0-9a-fA-F]';
-        $blk = '(?:' . $hex . '{1,4})';
         $pre = '(?:/(?:12[0-8]|1[0-1][0-9]|[1-9][0-9]|[0-9]))'; // /0 - /128
 
         //      prefix check
@@ -51,8 +52,10 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
         $c = count($aIP);
         if ($c > 2) {
             return false;
-        } elseif ($c == 2) {
-            list($first, $second) = $aIP;
+        }
+
+        if ($c === 2) {
+            [$first, $second] = $aIP;
             $first = explode(':', $first);
             $second = explode(':', $second);
 
@@ -61,7 +64,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
             }
 
             while (count($first) < 8) {
-                array_push($first, '0');
+                $first[] = '0';
             }
 
             array_splice($first, 8 - count($second), 8, $second);
@@ -72,7 +75,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
         }
         $c = count($aIP);
 
-        if ($c != 8) {
+        if ($c !== 8) {
             return false;
         }
 
@@ -82,8 +85,7 @@ class HTMLPurifier_AttrDef_URI_IPv6 extends HTMLPurifier_AttrDef_URI_IPv4
                 return false;
             }
         }
+
         return $original;
     }
 }
-
-// vim: et sw=4 sts=4

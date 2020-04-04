@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_AttrDef_CSS_AlphaValue
+ */
 class HTMLPurifier_AttrDef_CSS_AlphaValue extends HTMLPurifier_AttrDef_CSS_Number
 {
 
@@ -20,15 +25,16 @@ class HTMLPurifier_AttrDef_CSS_AlphaValue extends HTMLPurifier_AttrDef_CSS_Numbe
         if ($result === false) {
             return $result;
         }
+
         $float = (float)$result;
         if ($float < 0.0) {
             $result = '0';
         }
+
         if ($float > 1.0) {
             $result = '1';
         }
+
         return $result;
     }
 }
-
-// vim: et sw=4 sts=4

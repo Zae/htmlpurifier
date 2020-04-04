@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a MultiLength as defined by the HTML spec.
  *
@@ -8,11 +10,11 @@
  */
 class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Length
 {
-
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -36,9 +38,10 @@ class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Le
 
         $int = substr($string, 0, $length - 1);
 
-        if ($int == '') {
+        if ($int === '') {
             return '*';
         }
+
         if (!is_numeric($int)) {
             return false;
         }
@@ -47,14 +50,15 @@ class HTMLPurifier_AttrDef_HTML_MultiLength extends HTMLPurifier_AttrDef_HTML_Le
         if ($int < 0) {
             return false;
         }
-        if ($int == 0) {
+
+        if ($int === 0) {
             return '0';
         }
-        if ($int == 1) {
+
+        if ($int === 1) {
             return '*';
         }
+
         return ((string)$int) . '*';
     }
 }
-
-// vim: et sw=4 sts=4

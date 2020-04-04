@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates shorthand CSS property background.
+ *
  * @warning Does not support url tokens that have internal spaces.
  */
 class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
 {
-
     /**
      * Local copy of component validators.
+     *
      * @type HTMLPurifier_AttrDef[]
      * @note See HTMLPurifier_AttrDef_Font::$info for a similar impl.
      */
@@ -16,10 +19,13 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
 
     /**
      * @param HTMLPurifier_Config $config
+     *
+     * @throws HTMLPurifier_Exception
      */
     public function __construct($config)
     {
         $def = $config->getCSSDefinition();
+
         $this->info['background-color'] = $def->info['background-color'];
         $this->info['background-image'] = $def->info['background-image'];
         $this->info['background-repeat'] = $def->info['background-repeat'];
@@ -28,9 +34,10 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -47,7 +54,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
         // assumes URI doesn't have spaces in it
         $bits = explode(' ', $string); // bits to process
 
-        $caught = array();
+        $caught = [];
         $caught['color'] = false;
         $caught['image'] = false;
         $caught['repeat'] = false;
@@ -61,7 +68,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
                 continue;
             }
             foreach ($caught as $key => $status) {
-                if ($key != 'position') {
+                if ($key !== 'position') {
                     if ($status !== false) {
                         continue;
                     }
@@ -69,10 +76,12 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
                 } else {
                     $r = $bit;
                 }
+
                 if ($r === false) {
                     continue;
                 }
-                if ($key == 'position') {
+
+                if ($key === 'position') {
                     if ($caught[$key] === false) {
                         $caught[$key] = '';
                     }
@@ -80,6 +89,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
                 } else {
                     $caught[$key] = $r;
                 }
+
                 $i++;
                 break;
             }
@@ -88,12 +98,12 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
         if (!$i) {
             return false;
         }
+
         if ($caught['position'] !== false) {
-            $caught['position'] = $this->info['background-position']->
-                validate($caught['position'], $config, $context);
+            $caught['position'] = $this->info['background-position']->validate($caught['position'], $config, $context);
         }
 
-        $ret = array();
+        $ret = [];
         foreach ($caught as $value) {
             if ($value === false) {
                 continue;
@@ -104,8 +114,7 @@ class HTMLPurifier_AttrDef_CSS_Background extends HTMLPurifier_AttrDef
         if (empty($ret)) {
             return false;
         }
+
         return implode(' ', $ret);
     }
 }
-
-// vim: et sw=4 sts=4

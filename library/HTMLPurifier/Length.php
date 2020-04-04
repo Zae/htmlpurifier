@@ -100,7 +100,7 @@ class HTMLPurifier_Length
 
         // Hack:
         $def = new HTMLPurifier_AttrDef_CSS_Number();
-        $result = $def->validate($this->n, false, false);
+        $result = $def->validate($this->n, null, null);
         if ($result === false) {
             return false;
         }

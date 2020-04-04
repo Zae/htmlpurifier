@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a URI as defined by RFC 3986.
+ *
  * @note Scheme-specific mechanics deferred to HTMLPurifier_URIScheme
  */
 class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_URIParser
      */
@@ -28,19 +30,23 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 
     /**
      * @param string $string
+     *
      * @return HTMLPurifier_AttrDef_URI
      */
-    public function make($string)
+    public function make(string $string): HTMLPurifier_AttrDef_URI
     {
         $embeds = ($string === 'embedded');
+
         return new HTMLPurifier_AttrDef_URI($embeds);
     }
 
     /**
-     * @param string $uri
-     * @param HTMLPurifier_Config $config
+     * @param string               $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($uri, $config, $context)
     {
@@ -61,7 +67,6 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
 
         $ok = false;
         do {
-
             // generic validation
             $result = $uri->validate($config, $context);
             if (!$result) {
@@ -103,9 +108,8 @@ class HTMLPurifier_AttrDef_URI extends HTMLPurifier_AttrDef
         if (!$ok) {
             return false;
         }
+
         // back to string
         return $uri->toString();
     }
 }
-
-// vim: et sw=4 sts=4

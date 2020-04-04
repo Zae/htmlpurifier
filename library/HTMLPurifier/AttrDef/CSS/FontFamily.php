@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a font family list according to CSS spec
  */
 class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
 {
-
     protected $mask = null;
 
     public function __construct()
@@ -14,12 +15,15 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         for ($c = 'a'; $c <= 'z'; $c++) {
             $this->mask .= $c;
         }
+
         for ($c = 'A'; $c <= 'Z'; $c++) {
             $this->mask .= $c;
         }
+
         for ($c = '0'; $c <= '9'; $c++) {
             $this->mask .= $c;
         } // cast-y, but should be fine
+
         // special bytes used by UTF-8
         for ($i = 0x80; $i <= 0xFF; $i++) {
             // We don't bother excluding invalid bytes in this range,
@@ -47,20 +51,22 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
-        static $generic_names = array(
+        static $generic_names = [
             'serif' => true,
             'sans-serif' => true,
             'monospace' => true,
             'fantasy' => true,
             'cursive' => true
-        );
+        ];
         $allowed_fonts = $config->get('CSS.AllowedFonts');
 
         // assume that no font names contain commas in them
@@ -71,23 +77,28 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
             if ($font === '') {
                 continue;
             }
+
             // match a generic name
             if (isset($generic_names[$font])) {
                 if ($allowed_fonts === null || isset($allowed_fonts[$font])) {
                     $final .= $font . ', ';
                 }
+
                 continue;
             }
+
             // match a quoted name
             if ($font[0] === '"' || $font[0] === "'") {
                 $length = strlen($font);
                 if ($length <= 2) {
                     continue;
                 }
+
                 $quote = $font[0];
                 if ($font[$length - 1] !== $quote) {
                     continue;
                 }
+
                 $font = substr($font, 1, $length - 2);
             }
 
@@ -99,7 +110,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
                 continue;
             }
 
-            if (ctype_alnum($font) && $font !== '') {
+            if ($font !== '' && ctype_alnum($font)) {
                 // very simple font, allow it in unharmed
                 $final .= $font . ', ';
                 continue;
@@ -107,7 +118,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
 
             // bugger out on whitespace.  form feed (0C) really
             // shouldn't show up regardless
-            $font = str_replace(array("\n", "\t", "\r", "\x0C"), ' ', $font);
+            $font = str_replace(["\n", "\t", "\r", "\x0C"], ' ', $font);
 
             // Here, there are various classes of characters which need
             // to be treated differently:
@@ -211,9 +222,8 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef
         if ($final === '') {
             return false;
         }
+
         return $final;
     }
 
 }
-
-// vim: et sw=4 sts=4
