@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Takes a well formed list of tokens and fixes their nesting.
  *
@@ -28,25 +30,24 @@
  * @todo Enable nodes to be bubbled out of the structure.  This is
  *       easier with our new algorithm.
  */
-
 class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 {
-
     /**
      * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array|HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
-    public function execute($tokens, $config, $context)
+    public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
-
         //####################################################################//
         // Pre-processing
 
         // O(n) pass to convert to a tree, so that we can efficiently
         // refer to substrings
-        $top_node = HTMLPurifier_Arborize::arborize($tokens, $config, $context);
+        $top_node = HTMLPurifier_Arborize::arborize($tokens, $config);
 
         // get a copy of the HTML definition
         $definition = $config->getHTMLDefinition();
@@ -70,13 +71,13 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
         // it is organized by parent elements, similar to $stack,
         // but it is only populated when an element with exclusions is
         // processed, i.e. there won't be empty exclusions.
-        $exclude_stack = array($definition->info_parent_def->excludes);
+        $exclude_stack = [$definition->info_parent_def->excludes];
 
         // variable that contains the start token while we are processing
         // nodes. This enables error reporting to do its job
         $node = $top_node;
         // dummy token
-        list($token, $d) = $node->toTokenPair();
+        [$token, $d] = $node->toTokenPair();
         $context->register('CurrentNode', $node);
         $context->register('CurrentToken', $token);
 
@@ -101,15 +102,15 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
         // children.
 
         $parent_def = $definition->info_parent_def;
-        $stack = array(
-            array($top_node,
-                  $parent_def->descendants_are_inline,
-                  $parent_def->excludes, // exclusions
-                  0)
-            );
+        $stack = [
+            [$top_node,
+                $parent_def->descendants_are_inline,
+                $parent_def->excludes, // exclusions
+                0]
+        ];
 
         while (!empty($stack)) {
-            list($node, $is_inline, $excludes, $ix) = array_pop($stack);
+            [$node, $is_inline, $excludes, $ix] = array_pop($stack);
             // recursive call
             $go = false;
             $def = empty($stack) ? $definition->info_parent_def : $definition->info[$node->name];
@@ -117,45 +118,57 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
                 $child = $node->children[$ix++];
                 if ($child instanceof HTMLPurifier_Node_Element) {
                     $go = true;
-                    $stack[] = array($node, $is_inline, $excludes, $ix);
-                    $stack[] = array($child,
+                    $stack[] = [$node, $is_inline, $excludes, $ix];
+                    $stack[] = [$child,
                         // ToDo: I don't think it matters if it's def or
                         // child_def, but double check this...
                         $is_inline || $def->descendants_are_inline,
                         empty($def->excludes) ? $excludes
-                                              : array_merge($excludes, $def->excludes),
-                        0);
+                            : array_merge($excludes, $def->excludes),
+                        0];
                     break;
                 }
-            };
-            if ($go) continue;
-            list($token, $d) = $node->toTokenPair();
+            }
+
+            if ($go) {
+                continue;
+            }
+
+            [$token, $d] = $node->toTokenPair();
             // base case
             if ($excludes_enabled && isset($excludes[$node->name])) {
                 $node->dead = true;
-                if ($e) $e->send(E_ERROR, 'Strategy_FixNesting: Node excluded');
+                if ($e) {
+                    $e->send(E_ERROR, 'Strategy_FixNesting: Node excluded');
+                }
             } else {
                 // XXX I suppose it would be slightly more efficient to
                 // avoid the allocation here and have children
                 // strategies handle it
-                $children = array();
+                $children = [];
                 foreach ($node->children as $child) {
-                    if (!$child->dead) $children[] = $child;
+                    if (!$child->dead) {
+                        $children[] = $child;
+                    }
                 }
+
                 $result = $def->child->validateChildren($children, $config, $context);
+
                 if ($result === true) {
                     // nop
                     $node->children = $children;
                 } elseif ($result === false) {
                     $node->dead = true;
-                    if ($e) $e->send(E_ERROR, 'Strategy_FixNesting: Node removed');
+                    if ($e) {
+                        $e->send(E_ERROR, 'Strategy_FixNesting: Node removed');
+                    }
                 } else {
                     $node->children = $result;
                     if ($e) {
                         // XXX This will miss mutations of internal nodes. Perhaps defer to the child validators
                         if (empty($result) && !empty($children)) {
                             $e->send(E_ERROR, 'Strategy_FixNesting: Node contents removed');
-                        } else if ($result != $children) {
+                        } else if ($result !== $children) {
                             $e->send(E_WARNING, 'Strategy_FixNesting: Node reorganized');
                         }
                     }
@@ -174,8 +187,6 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
         //####################################################################//
         // Return
 
-        return HTMLPurifier_Arborize::flatten($node, $config, $context);
+        return HTMLPurifier_Arborize::flatten($node);
     }
 }
-
-// vim: et sw=4 sts=4

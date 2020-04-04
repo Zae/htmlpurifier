@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_HTMLModule_Tidy_XHTML
+ */
 class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
 {
     /**
@@ -15,12 +20,10 @@ class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
     /**
      * @return array
      */
-    public function makeFixes()
+    public function makeFixes(): array
     {
-        $r = array();
+        $r = [];
         $r['@lang'] = new HTMLPurifier_AttrTransform_Lang();
         return $r;
     }
 }
-
-// vim: et sw=4 sts=4

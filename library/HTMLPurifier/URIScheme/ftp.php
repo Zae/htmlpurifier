@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates ftp (File Transfer Protocol) URIs as defined by generic RFC 1738.
  */
@@ -21,12 +23,13 @@ class HTMLPurifier_URIScheme_ftp extends HTMLPurifier_URIScheme
     public $hierarchical = true;
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_URI     $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
-    public function doValidate(&$uri, $config, $context)
+    public function doValidate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
     {
         $uri->query = null;
 
@@ -38,7 +41,7 @@ class HTMLPurifier_URIScheme_ftp extends HTMLPurifier_URIScheme
             $type_ret = '';
             if (strpos($type, '=') !== false) {
                 // figure out whether or not the declaration is correct
-                list($key, $typecode) = explode('=', $type, 2);
+                [$key, $typecode] = explode('=', $type, 2);
                 if ($key !== 'type') {
                     // invalid key, tack it back on encoded
                     $uri->path .= '%3B' . $type;
@@ -48,11 +51,11 @@ class HTMLPurifier_URIScheme_ftp extends HTMLPurifier_URIScheme
             } else {
                 $uri->path .= '%3B' . $type;
             }
+
             $uri->path = str_replace(';', '%3B', $uri->path);
             $uri->path .= $type_ret;
         }
+
         return true;
     }
 }
-
-// vim: et sw=4 sts=4

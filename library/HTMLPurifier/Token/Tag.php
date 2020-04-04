@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Abstract class of a tag token (start, end or empty), and its behavior.
  */
@@ -10,6 +12,7 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
      *
      * This allows us to check objects with <tt>!empty($obj->is_tag)</tt>
      * without having to use a function call <tt>is_a()</tt>.
+     *
      * @type bool
      */
     public $is_tag = true;
@@ -26,22 +29,24 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
 
     /**
      * Associative array of the tag's attributes.
+     *
      * @type array
      */
-    public $attr = array();
+    public $attr = [];
 
     /**
      * Non-overloaded constructor, which lower-cases passed tag name.
      *
      * @param string $name String name.
-     * @param array $attr Associative array of attributes.
-     * @param int $line
-     * @param int $col
-     * @param array $armor
+     * @param array  $attr Associative array of attributes.
+     * @param int    $line
+     * @param int    $col
+     * @param array  $armor
      */
-    public function __construct($name, $attr = array(), $line = null, $col = null, $armor = array())
+    public function __construct(string $name, array $attr = [], ?int $line = null, ?int $col = null, array $armor = [])
     {
         $this->name = ctype_lower($name) ? $name : strtolower($name);
+
         foreach ($attr as $key => $value) {
             // normalization only necessary when key is not lowercase
             if (!ctype_lower($key)) {
@@ -49,20 +54,21 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
                 if (!isset($attr[$new_key])) {
                     $attr[$new_key] = $attr[$key];
                 }
+
                 if ($new_key !== $key) {
                     unset($attr[$key]);
                 }
             }
         }
+
         $this->attr = $attr;
         $this->line = $line;
         $this->col = $col;
         $this->armor = $armor;
     }
 
-    public function toNode() {
+    public function toNode(): HTMLPurifier_Node
+    {
         return new HTMLPurifier_Node_Element($this->name, $this->attr, $this->line, $this->col, $this->armor);
     }
 }
-
-// vim: et sw=4 sts=4

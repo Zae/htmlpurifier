@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_HTMLModule_Tidy_Strict
+ */
 class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4
 {
     /**
@@ -15,10 +20,11 @@ class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_X
     /**
      * @return array
      */
-    public function makeFixes()
+    public function makeFixes(): array
     {
         $r = parent::makeFixes();
         $r['blockquote#content_model_type'] = 'strictblockquote';
+
         return $r;
     }
 
@@ -29,15 +35,15 @@ class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_X
 
     /**
      * @param HTMLPurifier_ElementDef $def
+     *
      * @return HTMLPurifier_ChildDef_StrictBlockquote
      */
-    public function getChildDef($def)
+    public function getChildDef(HTMLPurifier_ElementDef $def): HTMLPurifier_ChildDef_StrictBlockquote
     {
-        if ($def->content_model_type != 'strictblockquote') {
+        if ($def->content_model_type !== 'strictblockquote') {
             return parent::getChildDef($def);
         }
+
         return new HTMLPurifier_ChildDef_StrictBlockquote($def->content_model);
     }
 }
-
-// vim: et sw=4 sts=4

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * XHTML 1.1 Target Module, defines target attribute in link elements.
  */
@@ -13,16 +15,14 @@ class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config): void
     {
-        $elements = array('a');
+        $elements = ['a'];
         foreach ($elements as $name) {
             $e = $this->addBlankElement($name);
-            $e->attr = array(
+            $e->attr = [
                 'target' => new HTMLPurifier_AttrDef_HTML_FrameTarget()
-            );
+            ];
         }
     }
 }
-
-// vim: et sw=4 sts=4

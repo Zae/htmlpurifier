@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Definition that allows a set of elements, but disallows empty children.
  */
@@ -7,12 +9,14 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
 {
     /**
      * Lookup table of allowed elements.
+     *
      * @type array
      */
-    public $elements = array();
+    public $elements = [];
 
     /**
      * Whether or not the last passed node was all whitespace.
+     *
      * @type bool
      */
     protected $whitespace = false;
@@ -26,8 +30,10 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
             $elements = str_replace(' ', '', $elements);
             $elements = explode('|', $elements);
         }
+
         $keys = array_keys($elements);
-        if ($keys == array_keys($keys)) {
+
+        if ($keys === array_keys($keys)) {
             $elements = array_flip($elements);
             foreach ($elements as $i => $x) {
                 $elements[$i] = true;
@@ -36,6 +42,7 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
                 } // remove blank
             }
         }
+
         $this->elements = $elements;
     }
 
@@ -50,12 +57,13 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
     public $type = 'required';
 
     /**
-     * @param array $children
-     * @param HTMLPurifier_Config $config
+     * @param array                $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
-    public function validateChildren($children, $config, $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         // Flag for subclasses
         $this->whitespace = false;
@@ -66,7 +74,7 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
         }
 
         // the new set of children
-        $result = array();
+        $result = [];
 
         // whether or not parsed character data is allowed
         // this controls whether or not we silently drop a tag
@@ -92,27 +100,32 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
                     $result[] = $node;
                     continue;
                 }
+
                 // spill the child contents in
                 // ToDo: Make configurable
                 if ($node instanceof HTMLPurifier_Node_Element) {
                     for ($i = count($node->children) - 1; $i >= 0; $i--) {
                         $stack[] = $node->children[$i];
                     }
+
                     continue;
                 }
+
                 continue;
             }
+
             $result[] = $node;
         }
         if (empty($result)) {
             return false;
         }
+
         if ($all_whitespace) {
             $this->whitespace = true;
+
             return false;
         }
+
         return $result;
     }
 }
-
-// vim: et sw=4 sts=4

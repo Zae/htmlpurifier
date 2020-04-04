@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates tel (for phone numbers).
  *
@@ -8,7 +10,6 @@
  * numbers so that they only include (possibly) a leading plus,
  * and then any number of digits and x'es.
  */
-
 class HTMLPurifier_URIScheme_tel extends HTMLPurifier_URIScheme
 {
     /**
@@ -22,25 +23,24 @@ class HTMLPurifier_URIScheme_tel extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_URI     $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
-    public function doValidate(&$uri, $config, $context)
+    public function doValidate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
     {
         $uri->userinfo = null;
-        $uri->host     = null;
-        $uri->port     = null;
+        $uri->host = null;
+        $uri->port = null;
 
         // Delete all non-numeric characters, non-x characters
         // from phone number, EXCEPT for a leading plus sign.
         $uri->path = preg_replace('/(?!^\+)[^\dx]/', '',
-                     // Normalize e(x)tension to lower-case
-                     str_replace('X', 'x', $uri->path));
+            // Normalize e(x)tension to lower-case
+            str_replace('X', 'x', $uri->path));
 
         return true;
     }
 }
-
-// vim: et sw=4 sts=4

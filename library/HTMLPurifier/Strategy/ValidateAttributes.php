@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validate all attributes in the tokens.
  */
-
 class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
 {
-
     /**
      * @param HTMLPurifier_Token[] $tokens
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return HTMLPurifier_Token[]
      */
-    public function execute($tokens, $config, $context)
+    public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
         // setup validator
         $validator = new HTMLPurifier_AttrValidator();
@@ -21,8 +22,7 @@ class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
         $token = false;
         $context->register('CurrentToken', $token);
 
-        foreach ($tokens as $key => $token) {
-
+        foreach ($tokens as $token) {
             // only process tokens that have attributes,
             //   namely start and empty tags
             if (!$token instanceof HTMLPurifier_Token_Start && !$token instanceof HTMLPurifier_Token_Empty) {
@@ -37,9 +37,9 @@ class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
             // note that we have no facilities here for removing tokens
             $validator->validateToken($token, $config, $context);
         }
+
         $context->destroy('CurrentToken');
+
         return $tokens;
     }
 }
-
-// vim: et sw=4 sts=4

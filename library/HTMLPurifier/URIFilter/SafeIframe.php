@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Implements safety checks for safe iframes.
  *
@@ -28,41 +30,48 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
     // defer till the actual filtering.
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return bool
+     * @throws HTMLPurifier_Exception
      */
-    public function prepare($config)
+    public function prepare(HTMLPurifier_Config $config): bool
     {
         $this->regexp = $config->get('URI.SafeIframeRegexp');
+
         return true;
     }
 
     /**
-     * @param HTMLPurifier_URI $uri
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_URI     $uri
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
-     * @return bool
+     *
+     * @return bool|int
+     * @throws HTMLPurifier_Exception
      */
-    public function filter(&$uri, $config, $context)
+    public function filter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         // check if filter not applicable
         if (!$config->get('HTML.SafeIframe')) {
             return true;
         }
+
         // check if the filter should actually trigger
         if (!$context->get('EmbeddedURI', true)) {
             return true;
         }
+
         $token = $context->get('CurrentToken', true);
-        if (!($token && $token->name == 'iframe')) {
+        if (!($token && $token->name === 'iframe')) {
             return true;
         }
+
         // check if we actually have some whitelists enabled
         if ($this->regexp === null) {
             return false;
         }
+
         // actually check the whitelists
         return preg_match($this->regexp, $uri->toString());
     }
 }
-
-// vim: et sw=4 sts=4

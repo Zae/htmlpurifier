@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // must be called POST validation
 
 /**
@@ -10,20 +12,22 @@
  */
 class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
 {
-
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
+     * @throws HTMLPurifier_Exception
      */
-    public function transform($attr, $config, $context)
+    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
         $src = true;
         if (!isset($attr['src'])) {
             if ($config->get('Core.RemoveInvalidImg')) {
                 return $attr;
             }
+
             $attr['src'] = $config->get('Attr.DefaultInvalidImage');
             $src = false;
         }
@@ -31,6 +35,7 @@ class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
         if (!isset($attr['alt'])) {
             if ($src) {
                 $alt = $config->get('Attr.DefaultImageAlt');
+
                 if ($alt === null) {
                     $attr['alt'] = basename($attr['src']);
                 } else {
@@ -40,8 +45,7 @@ class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
                 $attr['alt'] = $config->get('Attr.DefaultInvalidImageAlt');
             }
         }
+
         return $attr;
     }
 }
-
-// vim: et sw=4 sts=4

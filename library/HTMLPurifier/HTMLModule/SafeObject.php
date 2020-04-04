@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * A "safe" object module. In theory, objects permitted by this module will
  * be safe, and untrusted users can be allowed to embed arbitrary flash objects
@@ -15,8 +17,10 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     *
+     * @throws HTMLPurifier_Exception
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config): void
     {
         // These definitions are not intrinsically safe: the attribute transforms
         // are a vital part of ensuring safety.
@@ -27,7 +31,7 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
             'Inline',
             'Optional: param | Flow | #PCDATA',
             'Common',
-            array(
+            [
                 // While technically not required by the spec, we're forcing
                 // it to this value.
                 'type' => 'Enum#application/x-shockwave-flash',
@@ -35,11 +39,11 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
                 'height' => 'Pixels#' . $max,
                 'data' => 'URI#embedded',
                 'codebase' => new HTMLPurifier_AttrDef_Enum(
-                    array(
+                    [
                         'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0'
-                    )
+                    ]
                 ),
-            )
+            ]
         );
         $object->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeObject();
 
@@ -48,15 +52,13 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
             false,
             'Empty',
             false,
-            array(
+            [
                 'id' => 'ID',
                 'name*' => 'Text',
                 'value' => 'Text'
-            )
+            ]
         );
         $param->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeParam();
         $this->info_injector[] = 'SafeObject';
     }
 }
-
-// vim: et sw=4 sts=4

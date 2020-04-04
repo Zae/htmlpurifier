@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Fluent interface for validating the contents of member variables.
  * This should be immutable. See HTMLPurifier_ConfigSchema_Validator for
@@ -28,7 +30,14 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
      */
     protected $contents;
 
-    public function __construct($context, $obj, $member)
+    /**
+     * HTMLPurifier_ConfigSchema_ValidatorAtom constructor.
+     *
+     * @param string $context
+     * @param        $obj
+     * @param string $member
+     */
+    public function __construct(string $context, $obj, string $member)
     {
         $this->context = $context;
         $this->obj = $obj;
@@ -38,75 +47,88 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertIsString()
+    public function assertIsString(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         if (!is_string($this->contents)) {
             $this->error('must be a string');
         }
+
         return $this;
     }
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertIsBool()
+    public function assertIsBool(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         if (!is_bool($this->contents)) {
             $this->error('must be a boolean');
         }
+
         return $this;
     }
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertIsArray()
+    public function assertIsArray(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         if (!is_array($this->contents)) {
             $this->error('must be an array');
         }
+
         return $this;
     }
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertNotNull()
+    public function assertNotNull(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         if ($this->contents === null) {
             $this->error('must not be null');
         }
+
         return $this;
     }
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertAlnum()
+    public function assertAlnum(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         $this->assertIsString();
         if (!ctype_alnum($this->contents)) {
             $this->error('must be alphanumeric');
         }
+
         return $this;
     }
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertNotEmpty()
+    public function assertNotEmpty(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         if (empty($this->contents)) {
             $this->error('must not be empty');
         }
+
         return $this;
     }
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function assertIsLookup()
+    public function assertIsLookup(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
         $this->assertIsArray();
         foreach ($this->contents as $v) {
@@ -114,17 +136,17 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
                 $this->error('must be a lookup array');
             }
         }
+
         return $this;
     }
 
     /**
      * @param string $msg
+     *
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    protected function error($msg)
+    protected function error(string $msg): void
     {
         throw new HTMLPurifier_ConfigSchema_Exception(ucfirst($this->member) . ' in ' . $this->context . ' ' . $msg);
     }
 }
-
-// vim: et sw=4 sts=4

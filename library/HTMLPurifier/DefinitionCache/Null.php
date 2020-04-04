@@ -1,76 +1,82 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Null cache object to use when no caching is on.
  */
 class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
 {
-
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return bool
      */
-    public function add($def, $config)
-    {
-        return false;
-    }
-
-    /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
-     * @return bool
-     */
-    public function set($def, $config)
+    public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return bool
      */
-    public function replace($def, $config)
+    public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config): bool
+    {
+        return false;
+    }
+
+    /**
+     * @param HTMLPurifier_Definition $def
+     * @param HTMLPurifier_Config     $config
+     *
+     * @return bool
+     */
+    public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return bool
      */
-    public function remove($config)
+    public function remove(HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return bool
      */
-    public function get($config)
+    public function get(HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return bool
      */
-    public function flush($config)
+    public function flush(HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return bool
      */
-    public function cleanup($config)
+    public function cleanup(HTMLPurifier_Config $config): bool
     {
         return false;
     }
 }
-
-// vim: et sw=4 sts=4

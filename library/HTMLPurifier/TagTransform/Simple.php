@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Simple transformation, just change tag name to something else,
  * and possibly add some styling. This will cover most of the deprecated
@@ -14,9 +16,9 @@ class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
 
     /**
      * @param string $transform_to Tag name to transform to.
-     * @param string $style CSS style to add to the tag
+     * @param string $style        CSS style to add to the tag
      */
-    public function __construct($transform_to, $style = null)
+    public function __construct(string $transform_to, string $style = null)
     {
         $this->transform_to = $transform_to;
         $this->style = $style;
@@ -24,11 +26,12 @@ class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
 
     /**
      * @param HTMLPurifier_Token_Tag $tag
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config    $config
+     * @param HTMLPurifier_Context   $context
+     *
      * @return string
      */
-    public function transform($tag, $config, $context)
+    public function transform(HTMLPurifier_Token_Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;
@@ -37,8 +40,7 @@ class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
         ) {
             $this->prependCSS($new_tag->attr, $this->style);
         }
+
         return $new_tag;
     }
 }
-
-// vim: et sw=4 sts=4

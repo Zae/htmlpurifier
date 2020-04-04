@@ -15,19 +15,19 @@ declare(strict_types=1);
  * HTMLPurifier_AttrDef validation.  See HTMLPurifier_HTMLDefinition for
  * more details.
  */
-
 abstract class HTMLPurifier_AttrTransform
 {
     /**
      * Abstract: makes changes to the attributes dependent on multiple values.
      *
-     * @param array $attr Assoc array of attributes, usually from
-     *              HTMLPurifier_Token_Tag::$attr
-     * @param HTMLPurifier_Config $config Mandatory HTMLPurifier_Config object.
+     * @param array                $attr    Assoc array of attributes, usually from
+     *                                      HTMLPurifier_Token_Tag::$attr
+     * @param HTMLPurifier_Config  $config  Mandatory HTMLPurifier_Config object.
      * @param HTMLPurifier_Context $context Mandatory HTMLPurifier_Context object
+     *
      * @return array Processed attribute array.
      */
-    abstract public function transform($attr, $config, $context);
+    abstract public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
 
     /**
      * Prepends CSS properties to the style attribute, creating the

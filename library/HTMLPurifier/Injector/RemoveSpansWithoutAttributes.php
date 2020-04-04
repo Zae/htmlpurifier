@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Injector that removes spans with no attributes
  */
@@ -13,7 +15,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
     /**
      * @type array
      */
-    public $needed = array('span');
+    public $needed = ['span'];
 
     /**
      * @type HTMLPurifier_AttrValidator
@@ -22,6 +24,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
 
     /**
      * Used by AttrValidator.
+     *
      * @type HTMLPurifier_Config
      */
     private $config;
@@ -31,18 +34,19 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
      */
     private $context;
 
-    public function prepare($config, $context)
+    public function prepare(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $this->attrValidator = new HTMLPurifier_AttrValidator();
         $this->config = $config;
         $this->context = $context;
+
         return parent::prepare($config, $context);
     }
 
     /**
      * @param HTMLPurifier_Token $token
      */
-    public function handleElement(&$token)
+    public function handleElement(HTMLPurifier_Token &$token)
     {
         if ($token->name !== 'span' || !$token instanceof HTMLPurifier_Token_Start) {
             return;
@@ -59,8 +63,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
         }
 
         $nesting = 0;
-        while ($this->forwardUntilEndToken($i, $current, $nesting)) {
-        }
+        while ($this->forwardUntilEndToken($i, $current, $nesting)) {}
 
         if ($current instanceof HTMLPurifier_Token_End && $current->name === 'span') {
             // Mark closing span tag for deletion
@@ -73,12 +76,10 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
     /**
      * @param HTMLPurifier_Token $token
      */
-    public function handleEnd(&$token)
+    public function handleEnd(HTMLPurifier_Token &$token)
     {
         if ($token->markForDeletion) {
             $token = false;
         }
     }
 }
-
-// vim: et sw=4 sts=4

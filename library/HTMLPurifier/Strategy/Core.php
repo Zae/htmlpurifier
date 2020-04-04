@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Core strategy composed of the big four strategies.
  */
@@ -13,5 +15,3 @@ class HTMLPurifier_Strategy_Core extends HTMLPurifier_Strategy_Composite
         $this->strategies[] = new HTMLPurifier_Strategy_ValidateAttributes();
     }
 }
-
-// vim: et sw=4 sts=4

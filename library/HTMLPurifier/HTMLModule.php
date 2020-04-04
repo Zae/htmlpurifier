@@ -315,7 +315,7 @@ class HTMLPurifier_HTMLModule
      *
      * @param HTMLPurifier_Config $config
      */
-    public function setup(HTMLPurifier_Config $config)
+    public function setup(HTMLPurifier_Config $config): void
     {
     }
 }

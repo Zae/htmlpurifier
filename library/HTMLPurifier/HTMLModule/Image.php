@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * XHTML 1.1 Image Module provides basic image embedding.
+ *
  * @note There is specialized code for removing empty images in
  *       HTMLPurifier_Strategy_RemoveForeignElements
  */
 class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
 {
-
     /**
      * @type string
      */
@@ -15,8 +17,10 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     *
+     * @throws HTMLPurifier_Exception
      */
-    public function setup($config)
+    public function setup($config): void
     {
         $max = $config->get('HTML.MaxImgLength');
         $img = $this->addElement(
@@ -24,7 +28,7 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
             'Inline',
             'Empty',
             'Common',
-            array(
+            [
                 'alt*' => 'Text',
                 // According to the spec, it's Length, but percents can
                 // be abused, so we allow only Pixels.
@@ -32,11 +36,11 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
                 'width' => 'Pixels#' . $max,
                 'longdesc' => 'URI',
                 'src*' => new HTMLPurifier_AttrDef_URI(true), // embedded
-            )
+            ]
         );
+
         if ($max === null || $config->get('HTML.Trusted')) {
-            $img->attr['height'] =
-            $img->attr['width'] = 'Length';
+            $img->attr['height'] = $img->attr['width'] = 'Length';
         }
 
         // kind of strange, but splitting things up would be inefficient
@@ -45,5 +49,3 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
             new HTMLPurifier_AttrTransform_ImgRequired();
     }
 }
-
-// vim: et sw=4 sts=4

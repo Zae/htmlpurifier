@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Custom validation class, accepts DTD child definitions
  *
@@ -20,32 +22,35 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
 
     /**
      * Allowed child pattern as defined by the DTD.
+     *
      * @type string
      */
     public $dtd_regex;
 
     /**
      * PCRE regex derived from $dtd_regex.
+     *
      * @type string
      */
     private $_pcre_regex;
 
     /**
-     * @param $dtd_regex Allowed child pattern from the DTD
+     * @param string $dtd_regex Allowed child pattern from the DTD
      */
-    public function __construct($dtd_regex)
+    public function __construct(string $dtd_regex)
     {
         $this->dtd_regex = $dtd_regex;
+
         $this->_compileRegex();
     }
 
     /**
      * Compiles the PCRE regex from a DTD regex ($dtd_regex to $_pcre_regex)
      */
-    protected function _compileRegex()
+    protected function _compileRegex(): void
     {
         $raw = str_replace(' ', '', $this->dtd_regex);
-        if ($raw[0] != '(') {
+        if ($raw[0] !== '(') {
             $raw = "($raw)";
         }
         $el = '[#a-zA-Z0-9_.-]+';
@@ -60,43 +65,44 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
             $this->elements[$match] = true;
         }
 
-        // setup all elements as parentheticals with leading commas
+        // setup all elements as parenthetical with leading commas
         $reg = preg_replace("/$el/", '(,\\0)', $reg);
 
         // remove commas when they were not solicited
         $reg = preg_replace("/([^,(|]\(+),/", '\\1', $reg);
 
-        // remove all non-paranthetical commas: they are handled by first regex
+        // remove all non-parenthetical commas: they are handled by first regex
         $reg = preg_replace("/,\(/", '(', $reg);
 
         $this->_pcre_regex = $reg;
     }
 
     /**
-     * @param HTMLPurifier_Node[] $children
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Node[]  $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool
      */
-    public function validateChildren($children, $config, $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
     {
         $list_of_children = '';
-        $nesting = 0; // depth into the nest
+
         foreach ($children as $node) {
             if (!empty($node->is_whitespace)) {
                 continue;
             }
+
             $list_of_children .= $node->name . ',';
         }
+
         // add leading comma to deal with stray comma declarations
         $list_of_children = ',' . rtrim($list_of_children, ',');
-        $okay =
-            preg_match(
-                '/^,?' . $this->_pcre_regex . '$/',
-                $list_of_children
-            );
+        $okay = preg_match(
+            '/^,?' . $this->_pcre_regex . '$/',
+            $list_of_children
+        );
+
         return (bool)$okay;
     }
 }
-
-// vim: et sw=4 sts=4

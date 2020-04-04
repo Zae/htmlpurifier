@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_Printer_CSSDefinition
+ */
 class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
 {
     /**
@@ -9,22 +14,24 @@ class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return string
+     * @throws HTMLPurifier_Exception
      */
-    public function render($config)
+    public function render(HTMLPurifier_Config $config): string
     {
         $this->def = $config->getCSSDefinition();
         $ret = '';
 
-        $ret .= $this->start('div', array('class' => 'HTMLPurifier_Printer'));
+        $ret .= $this->start('div', ['class' => 'HTMLPurifier_Printer']);
         $ret .= $this->start('table');
 
         $ret .= $this->element('caption', 'Properties ($info)');
 
         $ret .= $this->start('thead');
         $ret .= $this->start('tr');
-        $ret .= $this->element('th', 'Property', array('class' => 'heavy'));
-        $ret .= $this->element('th', 'Definition', array('class' => 'heavy', 'style' => 'width:auto;'));
+        $ret .= $this->element('th', 'Property', ['class' => 'heavy']);
+        $ret .= $this->element('th', 'Definition', ['class' => 'heavy', 'style' => 'width:auto;']);
         $ret .= $this->end('tr');
         $ret .= $this->end('thead');
 
@@ -35,10 +42,6 @@ class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
         }
 
         $ret .= $this->end('table');
-        $ret .= $this->end('div');
-
-        return $ret;
+        return $ret . $this->end('div');
     }
 }
-
-// vim: et sw=4 sts=4

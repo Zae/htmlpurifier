@@ -105,6 +105,8 @@ abstract class HTMLPurifier_Token
 
     /**
      * Converts a token into its corresponding node.
+     *
+     * @return HTMLPurifier_Node
      */
-    abstract public function toNode();
+    abstract public function toNode(): HTMLPurifier_Node;
 }

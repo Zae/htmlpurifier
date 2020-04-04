@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Our in-house implementation of a parser.
  *
@@ -19,28 +21,32 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
     /**
      * Whitespace characters for str(c)spn.
+     *
      * @type string
      */
     protected $_whitespace = "\x20\x09\x0D\x0A";
 
     /**
      * Callback function for script CDATA fudge
-     * @param array $matches, in form of array(opening tag, contents, closing tag)
+     *
+     * @param array $matches , in form of array(opening tag, contents, closing tag)
+     *
      * @return string
      */
-    protected function scriptCallback($matches)
+    protected function scriptCallback(array $matches): string
     {
         return $matches[1] . htmlspecialchars($matches[2], ENT_COMPAT, 'UTF-8') . $matches[3];
     }
 
     /**
-     * @param String               $string
+     * @param string               $string
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
      * @return array|HTMLPurifier_Token[]
+     * @throws HTMLPurifier_Exception
      */
-    public function tokenizeHTML($string, $config, $context): array
+    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
         // special normalization for script tags without any armor
         // our "armor" heurstic is a < sign any number of whitespaces after
@@ -48,7 +54,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         if ($config->get('HTML.Trusted')) {
             $string = preg_replace_callback(
                 '#(<script[^>]*>)(\s*[^<].+?)(</script>)#si',
-                array($this, 'scriptCallback'),
+                [$this, 'scriptCallback'],
                 $string
             );
         }
@@ -57,7 +63,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
         $cursor = 0; // our location in the text
         $inside_tag = false; // whether or not we're parsing the inside of a tag
-        $array = array(); // result array
+        $array = []; // result array
 
         // This is also treated to mean maintain *column* numbers too
         $maintain_line_numbers = $config->get('Core.MaintainLineNumbers');
@@ -77,6 +83,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             $current_col = false;
             $length = false;
         }
+
         $context->register('CurrentLine', $current_line);
         $context->register('CurrentCol', $current_col);
         $nl = "\n";
@@ -301,7 +308,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                         $context
                     );
                 } else {
-                    $attr = array();
+                    $attr = [];
                 }
 
                 if ($is_self_closing) {
@@ -341,45 +348,55 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
         $context->destroy('CurrentLine');
         $context->destroy('CurrentCol');
+
         return $array;
     }
 
     /**
      * PHP 5.0.x compatible substr_count that implements offset and length
+     *
      * @param string $haystack
      * @param string $needle
-     * @param int $offset
-     * @param int $length
+     * @param int    $offset
+     * @param int    $length
+     *
      * @return int
      */
-    protected function substrCount($haystack, $needle, $offset, $length)
+    protected function substrCount(string $haystack, string $needle, int $offset, int $length): int
     {
         static $oldVersion;
         if ($oldVersion === null) {
-            $oldVersion = version_compare(PHP_VERSION, '5.1', '<');
+            $oldVersion = PHP_VERSION_ID < 50100;
         }
+
         if ($oldVersion) {
             $haystack = substr($haystack, $offset, $length);
+
             return substr_count($haystack, $needle);
-        } else {
-            return substr_count($haystack, $needle, $offset, $length);
         }
+
+        return substr_count($haystack, $needle, $offset, $length);
     }
 
     /**
      * Takes the inside of an HTML tag and makes an assoc array of attributes.
      *
-     * @param string $string Inside of tag excluding name.
-     * @param HTMLPurifier_Config $config
+     * @param string               $string Inside of tag excluding name.
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array Assoc array of attributes.
+     * @throws HTMLPurifier_Exception
      */
-    public function parseAttributeString($string, $config, $context)
-    {
+    public function parseAttributeString(
+        string $string,
+        HTMLPurifier_Config $config,
+        HTMLPurifier_Context$context
+    ): array {
         $string = (string)$string; // quick typecast
 
-        if ($string == '') {
-            return array();
+        if ($string === '') {
+            return [];
         } // no attributes
 
         $e = false;
@@ -393,48 +410,54 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         $has_space = strpos($string, ' ');
         if ($num_equal === 0 && !$has_space) {
             // bool attribute
-            return array($string => $string);
-        } elseif ($num_equal === 1 && !$has_space) {
+            return [$string => $string];
+        }
+
+        if ($num_equal === 1 && !$has_space) {
             // only one attribute
-            list($key, $quoted_value) = explode('=', $string);
+            [$key, $quoted_value] = explode('=', $string);
+
             $quoted_value = trim($quoted_value);
             if (!$key) {
                 if ($e) {
                     $e->send(E_ERROR, 'Lexer: Missing attribute key');
                 }
-                return array();
+
+                return [];
             }
+
             if (!$quoted_value) {
-                return array($key => '');
+                return [$key => ''];
             }
+
             $first_char = @$quoted_value[0];
             $last_char = @$quoted_value[strlen($quoted_value) - 1];
 
-            $same_quote = ($first_char == $last_char);
-            $open_quote = ($first_char == '"' || $first_char == "'");
+            $same_quote = ($first_char === $last_char);
+            $open_quote = ($first_char === '"' || $first_char === "'");
 
             if ($same_quote && $open_quote) {
                 // well behaved
-                $value = substr($quoted_value, 1, strlen($quoted_value) - 2);
-            } else {
-                // not well behaved
-                if ($open_quote) {
-                    if ($e) {
-                        $e->send(E_ERROR, 'Lexer: Missing end quote');
-                    }
-                    $value = substr($quoted_value, 1);
-                } else {
-                    $value = $quoted_value;
+                $value = substr($quoted_value, 1, -1);
+            } else if ($open_quote) {
+                if ($e) {
+                    $e->send(E_ERROR, 'Lexer: Missing end quote');
                 }
+
+                $value = substr($quoted_value, 1);
+            } else {
+                $value = $quoted_value;
             }
+
             if ($value === false) {
                 $value = '';
             }
-            return array($key => $this->parseAttr($value, $config));
+
+            return [$key => $this->parseAttr($value, $config)];
         }
 
         // setup loop environment
-        $array = array(); // return assoc array of attributes
+        $array = []; // return assoc array of attributes
         $cursor = 0; // current position in string (moves forward)
         $size = strlen($string); // size of the string (stays the same)
 
@@ -496,7 +519,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
                 $char = @$string[$cursor];
 
-                if ($char == '"' || $char == "'") {
+                if ($char === '"' || $char === "'") {
                     // it's quoted, end bound is $char
                     $cursor++;
                     $value_begin = $cursor;
@@ -519,22 +542,16 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 if ($value === false) {
                     $value = '';
                 }
+
                 $array[$key] = $this->parseAttr($value, $config);
                 $cursor++;
-            } else {
-                // boolattr
-                if ($key !== '') {
-                    $array[$key] = $key;
-                } else {
-                    // purely theoretical
-                    if ($e) {
-                        $e->send(E_ERROR, 'Lexer: Missing attribute key');
-                    }
-                }
+            } else if ($key !== '') {
+                $array[$key] = $key;
+            } else if ($e) {
+                $e->send(E_ERROR, 'Lexer: Missing attribute key');
             }
         }
+
         return $array;
     }
 }
-
-// vim: et sw=4 sts=4

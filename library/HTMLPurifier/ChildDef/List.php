@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Definition for list containers ul and ol.
  *
@@ -15,20 +17,23 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
      * @type string
      */
     public $type = 'list';
+
     /**
      * @type array
      */
+    public $elements = ['li' => true, 'ul' => true, 'ol' => true];
     // lying a little bit, so that we can handle ul and ol ourselves
     // XXX: This whole business with 'wrap' is all a bit unsatisfactory
-    public $elements = array('li' => true, 'ul' => true, 'ol' => true);
 
     /**
-     * @param array $children
-     * @param HTMLPurifier_Config $config
+     * @param array                $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
+     * @throws HTMLPurifier_Exception
      */
-    public function validateChildren($children, $config, $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         // Flag for subclasses
         $this->whitespace = false;
@@ -41,11 +46,12 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
         // if li is not allowed, delete parent node
         if (!isset($config->getHTMLDefinition()->info['li'])) {
             trigger_error("Cannot allow ul/ol without allowing li", E_USER_WARNING);
+
             return false;
         }
 
         // the new set of children
-        $result = array();
+        $result = [];
 
         // a little sanity check to make sure it's not ALL whitespace
         $all_whitespace = true;
@@ -79,14 +85,15 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
                 $current_li->empty = false; // XXX fascinating! Check for this error elsewhere ToDo
             }
         }
+
         if (empty($result)) {
             return false;
         }
+
         if ($all_whitespace) {
             return false;
         }
+
         return $result;
     }
 }
-
-// vim: et sw=4 sts=4

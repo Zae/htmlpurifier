@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Class for handling width/height length attribute transformations to CSS
  */
 class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
 {
-
     /**
      * @type string
      */
@@ -16,30 +17,38 @@ class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
      */
     protected $cssName;
 
-    public function __construct($name, $css_name = null)
+    /**
+     * HTMLPurifier_AttrTransform_Length constructor.
+     *
+     * @param string      $name
+     * @param string|null $css_name
+     */
+    public function __construct(string $name, string $css_name = null)
     {
         $this->name = $name;
-        $this->cssName = $css_name ? $css_name : $name;
+        $this->cssName = $css_name ?: $name;
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
-    public function transform($attr, $config, $context)
+    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
         if (!isset($attr[$this->name])) {
             return $attr;
         }
+
         $length = $this->confiscateAttr($attr, $this->name);
         if (ctype_digit($length)) {
             $length .= 'px';
         }
+
         $this->prependCSS($attr, $this->cssName . ":$length;");
+
         return $attr;
     }
 }
-
-// vim: et sw=4 sts=4
