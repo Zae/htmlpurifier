@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Pre-transform that changes deprecated hspace and vspace attributes to CSS
  */
@@ -13,10 +15,10 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
     /**
      * @type array
      */
-    protected $css = array(
-        'hspace' => array('left', 'right'),
-        'vspace' => array('top', 'bottom')
-    );
+    protected $css = [
+        'hspace' => ['left', 'right'],
+        'vspace' => ['top', 'bottom']
+    ];
 
     /**
      * @param string $attr
@@ -30,12 +32,13 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
-    public function transform($attr, $config, $context)
+    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
         if (!isset($attr[$this->attr])) {
             return $attr;
@@ -53,9 +56,9 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform
             $property = "margin-$suffix";
             $style .= "$property:{$width}px;";
         }
+
         $this->prependCSS($attr, $style);
+
         return $attr;
     }
 }
-
-// vim: et sw=4 sts=4

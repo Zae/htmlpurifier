@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * XHTML 1.1 Legacy module defines elements that were previously
  * deprecated.
@@ -15,7 +17,6 @@
  * as well as transform elements that don't have an implementation.
  * See docs/ref-strictness.txt for more details.
  */
-
 class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
 {
     /**
@@ -26,19 +27,19 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config): void
     {
         $this->addElement(
             'basefont',
             'Inline',
             'Empty',
             null,
-            array(
+            [
                 'color' => 'Color',
                 'face' => 'Text', // extremely broad, we should
                 'size' => 'Text', // tighten it
                 'id' => 'ID'
-            )
+            ]
         );
         $this->addElement('center', 'Block', 'Flow', 'Common');
         $this->addElement(
@@ -46,29 +47,29 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
             'Block',
             'Required: li',
             'Common',
-            array(
+            [
                 'compact' => 'Bool#compact'
-            )
+            ]
         );
         $this->addElement(
             'font',
             'Inline',
             'Inline',
-            array('Core', 'I18N'),
-            array(
+            ['Core', 'I18N'],
+            [
                 'color' => 'Color',
                 'face' => 'Text', // extremely broad, we should
                 'size' => 'Text', // tighten it
-            )
+            ]
         );
         $this->addElement(
             'menu',
             'Block',
             'Required: li',
             'Common',
-            array(
+            [
                 'compact' => 'Bool#compact'
-            )
+            ]
         );
 
         $s = $this->addElement('s', 'Inline', 'Inline', 'Common');
@@ -182,5 +183,3 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         $legend->attr['align'] = 'LAlign';
     }
 }
-
-// vim: et sw=4 sts=4

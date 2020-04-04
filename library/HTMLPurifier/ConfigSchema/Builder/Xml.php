@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Converts HTMLPurifier_ConfigSchema_Interchange to an XML format,
  * which can be further processed to generate documentation.
  */
 class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 {
-
     /**
      * @type HTMLPurifier_ConfigSchema_Interchange
      */
@@ -19,8 +20,10 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 
     /**
      * @param string $html
+     *
+     * @throws HTMLPurifier_Exception
      */
-    protected function writeHTMLDiv($html)
+    protected function writeHTMLDiv(string $html): void
     {
         $this->startElement('div');
 
@@ -36,18 +39,19 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
      * @param mixed $var
      * @return string
      */
-    protected function export($var)
+    protected function export($var): string
     {
-        if ($var === array()) {
+        if ($var === []) {
             return 'array()';
         }
+
         return var_export($var, true);
     }
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      */
-    public function build($interchange)
+    public function build(HTMLPurifier_ConfigSchema_Interchange $interchange): void
     {
         // global access, only use as last resort
         $this->interchange = $interchange;
@@ -71,8 +75,10 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $directive
+     *
+     * @throws HTMLPurifier_Exception
      */
-    public function buildDirective($directive)
+    public function buildDirective(HTMLPurifier_ConfigSchema_Interchange_Directive $directive): void
     {
         // Kludge, although I suppose having a notion of a "root namespace"
         // certainly makes things look nicer when documentation is built.
@@ -140,5 +146,3 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
         $this->endElement(); // directive
     }
 }
-
-// vim: et sw=4 sts=4

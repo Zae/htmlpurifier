@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_HTMLModule_CommonAttributes
+ */
 class HTMLPurifier_HTMLModule_CommonAttributes extends HTMLPurifier_HTMLModule
 {
     /**
@@ -10,22 +15,20 @@ class HTMLPurifier_HTMLModule_CommonAttributes extends HTMLPurifier_HTMLModule
     /**
      * @type array
      */
-    public $attr_collections = array(
-        'Core' => array(
-            0 => array('Style'),
+    public $attr_collections = [
+        'Core' => [
+            0 => ['Style'],
             // 'xml:space' => false,
             'class' => 'Class',
             'id' => 'ID',
             'title' => 'CDATA',
-        ),
-        'Lang' => array(),
-        'I18N' => array(
-            0 => array('Lang'), // proprietary, for xml:lang/lang
-        ),
-        'Common' => array(
-            0 => array('Core', 'I18N')
-        )
-    );
+        ],
+        'Lang' => [],
+        'I18N' => [
+            0 => ['Lang'], // proprietary, for xml:lang/lang
+        ],
+        'Common' => [
+            0 => ['Core', 'I18N']
+        ]
+    ];
 }
-
-// vim: et sw=4 sts=4

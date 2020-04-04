@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 // must be called POST validation
 
 /**
@@ -20,12 +22,14 @@ class HTMLPurifier_AttrTransform_TargetBlank extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array $attr
-     * @param HTMLPurifier_Config $config
+     * @param array                $attr
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
+     * @throws HTMLPurifier_Exception
      */
-    public function transform($attr, $config, $context)
+    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
         if (!isset($attr['href'])) {
             return $attr;
@@ -38,8 +42,7 @@ class HTMLPurifier_AttrTransform_TargetBlank extends HTMLPurifier_AttrTransform
         if ($scheme->browsable && !$url->isBenign($config, $context)) {
             $attr['target'] = '_blank';
         }
+
         return $attr;
     }
 }
-
-// vim: et sw=4 sts=4

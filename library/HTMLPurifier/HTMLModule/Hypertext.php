@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * XHTML 1.1 Hypertext Module, defines hypertext links. Core Module.
  */
 class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
 {
-
     /**
      * @type string
      */
@@ -14,14 +15,14 @@ class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config): void
     {
         $a = $this->addElement(
             'a',
             'Inline',
             'Inline',
             'Common',
-            array(
+            [
                 // 'accesskey' => 'Character',
                 // 'charset' => 'Charset',
                 'href' => 'URI',
@@ -30,11 +31,9 @@ class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
                 'rev' => new HTMLPurifier_AttrDef_HTML_LinkTypes('rev'),
                 // 'tabindex' => 'Number',
                 // 'type' => 'ContentType',
-            )
+            ]
         );
         $a->formatting = true;
-        $a->excludes = array('a' => true);
+        $a->excludes = ['a' => true];
     }
 }
-
-// vim: et sw=4 sts=4

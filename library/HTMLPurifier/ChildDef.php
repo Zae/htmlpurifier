@@ -43,10 +43,11 @@ abstract class HTMLPurifier_ChildDef
     /**
      * Validates nodes according to definition and returns modification.
      *
-     * @param HTMLPurifier_Node[] $children Array of HTMLPurifier_Node
-     * @param HTMLPurifier_Config $config HTMLPurifier_Config object
-     * @param HTMLPurifier_Context $context HTMLPurifier_Context object
+     * @param HTMLPurifier_Node[]  $children Array of HTMLPurifier_Node
+     * @param HTMLPurifier_Config  $config   HTMLPurifier_Config object
+     * @param HTMLPurifier_Context $context  HTMLPurifier_Context object
+     *
      * @return bool|array true to leave nodes as is, false to remove parent node, array of replacement children
      */
-    abstract public function validateChildren($children, $config, $context);
+    abstract public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
 }

@@ -25,7 +25,6 @@ declare(strict_types=1);
  *          around, you may want to run Tidy on the resulting output or use
  *          HTMLPurifier_DirectLex
  */
-
 class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
 {
     /**
@@ -113,13 +112,15 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Token[] $tokens Array-list of already tokenized tokens.
      * @param HTMLPurifier_Config  $config
      *
-     * @return HTMLPurifier_Token of node appended to previously passed tokens.
+     * @return void of node appended to previously passed tokens.
+     * @throws HTMLPurifier_Exception
      */
     protected function tokenizeDOM(DOMNode $node, array &$tokens, HTMLPurifier_Config $config): void
     {
         $level = 0;
         $nodes = [$level => new HTMLPurifier_Queue([$node])];
         $closingNodes = [];
+
         do {
             while (!$nodes[$level]->isEmpty()) {
                 $node = $nodes[$level]->shift(); // FIFO
@@ -136,6 +137,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
                     }
                 }
             }
+
             $level--;
             if ($level && isset($closingNodes[$level])) {
                 while ($node = array_pop($closingNodes[$level])) {
@@ -213,6 +215,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
                     }
                 }
             }
+
             $tokens[] = $this->factory->createText($this->parseText($data, $config));
             return false;
         }
@@ -359,7 +362,6 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
             $ret .= '</div>';
         }
 
-        $ret .= '</body></html>';
-        return $ret;
+        return $ret . '</body></html>';
     }
 }

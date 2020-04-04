@@ -279,22 +279,28 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Handler that is called when a text token is processed
+     *
+     * @param HTMLPurifier_Token_Text $token
      */
-    public function handleText(&$token)
+    public function handleText(HTMLPurifier_Token_Text &$token)
     {
     }
 
     /**
      * Handler that is called when a start or empty token is processed
+     *
+     * @param HTMLPurifier_Token $token
      */
-    public function handleElement(&$token)
+    public function handleElement(HTMLPurifier_Token &$token)
     {
     }
 
     /**
      * Handler that is called when an end token is processed
+     *
+     * @param HTMLPurifier_Token $token
      */
-    public function handleEnd(&$token)
+    public function handleEnd(HTMLPurifier_Token &$token)
     {
         $this->notifyEnd($token);
     }

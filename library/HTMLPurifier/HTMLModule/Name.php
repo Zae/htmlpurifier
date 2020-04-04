@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_HTMLModule_Name
+ */
 class HTMLPurifier_HTMLModule_Name extends HTMLPurifier_HTMLModule
 {
     /**
@@ -9,10 +14,12 @@ class HTMLPurifier_HTMLModule_Name extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     *
+     * @throws HTMLPurifier_Exception
      */
-    public function setup($config)
+    public function setup($config): void
     {
-        $elements = array('a', 'applet', 'form', 'frame', 'iframe', 'img', 'map');
+        $elements = ['a', 'applet', 'form', 'frame', 'iframe', 'img', 'map'];
         foreach ($elements as $name) {
             $element = $this->addBlankElement($name);
             $element->attr['name'] = 'CDATA';
@@ -22,5 +29,3 @@ class HTMLPurifier_HTMLModule_Name extends HTMLPurifier_HTMLModule
         }
     }
 }
-
-// vim: et sw=4 sts=4

@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * Class HTMLPurifier_HTMLModule_Tidy_Transitional
+ */
 class HTMLPurifier_HTMLModule_Tidy_Transitional extends HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4
 {
     /**
@@ -12,5 +17,3 @@ class HTMLPurifier_HTMLModule_Tidy_Transitional extends HTMLPurifier_HTMLModule_
      */
     public $defaultLevel = 'heavy';
 }
-
-// vim: et sw=4 sts=4

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 class HTMLPurifier_ConfigSchema_InterchangeBuilder
 {
-
     /**
      * Used for processing DEFAULT, nothing else.
+     *
      * @type HTMLPurifier_VarParser
      */
     protected $varParser;
@@ -12,43 +14,50 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     /**
      * @param HTMLPurifier_VarParser $varParser
      */
-    public function __construct($varParser = null)
+    public function __construct(HTMLPurifier_VarParser $varParser = null)
     {
-        $this->varParser = $varParser ? $varParser : new HTMLPurifier_VarParser_Native();
+        $this->varParser = $varParser ?: new HTMLPurifier_VarParser_Native();
     }
 
     /**
      * @param string $dir
+     *
      * @return HTMLPurifier_ConfigSchema_Interchange
      */
-    public static function buildFromDirectory($dir = null)
+    public static function buildFromDirectory(string $dir = null): HTMLPurifier_ConfigSchema_Interchange
     {
         $builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
         $interchange = new HTMLPurifier_ConfigSchema_Interchange();
+
         return $builder->buildDir($interchange, $dir);
     }
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param string $dir
+     * @param string                                $dir
+     *
      * @return HTMLPurifier_ConfigSchema_Interchange
      */
-    public function buildDir($interchange, $dir = null)
-    {
+    public function buildDir(
+        HTMLPurifier_ConfigSchema_Interchange $interchange,
+        string $dir = null
+    ): HTMLPurifier_ConfigSchema_Interchange {
         if (!$dir) {
             $dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier/ConfigSchema/schema';
         }
+
         if (file_exists($dir . '/info.ini')) {
             $info = parse_ini_file($dir . '/info.ini');
             $interchange->name = $info['name'];
         }
 
-        $files = array();
+        $files = [];
         $dh = opendir($dir);
-        while (false !== ($file = readdir($dh))) {
-            if (!$file || $file[0] == '.' || strrchr($file, '.') !== '.txt') {
+        while (($file = readdir($dh)) !== false) {
+            if (!$file || $file[0] === '.' || strrchr($file, '.') !== '.txt') {
                 continue;
             }
+
             $files[] = $file;
         }
         closedir($dh);
@@ -57,14 +66,17 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         foreach ($files as $file) {
             $this->buildFile($interchange, $dir . '/' . $file);
         }
+
         return $interchange;
     }
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param string $file
+     * @param string                                $file
+     *
+     * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function buildFile($interchange, $file)
+    public function buildFile(HTMLPurifier_ConfigSchema_Interchange $interchange, string $file): void
     {
         $parser = new HTMLPurifier_StringHashParser();
         $this->build(
@@ -75,20 +87,24 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
     /**
      * Builds an interchange object based on a hash.
+     *
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange HTMLPurifier_ConfigSchema_Interchange object to build
-     * @param HTMLPurifier_StringHash $hash source data
+     * @param HTMLPurifier_StringHash               $hash        source data
+     *
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function build($interchange, $hash)
+    public function build(HTMLPurifier_ConfigSchema_Interchange $interchange, HTMLPurifier_StringHash $hash): void
     {
         if (!$hash instanceof HTMLPurifier_StringHash) {
             $hash = new HTMLPurifier_StringHash($hash);
         }
+
         if (!isset($hash['ID'])) {
             throw new HTMLPurifier_ConfigSchema_Exception('Hash does not have any ID');
         }
+
         if (strpos($hash['ID'], '.') === false) {
-            if (count($hash) == 2 && isset($hash['DESCRIPTION'])) {
+            if (count($hash) === 2 && isset($hash['DESCRIPTION'])) {
                 $hash->offsetGet('DESCRIPTION'); // prevent complaining
             } else {
                 throw new HTMLPurifier_ConfigSchema_Exception('All directives must have a namespace');
@@ -96,16 +112,20 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         } else {
             $this->buildDirective($interchange, $hash);
         }
+
         $this->_findUnused($hash);
     }
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param HTMLPurifier_StringHash $hash
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @param HTMLPurifier_StringHash               $hash
+     *
+     * @throws HTMLPurifier_ConfigSchema_Exception|HTMLPurifier_Exception
      */
-    public function buildDirective($interchange, $hash)
-    {
+    public function buildDirective(
+        HTMLPurifier_ConfigSchema_Interchange $interchange,
+        HTMLPurifier_StringHash $hash
+    ): void {
         $directive = new HTMLPurifier_ConfigSchema_Interchange_Directive();
 
         // These are required elements:
@@ -175,7 +195,10 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
     /**
      * Evaluates an array PHP code string without array() wrapper
+     *
      * @param string $contents
+     *
+     * @return mixed
      */
     protected function evalArray($contents)
     {
@@ -184,25 +207,30 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
     /**
      * Converts an array list into a lookup array.
+     *
      * @param array $array
+     *
      * @return array
      */
-    protected function lookup($array)
+    protected function lookup(array $array): array
     {
-        $ret = array();
+        $ret = [];
         foreach ($array as $val) {
             $ret[$val] = true;
         }
+
         return $ret;
     }
 
     /**
      * Convenience function that creates an HTMLPurifier_ConfigSchema_Interchange_Id
      * object based on a string Id.
+     *
      * @param string $id
+     *
      * @return HTMLPurifier_ConfigSchema_Interchange_Id
      */
-    protected function id($id)
+    protected function id(string $id): HTMLPurifier_ConfigSchema_Interchange_Id
     {
         return HTMLPurifier_ConfigSchema_Interchange_Id::make($id);
     }
@@ -210,9 +238,10 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
     /**
      * Triggers errors for any unused keys passed in the hash; such keys
      * may indicate typos, missing values, etc.
+     *
      * @param HTMLPurifier_StringHash $hash Hash to check.
      */
-    protected function _findUnused($hash)
+    protected function _findUnused(HTMLPurifier_StringHash $hash): void
     {
         $accessed = $hash->getAccessed();
         foreach ($hash as $k => $v) {
@@ -222,5 +251,3 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         }
     }
 }
-
-// vim: et sw=4 sts=4

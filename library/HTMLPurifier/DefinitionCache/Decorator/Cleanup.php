@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Definition cache decorator class that cleans up the cache
  * whenever there is a cache miss.
@@ -14,65 +16,71 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends HTMLPurifier_Defini
     /**
      * @return HTMLPurifier_DefinitionCache_Decorator_Cleanup
      */
-    public function copy()
+    public function copy(): HTMLPurifier_DefinitionCache_Decorator
     {
-        return new HTMLPurifier_DefinitionCache_Decorator_Cleanup();
+        return new static();
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return mixed
      */
-    public function add($def, $config)
+    public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
     {
         $status = parent::add($def, $config);
         if (!$status) {
-            parent::cleanup($config);
+            $this->cleanup($config);
         }
+
         return $status;
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return mixed
      */
-    public function set($def, $config)
+    public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
     {
         $status = parent::set($def, $config);
         if (!$status) {
-            parent::cleanup($config);
+            $this->cleanup($config);
         }
+
         return $status;
     }
 
     /**
      * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config     $config
+     *
      * @return mixed
      */
-    public function replace($def, $config)
+    public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
     {
         $status = parent::replace($def, $config);
         if (!$status) {
-            parent::cleanup($config);
+            $this->cleanup($config);
         }
+
         return $status;
     }
 
     /**
      * @param HTMLPurifier_Config $config
+     *
      * @return mixed
      */
-    public function get($config)
+    public function get(HTMLPurifier_Config $config)
     {
         $ret = parent::get($config);
         if (!$ret) {
-            parent::cleanup($config);
+            $this->cleanup($config);
         }
+
         return $ret;
     }
 }
-
-// vim: et sw=4 sts=4

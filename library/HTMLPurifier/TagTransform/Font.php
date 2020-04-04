@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Transforms FONT tags to the proper form (SPAN with CSS styling)
  *
@@ -7,7 +9,7 @@
  * transforms them into their corresponding CSS attributes.  These are color,
  * face, and size.
  *
- * @note Size is an interesting case because it doesn't map cleanly to CSS.
+ * @note    Size is an interesting case because it doesn't map cleanly to CSS.
  *       Thanks to
  *       http://style.cleverchimp.com/font_size_intervals/altintervals.html
  *       for reasonable mappings.
@@ -25,7 +27,7 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
     /**
      * @type array
      */
-    protected $_size_lookup = array(
+    protected $_size_lookup = [
         '0' => 'xx-small',
         '1' => 'xx-small',
         '2' => 'small',
@@ -40,19 +42,21 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         '+2' => '150%',
         '+3' => '200%',
         '+4' => '300%'
-    );
+    ];
 
     /**
      * @param HTMLPurifier_Token_Tag $tag
-     * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config    $config
+     * @param HTMLPurifier_Context   $context
+     *
      * @return HTMLPurifier_Token_End|string
      */
-    public function transform($tag, $config, $context)
+    public function transform(HTMLPurifier_Token_Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         if ($tag instanceof HTMLPurifier_Token_End) {
             $new_tag = clone $tag;
             $new_tag->name = $this->transform_to;
+
             return $new_tag;
         }
 
@@ -75,25 +79,29 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         if (isset($attr['size'])) {
             // normalize large numbers
             if ($attr['size'] !== '') {
-                if ($attr['size'][0] == '+' || $attr['size'][0] == '-') {
+                if ($attr['size'][0] === '+' || $attr['size'][0] === '-') {
                     $size = (int)$attr['size'];
                     if ($size < -2) {
                         $attr['size'] = '-2';
                     }
+
                     if ($size > 4) {
                         $attr['size'] = '+4';
                     }
                 } else {
                     $size = (int)$attr['size'];
+
                     if ($size > 7) {
                         $attr['size'] = '7';
                     }
                 }
             }
+
             if (isset($this->_size_lookup[$attr['size']])) {
                 $prepend_style .= 'font-size:' .
-                    $this->_size_lookup[$attr['size']] . ';';
+                                  $this->_size_lookup[$attr['size']] . ';';
             }
+
             unset($attr['size']);
         }
 
@@ -110,5 +118,3 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
         return $new_tag;
     }
 }
-
-// vim: et sw=4 sts=4

@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Module adds the nofollow attribute transformation to a tags.  It
  * is enabled by HTML.Nofollow
  */
 class HTMLPurifier_HTMLModule_Nofollow extends HTMLPurifier_HTMLModule
 {
-
     /**
      * @type string
      */
@@ -15,11 +16,9 @@ class HTMLPurifier_HTMLModule_Nofollow extends HTMLPurifier_HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config): void
     {
         $a = $this->addBlankElement('a');
         $a->attr_transform_post[] = new HTMLPurifier_AttrTransform_Nofollow();
     }
 }
-
-// vim: et sw=4 sts=4

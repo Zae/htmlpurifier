@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * XHTML 1.1 Iframe Module provides inline frames.
  *
@@ -9,7 +11,6 @@
  */
 class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
 {
-
     /**
      * @type string
      */
@@ -22,8 +23,10 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
 
     /**
      * @param HTMLPurifier_Config $config
+     *
+     * @throws HTMLPurifier_Exception
      */
-    public function setup($config)
+    public function setup(HTMLPurifier_Config $config): void
     {
         if ($config->get('HTML.SafeIframe')) {
             $this->safe = true;
@@ -33,7 +36,7 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
             'Inline',
             'Flow',
             'Common',
-            array(
+            [
                 'src' => 'URI#embedded',
                 'width' => 'Length',
                 'height' => 'Length',
@@ -43,9 +46,7 @@ class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
                 'longdesc' => 'URI',
                 'marginheight' => 'Pixels',
                 'marginwidth' => 'Pixels',
-            )
+            ]
         );
     }
 }
-
-// vim: et sw=4 sts=4

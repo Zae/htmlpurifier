@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Injector that converts configuration directive syntax %Namespace.Directive
  * to links
@@ -19,23 +21,26 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
     /**
      * @type array
      */
-    public $needed = array('a' => array('href'));
+    public $needed = ['a' => ['href']];
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
-     * @return string
+     *
+     * @return string|bool
+     * @throws HTMLPurifier_Exception
      */
-    public function prepare($config, $context)
+    public function prepare(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $this->docURL = $config->get('AutoFormat.PurifierLinkify.DocURL');
+
         return parent::prepare($config, $context);
     }
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param HTMLPurifier_Token_Text $token
      */
-    public function handleText(&$token)
+    public function handleText(HTMLPurifier_Token_Text &$token)
     {
         if (!$this->allowsElement('a')) {
             return;
@@ -45,7 +50,7 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
         }
 
         $bits = preg_split('#%([a-z0-9]+\.[a-z0-9]+)#Si', $token->data, -1, PREG_SPLIT_DELIM_CAPTURE);
-        $token = array();
+        $token = [];
 
         // $i = index
         // $c = count
@@ -59,7 +64,7 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
             } else {
                 $token[] = new HTMLPurifier_Token_Start(
                     'a',
-                    array('href' => str_replace('%s', $bits[$i], $this->docURL))
+                    ['href' => str_replace('%s', $bits[$i], $this->docURL)]
                 );
                 $token[] = new HTMLPurifier_Token_Text('%' . $bits[$i]);
                 $token[] = new HTMLPurifier_Token_End('a');
@@ -67,5 +72,3 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
         }
     }
 }
-
-// vim: et sw=4 sts=4

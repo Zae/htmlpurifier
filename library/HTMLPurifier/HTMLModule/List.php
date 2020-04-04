@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * XHTML 1.1 List Module, defines list-oriented elements. Core Module.
  */
@@ -22,12 +24,12 @@ class HTMLPurifier_HTMLModule_List extends HTMLPurifier_HTMLModule
     /**
      * @type array
      */
-    public $content_sets = array('Flow' => 'List');
+    public $content_sets = ['Flow' => 'List'];
 
     /**
      * @param HTMLPurifier_Config $config
      */
-    public function setup($config)
+    public function setup($config): void
     {
         $ol = $this->addElement('ol', 'List', new HTMLPurifier_ChildDef_List(), 'Common');
         $ul = $this->addElement('ul', 'List', new HTMLPurifier_ChildDef_List(), 'Common');
@@ -47,5 +49,3 @@ class HTMLPurifier_HTMLModule_List extends HTMLPurifier_HTMLModule
         $this->addElement('dt', false, 'Inline', 'Common');
     }
 }
-
-// vim: et sw=4 sts=4

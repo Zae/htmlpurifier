@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Represents a directive ID in the interchange format.
  */
 class HTMLPurifier_ConfigSchema_Interchange_Id
 {
-
     /**
      * @type string
      */
@@ -32,27 +33,26 @@ class HTMLPurifier_ConfigSchema_Interchange_Id
     /**
      * @return string
      */
-    public function getRootNamespace()
+    public function getRootNamespace(): string
     {
-        return substr($this->key, 0, strpos($this->key, "."));
+        return substr($this->key, 0, strpos($this->key, '.'));
     }
 
     /**
      * @return string
      */
-    public function getDirective()
+    public function getDirective(): string
     {
-        return substr($this->key, strpos($this->key, ".") + 1);
+        return substr($this->key, strpos($this->key, '.') + 1);
     }
 
     /**
      * @param string $id
+     *
      * @return HTMLPurifier_ConfigSchema_Interchange_Id
      */
-    public static function make($id)
+    public static function make(string $id): HTMLPurifier_ConfigSchema_Interchange_Id
     {
         return new HTMLPurifier_ConfigSchema_Interchange_Id($id);
     }
 }
-
-// vim: et sw=4 sts=4

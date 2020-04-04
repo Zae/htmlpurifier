@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Definition that allows a set of elements, and allows no children.
+ *
  * @note This is a hack to reuse code from HTMLPurifier_ChildDef_Required,
  *       really, one shouldn't inherit from the other.  Only altered behavior
  *       is to overload a returned false with an array.  Thus, it will never
@@ -20,26 +23,28 @@ class HTMLPurifier_ChildDef_Optional extends HTMLPurifier_ChildDef_Required
     public $type = 'optional';
 
     /**
-     * @param array $children
-     * @param HTMLPurifier_Config $config
+     * @param array                $children
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return array
      */
-    public function validateChildren($children, $config, $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $result = parent::validateChildren($children, $config, $context);
         // we assume that $children is not modified
         if ($result === false) {
             if (empty($children)) {
                 return true;
-            } elseif ($this->whitespace) {
-                return $children;
-            } else {
-                return array();
             }
+
+            if ($this->whitespace) {
+                return $children;
+            }
+
+            return [];
         }
+
         return $result;
     }
 }
-
-// vim: et sw=4 sts=4

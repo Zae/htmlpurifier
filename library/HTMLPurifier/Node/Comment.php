@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Concrete comment node class.
  */
@@ -7,6 +9,7 @@ class HTMLPurifier_Node_Comment extends HTMLPurifier_Node
 {
     /**
      * Character data within comment.
+     *
      * @type string
      */
     public $data;
@@ -20,17 +23,25 @@ class HTMLPurifier_Node_Comment extends HTMLPurifier_Node
      * Transparent constructor.
      *
      * @param string $data String comment data.
-     * @param int $line
-     * @param int $col
+     * @param int    $line
+     * @param int    $col
      */
-    public function __construct($data, $line = null, $col = null)
+    public function __construct(string $data, ?int $line = null, ?int $col = null)
     {
         $this->data = $data;
         $this->line = $line;
         $this->col = $col;
     }
 
-    public function toTokenPair() {
-        return array(new HTMLPurifier_Token_Comment($this->data, $this->line, $this->col), null);
+    /**
+     * Returns a pair of start and end tokens, where the end token
+     * is null if it is not necessary. Does not include children.
+     *
+     * @type array
+     * @return array
+     */
+    public function toTokenPair(): array
+    {
+        return [new HTMLPurifier_Token_Comment($this->data, $this->line, $this->col), null];
     }
 }
