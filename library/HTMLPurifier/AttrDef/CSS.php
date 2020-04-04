@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates the HTML attribute style, otherwise known as CSS.
+ *
  * @note We don't implement the whole CSS specification, so it might be
  *       difficult to reuse this component in the context of validating
  *       actual stylesheet declarations.
@@ -15,51 +18,58 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
 {
 
     /**
-     * @param string $css
-     * @param HTMLPurifier_Config $config
+     * @param string               $css
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($css, $config, $context)
     {
         $css = $this->parseCDATA($css);
 
         $definition = $config->getCSSDefinition();
-        $allow_duplicates = $config->get("CSS.AllowDuplicates");
-
+        $allow_duplicates = $config->get('CSS.AllowDuplicates');
 
         // According to the CSS2.1 spec, the places where a
         // non-delimiting semicolon can appear are in strings
         // escape sequences.   So here is some dumb hack to
         // handle quotes.
         $len = strlen($css);
-        $accum = "";
-        $declarations = array();
+        $accum = '';
+        $declarations = [];
         $quoted = false;
+
         for ($i = 0; $i < $len; $i++) {
             $c = strcspn($css, ";'\"", $i);
             $accum .= substr($css, $i, $c);
             $i += $c;
-            if ($i == $len) break;
+
+            if ($i === $len) {
+                break;
+            }
+
             $d = $css[$i];
             if ($quoted) {
                 $accum .= $d;
-                if ($d == $quoted) {
+                if ($d === $quoted) {
                     $quoted = false;
                 }
+            } else if ($d === ';') {
+                $declarations[] = $accum;
+                $accum = '';
             } else {
-                if ($d == ";") {
-                    $declarations[] = $accum;
-                    $accum = "";
-                } else {
-                    $accum .= $d;
-                    $quoted = $d;
-                }
+                $accum .= $d;
+                $quoted = $d;
             }
         }
-        if ($accum != "") $declarations[] = $accum;
 
-        $propvalues = array();
+        if ($accum !== '') {
+            $declarations[] = $accum;
+        }
+
+        $propvalues = [];
         $new_declarations = '';
 
         /**
@@ -72,13 +82,16 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             if (!$declaration) {
                 continue;
             }
+
             if (!strpos($declaration, ':')) {
                 continue;
             }
-            list($property, $value) = explode(':', $declaration, 2);
+
+            [$property, $value] = explode(':', $declaration, 2);
             $property = trim($property);
             $value = trim($value);
             $ok = false;
+
             do {
                 if (isset($definition->info[$property])) {
                     $ok = true;
@@ -93,9 +106,11 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
                     break;
                 }
             } while (0);
+
             if (!$ok) {
                 continue;
             }
+
             // inefficient call, since the validator will do this again
             if (strtolower(trim($value)) !== 'inherit') {
                 // inherit works for everything (but only on the base property)
@@ -107,9 +122,11 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             } else {
                 $result = 'inherit';
             }
+
             if ($result === false) {
                 continue;
             }
+
             if ($allow_duplicates) {
                 $new_declarations .= "$property:$result;";
             } else {
@@ -127,10 +144,6 @@ class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
             $new_declarations .= "$prop:$value;";
         }
 
-        return $new_declarations ? $new_declarations : false;
-
+        return $new_declarations ?: false;
     }
-
 }
-
-// vim: et sw=4 sts=4

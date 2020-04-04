@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates an integer representation of pixels according to the HTML spec.
  */
 class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type int
      */
@@ -20,9 +21,10 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -31,16 +33,20 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         if ($string === '0') {
             return $string;
         }
+
         if ($string === '') {
             return false;
         }
+
         $length = strlen($string);
-        if (substr($string, $length - 2) == 'px') {
+        if (substr($string, $length - 2) === 'px') {
             $string = substr($string, 0, $length - 2);
         }
+
         if (!is_numeric($string)) {
             return false;
         }
+
         $int = (int)$string;
 
         if ($int < 0) {
@@ -54,23 +60,25 @@ class HTMLPurifier_AttrDef_HTML_Pixels extends HTMLPurifier_AttrDef
         if ($this->max !== null && $int > $this->max) {
             return (string)$this->max;
         }
+
         return (string)$int;
     }
 
     /**
      * @param string $string
+     *
      * @return HTMLPurifier_AttrDef
      */
-    public function make($string)
+    public function make(string $string): HTMLPurifier_AttrDef
     {
         if ($string === '') {
             $max = null;
         } else {
             $max = (int)$string;
         }
+
         $class = get_class($this);
+
         return new $class($max);
     }
 }
-
-// vim: et sw=4 sts=4

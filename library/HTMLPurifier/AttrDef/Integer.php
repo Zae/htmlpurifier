@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates an integer.
+ *
  * @note While this class was modeled off the CSS definition, no currently
  *       allowed CSS uses this type.  The properties that do are: widows,
  *       orphans, z-index, counter-increment, counter-reset.  Some of the
@@ -12,26 +15,29 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
 
     /**
      * Whether or not negative values are allowed.
+     *
      * @type bool
      */
     protected $negative = true;
 
     /**
      * Whether or not zero is allowed.
+     *
      * @type bool
      */
     protected $zero = true;
 
     /**
      * Whether or not positive values are allowed.
+     *
      * @type bool
      */
     protected $positive = true;
 
     /**
-     * @param $negative Bool indicating whether or not negative values are allowed
-     * @param $zero Bool indicating whether or not zero is allowed
-     * @param $positive Bool indicating whether or not positive values are allowed
+     * @param bool $negative indicating whether or not negative values are allowed
+     * @param bool $zero     indicating whether or not zero is allowed
+     * @param bool $positive indicating whether or not positive values are allowed
      */
     public function __construct($negative = true, $zero = true, $positive = true)
     {
@@ -41,9 +47,10 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $integer
-     * @param HTMLPurifier_Config $config
+     * @param string               $integer
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($integer, $config, $context)
@@ -74,13 +81,15 @@ class HTMLPurifier_AttrDef_Integer extends HTMLPurifier_AttrDef
         }
 
         // perform scope tests
-        if (!$this->zero && $integer == 0) {
+        if (!$this->zero && (int)$integer === 0) {
             return false;
         }
-        if (!$this->positive && $integer > 0) {
+
+        if (!$this->positive && (int)$integer > 0) {
             return false;
         }
-        if (!$this->negative && $integer < 0) {
+
+        if (!$this->negative && (int)$integer < 0) {
             return false;
         }
 

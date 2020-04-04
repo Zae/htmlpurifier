@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Special-case enum attribute definition that lazy loads allowed frame targets
  */
 class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
 {
-
     /**
      * @type array
      */
@@ -16,9 +17,7 @@ class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
      */
     protected $case_sensitive = false;
 
-    public function __construct()
-    {
-    }
+    public function __construct(){}
 
     /**
      * @param string $string
@@ -31,8 +30,7 @@ class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum
         if ($this->valid_values === false) {
             $this->valid_values = $config->get('Attr.AllowedFrameTargets');
         }
+
         return parent::validate($string, $config, $context);
     }
 }
-
-// vim: et sw=4 sts=4

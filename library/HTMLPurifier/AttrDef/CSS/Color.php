@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates Color as defined by CSS.
  */
 class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_AttrDef_CSS_AlphaValue
      */
@@ -17,10 +18,12 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $color
-     * @param HTMLPurifier_Config $config
+     * @param string               $color
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($color, $config, $context)
     {
@@ -59,19 +62,19 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
              * Allowed types for values :
              * parameter_position => [type => max_value]
              */
-            $allowed_types = array(
-                1 => array('percentage' => 100, 'integer' => 255),
-                2 => array('percentage' => 100, 'integer' => 255),
-                3 => array('percentage' => 100, 'integer' => 255),
-            );
+            $allowed_types = [
+                1 => ['percentage' => 100, 'integer' => 255],
+                2 => ['percentage' => 100, 'integer' => 255],
+                3 => ['percentage' => 100, 'integer' => 255],
+            ];
             $allow_different_types = false;
 
             if (strpos($function, 'hsl') !== false) {
-                $allowed_types = array(
-                    1 => array('integer' => 360),
-                    2 => array('percentage' => 100),
-                    3 => array('percentage' => 100),
-                );
+                $allowed_types = [
+                    1 => ['integer' => 360],
+                    2 => ['percentage' => 100],
+                    3 => ['percentage' => 100],
+                ];
                 $allow_different_types = true;
             }
 
@@ -83,7 +86,7 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
             }
 
             $type = false;
-            $new_parts = array();
+            $new_parts = [];
             $i = 0;
 
             foreach ($parts as $part) {
@@ -120,16 +123,16 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                     $type = $current_type;
                 }
 
-                if ($allow_different_types === false && $type != $current_type) {
+                if ($allow_different_types === false && $type !== $current_type) {
                     return false;
                 }
 
                 $max_value = $allowed_types[$i][$current_type];
 
-                if ($current_type == 'integer') {
+                if ($current_type === 'integer') {
                     // Return value between range 0 -> $max_value
                     $new_parts[] = (int)max(min($part, $max_value), 0);
-                } elseif ($current_type == 'percentage') {
+                } elseif ($current_type === 'percentage') {
                     $new_parts[] = (float)max(min(rtrim($part, '%'), $max_value), 0) . '%';
                 }
             }
@@ -145,17 +148,17 @@ class HTMLPurifier_AttrDef_CSS_Color extends HTMLPurifier_AttrDef
                 $hex = $color;
                 $color = '#' . $color;
             }
+
             $length = strlen($hex);
             if ($length !== 3 && $length !== 6) {
                 return false;
             }
+
             if (!ctype_xdigit($hex)) {
                 return false;
             }
         }
+
         return $color;
     }
-
 }
-
-// vim: et sw=4 sts=4

@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a Percentage as defined by the CSS spec.
  */
 class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
 {
-
     /**
      * Instance to defer number validation to.
+     *
      * @type HTMLPurifier_AttrDef_CSS_Number
      */
     protected $number_def;
@@ -21,9 +23,10 @@ class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -33,10 +36,12 @@ class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
         if ($string === '') {
             return false;
         }
+
         $length = strlen($string);
         if ($length === 1) {
             return false;
         }
+
         if ($string[$length - 1] !== '%') {
             return false;
         }
@@ -47,8 +52,7 @@ class HTMLPurifier_AttrDef_CSS_Percentage extends HTMLPurifier_AttrDef
         if ($number === false) {
             return false;
         }
+
         return "$number%";
     }
 }
-
-// vim: et sw=4 sts=4

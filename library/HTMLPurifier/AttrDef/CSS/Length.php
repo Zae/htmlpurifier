@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Represents a Length as defined by CSS.
  */
 class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_Length|string
      */
@@ -27,9 +28,10 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -40,9 +42,11 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
         if ($string === '') {
             return false;
         }
+
         if ($string === '0') {
             return '0';
         }
+
         if (strlen($string) === 1) {
             return false;
         }
@@ -61,6 +65,7 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
                 return false;
             }
         }
+
         if ($this->max) {
             $c = $length->compareTo($this->max);
             if ($c === false) {
@@ -70,8 +75,7 @@ class HTMLPurifier_AttrDef_CSS_Length extends HTMLPurifier_AttrDef
                 return false;
             }
         }
+
         return $length->toString();
     }
 }
-
-// vim: et sw=4 sts=4

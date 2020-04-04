@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Validates a host according to the IPv4, IPv6 and DNS (future) specifications.
  */
@@ -25,10 +27,12 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
+     * @throws HTMLPurifier_Exception
      */
     public function validate($string, $config, $context)
     {
@@ -42,13 +46,16 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
         if ($string === '') {
             return '';
         }
+
         if ($length > 1 && $string[0] === '[' && $string[$length - 1] === ']') {
             //IPv6
             $ip = substr($string, 1, $length - 2);
             $valid = $this->ipv6->validate($ip, $config, $context);
+
             if ($valid === false) {
                 return false;
             }
+
             return '[' . $valid . ']';
         }
 
@@ -82,12 +89,15 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
         $a   = '[a-z]';     // alpha
         $an  = '[a-z0-9]';  // alphanum
         $and = "[a-z0-9-$underscore]"; // alphanum | "-"
+
         // domainlabel = alphanum | alphanum *( alphanum | "-" ) alphanum
         $domainlabel = "$an(?:$and*$an)?";
+
         // AMENDED as per RFC 3696
         // toplabel    = alphanum | alphanum *( alphanum | "-" ) alphanum
         //      side condition: not all numeric
         $toplabel = "$an(?:$and*$an)?";
+
         // hostname    = *( domainlabel "." ) toplabel [ "." ]
         if (preg_match("/^(?:$domainlabel\.)*($toplabel)\.?$/i", $string, $matches)) {
             if (!ctype_digit($matches[1])) {
@@ -107,11 +117,11 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
         // punycoding them. (This is the most portable thing to do,
         // since otherwise we have to assume browsers support
         } elseif ($config->get('Core.EnableIDNA')) {
-            $idna = new Net_IDNA2(array('encoding' => 'utf8', 'overlong' => false, 'strict' => true));
+            $idna = new Net_IDNA2(['encoding' => 'utf8', 'overlong' => false, 'strict' => true]);
             // we need to encode each period separately
             $parts = explode('.', $string);
             try {
-                $new_parts = array();
+                $new_parts = [];
                 foreach ($parts as $part) {
                     $encodable = false;
                     for ($i = 0, $c = strlen($part); $i < $c; $i++) {
@@ -120,23 +130,24 @@ class HTMLPurifier_AttrDef_URI_Host extends HTMLPurifier_AttrDef
                             break;
                         }
                     }
+
                     if (!$encodable) {
                         $new_parts[] = $part;
                     } else {
                         $new_parts[] = $idna->encode($part);
                     }
                 }
+
                 $string = implode('.', $new_parts);
             } catch (Exception $e) {
                 // XXX error reporting
             }
         }
         // Try again
-        if (preg_match("/^($domainlabel\.)*$toplabel\.?$/i", $string)) {
+        if (preg_match("/^($domainlabel\.)*$toplabel\.?$/i", (string)$string)) {
             return $string;
         }
+
         return false;
     }
 }
-
-// vim: et sw=4 sts=4

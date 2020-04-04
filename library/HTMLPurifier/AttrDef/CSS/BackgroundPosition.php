@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /* W3C says:
     [ // adjective and number must be in correct order, even if
       // you could switch them without introducing ambiguity.
@@ -43,7 +45,6 @@
  */
 class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
 {
-
     /**
      * @type HTMLPurifier_AttrDef_CSS_Length
      */
@@ -61,9 +62,10 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
     }
 
     /**
-     * @param string $string
-     * @param HTMLPurifier_Config $config
+     * @param string               $string
+     * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
+     *
      * @return bool|string
      */
     public function validate($string, $config, $context)
@@ -71,22 +73,22 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
         $string = $this->parseCDATA($string);
         $bits = explode(' ', $string);
 
-        $keywords = array();
+        $keywords = [];
         $keywords['h'] = false; // left, right
         $keywords['v'] = false; // top, bottom
         $keywords['ch'] = false; // center (first word)
         $keywords['cv'] = false; // center (second word)
-        $measures = array();
+        $measures = [];
 
         $i = 0;
 
-        $lookup = array(
+        $lookup = [
             'top' => 'v',
             'bottom' => 'v',
             'left' => 'h',
             'right' => 'h',
             'center' => 'c'
-        );
+        ];
 
         foreach ($bits as $bit) {
             if ($bit === '') {
@@ -97,13 +99,14 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
             $lbit = ctype_lower($bit) ? $bit : strtolower($bit);
             if (isset($lookup[$lbit])) {
                 $status = $lookup[$lbit];
-                if ($status == 'c') {
-                    if ($i == 0) {
+                if ($status === 'c') {
+                    if ($i === 0) {
                         $status = 'ch';
                     } else {
                         $status = 'cv';
                     }
                 }
+
                 $keywords[$status] = $lbit;
                 $i++;
             }
@@ -127,7 +130,7 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
             return false;
         } // no valid values were caught
 
-        $ret = array();
+        $ret = [];
 
         // first keyword
         if ($keywords['h']) {
@@ -150,8 +153,7 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPosition extends HTMLPurifier_AttrDef
         if (empty($ret)) {
             return false;
         }
+
         return implode(' ', $ret);
     }
 }
-
-// vim: et sw=4 sts=4
