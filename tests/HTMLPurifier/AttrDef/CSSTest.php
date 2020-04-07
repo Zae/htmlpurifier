@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS;
+
 class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function setup()
     {
         parent::setup();
-        $this->def = new HTMLPurifier_AttrDef_CSS();
+        $this->def = new CSS();
     }
 
     public function test()

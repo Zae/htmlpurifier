@@ -3,12 +3,14 @@
 // test case is from Feyd's IPv6 implementation
 // we ought to disallow non-routable addresses
 
+use HTMLPurifier\AttrDef\URI\IPv6;
+
 class HTMLPurifier_AttrDef_URI_IPv6Test extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_URI_IPv6();
+        $this->def = new IPv6();
 
         $this->assertDef('2001:DB8:0:0:8:800:200C:417A'); // unicast, full
         $this->assertDef('FF01:0:0:0:0:0:0:101'); // multicast, full

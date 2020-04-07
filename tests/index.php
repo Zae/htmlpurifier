@@ -211,13 +211,10 @@ if ($AC['file']) {
     foreach ($test_files as $test_file) {
         htmlpurifier_add_test($test, $test_file);
     }
-
 }
 
 if ($AC['dry']) $reporter->makeDry();
-
 $result = $test->run($reporter);
-
 if ($result) {
     exit(0); // Success!
 } else {

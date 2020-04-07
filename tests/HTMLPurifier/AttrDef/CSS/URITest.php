@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\URI;
+
 class HTMLPurifier_AttrDef_CSS_URITest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_URI();
+        $this->def = new URI();
 
         $this->assertDef('', false);
 

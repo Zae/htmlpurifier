@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Background;
+
 class HTMLPurifier_AttrDef_CSS_BackgroundTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $this->def = new HTMLPurifier_AttrDef_CSS_Background($config);
+        $this->def = new Background($config);
 
         $valid = '#333 url("chess.png") repeat fixed 50% top';
         $this->assertDef($valid);

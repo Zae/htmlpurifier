@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\AttrDef\Text;
+use HTMLPurifier\AttrDef\Enum;
+
 class HTMLPurifier_AttrTypesTest extends HTMLPurifier_Harness
 {
 
@@ -9,7 +12,7 @@ class HTMLPurifier_AttrTypesTest extends HTMLPurifier_Harness
 
         $this->assertIdentical(
             $types->get('CDATA'),
-            new HTMLPurifier_AttrDef_Text()
+            new Text()
         );
 
         $this->expectError('Cannot retrieve undefined attribute type foobar');
@@ -17,7 +20,7 @@ class HTMLPurifier_AttrTypesTest extends HTMLPurifier_Harness
 
         $this->assertIdentical(
             $types->get('Enum#foo,bar'),
-            new HTMLPurifier_AttrDef_Enum(array('foo', 'bar'))
+            new Enum(array('foo', 'bar'))
         );
 
     }

@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\HTML\Boolean;
+
 class HTMLPurifier_AttrDef_HTML_BoolTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_HTML_Bool('foo');
+        $this->def = new Boolean('foo');
         $this->assertDef('foo');
         $this->assertDef('', 'foo');
         $this->assertDef('bar', 'foo');
@@ -13,9 +15,9 @@ class HTMLPurifier_AttrDef_HTML_BoolTest extends HTMLPurifier_AttrDefHarness
 
     public function test_make()
     {
-        $factory = new HTMLPurifier_AttrDef_HTML_Bool();
+        $factory = new Boolean();
         $def = $factory->make('foo');
-        $def2 = new HTMLPurifier_AttrDef_HTML_Bool('foo');
+        $def2 = new Boolean('foo');
         $this->assertIdentical($def, $def2);
     }
 

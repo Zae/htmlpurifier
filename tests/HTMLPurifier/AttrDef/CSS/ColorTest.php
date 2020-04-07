@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Color;
+
 class HTMLPurifier_AttrDef_CSS_ColorTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_Color();
+        $this->def = new Color();
 
         $this->assertDef('#F00');
         $this->assertDef('#fff');

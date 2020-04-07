@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Number;
+
 class HTMLPurifier_AttrDef_CSS_NumberTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_Number();
+        $this->def = new Number();
 
         $this->assertDef('0');
         $this->assertDef('0.0', '0');
@@ -40,7 +42,7 @@ class HTMLPurifier_AttrDef_CSS_NumberTest extends HTMLPurifier_AttrDefHarness
 
     public function testNonNegative()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_Number(true);
+        $this->def = new Number(true);
         $this->assertDef('23');
         $this->assertDef('-12', false);
 

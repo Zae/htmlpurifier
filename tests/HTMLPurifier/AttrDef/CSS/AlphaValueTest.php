@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\AlphaValue;
+
 class HTMLPurifier_AttrDef_CSS_AlphaValueTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_AlphaValue();
+        $this->def = new AlphaValue();
 
         $this->assertDef('0');
         $this->assertDef('1');

@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\ListStyle;
+
 class HTMLPurifier_AttrDef_CSS_ListStyleTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $this->def = new HTMLPurifier_AttrDef_CSS_ListStyle($config);
+        $this->def = new ListStyle($config);
 
         $this->assertDef('lower-alpha');
         $this->assertDef('upper-roman inside');

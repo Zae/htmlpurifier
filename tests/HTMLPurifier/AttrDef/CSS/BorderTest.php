@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Border;
+
 class HTMLPurifier_AttrDef_CSS_BorderTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $this->def = new HTMLPurifier_AttrDef_CSS_Border($config);
+        $this->def = new Border($config);
 
         $this->assertDef('thick solid red', 'thick solid #FF0000');
         $this->assertDef('thick solid');

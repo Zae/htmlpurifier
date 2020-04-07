@@ -2,6 +2,23 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef;
+use HTMLPurifier\AttrDef\URI;
+use HTMLPurifier\AttrDef\Text;
+use HTMLPurifier\AttrDef\Lang;
+use HTMLPurifier\AttrDef\Integer;
+use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\AttrDef\Cloner;
+use HTMLPurifier\AttrDef\HTML\Pixels;
+use HTMLPurifier\AttrDef\HTML\Nmtokens;
+use HTMLPurifier\AttrDef\HTML\MultiLength;
+use HTMLPurifier\AttrDef\HTML\Boolean;
+use HTMLPurifier\AttrDef\HTML\Classname;
+use HTMLPurifier\AttrDef\HTML\Color;
+use HTMLPurifier\AttrDef\HTML\FrameTarget;
+use HTMLPurifier\AttrDef\HTML\Length;
+use HTMLPurifier\AttrDef\HTML\ID;
+
 /**
  * Provides lookup array of attribute types to HTMLPurifier_AttrDef objects
  */
@@ -9,7 +26,8 @@ class HTMLPurifier_AttrTypes
 {
     /**
      * Lookup array of attribute string identifiers to concrete implementations.
-     * @type HTMLPurifier_AttrDef[]
+     *
+     * @type AttrDef[]
      */
     protected $info = [];
 
@@ -27,46 +45,48 @@ class HTMLPurifier_AttrTypes
         // definition wouldn't work.
 
         // pseudo-types, must be instantiated via shorthand
-        $this->info['Enum']    = new HTMLPurifier_AttrDef_Enum();
-        $this->info['Bool']    = new HTMLPurifier_AttrDef_HTML_Bool();
+        $this->info['Enum'] = new Enum();
+        $this->info['Bool']    = new Boolean();
 
-        $this->info['CDATA']    = new HTMLPurifier_AttrDef_Text();
-        $this->info['ID']       = new HTMLPurifier_AttrDef_HTML_ID();
-        $this->info['Length']   = new HTMLPurifier_AttrDef_HTML_Length();
-        $this->info['MultiLength'] = new HTMLPurifier_AttrDef_HTML_MultiLength();
-        $this->info['NMTOKENS'] = new HTMLPurifier_AttrDef_HTML_Nmtokens();
-        $this->info['Pixels']   = new HTMLPurifier_AttrDef_HTML_Pixels();
-        $this->info['Text']     = new HTMLPurifier_AttrDef_Text();
-        $this->info['URI']      = new HTMLPurifier_AttrDef_URI();
-        $this->info['LanguageCode'] = new HTMLPurifier_AttrDef_Lang();
-        $this->info['Color']    = new HTMLPurifier_AttrDef_HTML_Color();
+        $this->info['CDATA'] = new Text();
+        $this->info['ID']       = new ID();
+        $this->info['Length']   = new Length();
+        $this->info['MultiLength'] = new MultiLength();
+        $this->info['NMTOKENS'] = new Nmtokens();
+        $this->info['Pixels']   = new Pixels();
+        $this->info['Text'] = new Text();
+        $this->info['URI'] = new URI();
+        $this->info['LanguageCode'] = new Lang();
+        $this->info['Color']    = new Color();
         $this->info['IAlign']   = self::makeEnum('top,middle,bottom,left,right');
         $this->info['LAlign']   = self::makeEnum('top,bottom,left,right');
-        $this->info['FrameTarget'] = new HTMLPurifier_AttrDef_HTML_FrameTarget();
+        $this->info['FrameTarget'] = new FrameTarget();
 
         // unimplemented aliases
-        $this->info['ContentType'] = new HTMLPurifier_AttrDef_Text();
-        $this->info['ContentTypes'] = new HTMLPurifier_AttrDef_Text();
-        $this->info['Charsets'] = new HTMLPurifier_AttrDef_Text();
-        $this->info['Character'] = new HTMLPurifier_AttrDef_Text();
+        $this->info['ContentType'] = new Text();
+        $this->info['ContentTypes'] = new Text();
+        $this->info['Charsets'] = new Text();
+        $this->info['Character'] = new Text();
 
         // "proprietary" types
-        $this->info['Class'] = new HTMLPurifier_AttrDef_HTML_Class();
+        $this->info['Class'] = new Classname();
 
         // number is really a positive integer (one or more digits)
         // FIXME: ^^ not always, see start and value of list items
-        $this->info['Number']   = new HTMLPurifier_AttrDef_Integer(false, false, true);
+        $this->info['Number'] = new Integer(false, false, true);
     }
 
-    private static function makeEnum($in): HTMLPurifier_AttrDef_Clone
+    private static function makeEnum($in): Cloner
     {
-        return new HTMLPurifier_AttrDef_Clone(new HTMLPurifier_AttrDef_Enum(explode(',', $in)));
+        return new Cloner(new Enum(explode(',', $in)));
     }
 
     /**
      * Retrieves a type
+     *
      * @param string $type String type name
-     * @return HTMLPurifier_AttrDef Object AttrDef for type
+     *
+     * @return AttrDef Object AttrDef for type
      */
     public function get(string $type)
     {
@@ -87,10 +107,11 @@ class HTMLPurifier_AttrTypes
 
     /**
      * Sets a new implementation for a type
+     *
      * @param string $type String type name
-     * @param HTMLPurifier_AttrDef $impl Object AttrDef for type
+     * @param AttrDef $impl Object AttrDef for type
      */
-    public function set(string $type, HTMLPurifier_AttrDef $impl)
+    public function set(string $type, AttrDef $impl)
     {
         $this->info[$type] = $impl;
     }

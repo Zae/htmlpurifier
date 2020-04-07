@@ -6,6 +6,10 @@ declare(strict_types=1);
 // understand how to interpret this filter if it's a static method.
 // It's all really silly, but if we go this route it might be reasonable
 // to coalesce all of these methods into one.
+use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\AttrDef\CSS\Ident;
+use HTMLPurifier\AttrDef\HTML\ID;
+
 function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
 {
 }
@@ -42,17 +46,17 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
     private $_tidy;
 
     /**
-     * @type HTMLPurifier_AttrDef_HTML_ID
+     * @type ID
      */
     private $_id_attrdef;
 
     /**
-     * @type HTMLPurifier_AttrDef_CSS_Ident
+     * @type Ident
      */
     private $_class_attrdef;
 
     /**
-     * @type HTMLPurifier_AttrDef_Enum
+     * @type Enum
      */
     private $_enum_attrdef;
 
@@ -60,9 +64,9 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
     {
         $this->_tidy = new csstidy();
         $this->_tidy->set_cfg('lowercase_s', false);
-        $this->_id_attrdef = new HTMLPurifier_AttrDef_HTML_ID(true);
-        $this->_class_attrdef = new HTMLPurifier_AttrDef_CSS_Ident();
-        $this->_enum_attrdef = new HTMLPurifier_AttrDef_Enum([
+        $this->_id_attrdef = new ID(true);
+        $this->_class_attrdef = new Ident();
+        $this->_enum_attrdef = new Enum([
             'first-child',
             'link',
             'visited',

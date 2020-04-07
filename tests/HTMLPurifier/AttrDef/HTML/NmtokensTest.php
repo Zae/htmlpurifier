@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\HTML\Nmtokens;
+
 class HTMLPurifier_AttrDef_HTML_NmtokensTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->def = new HTMLPurifier_AttrDef_HTML_Nmtokens();
+        $this->def = new Nmtokens();
     }
 
     public function testDefault()

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\CSS\Number;
+
 /**
  * Represents a measurable length, with a string numeric magnitude
  * and a unit. This object is immutable.
@@ -99,7 +101,7 @@ class HTMLPurifier_Length
         }
 
         // Hack:
-        $def = new HTMLPurifier_AttrDef_CSS_Number();
+        $def = new Number();
         $result = $def->validate($this->n, null, null);
         if ($result === false) {
             return false;

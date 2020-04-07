@@ -7,18 +7,20 @@ if (!defined('HTMLPurifierTest')) {
 
 // setup our own autoload, checking for HTMLPurifier library if spl_autoload_register
 // is not allowed
-function test_autoload($class)
-{
-    if (!function_exists('spl_autoload_register')) {
-        if (HTMLPurifier_Bootstrap::autoload($class)) return true;
-        if (HTMLPurifierExtras::autoload($class)) return true;
-    }
-    require str_replace('_', '/', $class) . '.php';
-    return true;
-}
-if (function_exists('spl_autoload_register')) {
-    spl_autoload_register('test_autoload');
-}
+//function test_autoload($class)
+//{
+//    if (!function_exists('spl_autoload_register')) {
+//        if (HTMLPurifier_Bootstrap::autoload($class)) return true;
+//        if (HTMLPurifierExtras::autoload($class)) return true;
+//    }
+//    require str_replace('_', '/', $class) . '.php';
+//    return true;
+//}
+//if (function_exists('spl_autoload_register')) {
+//    spl_autoload_register('test_autoload');
+//}
+
+require_once '../vendor/autoload.php';
 
 // default settings (protect against register_globals)
 $GLOBALS['HTMLPurifierTest'] = array();
