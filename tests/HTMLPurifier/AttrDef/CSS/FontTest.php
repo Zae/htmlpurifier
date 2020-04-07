@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Font;
+
 class HTMLPurifier_AttrDef_CSS_FontTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $this->def = new HTMLPurifier_AttrDef_CSS_Font($config);
+        $this->def = new Font($config);
 
         // hodgepodge of usage cases from W3C spec, but " -> '
         $this->assertDef('12px/14px sans-serif');

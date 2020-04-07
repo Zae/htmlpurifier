@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\Enum;
+
 /**
  * A "safe" object module. In theory, objects permitted by this module will
  * be safe, and untrusted users can be allowed to embed arbitrary flash objects
@@ -38,7 +40,7 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
                 'width' => 'Pixels#' . $max,
                 'height' => 'Pixels#' . $max,
                 'data' => 'URI#embedded',
-                'codebase' => new HTMLPurifier_AttrDef_Enum(
+                'codebase' => new Enum(
                     [
                         'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0'
                     ]

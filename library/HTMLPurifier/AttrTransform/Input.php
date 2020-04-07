@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\HTML\Pixels;
+
 /**
  * Performs miscellaneous cross attribute validation and filtering for
  * input elements. This is meant to be a post-transform.
@@ -9,13 +11,13 @@ declare(strict_types=1);
 class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform
 {
     /**
-     * @type HTMLPurifier_AttrDef_HTML_Pixels
+     * @type Pixels
      */
     protected $pixels;
 
     public function __construct()
     {
-        $this->pixels = new HTMLPurifier_AttrDef_HTML_Pixels();
+        $this->pixels = new Pixels();
     }
 
     /**

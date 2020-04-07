@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\TextDecoration;
+
 class HTMLPurifier_AttrDef_CSS_TextDecorationTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function testCaseInsensitive()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_TextDecoration();
+        $this->def = new TextDecoration();
 
         $this->assertDef('none');
         $this->assertDef('none underline', 'underline');

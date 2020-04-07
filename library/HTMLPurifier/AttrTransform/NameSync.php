@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\HTML\ID;
+
 /**
  * Post-transform that performs validation to the name attribute; if
  * it is present with an equivalent id attribute, it is passed through;
@@ -10,13 +12,13 @@ declare(strict_types=1);
 class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
 {
     /**
-     * @var HTMLPurifier_AttrDef_HTML_ID
+     * @var ID
      */
     private $idDef;
 
     public function __construct()
     {
-        $this->idDef = new HTMLPurifier_AttrDef_HTML_ID();
+        $this->idDef = new ID();
     }
 
     /**

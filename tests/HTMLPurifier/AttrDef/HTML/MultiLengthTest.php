@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\HTML\MultiLength;
+
 class HTMLPurifier_AttrDef_HTML_MultiLengthTest extends HTMLPurifier_AttrDef_HTML_LengthTest
 {
 
     public function setup()
     {
-        $this->def = new HTMLPurifier_AttrDef_HTML_MultiLength();
+        $this->def = new MultiLength();
     }
 
     public function test()

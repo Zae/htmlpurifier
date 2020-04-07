@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\URI;
+
 /**
  * XHTML 1.1 Image Module provides basic image embedding.
  *
@@ -35,7 +37,7 @@ class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
                 'height' => 'Pixels#' . $max,
                 'width' => 'Pixels#' . $max,
                 'longdesc' => 'URI',
-                'src*' => new HTMLPurifier_AttrDef_URI(true), // embedded
+                'src*' => new URI(true), // embedded
             ]
         );
 

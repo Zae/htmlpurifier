@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Percentage;
+
 class HTMLPurifier_AttrDef_CSS_PercentageTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_Percentage();
+        $this->def = new Percentage();
 
         $this->assertDef('10%');
         $this->assertDef('1.607%');

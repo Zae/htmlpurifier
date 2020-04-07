@@ -9,6 +9,9 @@ INSIDE HTML PURIFIER DOCUMENTS. USE ONLY WITH TRUSTED USER INPUT!!!
 
 */
 
+use HTMLPurifier\AttrDef\URI;
+use HTMLPurifier\AttrDef\Enum;
+
 /**
  * XHTML 1.1 Scripting module, defines elements that are used to contain
  * information pertaining to executable scripts or the lack of support
@@ -61,9 +64,9 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
 
         $this->info['script'] = new HTMLPurifier_ElementDef();
         $this->info['script']->attr = [
-            'defer' => new HTMLPurifier_AttrDef_Enum(['defer']),
-            'src' => new HTMLPurifier_AttrDef_URI(true),
-            'type' => new HTMLPurifier_AttrDef_Enum(['text/javascript'])
+            'defer' => new Enum(['defer']),
+            'src' => new URI(true),
+            'type' => new Enum(['text/javascript'])
         ];
         $this->info['script']->content_model = '#PCDATA';
         $this->info['script']->content_model_type = 'optional';

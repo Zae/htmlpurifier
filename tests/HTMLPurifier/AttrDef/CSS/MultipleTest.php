@@ -1,13 +1,16 @@
 <?php
 
 // borrowed for the sakes of this test
+use HTMLPurifier\AttrDef\Integer;
+use HTMLPurifier\AttrDef\CSS\Multiple;
+
 class HTMLPurifier_AttrDef_CSS_MultipleTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_Multiple(
-            new HTMLPurifier_AttrDef_Integer()
+        $this->def = new Multiple(
+            new Integer()
         );
 
         $this->assertDef('1 2 3 4');

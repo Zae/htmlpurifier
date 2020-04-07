@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\Lang;
+
 class HTMLPurifier_AttrDef_LangTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_Lang();
+        $this->def = new Lang();
 
         // basic good uses
         $this->assertDef('en');

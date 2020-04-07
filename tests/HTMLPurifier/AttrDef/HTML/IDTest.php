@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\AttrDef\HTML\ID;
+
 class HTMLPurifier_AttrDef_HTML_IDTest extends HTMLPurifier_AttrDefHarness
 {
 
@@ -10,7 +12,7 @@ class HTMLPurifier_AttrDef_HTML_IDTest extends HTMLPurifier_AttrDefHarness
         $id_accumulator = new HTMLPurifier_IDAccumulator();
         $this->context->register('IDAccumulator', $id_accumulator);
         $this->config->set('Attr.EnableID', true);
-        $this->def = new HTMLPurifier_AttrDef_HTML_ID();
+        $this->def = new ID();
 
     }
 
@@ -79,18 +81,18 @@ class HTMLPurifier_AttrDef_HTML_IDTest extends HTMLPurifier_AttrDefHarness
     // reference functionality is disabled for now
     public function disabled_testIDReference()
     {
-        $this->def = new HTMLPurifier_AttrDef_HTML_ID(true);
+        $this->def = new ID(true);
 
         $this->assertDef('good_id');
         $this->assertDef('good_id'); // duplicates okay
         $this->assertDef('<b>', false);
 
-        $this->def = new HTMLPurifier_AttrDef_HTML_ID();
+        $this->def = new ID();
 
         $this->assertDef('good_id');
         $this->assertDef('good_id', false); // duplicate now not okay
 
-        $this->def = new HTMLPurifier_AttrDef_HTML_ID(true);
+        $this->def = new ID(true);
 
         $this->assertDef('good_id'); // reference still okay
 

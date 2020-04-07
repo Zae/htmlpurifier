@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\URI\Host;
+
 /**
  * HTML Purifier's internal representation of a URI.
  * @note
@@ -129,7 +131,7 @@ class HTMLPurifier_URI
 
         // validate host
         if (!is_null($this->host)) {
-            $host_def = new HTMLPurifier_AttrDef_URI_Host();
+            $host_def = new Host();
             $this->host = $host_def->validate($this->host, $config, $context);
             if ($this->host === false) {
                 $this->host = null;

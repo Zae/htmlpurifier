@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\Integer;
+
 class HTMLPurifier_AttrDef_IntegerTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_Integer();
+        $this->def = new Integer();
 
         $this->assertDef('0');
         $this->assertDef('1');
@@ -34,25 +36,25 @@ class HTMLPurifier_AttrDef_IntegerTest extends HTMLPurifier_AttrDefHarness
 
     public function testRange()
     {
-        $this->def = new HTMLPurifier_AttrDef_Integer(false);
+        $this->def = new Integer(false);
         $this->assertRange(false, true, true); // non-negative
 
-        $this->def = new HTMLPurifier_AttrDef_Integer(false, false);
+        $this->def = new Integer(false, false);
         $this->assertRange(false, false, true); // positive
 
 
         // fringe cases
 
-        $this->def = new HTMLPurifier_AttrDef_Integer(false, false, false);
+        $this->def = new Integer(false, false, false);
         $this->assertRange(false, false, false); // allow none
 
-        $this->def = new HTMLPurifier_AttrDef_Integer(true, false, false);
+        $this->def = new Integer(true, false, false);
         $this->assertRange(true, false, false); // negative
 
-        $this->def = new HTMLPurifier_AttrDef_Integer(false, true, false);
+        $this->def = new Integer(false, true, false);
         $this->assertRange(false, true, false); // zero
 
-        $this->def = new HTMLPurifier_AttrDef_Integer(true, true, false);
+        $this->def = new Integer(true, true, false);
         $this->assertRange(true, true, false); // non-positive
 
     }

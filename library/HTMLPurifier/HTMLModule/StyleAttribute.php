@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\CSS;
+
 /**
  * XHTML 1.1 Edit Module, defines editing-related elements. Text Extension
  * Module.
@@ -28,6 +30,6 @@ class HTMLPurifier_HTMLModule_StyleAttribute extends HTMLPurifier_HTMLModule
      */
     public function setup(HTMLPurifier_Config $config): void
     {
-        $this->attr_collections['Style']['style'] = new HTMLPurifier_AttrDef_CSS();
+        $this->attr_collections['Style']['style'] = new CSS();
     }
 }

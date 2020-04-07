@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\FontFamily;
+
 class HTMLPurifier_AttrDef_CSS_FontFamilyTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_FontFamily();
+        $this->def = new FontFamily();
 
         $this->assertDef('Gill, Helvetica, sans-serif');
         $this->assertDef("'Times New Roman', serif");

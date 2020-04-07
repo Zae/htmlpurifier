@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\URI;
+use HTMLPurifier\AttrDef\Enum;
+
 /**
  * Validates name/value pairs in param tags to be used in safe objects. This
  * will only allow name values it recognizes, and pre-fill certain attributes
@@ -22,19 +25,19 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
     public $name = 'SafeParam';
 
     /**
-     * @type HTMLPurifier_AttrDef_URI
+     * @type URI
      */
     private $uri;
 
     /**
-     * @var HTMLPurifier_AttrDef_Enum
+     * @var Enum
      */
     private $wmode;
 
     public function __construct()
     {
-        $this->uri = new HTMLPurifier_AttrDef_URI(true); // embedded
-        $this->wmode = new HTMLPurifier_AttrDef_Enum(['window', 'opaque', 'transparent']);
+        $this->uri = new URI(true); // embedded
+        $this->wmode = new Enum(['window', 'opaque', 'transparent']);
     }
 
     /**

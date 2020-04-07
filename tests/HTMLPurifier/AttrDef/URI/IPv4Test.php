@@ -3,12 +3,14 @@
 // IPv4 test case is spliced from Feyd's IPv6 implementation
 // we ought to disallow non-routable addresses
 
+use HTMLPurifier\AttrDef\URI\IPv4;
+
 class HTMLPurifier_AttrDef_URI_IPv4Test extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_URI_IPv4();
+        $this->def = new IPv4();
 
         $this->assertDef('127.0.0.1'); // standard IPv4, loopback, non-routable
         $this->assertDef('0.0.0.0'); // standard IPv4, unspecified, non-routable

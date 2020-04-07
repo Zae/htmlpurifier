@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\Integer;
+
 /**
  * XHTML 1.1 Legacy module defines elements that were previously
  * deprecated.
@@ -127,12 +129,12 @@ class HTMLPurifier_HTMLModule_Legacy extends HTMLPurifier_HTMLModule
         // figure out this integer business
 
         $li = $this->addBlankElement('li');
-        $li->attr['value'] = new HTMLPurifier_AttrDef_Integer();
+        $li->attr['value'] = new Integer();
         $li->attr['type'] = 'Enum#s:1,i,I,a,A,disc,square,circle';
 
         $ol = $this->addBlankElement('ol');
         $ol->attr['compact'] = 'Bool#compact';
-        $ol->attr['start'] = new HTMLPurifier_AttrDef_Integer();
+        $ol->attr['start'] = new Integer();
         $ol->attr['type'] = 'Enum#s:1,i,I,a,A';
 
         $p = $this->addBlankElement('p');

@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\BackgroundPosition;
+
 class HTMLPurifier_AttrDef_CSS_BackgroundPositionTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_BackgroundPosition();
+        $this->def = new BackgroundPosition();
 
         // explicitly cited in spec
         $this->assertDef('0% 0%');

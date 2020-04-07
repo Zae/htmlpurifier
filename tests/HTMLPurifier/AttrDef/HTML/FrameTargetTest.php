@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrDef\HTML\FrameTarget;
+
 class HTMLPurifier_AttrDef_HTML_FrameTargetTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function setup()
     {
         parent::setup();
-        $this->def = new HTMLPurifier_AttrDef_HTML_FrameTarget();
+        $this->def = new FrameTarget();
     }
 
     public function testNoneAllowed()

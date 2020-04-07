@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\HTML\FrameTarget;
+
 /**
  * XHTML 1.1 Target Module, defines target attribute in link elements.
  */
@@ -21,7 +23,7 @@ class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
         foreach ($elements as $name) {
             $e = $this->addBlankElement($name);
             $e->attr = [
-                'target' => new HTMLPurifier_AttrDef_HTML_FrameTarget()
+                'target' => new FrameTarget()
             ];
         }
     }

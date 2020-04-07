@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Arborize;
+
 /**
  * General-purpose test-harness that makes testing functions that require
  * configuration and context objects easier when those two parameters are
@@ -65,8 +67,8 @@ class HTMLPurifier_ComplexHarness extends HTMLPurifier_Harness
         // $func may cause $input to change, so "clone" another copy
         // to sacrifice
         if ($this->to_node_list && is_string($input)) {
-            $input = HTMLPurifier_Arborize::arborize($this->tokenize($temp = $input), $this->config, $this->context)->children;
-            $input_c = HTMLPurifier_Arborize::arborize($this->tokenize($temp), $this->config, $this->context)->children;
+            $input = Arborize::arborize($this->tokenize($temp = $input), $this->config, $this->context)->children;
+            $input_c = Arborize::arborize($this->tokenize($temp), $this->config, $this->context)->children;
         } elseif ($this->to_tokens && is_string($input)) {
             $input   = $this->tokenize($temp = $input);
             $input_c = $this->tokenize($temp);
@@ -130,7 +132,7 @@ class HTMLPurifier_ComplexHarness extends HTMLPurifier_Harness
     {
         $dummy = new HTMLPurifier_Node_Element("dummy");
         $dummy->children = $children;
-        return HTMLPurifier_Arborize::flatten($dummy, $this->context, $this->config);
+        return Arborize::flatten($dummy, $this->context, $this->config);
     }
 
 }

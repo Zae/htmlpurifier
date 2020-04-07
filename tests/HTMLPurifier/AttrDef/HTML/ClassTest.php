@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\HTML\Classname;
+
 class HTMLPurifier_AttrDef_HTML_ClassTest extends HTMLPurifier_AttrDef_HTML_NmtokensTest
 {
     public function setUp()
     {
         parent::setUp();
-        $this->def = new HTMLPurifier_AttrDef_HTML_Class();
+        $this->def = new Classname();
     }
     public function testAllowedClasses()
     {

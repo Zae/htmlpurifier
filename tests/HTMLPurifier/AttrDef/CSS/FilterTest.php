@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\AttrDef\CSS\Filter;
+
 class HTMLPurifier_AttrDef_CSS_FilterTest extends HTMLPurifier_AttrDefHarness
 {
 
     public function test()
     {
-        $this->def = new HTMLPurifier_AttrDef_CSS_Filter();
+        $this->def = new Filter();
 
         $this->assertDef('none');
 

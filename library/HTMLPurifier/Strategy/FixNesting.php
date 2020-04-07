@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Arborize;
+
 /**
  * Takes a well formed list of tokens and fixes their nesting.
  *
@@ -47,7 +49,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 
         // O(n) pass to convert to a tree, so that we can efficiently
         // refer to substrings
-        $top_node = HTMLPurifier_Arborize::arborize($tokens, $config);
+        $top_node = Arborize::arborize($tokens, $config);
 
         // get a copy of the HTML definition
         $definition = $config->getHTMLDefinition();
@@ -187,6 +189,6 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
         //####################################################################//
         // Return
 
-        return HTMLPurifier_Arborize::flatten($node);
+        return Arborize::flatten($node);
     }
 }

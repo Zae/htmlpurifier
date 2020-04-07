@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrDef\Lang;
+
 /**
  * Class responsible for generating HTMLPurifier_Language objects, managing
  * caching and fallbacks.
@@ -31,7 +33,7 @@ class HTMLPurifier_LanguageFactory
     /**
      * Instance to validate language codes.
      *
-     * @type HTMLPurifier_AttrDef_Lang
+     * @type Lang
      *
      */
     protected $validator;
@@ -86,7 +88,7 @@ class HTMLPurifier_LanguageFactory
      */
     public function setup()
     {
-        $this->validator = new HTMLPurifier_AttrDef_Lang();
+        $this->validator = new Lang();
         $this->dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier';
     }
 

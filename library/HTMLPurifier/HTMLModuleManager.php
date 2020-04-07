@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrCollections;
+
 class HTMLPurifier_HTMLModuleManager
 {
     /**
@@ -68,7 +70,7 @@ class HTMLPurifier_HTMLModuleManager
     public $contentSets;
 
     /**
-     * @type HTMLPurifier_AttrCollections
+     * @type AttrCollections
      */
     public $attrCollections;
 
@@ -352,7 +354,7 @@ class HTMLPurifier_HTMLModuleManager
             $this->modules
         );
 
-        $this->attrCollections = new HTMLPurifier_AttrCollections(
+        $this->attrCollections = new AttrCollections(
             $this->attrTypes,
             // there is no way to directly disable a global attribute,
             // but using AllowedAttributes or simply not including
