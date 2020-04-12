@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node\Element;
+use HTMLPurifier\Node\Comment;
+
 /**
  * Definition for tables.  The general idea is to extract out all of the
  * essential bits, and then reconstruct it later.
@@ -90,7 +93,7 @@ class HTMLPurifier_ChildDef_Table extends HTMLPurifier_ChildDef
         $ws_accum =& $initial_ws;
 
         foreach ($children as $node) {
-            if ($node instanceof HTMLPurifier_Node_Comment) {
+            if ($node instanceof Comment) {
                 $ws_accum[] = $node;
                 continue;
             }
@@ -202,7 +205,7 @@ class HTMLPurifier_ChildDef_Table extends HTMLPurifier_ChildDef
                         break;
                     case 'tr':
                         if ($current_tr_tbody === null) {
-                            $current_tr_tbody = new HTMLPurifier_Node_Element('tbody');
+                            $current_tr_tbody = new Element('tbody');
                             $ret[] = $current_tr_tbody;
                         }
 

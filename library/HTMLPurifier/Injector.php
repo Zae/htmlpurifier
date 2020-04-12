@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Injects tokens into the document while parsing for well-formedness.
  * This enables "formatter-like" functionality such as auto-paragraphing,
@@ -24,7 +29,7 @@ abstract class HTMLPurifier_Injector
     public $name;
 
     /**
-     * @type HTMLPurifier_HTMLDefinition
+     * @type HTMLDefinition
      */
     protected $htmlDefinition;
 
@@ -37,7 +42,8 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Reference to current token.
-     * @type HTMLPurifier_Token
+     *
+     * @type Token
      */
     protected $currentToken;
 
@@ -191,14 +197,17 @@ abstract class HTMLPurifier_Injector
     /**
      * Iterator function, which starts with the next token and continues until
      * you reach the end of the input tokens.
+     *
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
+     *
      * @param int $i Current integer index variable for inputTokens
-     * @param HTMLPurifier_Token $current Current token variable.
+     * @param Token $current Current token variable.
      *          Do NOT use $token, as that variable is also a reference
+     *
      * @return bool
      */
-    protected function forward(?int &$i, ?HTMLPurifier_Token &$current): bool
+    protected function forward(?int &$i, ?Token &$current): bool
     {
         if ($i === null) {
             $i = count($this->inputZipper->back) - 1;
@@ -219,13 +228,15 @@ abstract class HTMLPurifier_Injector
      * Similar to _forward, but accepts a third parameter $nesting (which
      * should be initialized at 0) and stops when we hit the end tag
      * for the node $this->inputIndex starts in.
+     *
      * @param int $i Current integer index variable for inputTokens
-     * @param HTMLPurifier_Token $current Current token variable.
+     * @param Token $current Current token variable.
      *          Do NOT use $token, as that variable is also a reference
      * @param int $nesting
+     *
      * @return bool
      */
-    protected function forwardUntilEndToken(?int &$i, ?HTMLPurifier_Token &$current, ?int &$nesting): bool
+    protected function forwardUntilEndToken(?int &$i, ?Token &$current, ?int &$nesting): bool
     {
         $result = $this->forward($i, $current);
 
@@ -237,9 +248,9 @@ abstract class HTMLPurifier_Injector
             $nesting = 0;
         }
 
-        if ($current instanceof HTMLPurifier_Token_Start) {
+        if ($current instanceof Start) {
             $nesting++;
-        } elseif ($current instanceof HTMLPurifier_Token_End) {
+        } elseif ($current instanceof End) {
             if ($nesting <= 0) {
                 return false;
             }
@@ -253,14 +264,17 @@ abstract class HTMLPurifier_Injector
     /**
      * Iterator function, starts with the previous token and continues until
      * you reach the beginning of input tokens.
+     *
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
+     *
      * @param int $i Current integer index variable for inputTokens
-     * @param HTMLPurifier_Token $current Current token variable.
+     * @param Token $current Current token variable.
      *          Do NOT use $token, as that variable is also a reference
+     *
      * @return bool
      */
-    protected function backward(?int &$i, ?HTMLPurifier_Token &$current): bool
+    protected function backward(?int &$i, ?Token &$current): bool
     {
         if ($i === null) {
             $i = count($this->inputZipper->front) - 1;
@@ -289,25 +303,27 @@ abstract class HTMLPurifier_Injector
     /**
      * Handler that is called when a start or empty token is processed
      *
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleElement(HTMLPurifier_Token &$token)
+    public function handleElement(Token &$token)
     {
     }
 
     /**
      * Handler that is called when an end token is processed
      *
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleEnd(HTMLPurifier_Token &$token)
+    public function handleEnd(Token &$token)
     {
         $this->notifyEnd($token);
     }
 
     /**
      * Notifier that is called when an end token is processed
-     * @param HTMLPurifier_Token $token Current token variable.
+     *
+     * @param Token $token Current token variable.
+     *
      * @note This differs from handlers in that the token is read-only
      * @deprecated
      */

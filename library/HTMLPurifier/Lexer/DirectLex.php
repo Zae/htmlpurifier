@@ -2,13 +2,17 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Our in-house implementation of a parser.
  *
  * A pure PHP parser, DirectLex has absolutely no dependencies, making
  * it a reasonably good default for PHP4.  Written with efficiency in mind,
  * it can be four times faster than HTMLPurifier_Lexer_PEARSax3, although it
- * pales in comparison to HTMLPurifier_Lexer_DOMLex.
+ * pales in comparison to HTMLPurifier\Lexer\HTMLPurifier_Lexer_DOMLex.
  *
  * @todo Reread XML spec and document differences.
  */
@@ -43,7 +47,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return array|HTMLPurifier_Token[]
+     * @return array|Token[]
      * @throws HTMLPurifier_Exception
      */
     public function tokenizeHTML(string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
@@ -234,7 +238,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 $is_end_tag = (strpos($segment, '/') === 0);
                 if ($is_end_tag) {
                     $type = substr($segment, 1);
-                    $token = new HTMLPurifier_Token_End($type);
+                    $token = new End($type);
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
                         $current_line += $this->substrCount($string, $nl, $cursor, $position_next_gt - $cursor);
@@ -280,7 +284,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     if ($is_self_closing) {
                         $token = new HTMLPurifier_Token_Empty($segment);
                     } else {
-                        $token = new HTMLPurifier_Token_Start($segment);
+                        $token = new Start($segment);
                     }
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
@@ -314,7 +318,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 if ($is_self_closing) {
                     $token = new HTMLPurifier_Token_Empty($type, $attr);
                 } else {
-                    $token = new HTMLPurifier_Token_Start($type, $attr);
+                    $token = new Start($type, $attr);
                 }
                 if ($maintain_line_numbers) {
                     $token->rawPosition($current_line, $current_col);

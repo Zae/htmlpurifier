@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Arborize;
+use HTMLPurifier\Token;
+use HTMLPurifier\Node\Element;
 
 /**
  * Takes a well formed list of tokens and fixes their nesting.
@@ -35,11 +37,11 @@ use HTMLPurifier\Arborize;
 class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
 {
     /**
-     * @param HTMLPurifier_Token[] $tokens
+     * @param Token[]              $tokens
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return array|HTMLPurifier_Token[]
+     * @return array|Token[]
      * @throws HTMLPurifier_Exception
      */
     public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
@@ -118,7 +120,7 @@ class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
             $def = empty($stack) ? $definition->info_parent_def : $definition->info[$node->name];
             while (isset($node->children[$ix])) {
                 $child = $node->children[$ix++];
-                if ($child instanceof HTMLPurifier_Node_Element) {
+                if ($child instanceof Element) {
                     $go = true;
                     $stack[] = [$node, $is_inline, $excludes, $ix];
                     $stack[] = [$child,

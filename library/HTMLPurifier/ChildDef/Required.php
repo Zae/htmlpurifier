@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node\Element;
+use HTMLPurifier\Node\Text;
+
 /**
  * Definition that allows a set of elements, but disallows empty children.
  */
@@ -96,14 +99,14 @@ class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
             if (!isset($this->elements[$node->name])) {
                 // special case text
                 // XXX One of these ought to be redundant or something
-                if ($pcdata_allowed && $node instanceof HTMLPurifier_Node_Text) {
+                if ($pcdata_allowed && $node instanceof Text) {
                     $result[] = $node;
                     continue;
                 }
 
                 // spill the child contents in
                 // ToDo: Make configurable
-                if ($node instanceof HTMLPurifier_Node_Element) {
+                if ($node instanceof Element) {
                     for ($i = count($node->children) - 1; $i >= 0; $i--) {
                         $stack[] = $node->children[$i];
                     }

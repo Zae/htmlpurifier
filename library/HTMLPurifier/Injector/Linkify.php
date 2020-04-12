@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Injector that converts http, https and ftp text URLs to actual links.
  */
@@ -54,9 +57,9 @@ class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
                 }
                 $token[] = new HTMLPurifier_Token_Text($bits[$i]);
             } else {
-                $token[] = new HTMLPurifier_Token_Start('a', ['href' => $bits[$i]]);
+                $token[] = new Start('a', ['href' => $bits[$i]]);
                 $token[] = new HTMLPurifier_Token_Text($bits[$i]);
-                $token[] = new HTMLPurifier_Token_End('a');
+                $token[] = new End('a');
             }
         }
     }

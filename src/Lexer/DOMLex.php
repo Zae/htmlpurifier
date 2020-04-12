@@ -2,6 +2,20 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Lexer;
+
+use DOMDocument;
+use DOMNamedNodeMap;
+use DOMNode;
+use HTMLPurifier_Config;
+use HTMLPurifier_Context;
+use HTMLPurifier_Exception;
+use HTMLPurifier_Lexer;
+use HTMLPurifier_Queue;
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\Start;
+use HTMLPurifier_TokenFactory;
+
 /**
  * Parser that uses PHP 5's DOM extension (part of the core).
  *
@@ -11,11 +25,11 @@ declare(strict_types=1);
  * documents, it performs twenty times faster than
  * HTMLPurifier_Lexer_DirectLex,and is the default choice for PHP 5.
  *
- * @note Any empty elements will have empty tokens associated with them, even if
+ * @note    Any empty elements will have empty tokens associated with them, even if
  * this is prohibited by the spec. This is cannot be fixed until the spec
  * comes into play.
  *
- * @note PHP's DOM extension does not actually parse any entities, we use
+ * @note    PHP's DOM extension does not actually parse any entities, we use
  *       our own function to do that.
  *
  * @warning DOM tends to drop whitespace, which may wreak havoc on indenting.
@@ -25,7 +39,7 @@ declare(strict_types=1);
  *          around, you may want to run Tidy on the resulting output or use
  *          HTMLPurifier_DirectLex
  */
-class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
+class DOMLex extends HTMLPurifier_Lexer
 {
     /**
      * @type HTMLPurifier_TokenFactory
@@ -44,7 +58,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return HTMLPurifier_Token[]
+     * @return \HTMLPurifier\Token[]
      * @throws HTMLPurifier_Exception
      */
     public function tokenizeHTML(?string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
@@ -87,7 +101,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         restore_error_handler();
 
         $body = $doc->getElementsByTagName('html')->item(0)-> // <html>
-                      getElementsByTagName('body')->item(0);  // <body>
+        getElementsByTagName('body')->item(0);  // <body>
 
         $div = $body->getElementsByTagName('div')->item(0); // <div>
         $tokens = [];
@@ -108,9 +122,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * Iterative function that tokenizes a node, putting it into an accumulator.
      * To iterate is human, to recurse divine - L. Peter Deutsch
      *
-     * @param DOMNode              $node   DOMNode to be tokenized.
-     * @param HTMLPurifier_Token[] $tokens Array-list of already tokenized tokens.
-     * @param HTMLPurifier_Config  $config
+     * @param DOMNode               $node   DOMNode to be tokenized.
+     * @param \HTMLPurifier\Token[] $tokens Array-list of already tokenized tokens.
+     * @param HTMLPurifier_Config   $config
      *
      * @return void of node appended to previously passed tokens.
      * @throws HTMLPurifier_Exception
@@ -174,13 +188,13 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     }
 
     /**
-     * @param DOMNode              $node    DOMNode to be tokenized.
-     * @param HTMLPurifier_Token[] $tokens  Array-list of already tokenized tokens.
-     * @param bool                 $collect Says whether or start and close are collected, set to
+     * @param DOMNode               $node    DOMNode to be tokenized.
+     * @param \HTMLPurifier\Token[] $tokens  Array-list of already tokenized tokens.
+     * @param bool                  $collect Says whether or start and close are collected, set to
      *                                      false at first recursion because it's the implicit DIV
      *                                      tag you're dealing with.
      *
-     * @param HTMLPurifier_Config  $config
+     * @param HTMLPurifier_Config   $config
      *
      * @return bool if the token needs an endtoken
      * @throws HTMLPurifier_Exception
@@ -194,8 +208,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         if ($node->nodeType === XML_TEXT_NODE) {
             $data = $this->getData($node); // Handle variable data property
             if ($data !== null) {
-              $tokens[] = $this->factory->createText($data);
+                $tokens[] = $this->factory->createText($data);
             }
+
             return false;
         }
 
@@ -204,7 +219,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
             $last = end($tokens);
             $data = $node->data;
             // (note $node->tagname is already normalized)
-            if ($last instanceof HTMLPurifier_Token_Start && ($last->name === 'script' || $last->name === 'style')) {
+            if ($last instanceof Start && ($last->name === 'script' || $last->name === 'style')) {
                 $new_data = trim($data);
                 if (strncmp($new_data, '<!--', 4) === 0) {
                     $data = substr($new_data, 4);
@@ -217,6 +232,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
             }
 
             $tokens[] = $this->factory->createText($this->parseText($data, $config));
+
             return false;
         }
 
@@ -225,6 +241,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
             // of libxml pre-2.6.28 (regular comments, of course, are still
             // handled regularly)
             $tokens[] = $this->factory->createComment($node->data);
+
             return false;
         }
 
@@ -236,7 +253,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
         $attr = $node->hasAttributes() ? $this->transformAttrToAssoc($node->attributes) : [];
         $tag_name = $this->getTagName($node); // Handle variable tagName property
         if (empty($tag_name)) {
-            return (bool) $node->childNodes->length;
+            return (bool)$node->childNodes->length;
         }
 
         // We still have to make sure that the element actually IS empty
@@ -256,10 +273,10 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     }
 
     /**
-     * @param DOMNode $node
-     * @param HTMLPurifier_Token[] $tokens
+     * @param DOMNode               $node
+     * @param \HTMLPurifier\Token[] $tokens
      */
-    protected function createEndNode(DOMNode$node, array &$tokens): void
+    protected function createEndNode(DOMNode $node, array &$tokens): void
     {
         $tag_name = $this->getTagName($node); // Handle variable tagName property
         $tokens[] = $this->factory->createEnd($tag_name);
@@ -269,6 +286,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
      * Converts a DOMNamedNodeMap of DOMAttr objects into an assoc array.
      *
      * @param DOMNamedNodeMap $node_map DOMNamedNodeMap of DOMAttr objects.
+     *
      * @return array Associative array of attributes.
      */
     protected function transformAttrToAssoc(DOMNamedNodeMap $node_map): array
@@ -290,7 +308,8 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
 
     /**
      * An error handler that mutes all errors
-     * @param int $errno
+     *
+     * @param int    $errno
      * @param string $errstr
      */
     public function muteErrorHandler(int $errno, string $errstr): void
@@ -300,7 +319,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     /**
      * Callback function for undoing escaping of stray angled brackets
      * in comments
+     *
      * @param array $matches
+     *
      * @return string
      */
     public function callbackUndoCommentSubst(array $matches): string
@@ -311,7 +332,9 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
     /**
      * Callback function that entity-izes ampersands in comments so that
      * callbackUndoCommentSubst doesn't clobber them
+     *
      * @param array $matches
+     *
      * @return string
      */
     public function callbackArmorCommentEntities(array $matches): string

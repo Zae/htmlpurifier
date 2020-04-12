@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Lexer\DOMLex;
+
 /**
  * Forgivingly lexes HTML (SGML-style) markup into tokens.
  *
  * A lexer parses a string of SGML-style markup and converts them into
  * corresponding tokens.  It doesn't check for well-formedness, although its
  * internal mechanism may make this automatic (such as the case of
- * HTMLPurifier_Lexer_DOMLex).  There are several implementations to choose
+ * HTMLPurifier\Lexer\HTMLPurifier_Lexer_DOMLex).  There are several implementations to choose
  * from.
  *
  * A lexer is HTML-oriented: it might work with XML, but it's not
@@ -58,7 +61,7 @@ class HTMLPurifier_Lexer
     /**
      * Retrieves or sets the default Lexer as a Prototype Factory.
      *
-     * By default HTMLPurifier_Lexer_DOMLex will be returned. There are
+     * By default HTMLPurifier\Lexer\HTMLPurifier_Lexer_DOMLex will be returned. There are
      * a few exceptions involving special features that only DirectLex
      * implements.
      *
@@ -68,6 +71,7 @@ class HTMLPurifier_Lexer
      *       This change in behavior de-singletonizes the lexer object.
      *
      * @param HTMLPurifier_Config $config
+     *
      * @return HTMLPurifier_Lexer
      * @throws HTMLPurifier_Exception
      */
@@ -119,13 +123,13 @@ class HTMLPurifier_Lexer
             // instantiate recognized string names
             switch ($lexer) {
                 case 'DOMLex':
-                    $inst = new HTMLPurifier_Lexer_DOMLex();
+                    $inst = new DOMLex();
                     break;
                 case 'DirectLex':
                     $inst = new HTMLPurifier_Lexer_DirectLex();
                     break;
                 case 'PH5P':
-                    $inst = new HTMLPurifier_Lexer_PH5P();
+                    $inst = new _PH5P();
                     break;
                 default:
                     throw new HTMLPurifier_Exception(
@@ -161,6 +165,7 @@ class HTMLPurifier_Lexer
 
     /**
      * Most common entity to raw value conversion table for special entities.
+     *
      * @type array
      */
     protected $_special_entity2str = [
@@ -219,7 +224,7 @@ class HTMLPurifier_Lexer
 
         // subtracts amps that cannot possibly be escaped
         $num_amp = substr_count($string, '&') - substr_count($string, '& ') -
-            ($string[strlen($string) - 1] === '&' ? 1 : 0);
+                   ($string[strlen($string) - 1] === '&' ? 1 : 0);
 
         if (!$num_amp) {
             return $string;
@@ -230,7 +235,7 @@ class HTMLPurifier_Lexer
 
         // code duplication for sake of optimization, see above
         $num_amp_2 = substr_count($string, '&') - substr_count($string, '& ') -
-            ($string[strlen($string) - 1] === '&' ? 1 : 0);
+                     ($string[strlen($string) - 1] === '&' ? 1 : 0);
 
         if ($num_amp_2 <= $num_esc_amp) {
             return $string;
@@ -239,10 +244,12 @@ class HTMLPurifier_Lexer
         // hmm... now we have some uncommon entities. Use the callback.
         if ($config->get('Core.LegacyEntityDecoder')) {
             $string = $this->_entity_parser->substituteSpecialEntities($string);
-        } else if ($is_attr) {
-            $string = $this->_entity_parser->substituteAttrEntities($string);
         } else {
-            $string = $this->_entity_parser->substituteTextEntities($string);
+            if ($is_attr) {
+                $string = $this->_entity_parser->substituteAttrEntities($string);
+            } else {
+                $string = $this->_entity_parser->substituteTextEntities($string);
+            }
         }
 
         return $string;
@@ -255,7 +262,7 @@ class HTMLPurifier_Lexer
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return HTMLPurifier_Token[] array representation of HTML.
+     * @return Token[] array representation of HTML.
      */
     public function tokenizeHTML(string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
@@ -264,7 +271,9 @@ class HTMLPurifier_Lexer
 
     /**
      * Translates CDATA sections into regular sections (through escaping).
+     *
      * @param string $string HTML string to process.
+     *
      * @return string HTML with CDATA sections escaped.
      */
     protected static function escapeCDATA(string $string): string
@@ -278,7 +287,9 @@ class HTMLPurifier_Lexer
 
     /**
      * Special CDATA case that is especially convoluted for <script>
+     *
      * @param string $string HTML string to process.
+     *
      * @return string HTML with CDATA sections escaped.
      */
     protected static function escapeCommentedCDATA(string $string): string
@@ -292,7 +303,9 @@ class HTMLPurifier_Lexer
 
     /**
      * Special Internet Explorer conditional comments should be removed.
+     *
      * @param string $string HTML string to process.
+     *
      * @return string HTML with conditional comments removed.
      */
     protected static function removeIEConditional(string $string): string
@@ -309,8 +322,10 @@ class HTMLPurifier_Lexer
      *
      * @warning Though this is public in order to let the callback happen,
      *          calling it directly is not recommended.
+     *
      * @param array $matches PCRE matches array, with index 0 the entire match
-     *                  and 1 the inside of the CDATA section.
+     *                       and 1 the inside of the CDATA section.
+     *
      * @return string Escaped internals of the CDATA section.
      */
     protected static function CDATACallback(array $matches): string
@@ -339,7 +354,7 @@ class HTMLPurifier_Lexer
                 [
                     "\r\n", "\r"
                 ],
-        "\n",
+                "\n",
                 $html
             );
         }
@@ -385,7 +400,7 @@ class HTMLPurifier_Lexer
         $hidden_elements = $config->get('Core.HiddenElements');
         if ($config->get('Core.AggressivelyRemoveScript') &&
             !($config->get('HTML.Trusted') || !$config->get('Core.RemoveScriptContents')
-            || empty($hidden_elements['script']))) {
+              || empty($hidden_elements['script']))) {
             $html = preg_replace('#<script[^>]*>.*?</script>#i', '', $html);
         }
 
@@ -408,7 +423,7 @@ class HTMLPurifier_Lexer
         if ($result) {
             // Make sure it's not in a comment
             $comment_start = strrpos($matches[1], '<!--');
-            $comment_end   = strrpos($matches[1], '-->');
+            $comment_end = strrpos($matches[1], '-->');
             if ($comment_start === false ||
                 ($comment_end !== false && $comment_end > $comment_start)) {
                 return $matches[2];

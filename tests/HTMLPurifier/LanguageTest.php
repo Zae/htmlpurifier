@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Token\Start;
+
 /**
  * @todo Fix usage of HTMLPurifier_Language->_loaded using something else
  */
@@ -48,7 +50,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
         $lang->messages['LanguageTest: Element info'] = 'Element Token: $1.Name, $1.Serialized, $1.Compact, $1.Line';
         $lang->messages['LanguageTest: Data info']    = 'Data Token: $1.Data, $1.Serialized, $1.Compact, $1.Line';
         $this->assertIdentical($lang->formatMessage('LanguageTest: Element info',
-            array(1=>new HTMLPurifier_Token_Start('a', array('href'=>'http://example.com'), 18))),
+            array(1=>new Start('a', array('href'=>'http://example.com'), 18))),
             'Element Token: a, <a href="http://example.com">, <a>, 18');
         $this->assertIdentical($lang->formatMessage('LanguageTest: Data info',
             array(1=>new HTMLPurifier_Token_Text('data>', 23))),

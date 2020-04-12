@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 // OUT OF DATE, NEEDS UPDATING!
 // USE XMLWRITER!
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
 
 /**
  * Class HTMLPurifier_Printer
@@ -50,7 +52,7 @@ class HTMLPurifier_Printer
     protected function start(string $tag, array $attr = []): string
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Start($tag, $attr ?: [])
+            new Start($tag, $attr ?: [])
         );
     }
 
@@ -64,7 +66,7 @@ class HTMLPurifier_Printer
     protected function end(string $tag): string
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_End($tag)
+            new End($tag)
         );
     }
 

@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Lexer\DOMLex;
+
 /**
  * Experimental HTML5-based parser using Jeroen van der Meer's PH5P library.
  * Occupies space in the HTML5 pseudo-namespace, which may cause conflicts.
@@ -9,14 +12,14 @@
  *    error conditions with the original version of PH5P. Pending changes,
  *    this lexer will punt to DirectLex if DOM throws an exception.
  */
-class HTMLPurifier_Lexer_PH5P extends HTMLPurifier_Lexer_DOMLex
+class _PH5P extends DOMLex
 {
     /**
      * @param string               $string
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return HTMLPurifier_Token[]
+     * @return Token[]
      * @throws HTMLPurifier_Exception
      */
     public function tokenizeHTML($string, $config, $context): array

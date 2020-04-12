@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Structure that stores an HTML element definition. Used by
- * HTMLPurifier_HTMLDefinition and HTMLPurifier_HTMLModule.
+ * HTMLPurifier\HTMLPurifier_HTMLDefinition and HTMLPurifier_HTMLModule.
  * @note This class is inspected by HTMLPurifier_Printer_HTMLDefinition.
  *       Please update that class too.
  * @warning If you add new properties to this class, you MUST update
@@ -24,12 +24,12 @@ class HTMLPurifier_ElementDef
      * @type array
      * @note Before being processed by HTMLPurifier_AttrCollections
      *       when modules are finalized during
-     *       HTMLPurifier_HTMLDefinition->setup(), this array may also
+     *       HTMLPurifier\HTMLPurifier_HTMLDefinition->setup(), this array may also
      *       contain an array at index 0 that indicates which attribute
      *       collections to load into the full array. It may also
      *       contain string indentifiers in lieu of HTMLPurifier_AttrDef,
      *       see HTMLPurifier_AttrTypes on how they are expanded during
-     *       HTMLPurifier_HTMLDefinition->setup() processing.
+     *       HTMLPurifier\HTMLPurifier_HTMLDefinition->setup() processing.
      */
     public $attr = [];
 
@@ -94,7 +94,7 @@ class HTMLPurifier_ElementDef
 
     /**
      * List of the names of required attributes this element has.
-     * Dynamically populated by HTMLPurifier_HTMLDefinition::getElement()
+     * Dynamically populated by HTMLPurifier\HTMLPurifier_HTMLDefinition::getElement()
      * @type array
      */
     public $required_attr = [];

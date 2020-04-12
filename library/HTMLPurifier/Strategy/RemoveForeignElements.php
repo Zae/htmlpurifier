@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Removes all unrecognized tags from the list of tokens.
  *
@@ -12,11 +16,11 @@ declare(strict_types=1);
 class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
 {
     /**
-     * @param HTMLPurifier_Token[] $tokens
+     * @param Token[]              $tokens
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return array|HTMLPurifier_Token[]
+     * @return array|Token[]
      * @throws HTMLPurifier_Exception
      */
     public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
@@ -82,7 +86,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                 if (isset($definition->info[$token->name])) {
                     // mostly everything's good, but
                     // we need to make sure required attributes are in order
-                    if (($token instanceof HTMLPurifier_Token_Start || $token instanceof HTMLPurifier_Token_Empty) &&
+                    if (($token instanceof Start || $token instanceof HTMLPurifier_Token_Empty) &&
                         $definition->info[$token->name]->required_attr &&
                         ($token->name !== 'img' || $remove_invalid_img) // ensure config option still works
                     ) {
@@ -110,9 +114,9 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                         $token->armor['ValidateAttributes'] = true;
                     }
 
-                    if (isset($hidden_elements[$token->name]) && $token instanceof HTMLPurifier_Token_Start) {
+                    if (isset($hidden_elements[$token->name]) && $token instanceof Start) {
                         $textify_comments = $token->name;
-                    } elseif ($token->name === $textify_comments && $token instanceof HTMLPurifier_Token_End) {
+                    } elseif ($token->name === $textify_comments && $token instanceof End) {
                         $textify_comments = false;
                     }
 
@@ -129,7 +133,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                     // check if we need to destroy all of the tag's children
                     // CAN BE GENERICIZED
                     if (isset($hidden_elements[$token->name])) {
-                        if ($token instanceof HTMLPurifier_Token_Start) {
+                        if ($token instanceof Start) {
                             $remove_until = $token->name;
                         } elseif ($token instanceof HTMLPurifier_Token_Empty) {
                             // do nothing: we're still looking

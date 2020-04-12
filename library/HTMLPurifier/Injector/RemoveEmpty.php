@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Class HTMLPurifier_Injector_RemoveEmpty
  */
@@ -67,11 +71,11 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
     }
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleElement(HTMLPurifier_Token &$token)
+    public function handleElement(Token &$token)
     {
-        if (!$token instanceof HTMLPurifier_Token_Start) {
+        if (!$token instanceof Start) {
             return;
         }
 
@@ -97,7 +101,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
             break;
         }
 
-        if (!$next || ($next instanceof HTMLPurifier_Token_End && $next->name === $token->name)) {
+        if (!$next || ($next instanceof End && $next->name === $token->name)) {
             $this->attrValidator->validateToken($token, $this->config, $this->context);
             $token->armor['ValidateAttributes'] = true;
             if (isset($this->exclude[$token->name])) {

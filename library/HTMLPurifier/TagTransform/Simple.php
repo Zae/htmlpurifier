@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token\Tag;
+use HTMLPurifier\Token\Start;
+
 /**
  * Simple transformation, just change tag name to something else,
  * and possibly add some styling. This will cover most of the deprecated
@@ -25,18 +28,18 @@ class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
     }
 
     /**
-     * @param HTMLPurifier_Token_Tag $tag
-     * @param HTMLPurifier_Config    $config
-     * @param HTMLPurifier_Context   $context
+     * @param Tag                  $tag
+     * @param HTMLPurifier_Config  $config
+     * @param HTMLPurifier_Context $context
      *
      * @return string
      */
-    public function transform(HTMLPurifier_Token_Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function transform(Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;
         if (!is_null($this->style) &&
-            ($new_tag instanceof HTMLPurifier_Token_Start || $new_tag instanceof HTMLPurifier_Token_Empty)
+            ($new_tag instanceof Start || $new_tag instanceof HTMLPurifier_Token_Empty)
         ) {
             $this->prependCSS($new_tag->attr, $this->style);
         }

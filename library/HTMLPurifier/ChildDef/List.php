@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node\Element;
+
 /**
  * Definition for list containers ul and ol.
  *
@@ -78,7 +80,7 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
                 // not be appended to an existing li; only li created
                 // for non-list. This distinction is not currently made.
                 if ($current_li === null) {
-                    $current_li = new HTMLPurifier_Node_Element('li');
+                    $current_li = new Element('li');
                     $result[] = $current_li;
                 }
                 $current_li->children[] = $node;

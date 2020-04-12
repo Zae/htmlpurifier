@@ -1,6 +1,9 @@
 <?php
 
 // needs to be seperated into files
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
 {
 
@@ -44,25 +47,25 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
 
         // start tag transform
         $this->assertIdentical(
-                new HTMLPurifier_Token_Start($expect_name, $expect_added_attributes),
+                new Start($expect_name, $expect_added_attributes),
                 $transformer->transform(
-                    new HTMLPurifier_Token_Start($name), $config, $context)
+                    new Start($name), $config, $context)
             );
 
         // start tag transform with attributes
         $this->assertIdentical(
-                new HTMLPurifier_Token_Start($expect_name, $expect_attributes),
+                new Start($expect_name, $expect_attributes),
                 $transformer->transform(
-                    new HTMLPurifier_Token_Start($name, $attributes),
+                    new Start($name, $attributes),
                     $config, $context
                 )
             );
 
         // end tag transform
         $this->assertIdentical(
-                new HTMLPurifier_Token_End($expect_name),
+                new End($expect_name),
                 $transformer->transform(
-                    new HTMLPurifier_Token_End($name), $config, $context
+                    new End($name), $config, $context
                 )
             );
 

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Injector that converts configuration directive syntax %Namespace.Directive
  * to links
@@ -62,12 +65,12 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
                 }
                 $token[] = new HTMLPurifier_Token_Text($bits[$i]);
             } else {
-                $token[] = new HTMLPurifier_Token_Start(
+                $token[] = new Start(
                     'a',
                     ['href' => str_replace('%s', $bits[$i], $this->docURL)]
                 );
                 $token[] = new HTMLPurifier_Token_Text('%' . $bits[$i]);
-                $token[] = new HTMLPurifier_Token_End('a');
+                $token[] = new End('a');
             }
         }
     }

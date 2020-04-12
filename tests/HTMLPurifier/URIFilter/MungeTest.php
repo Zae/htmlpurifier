@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_URIFilter_MungeTest extends HTMLPurifier_URIFilterHarness
 {
 
@@ -34,7 +36,7 @@ class HTMLPurifier_URIFilter_MungeTest extends HTMLPurifier_URIFilterHarness
     public function testMungeReplaceTagName()
     {
         $this->setMunge('/r?tagname=%n&url=%s');
-        $token = new HTMLPurifier_Token_Start('a');
+        $token = new Start('a');
         $this->context->register('CurrentToken', $token);
         $this->assertFiltering('http://google.com', '/r?tagname=a&url=http%3A%2F%2Fgoogle.com');
     }

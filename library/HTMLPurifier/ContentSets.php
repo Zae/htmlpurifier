@@ -17,7 +17,7 @@ class HTMLPurifier_ContentSets
      * List of content set lookups (element => true) indexed by name.
      *
      * @type array
-     * @note This is in HTMLPurifier_HTMLDefinition->info_content_sets
+     * @note This is in HTMLPurifier\HTMLPurifier_HTMLDefinition->info_content_sets
      */
     public $lookup = [];
 

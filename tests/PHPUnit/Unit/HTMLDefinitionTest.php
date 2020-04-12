@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier;
 use HTMLPurifier_Config;
-use HTMLPurifier_HTMLDefinition;
+use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier_Injector;
 use HTMLPurifier_Injector_Linkify;
 
@@ -22,7 +22,7 @@ class HTMLDefinitionTest extends TestCase
      */
     public function test_parseTinyMCEAllowedList(): void
     {
-        $def = new HTMLPurifier_HTMLDefinition();
+        $def = new HTMLDefinition();
 
         // note: this is case-sensitive, but its config schema
         // counterpart is not. This is generally a good thing for users,

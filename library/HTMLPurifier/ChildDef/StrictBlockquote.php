@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node\Element;
+use HTMLPurifier\Node\Text;
+
 /**
  * Takes the contents of blockquote when in strict and reformats for validation.
  */
@@ -77,12 +80,12 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
 
         foreach ($result as $node) {
             if ($block_wrap === false) {
-                if (($node instanceof HTMLPurifier_Node_Text && !$node->is_whitespace) ||
-                    ($node instanceof HTMLPurifier_Node_Element && !isset($this->elements[$node->name]))) {
-                    $block_wrap = new HTMLPurifier_Node_Element($def->info_block_wrapper);
+                if (($node instanceof Text && !$node->is_whitespace) ||
+                    ($node instanceof Element && !isset($this->elements[$node->name]))) {
+                    $block_wrap = new Element($def->info_block_wrapper);
                     $ret[] = $block_wrap;
                 }
-            } else if ($node instanceof HTMLPurifier_Node_Element && isset($this->elements[$node->name])) {
+            } else if ($node instanceof Element && isset($this->elements[$node->name])) {
                 $block_wrap = false;
             }
 

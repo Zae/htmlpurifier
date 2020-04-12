@@ -2,17 +2,20 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\Start;
+
 /**
  * Validate all attributes in the tokens.
  */
 class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
 {
     /**
-     * @param HTMLPurifier_Token[] $tokens
+     * @param Token[]              $tokens
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return HTMLPurifier_Token[]
+     * @return Token[]
      */
     public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
     {
@@ -25,7 +28,7 @@ class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
         foreach ($tokens as $token) {
             // only process tokens that have attributes,
             //   namely start and empty tags
-            if (!$token instanceof HTMLPurifier_Token_Start && !$token instanceof HTMLPurifier_Token_Empty) {
+            if (!$token instanceof Start && !$token instanceof HTMLPurifier_Token_Empty) {
                 continue;
             }
 

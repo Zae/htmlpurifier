@@ -27,7 +27,7 @@ class HTMLPurifier_ErrorStruct
     /**
      * Value of the struct we are recording errors for. There are various
      * values for this:
-     *  - TOKEN: Instance of HTMLPurifier_Token
+     *  - TOKEN: Instance of HTMLPurifier\HTMLPurifier_Token
      *  - ATTR: array('attr-name', 'value')
      *  - CSSPROP: array('prop-name', 'value')
      * @type mixed

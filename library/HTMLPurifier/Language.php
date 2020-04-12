@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+
 /**
  * Represents a language and defines localizable string formatting and
  * other functions, as well as the localized messages for HTML Purifier.
@@ -187,7 +189,7 @@ class HTMLPurifier_Language
         $generator = false;
         foreach ($args as $i => $value) {
             if (is_object($value)) {
-                if ($value instanceof HTMLPurifier_Token) {
+                if ($value instanceof Token) {
                     // factor this out some time
                     if (!$generator) {
                         $generator = $this->context->get('Generator');

@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Generates HTML from tokens.
  *
@@ -30,7 +35,7 @@ class HTMLPurifier_Generator
      * Cache of HTMLDefinition during HTML output to determine whether or
      * not attributes should be minimized.
      *
-     * @type HTMLPurifier_HTMLDefinition
+     * @type HTMLDefinition
      */
     private $_def;
 
@@ -90,7 +95,7 @@ class HTMLPurifier_Generator
     /**
      * Generates HTML from an array of tokens.
      *
-     * @param HTMLPurifier_Token[] $tokens Array of HTMLPurifier_Token
+     * @param Token[] $tokens Array of HTMLPurifier\HTMLPurifier_Token
      *
      * @return string Generated HTML
      * @throws HTMLPurifier_Exception
@@ -105,7 +110,7 @@ class HTMLPurifier_Generator
         $html = '';
         for ($i = 0, $size = count($tokens); $i < $size; $i++) {
             if ($this->_scriptFix && $tokens[$i]->name === 'script'
-                && $i + 2 < $size && $tokens[$i + 2] instanceof HTMLPurifier_Token_End) {
+                && $i + 2 < $size && $tokens[$i + 2] instanceof End) {
                 // script special case
                 // the contents of the script block must be ONE token
                 // for this to work.
@@ -150,19 +155,19 @@ class HTMLPurifier_Generator
     /**
      * Generates HTML from a single token.
      *
-     * @param HTMLPurifier_Token $token HTMLPurifier_Token object.
+     * @param Token $token HTMLPurifier\HTMLPurifier_Token object.
      *
      * @return string Generated HTML
      */
     public function generateFromToken($token)
     {
-        if (!$token instanceof HTMLPurifier_Token) {
-            trigger_error('Cannot generate HTML from non-HTMLPurifier_Token object', E_USER_WARNING);
+        if (!$token instanceof Token) {
+            trigger_error('Cannot generate HTML from non-HTMLPurifier\HTMLPurifier_Token object', E_USER_WARNING);
 
             return '';
         }
 
-        if ($token instanceof HTMLPurifier_Token_Start) {
+        if ($token instanceof Start) {
             $attr = $this->generateAttributes($token->attr, $token->name);
             if ($this->_flashCompat && $token->name === "object") {
                 $flash = new stdClass();
@@ -175,7 +180,7 @@ class HTMLPurifier_Generator
 
         }
 
-        if ($token instanceof HTMLPurifier_Token_End) {
+        if ($token instanceof End) {
             $_extra = '';
             if ($this->_flashCompat && $token->name === 'object' && !empty($this->_flashStack)) {
                 // doesn't do anything for now
@@ -210,13 +215,13 @@ class HTMLPurifier_Generator
     /**
      * Special case processor for the contents of script tags
      *
-     * @param HTMLPurifier_Token $token HTMLPurifier_Token object.
+     * @param Token $token HTMLPurifier\HTMLPurifier_Token object.
      *
      * @return string
      * @warning This runs into problems if there's already a literal
      *          --> somewhere inside the script contents.
      */
-    public function generateScriptFromToken(HTMLPurifier_Token $token)
+    public function generateScriptFromToken(Token $token)
     {
         if (!$token instanceof HTMLPurifier_Token_Text) {
             return $this->generateFromToken($token);

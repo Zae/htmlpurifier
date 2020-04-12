@@ -10,7 +10,7 @@ use HTMLPurifier_Config;
 use HTMLPurifier_ErrorCollector;
 use HTMLPurifier_Generator;
 use HTMLPurifier_LanguageFactory;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\Start;
 use Mockery;
 
 /**
@@ -52,7 +52,7 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
 
         $def->info_attr_transform_pre[] = $transform;
 
-        $token = new HTMLPurifier_Token_Start('span', $input, 1);
+        $token = new Start('span', $input, 1);
         $this->invoke($token);
 
         $result = $this->collector->getRaw();
@@ -71,7 +71,7 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
         $this->config->set('HTML.TidyLevel', 'heavy');
         $input = ['align' => 'right'];
 
-        $token = new HTMLPurifier_Token_Start('p', $input, 1);
+        $token = new Start('p', $input, 1);
         $this->invoke($token);
         $result = $this->collector->getRaw();
         $expect = [
@@ -89,7 +89,7 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
      */
     public function testAttributeRemoved(): void
     {
-        $token = new HTMLPurifier_Token_Start('p', ['foobar' => 'right'], 1);
+        $token = new Start('p', ['foobar' => 'right'], 1);
         $this->invoke($token);
         $result = $this->collector->getRaw();
         $expect = [

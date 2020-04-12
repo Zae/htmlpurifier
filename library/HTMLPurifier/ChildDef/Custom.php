@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node;
+
 /**
  * Custom validation class, accepts DTD child definitions
  *
@@ -78,7 +80,7 @@ class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param HTMLPurifier_Node[]  $children
+     * @param Node[]               $children
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *

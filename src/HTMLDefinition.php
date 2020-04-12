@@ -2,6 +2,18 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_AttrTransform;
+use HTMLPurifier_Config;
+use HTMLPurifier_Definition;
+use HTMLPurifier_Doctype;
+use HTMLPurifier_ElementDef;
+use HTMLPurifier_Exception;
+use HTMLPurifier_HTMLModule;
+use HTMLPurifier_HTMLModuleManager;
+use HTMLPurifier_Injector;
+
 /**
  * Definition of the purified HTML that describes allowed children,
  * attributes, and many other things.
@@ -25,7 +37,7 @@ declare(strict_types=1);
  * @warning Directives that change this object's structure must be in
  *          the HTML or Attr namespace!
  */
-class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
+class HTMLDefinition extends HTMLPurifier_Definition
 {
     // FULLY-PUBLIC VARIABLES ---------------------------------------------
 

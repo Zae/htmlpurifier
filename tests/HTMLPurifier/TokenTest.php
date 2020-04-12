@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_TokenTest extends HTMLPurifier_Harness
 {
 
@@ -8,7 +10,7 @@ class HTMLPurifier_TokenTest extends HTMLPurifier_Harness
     ) {
         if ($expect_name === null) $expect_name = $name;
         if ($expect_attr === null) $expect_attr = $attr;
-        $token = new HTMLPurifier_Token_Start($name, $attr);
+        $token = new Start($name, $attr);
 
         $this->assertIdentical($expect_name, $token->name);
         $this->assertIdentical($expect_attr, $token->attr);
