@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Takes tokens makes them well-formed (balance end tags, etc.)
  *
@@ -18,14 +22,14 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
     /**
      * Array stream of tokens being processed.
      *
-     * @type HTMLPurifier_Token[]
+     * @type Token[]
      */
     protected $tokens;
 
     /**
      * Current token.
      *
-     * @type HTMLPurifier_Token
+     * @type Token
      */
     protected $token;
 
@@ -65,11 +69,11 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
     protected $context;
 
     /**
-     * @param HTMLPurifier_Token[] $tokens
+     * @param Token[]              $tokens
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *
-     * @return HTMLPurifier_Token[]
+     * @return Token[]
      * @throws HTMLPurifier_Exception
      */
     public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
@@ -185,9 +189,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         unset($token->skip[$i]);
                         $token->rewind = $i;
 
-                        if ($token instanceof HTMLPurifier_Token_Start) {
+                        if ($token instanceof Start) {
                             array_pop($this->stack);
-                        } elseif ($token instanceof HTMLPurifier_Token_End) {
+                        } elseif ($token instanceof End) {
                             $this->stack[] = $token->start;
                         }
                     }
@@ -213,7 +217,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 }
 
                 // append, don't splice, since this is the end
-                $token = new HTMLPurifier_Token_End($top_nesting->name);
+                $token = new End($top_nesting->name);
 
                 // punt!
                 $reprocess = true;
@@ -257,7 +261,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
             // quick tag checks: anything that's *not* an end tag
             $ok = false;
-            if ($type === 'empty' && $token instanceof HTMLPurifier_Token_Start) {
+            if ($type === 'empty' && $token instanceof Start) {
                 // claims to be a start tag but is empty
                 $token = new HTMLPurifier_Token_Empty(
                     $token->name,
@@ -271,9 +275,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 // claims to be empty but really is a start tag
                 // NB: this assignment is required
                 $old_token = $token;
-                $token = new HTMLPurifier_Token_End($token->name);
+                $token = new End($token->name);
                 $token = $this->insertBefore(
-                    new HTMLPurifier_Token_Start($old_token->name, $old_token->attr, $old_token->line, $old_token->col, $old_token->armor)
+                    new Start($old_token->name, $old_token->attr, $old_token->line, $old_token->col, $old_token->armor)
                 );
 
                 // punt (since we had to modify the input stream in a non-trivial way)
@@ -282,7 +286,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             } elseif ($token instanceof HTMLPurifier_Token_Empty) {
                 // real empty token
                 $ok = true;
-            } elseif ($token instanceof HTMLPurifier_Token_Start) {
+            } elseif ($token instanceof Start) {
                 // start tag
 
                 // ...unless they also have to close their parent
@@ -322,7 +326,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                         $wrapdef = $definition->info[$wrapname];
                         $elements = $wrapdef->child->getAllowedElements($config);
                         if (isset($elements[$token->name], $parent_elements[$wrapname])) {
-                            $newtoken = new HTMLPurifier_Token_Start($wrapname);
+                            $newtoken = new Start($wrapname);
                             $token = $this->insertBefore($newtoken);
                             $reprocess = true;
                             continue;
@@ -360,7 +364,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
                         if ($autoclose_ok) {
                             // errors need to be updated
-                            $new_token = new HTMLPurifier_Token_End($parent->name);
+                            $new_token = new End($parent->name);
                             $new_token->start = $parent;
                             // [TagClosedSuppress]
 
@@ -412,9 +416,9 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 
                 if (!$reprocess) {
                     // ah, nothing interesting happened; do normal processing
-                    if ($token instanceof HTMLPurifier_Token_Start) {
+                    if ($token instanceof Start) {
                         $this->stack[] = $token;
-                    } elseif ($token instanceof HTMLPurifier_Token_End) {
+                    } elseif ($token instanceof End) {
                         throw new HTMLPurifier_Exception(
                             'Improper handling of end tag in start code; possible error in MakeWellFormed'
                         );
@@ -425,7 +429,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             }
 
             // sanity check: we should be dealing with a closing tag
-            if (!$token instanceof HTMLPurifier_Token_End) {
+            if (!$token instanceof End) {
                 throw new HTMLPurifier_Exception('Unaccounted for tag token in input stream, bug in HTML Purifier');
             }
 
@@ -526,7 +530,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             $replace = [$token];
             for ($j = 1; $j < $c; $j++) {
                 // ...as well as from the insertions
-                $new_token = new HTMLPurifier_Token_End($skipped_tags[$j]->name);
+                $new_token = new End($skipped_tags[$j]->name);
                 $new_token->start = $skipped_tags[$j];
                 array_unshift($replace, $new_token);
                 if (isset($definition->info[$new_token->name]) && $definition->info[$new_token->name]->formatting) {
@@ -567,8 +571,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * If $token is an integer, that number of tokens (with the first token
      * being the current one) will be deleted.
      *
-     * @param HTMLPurifier_Token|array|int|bool $token    Token substitution value
-     * @param HTMLPurifier_Injector|int         $injector Injector that performed the substitution; default is if
+     * @param Token|array|int|bool      $token            Token substitution value
+     * @param HTMLPurifier_Injector|int $injector         Injector that performed the substitution; default is if
      *                                                    this is not an injector related operation.
      *
      * @return mixed
@@ -633,11 +637,11 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
      * Inserts a token before the current token. Cursor now points to
      * this token.  You must reprocess after this.
      *
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      *
      * @return mixed
      */
-    private function insertBefore(HTMLPurifier_Token $token)
+    private function insertBefore(Token $token)
     {
         // NB not $this->zipper->insertBefore(), due to positioning
         // differences
@@ -659,7 +663,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 // Note [Injector skips]
 // ~~~~~~~~~~~~~~~~~~~~~
 // When I originally designed this class, the idea behind the 'skip'
-// property of HTMLPurifier_Token was to help avoid infinite loops
+// property of HTMLPurifier\HTMLPurifier_Token was to help avoid infinite loops
 // in injector processing.  For example, suppose you wrote an injector
 // that bolded swear words.  Naively, you might write it so that
 // whenever you saw ****, you replaced it with <strong>****</strong>.

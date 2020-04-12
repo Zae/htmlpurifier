@@ -10,7 +10,7 @@ use HTMLPurifier_CSSDefinition;
 use HTMLPurifier_DefinitionCache;
 use HTMLPurifier_DefinitionCacheFactory;
 use HTMLPurifier_Exception;
-use HTMLPurifier_HTMLDefinition;
+use HTMLPurifier\HTMLDefinition;
 use Mockery;
 use stdClass;
 
@@ -269,7 +269,7 @@ class ConfigTest extends TestCase
 
         $def = $config->getHTMLDefinition();
         $def2 = $config->getHTMLDefinition();
-        static::assertInstanceOf(HTMLPurifier_HTMLDefinition::class, $def);
+        static::assertInstanceOf(HTMLDefinition::class, $def);
         static::assertTrue($def === $def2);
         static::assertTrue($def->setup);
 
@@ -277,7 +277,7 @@ class ConfigTest extends TestCase
 
         $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
         $def = $config->getHTMLDefinition();
-        static::assertInstanceOf( HTMLPurifier_HTMLDefinition::class, $def);
+        static::assertInstanceOf( HTMLDefinition::class, $def);
         static::assertTrue($def !== $old_def);
         static::assertTrue($def->setup);
 

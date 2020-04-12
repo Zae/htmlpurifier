@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit\Strategy\FixNesting;
 use HTMLPurifier\Tests\Unit\Strategy\ErrorsTestCase;
 use HTMLPurifier_Strategy;
 use HTMLPurifier_Strategy_FixNesting;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\Start;
 
 /**
  * Class ErrorsTest
@@ -21,7 +21,7 @@ class ErrorsTest extends ErrorsTestCase
     public function testNodeRemoved(): void
     {
         $this->expectErrorCollection(E_ERROR, 'Strategy_FixNesting: Node removed');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('ul', [], 1));
+        $this->expectContext('CurrentToken', new Start('ul', [], 1));
         $this->invoke('<ul></ul>');
     }
 
@@ -31,7 +31,7 @@ class ErrorsTest extends ErrorsTestCase
     public function testNodeExcluded(): void
     {
         $this->expectErrorCollection(E_ERROR, 'Strategy_FixNesting: Node excluded');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('a', [], 2));
+        $this->expectContext('CurrentToken', new Start('a', [], 2));
         $this->invoke("<a>\n<a></a></a>");
     }
 
@@ -41,7 +41,7 @@ class ErrorsTest extends ErrorsTestCase
     public function testNodeReorganized(): void
     {
         $this->expectErrorCollection(E_WARNING, 'Strategy_FixNesting: Node reorganized');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('span', [], 1));
+        $this->expectContext('CurrentToken', new Start('span', [], 1));
         $this->invoke('<span>Valid<div>Invalid</div></span>');
     }
 
@@ -60,7 +60,7 @@ class ErrorsTest extends ErrorsTestCase
     public function testNodeContentsRemoved(): void
     {
         $this->expectErrorCollection(E_ERROR, 'Strategy_FixNesting: Node contents removed');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('span', [], 1));
+        $this->expectContext('CurrentToken', new Start('span', [], 1));
         $this->invoke('<span><div></div></span>');
     }
 

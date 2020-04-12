@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node;
+
 /**
  * Definition that disallows all elements.
  *
@@ -23,7 +25,7 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
     public $type = 'empty';
 
     /**
-     * @param HTMLPurifier_Node[]  $children
+     * @param Node[]               $children
      * @param HTMLPurifier_Config  $config
      * @param HTMLPurifier_Context $context
      *

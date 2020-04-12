@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Lexer\DOMLex;
+
 require_once '../library/HTMLPurifier.auto.php';
 @include_once '../test-settings.php';
 
@@ -16,7 +18,7 @@ $LEXERS['DirectLex'] = new HTMLPurifier_Lexer_DirectLex();
 
 if (version_compare(PHP_VERSION, '5', '>=')) {
     require_once 'HTMLPurifier/Lexer/DOMLex.php';
-    $LEXERS['DOMLex'] = new HTMLPurifier_Lexer_DOMLex();
+    $LEXERS['DOMLex'] = new DOMLex();
 }
 
 // custom class to aid unit testing

@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
 {
 
@@ -46,7 +49,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_startWithAttr()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Start('a',
+            new Start('a',
                 array('href' => 'dyn?a=foo&b=bar')
             ),
             '<a href="dyn?a=foo&amp;b=bar">'
@@ -56,7 +59,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_end()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_End('b'),
+            new End('b'),
             '</b>'
         );
     }
@@ -74,7 +77,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_startNoAttr()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Start('asdf'),
+            new Start('asdf'),
             '<asdf>'
         );
     }
@@ -89,7 +92,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
 
     public function test_generateFromToken_error()
     {
-        $this->expectError('Cannot generate HTML from non-HTMLPurifier_Token object');
+        $this->expectError('Cannot generate HTML from non-HTMLPurifier\HTMLPurifier_Token object');
         $this->assertGenerateFromToken( null, '' );
     }
 
@@ -105,7 +108,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_backtick()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Start('img', array('alt' => '`foo')),
+            new Start('img', array('alt' => '`foo')),
             '<img alt="`foo ">'
         );
     }
@@ -114,7 +117,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     {
         $this->config->set('Output.FixInnerHTML', false);
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Start('img', array('alt' => '`')),
+            new Start('img', array('alt' => '`')),
             '<img alt="`">'
         );
     }
@@ -122,7 +125,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_backtickNoChange()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Start('img', array('alt' => '`foo` bar')),
+            new Start('img', array('alt' => '`foo` bar')),
             '<img alt="`foo` bar">'
         );
     }
@@ -193,9 +196,9 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     {
         $this->assertGeneration(
             array(
-                new HTMLPurifier_Token_Start('b'),
+                new Start('b'),
                 new HTMLPurifier_Token_Text('Foobar!'),
-                new HTMLPurifier_Token_End('b')
+                new End('b')
             ),
             '<b>Foobar!</b>'
         );
@@ -213,9 +216,9 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     {
         $this->assertGeneration(
             array(
-                new HTMLPurifier_Token_Start('script'),
+                new Start('script'),
                 new HTMLPurifier_Token_Text('alert(3 < 5);'),
-                new HTMLPurifier_Token_End('script')
+                new End('script')
             ),
             "<script><!--//--><![CDATA[//><!--\nalert(3 < 5);\n//--><!]]></script>"
         );
@@ -225,7 +228,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     {
         $this->assertGeneration(
             array(
-                new HTMLPurifier_Token_Start('script'),
+                new Start('script'),
                 new HTMLPurifier_Token_Text('alert(3 < 5);'),
             ),
             "<script>alert(3 &lt; 5);"
@@ -236,10 +239,10 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     {
         $this->assertGeneration(
             array(
-                new HTMLPurifier_Token_Start('script'),
+                new Start('script'),
                 new HTMLPurifier_Token_Text('alert(3 < 5);'),
                 new HTMLPurifier_Token_Text('foo();'),
-                new HTMLPurifier_Token_End('script')
+                new End('script')
             ),
             "<script>alert(3 &lt; 5);foo();</script>"
         );
@@ -250,9 +253,9 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->config->set('Output.CommentScriptContents', false);
         $this->assertGeneration(
             array(
-                new HTMLPurifier_Token_Start('script'),
+                new Start('script'),
                 new HTMLPurifier_Token_Text('alert(3 < 5);'),
-                new HTMLPurifier_Token_End('script')
+                new End('script')
             ),
             "<script>alert(3 &lt; 5);</script>"
         );
@@ -274,7 +277,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
 
         // namespaced attributes must be dropped
         $this->assertGeneration(
-            array( new HTMLPurifier_Token_Start('p', array('xml:lang'=>'fr')) ),
+            array( new Start('p', array('xml:lang'=>'fr')) ),
             '<p>'
         );
 
@@ -294,9 +297,9 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         // nice wrapping please
         $this->assertGeneration(
             array(
-                new HTMLPurifier_Token_Start('div'),
+                new Start('div'),
                 new HTMLPurifier_Token_Text('Text'),
-                new HTMLPurifier_Token_End('div')
+                new End('div')
             ),
             "<div>\n  Text\n</div>\n"
         );
@@ -308,7 +311,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->config->set('Output.SortAttr', true);
 
         $this->assertGeneration(
-            array( new HTMLPurifier_Token_Start('p', array('b'=>'c', 'a'=>'d')) ),
+            array( new Start('p', array('b'=>'c', 'a'=>'d')) ),
             '<p a="d" b="c">'
         );
 

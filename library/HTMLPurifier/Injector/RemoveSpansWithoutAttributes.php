@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Injector that removes spans with no attributes
  */
@@ -44,11 +48,11 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
     }
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleElement(HTMLPurifier_Token &$token)
+    public function handleElement(Token &$token)
     {
-        if ($token->name !== 'span' || !$token instanceof HTMLPurifier_Token_Start) {
+        if ($token->name !== 'span' || !$token instanceof Start) {
             return;
         }
 
@@ -65,7 +69,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
         $nesting = 0;
         while ($this->forwardUntilEndToken($i, $current, $nesting)) {}
 
-        if ($current instanceof HTMLPurifier_Token_End && $current->name === 'span') {
+        if ($current instanceof End && $current->name === 'span') {
             // Mark closing span tag for deletion
             $current->markForDeletion = true;
             // Delete open span tag
@@ -74,9 +78,9 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
     }
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleEnd(HTMLPurifier_Token &$token)
+    public function handleEnd(Token &$token)
     {
         if ($token->markForDeletion) {
             $token = false;

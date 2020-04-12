@@ -1,10 +1,13 @@
 <?php
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_Strategy_MakeWellFormed_EndRewindInjector extends HTMLPurifier_Injector
 {
     public $name = 'EndRewindInjector';
     public $needed = array('span');
-    public function handleElement(HTMLPurifier_Token &$token)
+    public function handleElement(Token &$token)
     {
         if (isset($token->_InjectorTest_EndRewindInjector_delete)) {
             $token = false;
@@ -14,12 +17,12 @@ class HTMLPurifier_Strategy_MakeWellFormed_EndRewindInjector extends HTMLPurifie
     {
         $token = false;
     }
-    public function handleEnd(HTMLPurifier_Token &$token)
+    public function handleEnd(Token &$token)
     {
         $i = null;
         if (
             $this->backward($i, $prev) &&
-            $prev instanceof HTMLPurifier_Token_Start &&
+            $prev instanceof Start &&
             $prev->name == 'span'
         ) {
             $token = false;

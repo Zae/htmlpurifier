@@ -7,8 +7,8 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier\Arborize;
 use HTMLPurifier_Generator;
 use HTMLPurifier_Lexer_DirectLex;
-use HTMLPurifier_Node;
-use HTMLPurifier_Node_Element;
+use HTMLPurifier\Node;
+use HTMLPurifier\Node\Element;
 use function is_array;
 use function is_bool;
 use function is_string;
@@ -106,7 +106,7 @@ class ComplexTestCase extends TestCase
         if ($this->to_html) {
             if ($this->to_node_list) {
                 $result = $this->generateTokens($result);
-                if (is_array($expect) && !empty($expect) && $expect[0] instanceof HTMLPurifier_Node) {
+                if (is_array($expect) && !empty($expect) && $expect[0] instanceof Node) {
                     $expect = $this->generateTokens($expect);
                 }
             }
@@ -127,7 +127,7 @@ class ComplexTestCase extends TestCase
      *
      * @param $html
      *
-     * @return array|\HTMLPurifier_Token[]
+     * @return array|\HTMLPurifier\Token[]
      * @throws \HTMLPurifier_Exception
      */
     protected function tokenize($html): array
@@ -158,7 +158,7 @@ class ComplexTestCase extends TestCase
      */
     protected function generateTokens($children): array
     {
-        $dummy = new HTMLPurifier_Node_Element('dummy');
+        $dummy = new Element('dummy');
         $dummy->children = $children;
 
         return Arborize::flatten($dummy);

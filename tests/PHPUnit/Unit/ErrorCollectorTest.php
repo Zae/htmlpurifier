@@ -7,7 +7,7 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier_ErrorCollector;
 use HTMLPurifier_Generator;
 use HTMLPurifier_Language;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\Start;
 use Mockery;
 
 /**
@@ -153,7 +153,7 @@ class ErrorCollectorTest extends TestCase
         $this->context->register('CurrentToken', $current_token);
 
         // 0
-        $current_token = new HTMLPurifier_Token_Start('a', ['href' => 'http://example.com'], 32);
+        $current_token = new Start('a', ['href' => 'http://example.com'], 32);
 
         $this->language->expects()
             ->formatMessage('message-data-token', ['CurrentToken' => $current_token])

@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node;
+use HTMLPurifier\Token\Tag;
+
 /**
  * Concrete empty token class.
  */
-class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag
+class HTMLPurifier_Token_Empty extends Tag
 {
-    public function toNode(): HTMLPurifier_Node
+    public function toNode(): Node
     {
         $n = parent::toNode();
         $n->empty = true;

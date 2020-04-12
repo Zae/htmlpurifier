@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 /**
  * Abstract base token class that all others inherit from.
  */
-abstract class HTMLPurifier_Token
+abstract class Token
 {
     /**
      * Line number node was on in source document. Null if unknown.
@@ -57,11 +59,11 @@ abstract class HTMLPurifier_Token
         if ($n === 'type') {
             trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
             switch (get_class($this)) {
-                case 'HTMLPurifier_Token_Start':
+                case 'HTMLPurifier\Token\Start':
                     return 'start';
                 case 'HTMLPurifier_Token_Empty':
                     return 'empty';
-                case 'HTMLPurifier_Token_End':
+                case 'HTMLPurifier\Token\End':
                     return 'end';
                 case 'HTMLPurifier_Token_Text':
                     return 'text';
@@ -106,7 +108,7 @@ abstract class HTMLPurifier_Token
     /**
      * Converts a token into its corresponding node.
      *
-     * @return HTMLPurifier_Node
+     * @return Node
      */
-    abstract public function toNode(): HTMLPurifier_Node;
+    abstract public function toNode(): Node;
 }

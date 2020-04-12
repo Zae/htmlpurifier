@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token\Tag;
+
 /**
  * Defines a mutation of an obsolete tag into a valid tag.
  */
@@ -16,11 +18,11 @@ abstract class HTMLPurifier_TagTransform
     /**
      * Transforms the obsolete tag into the valid tag.
      *
-     * @param HTMLPurifier_Token_Tag $tag     Tag to be transformed.
-     * @param HTMLPurifier_Config    $config  Mandatory HTMLPurifier_Config object
-     * @param HTMLPurifier_Context   $context Mandatory HTMLPurifier_Context object
+     * @param Tag                  $tag     Tag to be transformed.
+     * @param HTMLPurifier_Config  $config  Mandatory HTMLPurifier_Config object
+     * @param HTMLPurifier_Context $context Mandatory HTMLPurifier_Context object
      */
-    abstract public function transform(HTMLPurifier_Token_Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
+    abstract public function transform(Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
 
     /**
      * Prepends CSS properties to the style attribute, creating the

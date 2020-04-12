@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLDefinition;
+
 /**
  * Class HTMLPurifier_Printer_HTMLDefinition
  */
 class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
 {
     /**
-     * @type HTMLPurifier_HTMLDefinition, for easy access
+     * @type HTMLDefinition, for easy access
      */
     protected $def;
 

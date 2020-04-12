@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
 /**
  * Abstract base node class that all others inherit from.
  *
@@ -10,16 +11,18 @@ declare(strict_types=1);
  * whereas we want a maximally flexible representation, and (3) its
  * interface is a bit cumbersome.
  */
-abstract class HTMLPurifier_Node
+abstract class Node
 {
     /**
      * Line number of the start token in the source document
+     *
      * @type int
      */
     public $line;
 
     /**
      * Column number of the start token in the source document. Null if unknown.
+     *
      * @type int
      */
     public $col;
@@ -27,6 +30,7 @@ abstract class HTMLPurifier_Node
     /**
      * Lookup array of processing that this token is exempt from.
      * Currently, valid values are "ValidateAttributes".
+     *
      * @type array
      */
     public $armor = [];
@@ -43,6 +47,7 @@ abstract class HTMLPurifier_Node
     /**
      * Returns a pair of start and end tokens, where the end token
      * is null if it is not necessary. Does not include children.
+     *
      * @type array
      */
     abstract public function toTokenPair();

@@ -1,6 +1,8 @@
 <?php
 
 use HTMLPurifier\Arborize;
+use HTMLPurifier\Node;
+use HTMLPurifier\Node\Element;
 
 /**
  * General-purpose test-harness that makes testing functions that require
@@ -91,7 +93,7 @@ class HTMLPurifier_ComplexHarness extends HTMLPurifier_Harness
         if ($this->to_html) {
             if ($this->to_node_list) {
                 $result = $this->generateTokens($result);
-                if (is_array($expect) && !empty($expect) && $expect[0] instanceof HTMLPurifier_Node) {
+                if (is_array($expect) && !empty($expect) && $expect[0] instanceof Node) {
                     $expect = $this->generateTokens($expect);
                 }
             }
@@ -130,7 +132,7 @@ class HTMLPurifier_ComplexHarness extends HTMLPurifier_Harness
      */
     protected function generateTokens($children)
     {
-        $dummy = new HTMLPurifier_Node_Element("dummy");
+        $dummy = new Element("dummy");
         $dummy->children = $children;
         return Arborize::flatten($dummy, $this->context, $this->config);
     }

@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Node;
+use HTMLPurifier\Node\Comment;
+
 /**
  * Concrete comment token class. Generally will be ignored.
  */
-class HTMLPurifier_Token_Comment extends HTMLPurifier_Token
+class HTMLPurifier_Token_Comment extends Token
 {
     /**
      * Character data within comment.
@@ -36,10 +40,10 @@ class HTMLPurifier_Token_Comment extends HTMLPurifier_Token
     /**
      * Converts a token into its corresponding node.
      *
-     * @return HTMLPurifier_Node
+     * @return Node
      */
-    public function toNode(): HTMLPurifier_Node
+    public function toNode(): Node
     {
-        return new HTMLPurifier_Node_Comment($this->data, $this->line, $this->col);
+        return new Comment($this->data, $this->line, $this->col);
     }
 }

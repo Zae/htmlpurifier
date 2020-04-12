@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLDefinition;
+
 /**
  * Configuration object that triggers customizable behavior.
  *
@@ -437,7 +439,7 @@ class HTMLPurifier_Config
      *                        maybeGetRawHTMLDefinition, which is more explicitly
      *                        named, instead.
      *
-     * @return HTMLPurifier_HTMLDefinition|null
+     * @return HTMLDefinition|null
      * @throws HTMLPurifier_Exception
      */
     public function getHTMLDefinition(bool $raw = false, bool $optimized = false)
@@ -659,14 +661,14 @@ class HTMLPurifier_Config
      *
      * @param string $type What type of definition to create
      *
-     * @return HTMLPurifier_CSSDefinition|HTMLPurifier_HTMLDefinition|HTMLPurifier_URIDefinition
+     * @return HTMLPurifier_CSSDefinition|HTMLDefinition|HTMLPurifier_URIDefinition
      * @throws HTMLPurifier_Exception
      */
     private function initDefinition(string $type)
     {
         // quick checks failed, let's create the object
         if ($type === 'HTML') {
-            $def = new HTMLPurifier_HTMLDefinition();
+            $def = new HTMLDefinition();
         } elseif ($type === 'CSS') {
             $def = new HTMLPurifier_CSSDefinition();
         } elseif ($type === 'URI') {
@@ -687,7 +689,7 @@ class HTMLPurifier_Config
     }
 
     /**
-     * @return HTMLPurifier_HTMLDefinition|null
+     * @return HTMLDefinition|null
      * @throws HTMLPurifier_Exception
      */
     public function maybeGetRawHTMLDefinition()

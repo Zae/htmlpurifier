@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Tag;
+
 /**
  * Transforms FONT tags to the proper form (SPAN with CSS styling)
  *
@@ -45,15 +48,15 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
     ];
 
     /**
-     * @param HTMLPurifier_Token_Tag $tag
-     * @param HTMLPurifier_Config    $config
-     * @param HTMLPurifier_Context   $context
+     * @param Tag                  $tag
+     * @param HTMLPurifier_Config  $config
+     * @param HTMLPurifier_Context $context
      *
-     * @return HTMLPurifier_Token_End|string
+     * @return End|string
      */
-    public function transform(HTMLPurifier_Token_Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function transform(Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
     {
-        if ($tag instanceof HTMLPurifier_Token_End) {
+        if ($tag instanceof End) {
             $new_tag = clone $tag;
             $new_tag->name = $this->transform_to;
 

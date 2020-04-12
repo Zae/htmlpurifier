@@ -12,7 +12,7 @@ declare(strict_types=1);
  * family of HTMLPurifier_AttrTransform.
  *
  * An attribute transformation can be assigned to run before or after
- * HTMLPurifier_AttrDef validation.  See HTMLPurifier_HTMLDefinition for
+ * HTMLPurifier_AttrDef validation.  See HTMLPurifier\HTMLPurifier_HTMLDefinition for
  * more details.
  */
 abstract class HTMLPurifier_AttrTransform
@@ -21,7 +21,7 @@ abstract class HTMLPurifier_AttrTransform
      * Abstract: makes changes to the attributes dependent on multiple values.
      *
      * @param array                $attr    Assoc array of attributes, usually from
-     *                                      HTMLPurifier_Token_Tag::$attr
+     *                                      HTMLPurifier\Token\HTMLPurifier_Token_Tag::$attr
      * @param HTMLPurifier_Config  $config  Mandatory HTMLPurifier_Config object.
      * @param HTMLPurifier_Context $context Mandatory HTMLPurifier_Context object
      *

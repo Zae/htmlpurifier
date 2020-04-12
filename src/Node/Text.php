@@ -2,6 +2,11 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Node;
+
+use HTMLPurifier\Node;
+use HTMLPurifier_Token_Text;
+
 /**
  * Concrete text token class.
  *
@@ -11,7 +16,7 @@ declare(strict_types=1);
  * does have a "tag name" called #PCDATA, which is how the DTD represents it
  * in permissible child nodes.
  */
-class HTMLPurifier_Node_Text extends HTMLPurifier_Node
+class Text extends Node
 {
     /**
      * PCDATA tag name compatible with DTD, see

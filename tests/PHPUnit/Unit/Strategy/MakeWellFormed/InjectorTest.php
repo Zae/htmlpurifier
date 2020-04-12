@@ -7,8 +7,8 @@ namespace HTMLPurifier\Tests\Unit\Strategy\MakeWellFormed;
 use HTMLPurifier\Tests\Unit\Strategy\TestCase;
 use HTMLPurifier_Injector;
 use HTMLPurifier_Strategy_MakeWellFormed;
-use HTMLPurifier_Token_End;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
 use Mockery;
 
 /**
@@ -37,9 +37,9 @@ class InjectorTest extends TestCase
         $this->markAsRisky();
         $mock = Mockery::mock(HTMLPurifier_Injector::class);
 
-        $b = new HTMLPurifier_Token_End('b');
+        $b = new End('b');
         $b->skip = [0 => true];
-        $b->start = new HTMLPurifier_Token_Start('b');
+        $b->start = new Start('b');
         $b->start->skip = [0 => true, 1 => true];
 
         $mock->expects()
@@ -58,8 +58,8 @@ class InjectorTest extends TestCase
              ->handleText(Mockery::any())
              ->once();
 
-        $i = new HTMLPurifier_Token_End('i');
-        $i->start = new HTMLPurifier_Token_Start('i');
+        $i = new End('i');
+        $i->start = new Start('i');
         $i->skip = [0 => true];
         $i->start->skip = [0 => true, 1 => true];
 

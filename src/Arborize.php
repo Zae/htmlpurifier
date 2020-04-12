@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Node_Element;
+use HTMLPurifier\Node\Element;
 use HTMLPurifier_Queue;
-use HTMLPurifier_Token_End;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
 
 /**
- * Converts a stream of HTMLPurifier_Token into an HTMLPurifier_Node,
+ * Converts a stream of HTMLPurifier\HTMLPurifier_Token into an HTMLPurifier\HTMLPurifier_Node,
  * and back again.
  *
  * @note This transformation is not an equivalence.  We mutate the input
@@ -27,13 +27,13 @@ class Arborize
     public static function arborize($tokens, $config)
     {
         $definition = $config->getHTMLDefinition();
-        $parent = new HTMLPurifier_Token_Start($definition->info_parent);
+        $parent = new Start($definition->info_parent);
         $stack = [$parent->toNode()];
 
         foreach ($tokens as $token) {
             $token->skip = null; // [MUT]
             $token->carryover = null; // [MUT]
-            if ($token instanceof HTMLPurifier_Token_End) {
+            if ($token instanceof End) {
                 $token->start = null; // [MUT]
                 $r = array_pop($stack);
                 //assert($r->name === $token->name);
@@ -47,7 +47,7 @@ class Arborize
             $node = $token->toNode();
             $stack[count($stack) - 1]->children[] = $node;
 
-            if ($token instanceof HTMLPurifier_Token_Start) {
+            if ($token instanceof Start) {
                 $stack[] = $node;
             }
         }
@@ -77,7 +77,7 @@ class Arborize
                 if ($end !== null) {
                     $closingTokens[$level][] = $end;
                 }
-                if ($node instanceof HTMLPurifier_Node_Element) {
+                if ($node instanceof Element) {
                     $level++;
                     $nodes[$level] = new HTMLPurifier_Queue();
                     foreach ($node->children as $childNode) {

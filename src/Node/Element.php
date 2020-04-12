@@ -2,10 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Node;
+
+use HTMLPurifier\Node;
+use HTMLPurifier_Token_Empty;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 /**
  * Concrete element node class.
  */
-class HTMLPurifier_Node_Element extends HTMLPurifier_Node
+class Element extends Node
 {
     /**
      * The lower-case name of the tag, like 'a', 'b' or 'blockquote'.
@@ -42,7 +49,7 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
     public $endCol = null, $endLine = null, $endArmor = [];
 
     /**
-     * HTMLPurifier_Node_Element constructor.
+     * HTMLPurifier\Node\HTMLPurifier_Node_Element constructor.
      *
      * @param          $name
      * @param array    $attr
@@ -73,8 +80,8 @@ class HTMLPurifier_Node_Element extends HTMLPurifier_Node
             return [new HTMLPurifier_Token_Empty($this->name, $this->attr, $this->line, $this->col, $this->armor), null];
         }
 
-        $start = new HTMLPurifier_Token_Start($this->name, $this->attr, $this->line, $this->col, $this->armor);
-        $end = new HTMLPurifier_Token_End($this->name, [], $this->endLine, $this->endCol, $this->endArmor);
+        $start = new Start($this->name, $this->attr, $this->line, $this->col, $this->armor);
+        $end = new End($this->name, [], $this->endLine, $this->endCol, $this->endArmor);
 
         //$end->start = $start;
         return [$start, $end];

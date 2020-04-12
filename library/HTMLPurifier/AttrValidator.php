@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\Start;
+
 /**
  * Validates the attributes of a token. Doesn't manage required attributes
  * very well. The only reason we factored this out was because RemoveForeignElements
@@ -12,11 +15,12 @@ class HTMLPurifier_AttrValidator
     /**
      * Validates the attributes of a token, mutating it as necessary.
      * that has valid tokens
-     * @param HTMLPurifier_Token $token Token to validate.
-     * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
+     *
+     * @param Token                $token   Token to validate.
+     * @param HTMLPurifier_Config  $config  Instance of HTMLPurifier_Config
      * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
      */
-    public function validateToken(HTMLPurifier_Token $token, HTMLPurifier_Config $config, HTMLPurifier_Context $context): void
+    public function validateToken(Token $token, HTMLPurifier_Config $config, HTMLPurifier_Context $context): void
     {
         $definition = $config->getHTMLDefinition();
         $e =& $context->get('ErrorCollector', true);
@@ -34,7 +38,7 @@ class HTMLPurifier_AttrValidator
             $context->register('CurrentToken', $token);
         }
 
-        if (!$token instanceof HTMLPurifier_Token_Start &&
+        if (!$token instanceof Start &&
             !$token instanceof HTMLPurifier_Token_Empty
         ) {
             return;

@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit\AttrDef;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\Switcher;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\Start;
 use Mockery;
 
 /**
@@ -32,7 +32,7 @@ class SwitchTest extends TestCase
      */
     public function testWith(): void
     {
-        $token = new HTMLPurifier_Token_Start('tag');
+        $token = new Start('tag');
         $this->context->register('CurrentToken', $token);
 
         $this->with->expects()
@@ -48,7 +48,7 @@ class SwitchTest extends TestCase
      */
     public function testWithout(): void
     {
-        $token = new HTMLPurifier_Token_Start('other-tag');
+        $token = new Start('other-tag');
         $this->context->register('CurrentToken', $token);
 
         $this->without->expects()

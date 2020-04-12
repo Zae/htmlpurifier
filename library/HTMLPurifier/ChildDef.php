@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Node;
+
 /**
  * Defines allowed child nodes and validates nodes against it.
  */
@@ -43,7 +45,7 @@ abstract class HTMLPurifier_ChildDef
     /**
      * Validates nodes according to definition and returns modification.
      *
-     * @param HTMLPurifier_Node[]  $children Array of HTMLPurifier_Node
+     * @param Node[]               $children Array of HTMLPurifier\HTMLPurifier_Node
      * @param HTMLPurifier_Config  $config   HTMLPurifier_Config object
      * @param HTMLPurifier_Context $context  HTMLPurifier_Context object
      *

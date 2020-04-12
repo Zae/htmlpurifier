@@ -9,7 +9,7 @@ use HTMLPurifier_Strategy;
 use HTMLPurifier_Strategy_RemoveForeignElements;
 use HTMLPurifier_Token_Comment;
 use HTMLPurifier_Token_Empty;
-use HTMLPurifier_Token_Start;
+use HTMLPurifier\Token\Start;
 
 /**
  * Class ErrorsTest
@@ -30,7 +30,7 @@ class ErrorsTest extends ErrorsTestCase
     public function testTagTransform(): void
     {
         $this->expectErrorCollection(E_NOTICE, 'Strategy_RemoveForeignElements: Tag transform', 'center');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('div', ['style' => 'text-align:center;'], 1));
+        $this->expectContext('CurrentToken', new Start('div', ['style' => 'text-align:center;'], 1));
         $this->invoke('<center>');
     }
 
@@ -52,7 +52,7 @@ class ErrorsTest extends ErrorsTestCase
     {
         $this->config->set('Core.EscapeInvalidTags', true);
         $this->expectErrorCollection(E_WARNING, 'Strategy_RemoveForeignElements: Foreign element to text');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('invalid', [], 1));
+        $this->expectContext('CurrentToken', new Start('invalid', [], 1));
         $this->invoke('<invalid>');
     }
 
@@ -63,7 +63,7 @@ class ErrorsTest extends ErrorsTestCase
     {
         // uses $CurrentToken.Serialized
         $this->expectErrorCollection(E_ERROR, 'Strategy_RemoveForeignElements: Foreign element removed');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Start('invalid', [], 1));
+        $this->expectContext('CurrentToken', new Start('invalid', [], 1));
         $this->invoke('<invalid>');
     }
 
@@ -113,7 +113,7 @@ class ErrorsTest extends ErrorsTestCase
             ->send(E_ERROR, 'Strategy_RemoveForeignElements: Token removed to end', 'script')
             ->once();
 
-//        $this->collector->expectContextAt(0, 'CurrentToken', new HTMLPurifier_Token_Start('script', [], 1));
+//        $this->collector->expectContextAt(0, 'CurrentToken', new HTMLPurifier\Token\HTMLPurifier_Token_Start('script', [], 1));
         $this->invoke('<script>asdf');
     }
 

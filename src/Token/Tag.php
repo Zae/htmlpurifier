@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Token;
+
+use HTMLPurifier\Token;
+use HTMLPurifier\Node;
+use HTMLPurifier\Node\Element;
+
 /**
  * Abstract class of a tag token (start, end or empty), and its behavior.
  */
-abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
+abstract class Tag extends Token
 {
     /**
      * Static bool marker that indicates the class is a tag.
@@ -67,8 +73,8 @@ abstract class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
         $this->armor = $armor;
     }
 
-    public function toNode(): HTMLPurifier_Node
+    public function toNode(): Node
     {
-        return new HTMLPurifier_Node_Element($this->name, $this->attr, $this->line, $this->col, $this->armor);
+        return new Element($this->name, $this->attr, $this->line, $this->col, $this->armor);
     }
 }

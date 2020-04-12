@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
 {
 
@@ -82,14 +85,14 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
 
         $expect = array(
             // line 1
-            0 => new HTMLPurifier_Token_Start('b')
+            0 => new Start('b')
            ,1 => new HTMLPurifier_Token_Text('Line 1')
-           ,2 => new HTMLPurifier_Token_End('b')
+           ,2 => new End('b')
            ,3 => new HTMLPurifier_Token_Text("\n")
             // line 2
-           ,4 => new HTMLPurifier_Token_Start('i')
+           ,4 => new Start('i')
            ,5 => new HTMLPurifier_Token_Text('Line 2')
-           ,6 => new HTMLPurifier_Token_End('i')
+           ,6 => new End('i')
            ,7 => new HTMLPurifier_Token_Text("\nStill Line 2")
             // line 3
            ,8 => new HTMLPurifier_Token_Empty('br')

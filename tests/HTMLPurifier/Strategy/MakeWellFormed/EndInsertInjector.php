@@ -1,16 +1,20 @@
 <?php
 
+use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+
 class HTMLPurifier_Strategy_MakeWellFormed_EndInsertInjector extends HTMLPurifier_Injector
 {
     public $name = 'EndInsertInjector';
     public $needed = array('span');
-    public function handleEnd(HTMLPurifier_Token &$token)
+    public function handleEnd(Token &$token)
     {
         if ($token->name == 'div') return;
         $token = array(
-            new HTMLPurifier_Token_Start('b'),
+            new Start('b'),
             new HTMLPurifier_Token_Text('Comment'),
-            new HTMLPurifier_Token_End('b'),
+            new End('b'),
             $token
         );
     }

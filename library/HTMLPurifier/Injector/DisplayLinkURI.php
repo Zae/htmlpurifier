@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+
 /**
  * Injector that displays the URL of an anchor instead of linking to it, in addition to showing the text of the link.
  */
@@ -18,16 +20,16 @@ class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
     public $needed = array('a');
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleElement(HTMLPurifier_Token &$token)
+    public function handleElement(Token &$token)
     {
     }
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleEnd(HTMLPurifier_Token &$token)
+    public function handleEnd(Token &$token)
     {
         if (isset($token->start->attr['href'])) {
             $url = $token->start->attr['href'];

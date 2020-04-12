@@ -12,7 +12,7 @@ declare(strict_types=1);
  *       implementation is by no means conforming and does not directly
  *       use the normative DTDs or XML schemas.
  * @note The public variables in a module should almost directly
- *       correspond to the variables in HTMLPurifier_HTMLDefinition.
+ *       correspond to the variables in HTMLPurifier\HTMLPurifier_HTMLDefinition.
  *       However, the prefix info carries no special meaning in these
  *       objects (include it anyway if that's the correspondence though).
  * @todo Consider making some member functions protected
@@ -127,7 +127,7 @@ class HTMLPurifier_HTMLModule
      * Retrieves a proper HTMLPurifier_ChildDef subclass based on
      * content_model and content_model_type member variables of
      * the HTMLPurifier_ElementDef class. There is a similar function
-     * in HTMLPurifier_HTMLDefinition.
+     * in HTMLPurifier\HTMLPurifier_HTMLDefinition.
      *
      * @param HTMLPurifier_ElementDef $def
      *

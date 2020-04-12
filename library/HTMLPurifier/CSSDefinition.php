@@ -23,11 +23,12 @@ use HTMLPurifier\AttrDef\CSS\BackgroundPosition;
 use HTMLPurifier\AttrDef\CSS\Background;
 use HTMLPurifier\AttrDef\CSS\AlphaValue;
 use HTMLPurifier\AttrDef\CSS\ImportantDecorator;
+use HTMLPurifier\HTMLDefinition;
 
 /**
  * Defines allowed CSS attributes and what their values are.
  *
- * @see HTMLPurifier_HTMLDefinition
+ * @see HTMLDefinition
  */
 class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 {
@@ -526,7 +527,7 @@ class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
 
     /**
      * Performs extra config-based processing. Based off of
-     * HTMLPurifier_HTMLDefinition.
+     * HTMLPurifier\HTMLPurifier_HTMLDefinition.
      *
      * @param HTMLPurifier_Config $config
      *

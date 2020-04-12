@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Token;
+
 /**
  * Adds important param elements to inside of object in order to make
  * things safe.
@@ -64,9 +66,9 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
     }
 
     /**
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleElement(HTMLPurifier_Token &$token)
+    public function handleElement(Token &$token)
     {
         if ($token->name == 'object') {
             $this->objectStack[] = $token;
@@ -123,9 +125,9 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
     /**
      * Handler that is called when an end token is processed
      *
-     * @param HTMLPurifier_Token $token
+     * @param Token $token
      */
-    public function handleEnd(HTMLPurifier_Token &$token): void
+    public function handleEnd(Token &$token): void
     {
         // This is the WRONG way of handling the object and param stacks;
         // we should be inserting them directly on the relevant object tokens
