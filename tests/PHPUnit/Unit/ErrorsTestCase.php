@@ -14,7 +14,7 @@ use Mockery;
  *
  * @package HTMLPurifier\Tests\Unit
  */
-abstract class ErrorsTest extends TestCase
+abstract class ErrorsTestCase extends TestCase
 {
     protected $config, $context;
     protected $collector, $generator, $callCount;

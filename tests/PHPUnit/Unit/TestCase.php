@@ -21,7 +21,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * @var HTMLPurifier
      */
-    private $purifier;
+    protected $purifier;
 
     /**
      * @type HTMLPurifier_Config

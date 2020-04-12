@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\Strategy;
+
+use HTMLPurifier_Lexer_DirectLex;
+use HTMLPurifier_Strategy;
+
+/**
+ * Class ErrorsTestCase
+ *
+ * @package HTMLPurifier\Tests\Unit\Strategy
+ */
+abstract class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
+{
+    // needs to be defined
+    abstract protected function getStrategy(): HTMLPurifier_Strategy;
+
+    /**
+     * @param $input
+     */
+    protected function invoke($input)
+    {
+        $strategy = $this->getStrategy();
+        $lexer = new HTMLPurifier_Lexer_DirectLex();
+        $tokens = $lexer->tokenizeHTML($input, $this->config, $this->context);
+        $strategy->execute($tokens, $this->config, $this->context);
+    }
+}
