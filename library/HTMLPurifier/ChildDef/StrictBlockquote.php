@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
 
@@ -50,14 +51,14 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
     }
 
     /**
-     * @param array                $children
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $children
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context): array
     {
         $this->init($config);
 

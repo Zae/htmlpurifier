@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\UnitConverter;
+
 class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
 {
 
@@ -10,12 +12,12 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         else $expectl = false;
         $to_unit = $unit !== null ? $unit : $expectl->getUnit();
 
-        $converter = new HTMLPurifier_UnitConverter(4, 10);
+        $converter = new UnitConverter(4, 10);
         $result = $converter->convert($length, $to_unit);
         if (!$result || !$expectl) $this->assertIdentical($result, $expectl);
         else $this->assertIdentical($result->toString(), $expectl->toString());
 
-        $converter = new HTMLPurifier_UnitConverter(4, 10, true);
+        $converter = new UnitConverter(4, 10, true);
         $result = $converter->convert($length, $to_unit);
         if (!$result || !$expectl) $this->assertIdentical($result, $expectl);
         else $this->assertIdentical($result->toString(), $expectl->toString(), 'BCMath substitute: %s');
@@ -109,7 +111,7 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
 
     protected function assertSigFig($n, $sigfigs)
     {
-        $converter = new HTMLPurifier_UnitConverter();
+        $converter = new UnitConverter();
         $result = $converter->getSigFigs($n);
         $this->assertIdentical($result, $sigfigs);
     }

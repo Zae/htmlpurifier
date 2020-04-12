@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates contents based on NMTOKENS attribute type.
@@ -14,9 +14,9 @@ use HTMLPurifier_Context;
 class Nmtokens extends AttrDef
 {
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $string
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */
@@ -41,13 +41,13 @@ class Nmtokens extends AttrDef
     /**
      * Splits a space separated list of tokens into its constituent parts.
      *
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    protected function split(string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    protected function split(string $string, HTMLPurifier_Config $config, Context $context)
     {
         // OPTIMIZABLE!
         // do the preg_match, capture all subpatterns for reformulation
@@ -70,13 +70,13 @@ class Nmtokens extends AttrDef
      * @note If we wanted to be really functional, we'd do an array_filter
      *       with a callback. But... we're not.
      *
-     * @param array                $tokens
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $tokens
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    protected function filter(array $tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    protected function filter(array $tokens, HTMLPurifier_Config $config, Context $context)
     {
         return $tokens;
     }

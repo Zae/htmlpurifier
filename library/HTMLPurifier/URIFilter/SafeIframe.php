@@ -2,13 +2,17 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\URIFilter;
+use HTMLPurifier\URI;
+
 /**
  * Implements safety checks for safe iframes.
  *
  * @warning This filter is *critical* for ensuring that %HTML.SafeIframe
  * works safely.
  */
-class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
+class HTMLPurifier_URIFilter_SafeIframe extends URIFilter
 {
     /**
      * @type string
@@ -42,14 +46,14 @@ class HTMLPurifier_URIFilter_SafeIframe extends HTMLPurifier_URIFilter
     }
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|int
      * @throws HTMLPurifier_Exception
      */
-    public function filter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context)
     {
         // check if filter not applicable
         if (!$config->get('HTML.SafeIframe')) {

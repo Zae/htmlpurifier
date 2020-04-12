@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 use HTMLPurifier\Lexer\DOMLex;
 
@@ -15,9 +16,9 @@ use HTMLPurifier\Lexer\DOMLex;
 class _PH5P extends DOMLex
 {
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return Token[]
      * @throws HTMLPurifier_Exception

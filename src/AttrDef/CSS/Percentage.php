@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\CSS\Number;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates a Percentage as defined by the CSS spec.
@@ -30,9 +30,9 @@ class Percentage extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

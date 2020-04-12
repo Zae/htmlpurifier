@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+
 /**
  * Super-class for definition datatype objects, implements serialization
  * functions for the class.
  */
-abstract class HTMLPurifier_Definition
+abstract class Definition
 {
     /**
      * Has setup() been called yet?

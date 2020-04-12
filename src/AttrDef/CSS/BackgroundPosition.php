@@ -45,7 +45,7 @@ use HTMLPurifier\AttrDef\CSS\Length;
 use HTMLPurifier\AttrDef\CSS\Percentage;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates the value of background-position.
@@ -69,9 +69,9 @@ class BackgroundPosition extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

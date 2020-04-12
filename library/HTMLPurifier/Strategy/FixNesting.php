@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Arborize;
+use HTMLPurifier\Context;
+use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node\Element;
 
@@ -34,17 +36,17 @@ use HTMLPurifier\Node\Element;
  * @todo Enable nodes to be bubbled out of the structure.  This is
  *       easier with our new algorithm.
  */
-class HTMLPurifier_Strategy_FixNesting extends HTMLPurifier_Strategy
+class HTMLPurifier_Strategy_FixNesting extends Strategy
 {
     /**
-     * @param Token[]              $tokens
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Token[]             $tokens
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array|Token[]
      * @throws HTMLPurifier_Exception
      */
-    public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function execute($tokens, HTMLPurifier_Config $config, Context $context)
     {
         //####################################################################//
         // Pre-processing

@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Decorator which enables CSS properties to be disabled for specific elements.
@@ -36,9 +36,9 @@ class DenyElementDecorator extends AttrDef
     /**
      * Checks if CurrentToken is set and equal to $this->element
      *
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $string
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */

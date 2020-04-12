@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -68,7 +69,7 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
         $expect[14] = array('href' => ' <');
 
         $config = HTMLPurifier_Config::createDefault();
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $size = count($input);
         for($i = 0; $i < $size; $i++) {
             $result = $this->DirectLex->parseAttributeString($input[$i], $config, $context);
@@ -102,13 +103,13 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
            ,10 => new HTMLPurifier_Token_Empty('br')
         );
 
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $config  = HTMLPurifier_Config::createDefault();
         $output = $this->DirectLex->tokenizeHTML($html, $config, $context);
 
         $this->assertIdentical($output, $expect);
 
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $config  = HTMLPurifier_Config::create(array(
             'Core.MaintainLineNumbers' => true
         ));

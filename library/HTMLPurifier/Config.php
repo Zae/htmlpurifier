@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\Definition;
+use HTMLPurifier\CSSDefinition;
+use HTMLPurifier\VarParser;
 
 /**
  * Configuration object that triggers customizable behavior.
@@ -64,7 +67,8 @@ class HTMLPurifier_Config
 
     /**
      * Indexed array of definitions.
-     * @type HTMLPurifier_Definition[]
+     *
+     * @type Definition[]
      */
     protected $definitions;
 
@@ -376,7 +380,7 @@ class HTMLPurifier_Config
         } catch (HTMLPurifier_VarParserException $e) {
             $this->triggerError(
                 'Value for ' . $key . ' is of invalid type, should be ' .
-                HTMLPurifier_VarParser::getTypeName($type),
+                VarParser::getTypeName($type),
                 E_USER_WARNING
             );
             return;
@@ -459,7 +463,7 @@ class HTMLPurifier_Config
      *                        maybeGetRawCSSDefinition, which is more explicitly
      *                        named, instead.
      *
-     * @return HTMLPurifier_CSSDefinition|null
+     * @return CSSDefinition|null
      * @throws HTMLPurifier_Exception
      */
     public function getCSSDefinition(bool $raw = false, bool $optimized = false)
@@ -501,8 +505,8 @@ class HTMLPurifier_Config
      *        We probably won't ever change this default, as much as the
      *        maybe semantics is the "right thing to do."
      *
-     * @throws HTMLPurifier_Exception
-     * @return HTMLPurifier_Definition|null
+     * @return Definition|null
+     *@throws HTMLPurifier_Exception
      */
     public function getDefinition(string $type, bool $raw = false, bool $optimized = false)
     {
@@ -661,7 +665,7 @@ class HTMLPurifier_Config
      *
      * @param string $type What type of definition to create
      *
-     * @return HTMLPurifier_CSSDefinition|HTMLDefinition|HTMLPurifier_URIDefinition
+     * @return CSSDefinition|HTMLDefinition|HTMLPurifier_URIDefinition
      * @throws HTMLPurifier_Exception
      */
     private function initDefinition(string $type)
@@ -670,7 +674,7 @@ class HTMLPurifier_Config
         if ($type === 'HTML') {
             $def = new HTMLDefinition();
         } elseif ($type === 'CSS') {
-            $def = new HTMLPurifier_CSSDefinition();
+            $def = new CSSDefinition();
         } elseif ($type === 'URI') {
             $def = new HTMLPurifier_URIDefinition();
         } else {
@@ -698,7 +702,7 @@ class HTMLPurifier_Config
     }
 
     /**
-     * @return HTMLPurifier_CSSDefinition|null
+     * @return CSSDefinition|null
      * @throws HTMLPurifier_Exception
      */
     public function maybeGetRawCSSDefinition()

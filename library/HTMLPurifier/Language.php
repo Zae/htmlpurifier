@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 
 /**
@@ -61,13 +62,13 @@ class HTMLPurifier_Language
     protected $config;
 
     /**
-     * @type HTMLPurifier_Context
+     * @type Context
      */
     protected $context;
 
     /**
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      */
     public function __construct($config, $context)
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\AttrDef;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Class TestCase
@@ -20,7 +20,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
     public function setUp(): void
     {
         $this->config = HTMLPurifier_Config::createDefault();
-        $this->context = new HTMLPurifier_Context();
+        $this->context = new Context();
     }
 
     /**

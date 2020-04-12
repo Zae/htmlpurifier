@@ -2,17 +2,26 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\AttrDef\URI\Host;
+use HTMLPurifier_Config;
+use HTMLPurifier\Context;
+use HTMLPurifier_Exception;
+use HTMLPurifier_PercentEncoder;
+use HTMLPurifier_URIScheme;
+use HTMLPurifier_URISchemeRegistry;
 
 /**
  * HTML Purifier's internal representation of a URI.
+ *
  * @note
  *      Internal data-structures are completely escaped. If the data needs
  *      to be used in a non-URI context (which is very unlikely), be sure
  *      to decode it first. The URI may not necessarily be well-formed until
  *      validate() is called.
  */
-class HTMLPurifier_URI
+class URI
 {
     /**
      * @type string
@@ -53,10 +62,11 @@ class HTMLPurifier_URI
      * @param string $scheme
      * @param string $userinfo
      * @param string $host
-     * @param int $port
+     * @param int    $port
      * @param string $path
      * @param string $query
      * @param string $fragment
+     *
      * @note Automatically normalizes scheme and port
      */
     public function __construct(
@@ -67,7 +77,8 @@ class HTMLPurifier_URI
         ?string $path,
         ?string $query,
         ?string $fragment
-    ) {
+    )
+    {
         $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
@@ -80,13 +91,13 @@ class HTMLPurifier_URI
     /**
      * Retrieves a scheme object corresponding to the URI's scheme/default
      *
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return HTMLPurifier_URIScheme|bool Scheme object appropriate for validating this URI
      * @throws HTMLPurifier_Exception
      */
-    public function getSchemeObj(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function getSchemeObj(HTMLPurifier_Config $config, Context $context)
     {
         $registry = HTMLPurifier_URISchemeRegistry::instance();
         if ($this->scheme !== null) {
@@ -106,6 +117,7 @@ class HTMLPurifier_URI
                         E_USER_WARNING
                     );
                 } // suppress error if it's null
+
                 return false;
             }
         }
@@ -117,13 +129,13 @@ class HTMLPurifier_URI
      * Generic validation method applicable for all schemes. May modify
      * this URI in order to get it into a compliant form.
      *
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool True if validation/filtering succeeds, false if failure
      * @throws HTMLPurifier_Exception
      */
-    public function validate(HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
+    public function validate(HTMLPurifier_Config $config, Context $context): bool
     {
         // ABNF definitions from RFC 3986
         $chars_sub_delims = '!$&\'()*+,;=';
@@ -232,6 +244,7 @@ class HTMLPurifier_URI
 
     /**
      * Convert URI back to string
+     *
      * @return string URI appropriate for output
      */
     public function toString(): string
@@ -291,7 +304,7 @@ class HTMLPurifier_URI
      * only appropriate for metadata that doesn't care about protocol
      * security.  isBenign is probably what you actually want.
      *
-     * @param HTMLPurifier_Config  $config
+     * @param HTMLPurifier_Config $config
      *
      * @return bool
      * @throws HTMLPurifier_Exception
@@ -314,13 +327,13 @@ class HTMLPurifier_URI
      *      - It is a local URL (isLocal), and
      *      - It has a equal or better level of security
      *
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      * @throws HTMLPurifier_Exception
      */
-    public function isBenign(HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
+    public function isBenign(HTMLPurifier_Config $config, Context $context): bool
     {
         if (!$this->isLocal($config)) {
             return false;

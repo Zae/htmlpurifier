@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_Length;
+
 /**
  * Class for converting between different unit-lengths as specified by
  * CSS.
  */
-class HTMLPurifier_UnitConverter
+class UnitConverter
 {
     public const ENGLISH = 1;
     public const METRIC  = 2;
@@ -58,7 +62,7 @@ class HTMLPurifier_UnitConverter
     private $bcmath;
 
     /**
-     * HTMLPurifier_UnitConverter constructor.
+     * HTMLPurifier\HTMLPurifier_UnitConverter constructor.
      *
      * @param int  $output_precision
      * @param int  $internal_precision
@@ -279,7 +283,7 @@ class HTMLPurifier_UnitConverter
      * using arbitrary precision when available.
      *
      * @param string $n
-     * @param int   $sigfigs
+     * @param int    $sigfigs
      *
      * @return string
      */

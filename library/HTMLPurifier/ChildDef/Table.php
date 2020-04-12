@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Comment;
 
@@ -60,13 +61,13 @@ class HTMLPurifier_ChildDef_Table extends HTMLPurifier_ChildDef
     ];
 
     /**
-     * @param array                $children
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $children
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
     {
         if (empty($children)) {
             return false;

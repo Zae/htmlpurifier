@@ -2,20 +2,22 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+
 /**
  * Pre-transform that changes deprecated name attribute to ID if necessary
  */
 class HTMLPurifier_AttrTransform_Name extends HTMLPurifier_AttrTransform
 {
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         // Abort early if we're using relaxed definition of name
         if ($config->get('HTML.Attr.Name.UseCDATA')) {

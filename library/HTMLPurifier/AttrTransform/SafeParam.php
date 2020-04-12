@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\Context;
 
 /**
  * Validates name/value pairs in param tags to be used in safe objects. This
@@ -41,14 +42,14 @@ class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         // If we add support for other objects, we'll need to alter the
         // transforms.

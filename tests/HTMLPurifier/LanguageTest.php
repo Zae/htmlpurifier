@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\Start;
 
 /**
@@ -14,14 +15,14 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     {
         $factory = HTMLPurifier_LanguageFactory::instance();
         $config = HTMLPurifier_Config::create(array('Core.Language' => 'en'));
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         return $factory->create($config, $context);
     }
 
     public function test_getMessage()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $lang = new HTMLPurifier_Language($config, $context);
         $lang->_loaded = true;
         $lang->messages['HTMLPurifier'] = 'HTML Purifier';
@@ -32,7 +33,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     public function test_formatMessage()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $lang = new HTMLPurifier_Language($config, $context);
         $lang->_loaded = true;
         $lang->messages['LanguageTest: Error'] = 'Error is $1 on line $2';
@@ -42,7 +43,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     public function test_formatMessage_tokenParameter()
     {
         $config = HTMLPurifier_Config::createDefault();
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $generator = new HTMLPurifier_Generator($config, $context); // replace with mock if this gets icky
         $context->register('Generator', $generator);
         $lang = new HTMLPurifier_Language($config, $context);

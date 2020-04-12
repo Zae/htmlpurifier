@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier_AttrTransform;
 use HTMLPurifier_Config;
-use HTMLPurifier_Definition;
+use HTMLPurifier\Definition;
 use HTMLPurifier_Doctype;
 use HTMLPurifier_ElementDef;
 use HTMLPurifier_Exception;
@@ -37,7 +37,7 @@ use HTMLPurifier_Injector;
  * @warning Directives that change this object's structure must be in
  *          the HTML or Attr namespace!
  */
-class HTMLDefinition extends HTMLPurifier_Definition
+class HTMLDefinition extends Definition
 {
     // FULLY-PUBLIC VARIABLES ---------------------------------------------
 

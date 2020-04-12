@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
-use HTMLPurifier_Encoder;
+use HTMLPurifier\Context;
+use HTMLPurifier\Encoder;
 
 /**
  * Base class for all validating attribute definitions.
@@ -38,9 +38,9 @@ abstract class AttrDef
     /**
      * Validates and cleans passed string according to a definition.
      *
-     * @param string               $string  String to be validated and cleaned.
-     * @param HTMLPurifier_Config  $config  Mandatory HTMLPurifier_Config object.
-     * @param HTMLPurifier_Context $context Mandatory HTMLPurifier_Context object.
+     * @param string              $string  String to be validated and cleaned.
+     * @param HTMLPurifier_Config $config  Mandatory HTMLPurifier_Config object.
+     * @param Context             $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
      */
     abstract public function validate($string, $config, $context);
 
@@ -57,7 +57,7 @@ abstract class AttrDef
      * @note    This method is not entirely standards compliant, as trim() removes
      *       more types of whitespace than specified in the spec. In practice,
      *       this is rarely a problem, as those extra characters usually have
-     *       already been removed by HTMLPurifier_Encoder.
+     *       already been removed by HTMLPurifier\HTMLPurifier_Encoder.
      *
      * @warning This processing is inconsistent with XML's whitespace handling
      *          as specified by section 3.3.3 and referenced XHTML 1.0 section
@@ -134,8 +134,8 @@ abstract class AttrDef
                     // We have to be extremely careful when adding
                     // new characters, to make sure we're not breaking
                     // the encoding.
-                    $char = HTMLPurifier_Encoder::unichr(hexdec($code));
-                    if (HTMLPurifier_Encoder::cleanUTF8($char) === '') {
+                    $char = Encoder::unichr(hexdec($code));
+                    if (Encoder::cleanUTF8($char) === '') {
                         continue;
                     }
                     $ret .= $char;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\Strategy\FixNesting;
 
 use HTMLPurifier\Tests\Unit\Strategy\ErrorsTestCase;
-use HTMLPurifier_Strategy;
+use HTMLPurifier\Strategy;
 use HTMLPurifier_Strategy_FixNesting;
 use HTMLPurifier\Token\Start;
 
@@ -65,9 +65,9 @@ class ErrorsTest extends ErrorsTestCase
     }
 
     /**
-     * @return HTMLPurifier_Strategy
+     * @return \HTMLPurifier\Strategy
      */
-    protected function getStrategy(): HTMLPurifier_Strategy
+    protected function getStrategy(): Strategy
     {
         return new HTMLPurifier_Strategy_FixNesting();
     }

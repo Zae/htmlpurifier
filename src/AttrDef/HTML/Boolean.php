@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates a boolean attribute
@@ -32,9 +32,9 @@ class Boolean extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

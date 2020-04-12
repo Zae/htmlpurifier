@@ -6,9 +6,9 @@ namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_Exception;
-use HTMLPurifier_URIParser;
+use HTMLPurifier\URIParser;
 
 /**
  * Validates a URI as defined by RFC 3986.
@@ -18,7 +18,7 @@ use HTMLPurifier_URIParser;
 class URI extends AttrDef
 {
     /**
-     * @type HTMLPurifier_URIParser
+     * @type URIParser
      */
     protected $parser;
 
@@ -32,7 +32,7 @@ class URI extends AttrDef
      */
     public function __construct($embeds_resource = false)
     {
-        $this->parser = new HTMLPurifier_URIParser();
+        $this->parser = new URIParser();
         $this->embedsResource = (bool)$embeds_resource;
     }
 
@@ -49,9 +49,9 @@ class URI extends AttrDef
     }
 
     /**
-     * @param string               $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $uri
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      * @throws HTMLPurifier_Exception

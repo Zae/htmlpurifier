@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\Strategy\RemoveForeignElements;
 
 use HTMLPurifier\Tests\Unit\Strategy\ErrorsTestCase;
-use HTMLPurifier_Strategy;
+use HTMLPurifier\Strategy;
 use HTMLPurifier_Strategy_RemoveForeignElements;
 use HTMLPurifier_Token_Comment;
 use HTMLPurifier_Token_Empty;
@@ -118,9 +118,9 @@ class ErrorsTest extends ErrorsTestCase
     }
 
     /**
-     * @return HTMLPurifier_Strategy
+     * @return Strategy
      */
-    protected function getStrategy(): HTMLPurifier_Strategy
+    protected function getStrategy(): Strategy
     {
         return new HTMLPurifier_Strategy_RemoveForeignElements();
     }

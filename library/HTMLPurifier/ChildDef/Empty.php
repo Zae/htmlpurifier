@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Node;
 
 /**
@@ -25,13 +26,13 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
     public $type = 'empty';
 
     /**
-     * @param Node[]               $children
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Node[]              $children
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context): array
     {
         return [];
     }

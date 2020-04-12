@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\URI\Email;
 
 use HTMLPurifier\AttrDef\URI\Email;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Primitive email validation class based on the regexp found at
@@ -15,9 +15,9 @@ use HTMLPurifier_Context;
 class SimpleCheck extends Email
 {
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

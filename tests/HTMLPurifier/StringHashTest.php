@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\StringHash;
+
 class HTMLPurifier_StringHashTest extends UnitTestCase
 {
 
     public function testUsed()
     {
-        $hash = new HTMLPurifier_StringHash(array(
+        $hash = new StringHash(array(
             'key' => 'value',
             'key2' => 'value2'
         ));

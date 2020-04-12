@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_PercentEncoder;
+
 /**
  * Parses a URI into the components and fragment identifier as specified
  * by RFC 3986.
  */
-class HTMLPurifier_URIParser
+class URIParser
 {
     /**
      * Instance of HTMLPurifier_PercentEncoder to do normalization with.
@@ -23,7 +27,7 @@ class HTMLPurifier_URIParser
      *
      * @param string $uri URI to parse
      *
-     * @return HTMLPurifier_URI|bool representation of URI. This representation has
+     * @return URI|bool representation of URI. This representation has
      *         not been validated yet and may not conform to RFC.
      */
     public function parse(string $uri)
@@ -67,6 +71,6 @@ class HTMLPurifier_URIParser
             $port = $host = $userinfo = null;
         }
 
-        return new HTMLPurifier_URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
+        return new URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
     }
 }

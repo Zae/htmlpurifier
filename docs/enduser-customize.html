@@ -201,7 +201,7 @@ $def = $config-&gt;getHTMLDefinition(true);</pre>
 <p>
   A few things should be mentioned about the caching mechanism before
   we move on.  For performance reasons, HTML Purifier caches generated
-  <code>HTMLPurifier_Definition</code> objects in serialized files
+  <code>HTMLPurifier\HTMLPurifier_Definition</code> objects in serialized files
   stored (by default) in <code>library/HTMLPurifier/DefinitionCache/Serializer</code>.
   A lot of processing is done in order to create these objects, so it
   makes little sense to repeat the same processing over and over again

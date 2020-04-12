@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Dummy AttrDef that mimics another AttrDef, BUT it generates clones
@@ -30,9 +30,9 @@ class Cloner extends AttrDef
     }
 
     /**
-     * @param string               $v
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $v
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

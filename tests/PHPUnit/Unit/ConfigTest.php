@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_Config;
 use HTMLPurifier_ConfigSchema;
-use HTMLPurifier_CSSDefinition;
+use HTMLPurifier\CSSDefinition;
 use HTMLPurifier_DefinitionCache;
 use HTMLPurifier_DefinitionCacheFactory;
 use HTMLPurifier_Exception;
@@ -265,7 +265,7 @@ class ConfigTest extends TestCase
         $config->autoFinalize = false;
 
         $def = $config->getCSSDefinition();
-        static::assertInstanceOf(HTMLPurifier_CSSDefinition::class, $def);
+        static::assertInstanceOf(CSSDefinition::class, $def);
 
         $def = $config->getHTMLDefinition();
         $def2 = $config->getHTMLDefinition();
@@ -376,7 +376,7 @@ class ConfigTest extends TestCase
     {
         $config = HTMLPurifier_Config::createDefault();
         $def = $config->getCSSDefinition();
-        static::assertInstanceOf( HTMLPurifier_CSSDefinition::class, $def);
+        static::assertInstanceOf( CSSDefinition::class, $def);
     }
 
     /**

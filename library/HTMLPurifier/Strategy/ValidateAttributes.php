@@ -2,22 +2,24 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
 
 /**
  * Validate all attributes in the tokens.
  */
-class HTMLPurifier_Strategy_ValidateAttributes extends HTMLPurifier_Strategy
+class HTMLPurifier_Strategy_ValidateAttributes extends Strategy
 {
     /**
-     * @param Token[]              $tokens
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Token[]             $tokens
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return Token[]
      */
-    public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {
         // setup validator
         $validator = new HTMLPurifier_AttrValidator();

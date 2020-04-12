@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // this MUST be placed in post, as it assumes that any value in dir is valid
+use HTMLPurifier\Context;
 
 /**
  * Post-trasnform that ensures that bdo tags have the dir attribute set.
@@ -10,14 +11,14 @@ declare(strict_types=1);
 class HTMLPurifier_AttrTransform_BdoDir extends HTMLPurifier_AttrTransform
 {
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         if (isset($attr['dir'])) {
             return $attr;

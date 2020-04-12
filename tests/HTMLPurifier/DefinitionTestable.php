@@ -1,7 +1,7 @@
 <?php
 
 Mock::generatePartial(
-        'HTMLPurifier_Definition',
+        'HTMLPurifier\Definition',
         'HTMLPurifier_DefinitionTestable',
         array('doSetup'));
 

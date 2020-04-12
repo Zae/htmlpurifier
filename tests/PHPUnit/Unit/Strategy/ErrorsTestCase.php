@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\Strategy;
 
 use HTMLPurifier_Lexer_DirectLex;
-use HTMLPurifier_Strategy;
+use HTMLPurifier\Strategy;
 
 /**
  * Class ErrorsTestCase
@@ -15,7 +15,7 @@ use HTMLPurifier_Strategy;
 abstract class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
 {
     // needs to be defined
-    abstract protected function getStrategy(): HTMLPurifier_Strategy;
+    abstract protected function getStrategy(): Strategy;
 
     /**
      * @param $input

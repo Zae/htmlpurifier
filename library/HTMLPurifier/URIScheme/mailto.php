@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 // VERY RELAXED! Shouldn't cause problems, not even Firefox checks if the
 // email is valid, but be careful!
+use HTMLPurifier\Context;
+use HTMLPurifier\URI;
 
 /**
  * Validates mailto (for E-mail) according to RFC 2368
@@ -24,13 +26,13 @@ class HTMLPurifier_URIScheme_mailto extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      */
-    public function doValidate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
+    public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
     {
         $uri->userinfo = null;
         $uri->host = null;

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Definition;
+
 /**
  * Abstract class representing Definition cache managers that implements
  * useful common methods and is a factory.
@@ -80,11 +82,11 @@ abstract class HTMLPurifier_DefinitionCache
      *
      * @note Throws an error on failure
      *
-     * @param HTMLPurifier_Definition $def Definition object to check
+     * @param Definition $def Definition object to check
      *
      * @return bool true if good, false if not
      */
-    public function checkDefType(HTMLPurifier_Definition $def)
+    public function checkDefType(Definition $def)
     {
         if ($def->type !== $this->type) {
             trigger_error("Cannot use definition of type {$def->type} in cache for {$this->type}");
@@ -98,26 +100,26 @@ abstract class HTMLPurifier_DefinitionCache
     /**
      * Adds a definition object to the cache
      *
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      */
-    abstract public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config);
+    abstract public function add(Definition $def, HTMLPurifier_Config $config);
 
     /**
      * Unconditionally saves a definition object to the cache
      *
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      */
-    abstract public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config);
+    abstract public function set(Definition $def, HTMLPurifier_Config $config);
 
     /**
      * Replace an object in the cache
      *
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      */
-    abstract public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config);
+    abstract public function replace(Definition $def, HTMLPurifier_Config $config);
 
     /**
      * Retrieves a definition object from the cache

@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use Illuminate\Support\Str;
 use Mockery;
 use Mockery\Exception\InvalidCountException;
@@ -29,7 +29,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected $config;
 
     /**
-     * @type HTMLPurifier_Context
+     * @type \HTMLPurifier\Context
      */
     protected $context;
 
@@ -68,7 +68,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         return [
             HTMLPurifier_Config::createDefault(),
-            new HTMLPurifier_Context
+            new Context
         ];
     }
 

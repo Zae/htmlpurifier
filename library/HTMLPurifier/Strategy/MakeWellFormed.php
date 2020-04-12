@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\Zipper;
+use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -17,7 +20,7 @@ use HTMLPurifier\Token\Start;
  *        Purifier, we may rely on our infrastructure to close it for us
  *        and shouldn't report an error to the user [TagClosedAuto].
  */
-class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
+class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
 {
     /**
      * Array stream of tokens being processed.
@@ -36,7 +39,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
     /**
      * Zipper managing the true state.
      *
-     * @type HTMLPurifier_Zipper
+     * @type Zipper
      */
     protected $zipper;
 
@@ -62,21 +65,21 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
     protected $config;
 
     /**
-     * Current instance of HTMLPurifier_Context.
+     * Current instance of HTMLPurifier\HTMLPurifier_Context.
      *
-     * @type HTMLPurifier_Context
+     * @type Context
      */
     protected $context;
 
     /**
-     * @param Token[]              $tokens
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Token[]             $tokens
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return Token[]
      * @throws HTMLPurifier_Exception
      */
-    public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
 
@@ -87,7 +90,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config);
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
-        [$zipper, $token] = HTMLPurifier_Zipper::fromArray($tokens);
+        [$zipper, $token] = Zipper::fromArray($tokens);
 
         if ($token === null) {
             return [];

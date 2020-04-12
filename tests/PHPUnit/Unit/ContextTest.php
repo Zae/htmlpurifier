@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_IDAccumulator;
 use Mockery;
 
@@ -19,7 +19,7 @@ class ContextTest extends TestCase
 
     public function setUp(): void
     {
-        $this->context = new HTMLPurifier_Context();
+        $this->context = new Context();
     }
 
     /**
@@ -75,8 +75,8 @@ class ContextTest extends TestCase
     {
         // references can be *really* wonky!
 
-        $context_manual = new HTMLPurifier_Context();
-        $context_load   = new HTMLPurifier_Context();
+        $context_manual = new Context();
+        $context_load   = new Context();
 
         $var1 = 1;
         $var2 = 2;
@@ -105,7 +105,7 @@ class ContextTest extends TestCase
      */
     public function testNull(): void
     {
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $var = NULL;
         $context->register('var', $var);
 

@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_Exception;
 
 /**
@@ -36,9 +36,9 @@ class Border extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $string
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */

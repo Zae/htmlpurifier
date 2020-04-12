@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates a number as defined by the CSS spec.
@@ -29,9 +29,9 @@ class Number extends AttrDef
     }
 
     /**
-     * @param string               $number
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $number
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return string|bool
      * @warning Some contexts do not pass $config, $context. These

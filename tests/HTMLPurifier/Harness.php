@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Context;
+
 /**
  * All-use harness, use this rather than SimpleTest's
  */
@@ -17,7 +19,7 @@ class HTMLPurifier_Harness extends UnitTestCase
     protected $config;
 
     /**
-     * @type HTMLPurifier_Context
+     * @type Context
      */
     protected $context;
 
@@ -62,7 +64,7 @@ class HTMLPurifier_Harness extends UnitTestCase
     {
         $config = HTMLPurifier_Config::create($config);
         if (!$context) {
-            $context = new HTMLPurifier_Context();
+            $context = new Context();
         }
     }
 
@@ -72,7 +74,7 @@ class HTMLPurifier_Harness extends UnitTestCase
      */
     protected function createCommon()
     {
-        return array(HTMLPurifier_Config::createDefault(), new HTMLPurifier_Context);
+        return array(HTMLPurifier_Config::createDefault(), new Context);
     }
 
     /**

@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\StringHashParser;
+use HTMLPurifier\StringHash;
+
 /**
  * Controller for validator test-cases.
  */
@@ -12,7 +15,7 @@ class HTMLPurifier_ConfigSchema_ValidatorTestCase extends UnitTestCase
     public function __construct($path)
     {
         $this->_path = $path;
-        $this->_parser  = new HTMLPurifier_StringHashParser();
+        $this->_parser  = new StringHashParser();
         $this->_builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
         parent::__construct($path);
     }
@@ -36,7 +39,7 @@ class HTMLPurifier_ConfigSchema_ValidatorTestCase extends UnitTestCase
                 }
                 continue;
             }
-            $this->_builder->build($interchange, new HTMLPurifier_StringHash($hash));
+            $this->_builder->build($interchange, new StringHash($hash));
         }
         $this->validator->validate($interchange);
         $this->pass();

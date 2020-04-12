@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_URIParser;
+use HTMLPurifier\URIParser;
 
 /**
  * Class UriTestCase
@@ -21,7 +21,7 @@ abstract class UriTestCase extends TestCase
      */
     protected function prepareURI(string &$uri, string &$expect_uri): void
     {
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
 
         if ($expect_uri === true) {
             $expect_uri = $uri;
@@ -38,11 +38,11 @@ abstract class UriTestCase extends TestCase
      *
      * @param $uri
      *
-     * @return bool|\HTMLPurifier_URI
+     * @return bool|\HTMLPurifier\URI
      */
     protected function createURI(string $uri)
     {
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
         return $parser->parse($uri);
     }
 }

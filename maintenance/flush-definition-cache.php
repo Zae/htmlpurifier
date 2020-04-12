@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 
+use HTMLPurifier\DefinitionCache\Serializer;
+
 chdir(dirname(__FILE__));
 require_once 'common.php';
 assertCli();
@@ -8,7 +10,7 @@ assertCli();
 /**
  * @file
  * Flushes the definition serial cache. This file should be
- * called if changes to any subclasses of HTMLPurifier_Definition
+ * called if changes to any subclasses of HTMLPurifier\HTMLPurifier_Definition
  * or related classes (such as HTMLPurifier_HTMLModule) are made. This
  * may also be necessary if you've modified a customized version.
  *
@@ -33,7 +35,7 @@ if (isset($argv[1])) {
 
 foreach ($names as $name) {
     echo " - Flushing $name\n";
-    $cache = new HTMLPurifier_DefinitionCache_Serializer($name);
+    $cache = new Serializer($name);
     $cache->flush($config);
 }
 

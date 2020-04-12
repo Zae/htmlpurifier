@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\URIParser;
+use HTMLPurifier\URIFilter;
+use HTMLPurifier\URI;
+
 /**
  * Class HTMLPurifier_URIFilter_Munge
  */
-class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
+class HTMLPurifier_URIFilter_Munge extends URIFilter
 {
     /**
      * @type string
@@ -23,7 +28,7 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
     private $target;
 
     /**
-     * @type HTMLPurifier_URIParser
+     * @type URIParser
      */
     private $parser;
 
@@ -51,7 +56,7 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
     public function prepare(HTMLPurifier_Config $config): bool
     {
         $this->target = $config->get('URI.' . $this->name);
-        $this->parser = new HTMLPurifier_URIParser();
+        $this->parser = new URIParser();
         $this->doEmbed = $config->get('URI.MungeResources');
         $this->secretKey = $config->get('URI.MungeSecretKey');
 
@@ -63,14 +68,14 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
     }
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      * @throws HTMLPurifier_Exception
      */
-    public function filter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
+    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
     {
         if ($context->get('EmbeddedURI', true) && !$this->doEmbed) {
             return true;
@@ -107,14 +112,14 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
     }
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      */
     protected function makeReplace(
-        HTMLPurifier_URI $uri,
+        URI $uri,
         HTMLPurifier_Config $config,
-        HTMLPurifier_Context $context
+        Context $context
     ): void {
         $string = $uri->toString();
 

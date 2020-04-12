@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Node\Element;
 
 /**
@@ -28,14 +29,14 @@ class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
     // XXX: This whole business with 'wrap' is all a bit unsatisfactory
 
     /**
-     * @param array                $children
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $children
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
     {
         // Flag for subclasses
         $this->whitespace = false;

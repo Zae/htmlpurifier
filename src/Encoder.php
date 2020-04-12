@@ -2,12 +2,18 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier\Context;
+use HTMLPurifier_Exception;
+
 /**
  * A UTF-8 specific character encoder that handles cleaning and transforming.
  *
  * @note All functions in this class should be static.
  */
-class HTMLPurifier_Encoder
+class Encoder
 {
     /**
      * Constructor throws fatal error if you attempt to instantiate class
@@ -35,7 +41,7 @@ class HTMLPurifier_Encoder
      */
     public static function unsafeIconv($in, $out, $text)
     {
-        set_error_handler(['HTMLPurifier_Encoder', 'muteErrorHandler']);
+        set_error_handler(['HTMLPurifier\Encoder', 'muteErrorHandler']);
         $r = iconv($in, $out, $text);
         restore_error_handler();
 
@@ -393,14 +399,14 @@ class HTMLPurifier_Encoder
     /**
      * Convert a string to UTF-8 based on configuration.
      *
-     * @param string               $str The string to convert
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $str The string to convert
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string
      * @throws HTMLPurifier_Exception
      */
-    public static function convertToUTF8(string $str, HTMLPurifier_Config $config, HTMLPurifier_Context $context): string
+    public static function convertToUTF8(string $str, HTMLPurifier_Config $config, Context $context): string
     {
         $encoding = $config->get('Core.Encoding');
         if ($encoding === 'utf-8') {
@@ -447,16 +453,16 @@ class HTMLPurifier_Encoder
     /**
      * Converts a string from UTF-8 based on configuration.
      *
-     * @param string               $str The string to convert
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $str The string to convert
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string
      * @note Currently, this is a lossy conversion, with unexpressable
      *       characters being omitted.
      * @throws HTMLPurifier_Exception
      */
-    public static function convertFromUTF8(?string $str, HTMLPurifier_Config $config, ?HTMLPurifier_Context $context): ?string
+    public static function convertFromUTF8(?string $str, HTMLPurifier_Config $config, ?Context $context): ?string
     {
         $encoding = $config->get('Core.Encoding');
         if ($escape = $config->get('Core.EscapeNonASCIICharacters')) {

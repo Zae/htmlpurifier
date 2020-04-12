@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\URI;
+
 /**
  * Validator for the components of a URI for a specific scheme
  */
@@ -52,26 +55,26 @@ abstract class HTMLPurifier_URIScheme
     /**
      * Validates the components of a URI for a specific scheme.
      *
-     * @param HTMLPurifier_URI     $uri Reference to a HTMLPurifier_URI object
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri Reference to a HTMLPurifier\HTMLPurifier_URI object
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool success or failure
      */
-    abstract public function doValidate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
+    abstract public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context);
 
     /**
      * Public interface for validating components of a URI.  Performs a
      * bunch of default actions. Don't overload this method.
      *
-     * @param HTMLPurifier_URI     $uri Reference to a HTMLPurifier_URI object
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri Reference to a HTMLPurifier\HTMLPurifier_URI object
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool success or failure
      * @throws HTMLPurifier_Exception
      */
-    public function validate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function validate(URI &$uri, HTMLPurifier_Config $config, Context $context)
     {
         if ($this->default_port === $uri->port) {
             $uri->port = null;

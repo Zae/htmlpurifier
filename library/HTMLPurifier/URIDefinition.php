@@ -2,10 +2,16 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Definition;
+use HTMLPurifier\Context;
+use HTMLPurifier\URIParser;
+use HTMLPurifier\URIFilter;
+use HTMLPurifier\URI;
+
 /**
  * Class HTMLPurifier_URIDefinition
  */
-class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
+class HTMLPurifier_URIDefinition extends Definition
 {
     public $type = 'URI';
     protected $filters = [];
@@ -13,7 +19,7 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     protected $registeredFilters = [];
 
     /**
-     * HTMLPurifier_URI object of the base specified at %URI.Base
+     * HTMLPurifier\HTMLPurifier_URI object of the base specified at %URI.Base
      */
     public $base;
 
@@ -39,9 +45,9 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     }
 
     /**
-     * @param HTMLPurifier_URIFilter $filter
+     * @param URIFilter $filter
      */
-    public function registerFilter(HTMLPurifier_URIFilter $filter)
+    public function registerFilter(URIFilter $filter)
     {
         $this->registeredFilters[$filter->name] = $filter;
     }
@@ -50,7 +56,7 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
      * @param $filter
      * @param $config
      */
-    public function addFilter(HTMLPurifier_URIFilter $filter, HTMLPurifier_Config $config)
+    public function addFilter(URIFilter $filter, HTMLPurifier_Config $config)
     {
         $r = $filter->prepare($config);
 
@@ -110,7 +116,7 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
         $this->host = $config->get('URI.Host');
         $base_uri = $config->get('URI.Base');
         if (!is_null($base_uri)) {
-            $parser = new HTMLPurifier_URIParser();
+            $parser = new URIParser();
             $this->base = $parser->parse($base_uri);
             $this->defaultScheme = $this->base->scheme;
 
@@ -125,24 +131,24 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     }
 
     /**
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return HTMLPurifier_URIScheme|null
      */
-    public function getDefaultScheme(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function getDefaultScheme(HTMLPurifier_Config $config, Context $context)
     {
         return HTMLPurifier_URISchemeRegistry::instance()->getScheme($this->defaultScheme, $config, $context);
     }
 
     /**
-     * @param HTMLPurifier_URI $uri
+     * @param URI                 $uri
      * @param HTMLPurifier_Config $config
-     * @param HTMLPurifier_Context $context
+     * @param Context             $context
      *
      * @return bool
      */
-    public function filter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context)
     {
         foreach ($this->filters as $name => $f) {
             $result = $f->filter($uri, $config, $context);
@@ -155,13 +161,13 @@ class HTMLPurifier_URIDefinition extends HTMLPurifier_Definition
     }
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      */
-    public function postFilter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function postFilter(URI &$uri, HTMLPurifier_Config $config, Context $context)
     {
         foreach ($this->postFilters as $name => $f) {
             $result = $f->filter($uri, $config, $context);

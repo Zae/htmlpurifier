@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates an IPv6 address.
@@ -17,9 +17,9 @@ use HTMLPurifier_Context;
 class IPv6 extends IPv4
 {
     /**
-     * @param string               $aIP
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $aIP
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */

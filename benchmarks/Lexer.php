@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Lexer\DOMLex;
 
 require_once '../library/HTMLPurifier.auto.php';
@@ -87,7 +88,7 @@ function do_benchmark($name, $document)
     global $LEXERS, $RUNS;
 
     $config = HTMLPurifier_Config::createDefault();
-    $context = new HTMLPurifier_Context();
+    $context = new Context();
 
     $timer = new RowTimer($name);
     $timer->start();

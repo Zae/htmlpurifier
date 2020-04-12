@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_URIScheme;
 use HTMLPurifier_URIScheme_http;
 use HTMLPurifier_URISchemeRegistry;
@@ -27,7 +27,7 @@ class URISchemeRegistryTest extends TestCase
             'URI.AllowedSchemes' => 'http, telnet',
             'URI.OverrideAllowedSchemes' => true
         ]);
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
 
         $registry = new HTMLPurifier_URISchemeRegistry();
         static::assertInstanceOf(HTMLPurifier_URIScheme_http::class, $registry->getScheme('http', $config, $context));

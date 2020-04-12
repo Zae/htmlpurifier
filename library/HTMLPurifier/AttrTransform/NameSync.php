@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\HTML\ID;
+use HTMLPurifier\Context;
 
 /**
  * Post-transform that performs validation to the name attribute; if
@@ -22,14 +23,14 @@ class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         if (!isset($attr['name'])) {
             return $attr;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\DefinitionCache;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Definition;
+use HTMLPurifier\Definition;
 use Mockery;
 use Mockery\Mock;
 
@@ -48,7 +48,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
      */
     protected function generateDefinition(array $member_vars = [])
     {
-        $def = Mockery::mock(HTMLPurifier_Definition::class)->makePartial();
+        $def = Mockery::mock(Definition::class)->makePartial();
 
         $def->shouldAllowMockingProtectedMethods();
         $def->expects()

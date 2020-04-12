@@ -2,6 +2,12 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier\Context;
+use HTMLPurifier\URI;
+use HTMLPurifier_Config;
+
 /**
  * Chainable filters for custom URI processing.
  *
@@ -27,7 +33,7 @@ declare(strict_types=1);
  *          you check that it exists. This allows filters to convert
  *          proprietary URI schemes into regular ones.
  */
-abstract class HTMLPurifier_URIFilter
+abstract class URIFilter
 {
     /**
      * Unique identifier of filter.
@@ -68,13 +74,13 @@ abstract class HTMLPurifier_URIFilter
     /**
      * Filter a URI object
      *
-     * @param HTMLPurifier_URI     $uri Reference to URI object variable
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri Reference to URI object variable
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool Whether or not to continue processing: false indicates
      *         URL is no good, true indicates continue processing. Note that
      *         all changes are committed directly on the URI object
      */
-    abstract public function filter(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
+    abstract public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context);
 }

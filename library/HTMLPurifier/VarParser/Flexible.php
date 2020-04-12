@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParser;
+
 /**
  * Performs safe variable parsing based on types which can be used by
  * users. This may not be able to represent all possible data inputs,
  * however.
  */
-class HTMLPurifier_VarParser_Flexible extends HTMLPurifier_VarParser
+class HTMLPurifier_VarParser_Flexible extends VarParser
 {
     /**
      * @param mixed $var

@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\URI;
+
 /**
  * Validates news (Usenet) as defined by generic RFC 1738
  */
@@ -18,13 +21,13 @@ class HTMLPurifier_URIScheme_news extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      */
-    public function doValidate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
+    public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
     {
         $uri->userinfo = null;
         $uri->host = null;

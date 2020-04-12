@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates arbitrary text according to the HTML spec.
@@ -14,9 +14,9 @@ use HTMLPurifier_Context;
 class Text extends AttrDef
 {
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

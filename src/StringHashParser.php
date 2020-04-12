@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
 /**
  * Parses string hash files. File format is as such:
  *
@@ -27,7 +28,7 @@ declare(strict_types=1);
  * You can use ---- to forcibly terminate parsing of a single string-hash;
  * this marker is used in multi string-hashes to delimit boundaries.
  */
-class HTMLPurifier_StringHashParser
+class StringHashParser
 {
     /**
      * @type string

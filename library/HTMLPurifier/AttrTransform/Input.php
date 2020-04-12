@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\HTML\Pixels;
+use HTMLPurifier\Context;
 
 /**
  * Performs miscellaneous cross attribute validation and filtering for
@@ -21,13 +22,13 @@ class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform
     }
 
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         if (!isset($attr['type'])) {
             $t = 'text';

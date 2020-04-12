@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_URIDefinition;
-use HTMLPurifier_URIFilter;
+use HTMLPurifier\URIFilter;
 use Mockery;
 
 /**
@@ -99,7 +99,7 @@ class URIDefinitionTest extends UriTestCase
     ) {
         static $i = 0;
 
-        $mock = Mockery::mock(HTMLPurifier_URIFilter::class);
+        $mock = Mockery::mock(URIFilter::class);
 
         if ($expect) {
             $mock->expects()

@@ -9,6 +9,8 @@ declare(strict_types=1);
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrDef\CSS\Ident;
 use HTMLPurifier\AttrDef\HTML\ID;
+use HTMLPurifier\Context;
+use HTMLPurifier\Filter;
 
 function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
 {
@@ -28,7 +30,7 @@ function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
  *      document--something purists would probably prefer. Just directly
  *      call HTMLPurifier_Filter_ExtractStyleBlocks->cleanCSS()
  */
-class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
+class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
 {
     /**
      * @type string
@@ -89,15 +91,15 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
     /**
      * Removes inline <style> tags from HTML, saves them for later use
      *
-     * @param string               $html
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $html
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string
      * @throws HTMLPurifier_Exception
      * @todo Extend to indicate non-text/css style blocks
      */
-    public function preFilter(string $html, HTMLPurifier_Config $config, HTMLPurifier_Context $context): string
+    public function preFilter(string $html, HTMLPurifier_Config $config, Context $context): string
     {
         $tidy = $config->get('Filter.ExtractStyleBlocks.TidyImpl');
         if ($tidy !== null) {
@@ -126,14 +128,14 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends HTMLPurifier_Filter
      *
      * @warning Requires CSSTidy <http://csstidy.sourceforge.net/>
      *
-     * @param string               $css CSS styling to clean
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $css CSS styling to clean
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string Cleaned CSS
      * @throws HTMLPurifier_Exception
      */
-    public function cleanCSS(string $css, HTMLPurifier_Config $config, HTMLPurifier_Context $context): string
+    public function cleanCSS(string $css, HTMLPurifier_Config $config, Context $context): string
     {
         // prepare scope
         $scope = $config->get('Filter.ExtractStyleBlocks.Scope');
