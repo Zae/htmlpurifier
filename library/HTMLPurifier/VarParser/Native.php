@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParser;
+
 /**
  * This variable parser uses PHP's internal code engine. Because it does
  * this, it can represent all inputs; however, it is dangerous and cannot
  * be used by users.
  */
-class HTMLPurifier_VarParser_Native extends HTMLPurifier_VarParser
+class HTMLPurifier_VarParser_Native extends VarParser
 {
     /**
      * @param mixed $var

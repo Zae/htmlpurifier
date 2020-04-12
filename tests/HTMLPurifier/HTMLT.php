@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\StringHashParser;
+
 class HTMLPurifier_HTMLT extends HTMLPurifier_Harness
 {
     protected $path;
@@ -12,7 +14,7 @@ class HTMLPurifier_HTMLT extends HTMLPurifier_Harness
 
     public function testHtmlt()
     {
-        $parser = new HTMLPurifier_StringHashParser();
+        $parser = new StringHashParser();
         $hash = $parser->parseFile($this->path); // assume parser normalizes to "\n"
         if (isset($hash['SKIPIF'])) {
             if (eval($hash['SKIPIF'])) return;

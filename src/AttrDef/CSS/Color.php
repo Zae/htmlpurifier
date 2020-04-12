@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\CSS\AlphaValue;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_Exception;
 
 /**
@@ -26,9 +26,9 @@ class Color extends AttrDef
     }
 
     /**
-     * @param string               $color
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $color
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      * @throws HTMLPurifier_Exception

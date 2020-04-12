@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier;
-use HTMLPurifier_Filter;
+use HTMLPurifier\Filter;
 use Mockery;
 
 /**
@@ -105,7 +105,7 @@ class HTMLPurifierTest extends TestCase
         $this->expectError();
         $this->expectErrorMessage('HTMLPurifier->addFilter() is deprecated, use configuration directives in the Filter namespace or Filter.Custom');
 
-        $mock = Mockery::mock(HTMLPurifier_Filter::class);
+        $mock = Mockery::mock(Filter::class);
 
         // TODO: This used to be $mock->expectOnce('preFilter'), but it seems to be called 0 times?
         $mock->expects()

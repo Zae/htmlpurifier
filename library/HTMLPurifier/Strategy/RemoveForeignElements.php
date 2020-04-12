@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -13,17 +15,17 @@ use HTMLPurifier\Token\Start;
  * tokens. If a token is not recognized but a TagTransform is defined for
  * that element, the element will be transformed accordingly.
  */
-class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
+class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
 {
     /**
-     * @param Token[]              $tokens
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Token[]             $tokens
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array|Token[]
      * @throws HTMLPurifier_Exception
      */
-    public function execute($tokens, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
         $generator = new HTMLPurifier_Generator($config, $context);

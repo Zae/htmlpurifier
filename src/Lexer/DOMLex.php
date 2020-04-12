@@ -8,10 +8,10 @@ use DOMDocument;
 use DOMNamedNodeMap;
 use DOMNode;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_Exception;
 use HTMLPurifier_Lexer;
-use HTMLPurifier_Queue;
+use HTMLPurifier\Queue;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_TokenFactory;
@@ -54,14 +54,14 @@ class DOMLex extends HTMLPurifier_Lexer
     }
 
     /**
-     * @param null|string          $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param null|string         $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return \HTMLPurifier\Token[]
      * @throws HTMLPurifier_Exception
      */
-    public function tokenizeHTML(?string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function tokenizeHTML(?string $string, HTMLPurifier_Config $config, Context $context): array
     {
         $string = $this->normalize($string, $config, $context);
 
@@ -132,7 +132,7 @@ class DOMLex extends HTMLPurifier_Lexer
     protected function tokenizeDOM(DOMNode $node, array &$tokens, HTMLPurifier_Config $config): void
     {
         $level = 0;
-        $nodes = [$level => new HTMLPurifier_Queue([$node])];
+        $nodes = [$level => new Queue([$node])];
         $closingNodes = [];
 
         do {
@@ -145,7 +145,7 @@ class DOMLex extends HTMLPurifier_Lexer
                 }
                 if ($node->childNodes && $node->childNodes->length) {
                     $level++;
-                    $nodes[$level] = new HTMLPurifier_Queue();
+                    $nodes[$level] = new Queue();
                     foreach ($node->childNodes as $childNode) {
                         $nodes[$level]->push($childNode);
                     }
@@ -345,16 +345,16 @@ class DOMLex extends HTMLPurifier_Lexer
     /**
      * Wraps an HTML fragment in the necessary HTML
      *
-     * @param string               $html
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $html
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
-     * @param bool                 $use_div
+     * @param bool                  $use_div
      *
      * @return string
      * @throws HTMLPurifier_Exception
      */
-    protected function wrapHTML(string $html, HTMLPurifier_Config $config, HTMLPurifier_Context $context, bool $use_div = true): string
+    protected function wrapHTML(string $html, HTMLPurifier_Config $config, Context $context, bool $use_div = true): string
     {
         $def = $config->getDefinition('HTML');
         $ret = '';

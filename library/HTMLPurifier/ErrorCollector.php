@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+
 /**
  * Error collection class that enables HTML Purifier to report HTML
  * problems back to the user
@@ -43,7 +45,7 @@ class HTMLPurifier_ErrorCollector
     protected $generator;
 
     /**
-     * @type HTMLPurifier_Context
+     * @type Context
      */
     protected $context;
 
@@ -53,9 +55,9 @@ class HTMLPurifier_ErrorCollector
     protected $lines = [];
 
     /**
-     * @param HTMLPurifier_Context $context
+     * @param Context $context
      */
-    public function __construct(HTMLPurifier_Context $context)
+    public function __construct(Context $context)
     {
         $this->locale    =& $context->get('Locale');
         $this->context   = $context;

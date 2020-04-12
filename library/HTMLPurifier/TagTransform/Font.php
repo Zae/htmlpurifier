@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Tag;
 
@@ -48,13 +49,13 @@ class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
     ];
 
     /**
-     * @param Tag                  $tag
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Tag                 $tag
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return End|string
      */
-    public function transform(Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function transform(Tag $tag, HTMLPurifier_Config $config, Context $context)
     {
         if ($tag instanceof End) {
             $new_tag = clone $tag;

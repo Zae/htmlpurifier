@@ -2,19 +2,23 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParser;
+use HTMLPurifier\StringHashParser;
+use HTMLPurifier\StringHash;
+
 class HTMLPurifier_ConfigSchema_InterchangeBuilder
 {
     /**
      * Used for processing DEFAULT, nothing else.
      *
-     * @type HTMLPurifier_VarParser
+     * @type VarParser
      */
     protected $varParser;
 
     /**
-     * @param HTMLPurifier_VarParser $varParser
+     * @param VarParser $varParser
      */
-    public function __construct(HTMLPurifier_VarParser $varParser = null)
+    public function __construct(VarParser $varParser = null)
     {
         $this->varParser = $varParser ?: new HTMLPurifier_VarParser_Native();
     }
@@ -78,10 +82,10 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      */
     public function buildFile(HTMLPurifier_ConfigSchema_Interchange $interchange, string $file): void
     {
-        $parser = new HTMLPurifier_StringHashParser();
+        $parser = new StringHashParser();
         $this->build(
             $interchange,
-            new HTMLPurifier_StringHash($parser->parseFile($file))
+            new StringHash($parser->parseFile($file))
         );
     }
 
@@ -89,14 +93,14 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * Builds an interchange object based on a hash.
      *
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange HTMLPurifier_ConfigSchema_Interchange object to build
-     * @param HTMLPurifier_StringHash               $hash        source data
+     * @param StringHash                            $hash        source data
      *
      * @throws HTMLPurifier_ConfigSchema_Exception
      */
-    public function build(HTMLPurifier_ConfigSchema_Interchange $interchange, HTMLPurifier_StringHash $hash): void
+    public function build(HTMLPurifier_ConfigSchema_Interchange $interchange, StringHash $hash): void
     {
-        if (!$hash instanceof HTMLPurifier_StringHash) {
-            $hash = new HTMLPurifier_StringHash($hash);
+        if (!$hash instanceof StringHash) {
+            $hash = new StringHash($hash);
         }
 
         if (!isset($hash['ID'])) {
@@ -118,13 +122,13 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
 
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
-     * @param HTMLPurifier_StringHash               $hash
+     * @param StringHash                            $hash
      *
      * @throws HTMLPurifier_ConfigSchema_Exception|HTMLPurifier_Exception
      */
     public function buildDirective(
         HTMLPurifier_ConfigSchema_Interchange $interchange,
-        HTMLPurifier_StringHash $hash
+        StringHash $hash
     ): void {
         $directive = new HTMLPurifier_ConfigSchema_Interchange_Directive();
 
@@ -239,9 +243,9 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * Triggers errors for any unused keys passed in the hash; such keys
      * may indicate typos, missing values, etc.
      *
-     * @param HTMLPurifier_StringHash $hash Hash to check.
+     * @param StringHash $hash Hash to check.
      */
-    protected function _findUnused(HTMLPurifier_StringHash $hash): void
+    protected function _findUnused(StringHash $hash): void
     {
         $accessed = $hash->getAccessed();
         foreach ($hash as $k => $v) {

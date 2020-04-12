@@ -2,25 +2,30 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 /**
  * Registry object that contains information about the current context.
+ *
  * @warning Is a bit buggy when variables are set to null: it thinks
  *          they don't exist! So use false instead, please.
- * @note Since the variables Context deals with may not be objects,
+ * @note    Since the variables Context deals with may not be objects,
  *       references are very important here! Do not remove!
  */
-class HTMLPurifier_Context
+class Context
 {
     /**
      * Private array that stores the references.
+     *
      * @type array
      */
     private $_storage = [];
 
     /**
      * Registers a variable into the context.
+     *
      * @param string $name String name
-     * @param mixed $ref Reference to variable to be registered
+     * @param mixed  $ref  Reference to variable to be registered
      */
     public function register(string $name, &$ref)
     {
@@ -29,16 +34,19 @@ class HTMLPurifier_Context
                 "Name $name produces collision, cannot re-register",
                 E_USER_ERROR
             );
+
             return;
         }
-        
+
         $this->_storage[$name] =& $ref;
     }
 
     /**
      * Retrieves a variable reference from the context.
-     * @param string $name String name
-     * @param bool $ignore_error Boolean whether or not to ignore error
+     *
+     * @param string $name         String name
+     * @param bool   $ignore_error Boolean whether or not to ignore error
+     *
      * @return mixed
      */
     public function &get(string $name, bool $ignore_error = false)
@@ -52,6 +60,7 @@ class HTMLPurifier_Context
             }
 
             $var = null; // so we can return by reference
+
             return $var;
         }
 
@@ -60,6 +69,7 @@ class HTMLPurifier_Context
 
     /**
      * Destroys a variable in the context.
+     *
      * @param string $name String name
      */
     public function destroy(string $name)
@@ -69,6 +79,7 @@ class HTMLPurifier_Context
                 "Attempted to destroy non-existent variable $name",
                 E_USER_ERROR
             );
+
             return;
         }
 
@@ -77,7 +88,9 @@ class HTMLPurifier_Context
 
     /**
      * Checks whether or not the variable exists.
+     *
      * @param string $name String name
+     *
      * @return bool
      */
     public function exists(string $name)
@@ -87,6 +100,7 @@ class HTMLPurifier_Context
 
     /**
      * Loads a series of variables from an associative array
+     *
      * @param array $context_array Assoc array of variables to load
      */
     public function loadArray(array $context_array)

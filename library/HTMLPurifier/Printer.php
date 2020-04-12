@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 // OUT OF DATE, NEEDS UPDATING!
 // USE XMLWRITER!
+use HTMLPurifier\Encoder;
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -37,7 +39,7 @@ class HTMLPurifier_Printer
     {
         $all = $config->getAll();
 
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $this->generator = new HTMLPurifier_Generator($config, $context);
     }
 
@@ -143,7 +145,7 @@ class HTMLPurifier_Printer
     protected function escape(string $string): string
     {
         return htmlspecialchars(
-            HTMLPurifier_Encoder::cleanUTF8($string),
+            Encoder::cleanUTF8($string),
             ENT_COMPAT,
             'UTF-8'
         );

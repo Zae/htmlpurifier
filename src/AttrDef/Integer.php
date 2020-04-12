@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates an integer.
@@ -52,9 +52,9 @@ class Integer extends AttrDef
     }
 
     /**
-     * @param string               $integer
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $integer
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

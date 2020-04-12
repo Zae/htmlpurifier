@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\Tag;
 
 /**
@@ -18,11 +19,11 @@ abstract class HTMLPurifier_TagTransform
     /**
      * Transforms the obsolete tag into the valid tag.
      *
-     * @param Tag                  $tag     Tag to be transformed.
-     * @param HTMLPurifier_Config  $config  Mandatory HTMLPurifier_Config object
-     * @param HTMLPurifier_Context $context Mandatory HTMLPurifier_Context object
+     * @param Tag                 $tag     Tag to be transformed.
+     * @param HTMLPurifier_Config $config  Mandatory HTMLPurifier_Config object
+     * @param Context             $context Mandatory HTMLPurifier\HTMLPurifier_Context object
      */
-    abstract public function transform(Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
+    abstract public function transform(Tag $tag, HTMLPurifier_Config $config, Context $context);
 
     /**
      * Prepends CSS properties to the style attribute, creating the

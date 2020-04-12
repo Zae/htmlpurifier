@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\Switcher;
 use HTMLPurifier\AttrDef\Integer;
@@ -24,13 +26,16 @@ use HTMLPurifier\AttrDef\CSS\Background;
 use HTMLPurifier\AttrDef\CSS\AlphaValue;
 use HTMLPurifier\AttrDef\CSS\ImportantDecorator;
 use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\Definition;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
  * Defines allowed CSS attributes and what their values are.
  *
  * @see HTMLDefinition
  */
-class HTMLPurifier_CSSDefinition extends HTMLPurifier_Definition
+class CSSDefinition extends Definition
 {
     public $type = 'CSS';
 

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Encoder;
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 use HTMLPurifier\Lexer\DOMLex;
 
@@ -258,13 +260,13 @@ class HTMLPurifier_Lexer
     /**
      * Lexes an HTML string into tokens.
      *
-     * @param String               $string HTML.
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param String              $string HTML.
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return Token[] array representation of HTML.
      */
-    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, Context $context): array
     {
         trigger_error('Call to abstract class', E_USER_ERROR);
     }
@@ -338,15 +340,15 @@ class HTMLPurifier_Lexer
      * Takes a piece of HTML and normalizes it by converting entities, fixing
      * encoding, extracting bits, and other good stuff.
      *
-     * @param string               $html HTML.
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $html HTML.
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string
      * @throws HTMLPurifier_Exception
      * @todo Consider making protected
      */
-    public function normalize(?string $html, HTMLPurifier_Config $config, HTMLPurifier_Context $context): string
+    public function normalize(?string $html, HTMLPurifier_Config $config, Context $context): string
     {
         // normalize newlines to \n
         if ($config->get('Core.NormalizeNewlines')) {
@@ -390,7 +392,7 @@ class HTMLPurifier_Lexer
         // clean into wellformed UTF-8 string for an SGML context: this has
         // to be done after entity expansion because the entities sometimes
         // represent non-SGML characters (horror, horror!)
-        $html = HTMLPurifier_Encoder::cleanUTF8($html);
+        $html = Encoder::cleanUTF8($html);
 
         // if processing instructions are to removed, remove them now
         if ($config->get('Core.RemoveProcessingInstructions')) {

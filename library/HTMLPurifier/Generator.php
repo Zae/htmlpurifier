@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -76,12 +77,12 @@ class HTMLPurifier_Generator
     protected $config;
 
     /**
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @throws HTMLPurifier_Exception
      */
-    public function __construct(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function __construct(HTMLPurifier_Config $config, Context $context)
     {
         $this->config = $config;
         $this->_scriptFix = $config->get('Output.CommentScriptContents');

@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\URIParser;
+use HTMLPurifier\URI;
+
 class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
 {
 
@@ -7,9 +10,9 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         $uri, $scheme, $userinfo, $host, $port, $path, $query, $fragment, $config = null, $context = null
     ) {
         $this->prepareCommon($config, $context);
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
         $result = $parser->parse($uri, $config, $context);
-        $expect = new HTMLPurifier_URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
+        $expect = new URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
         $this->assertEqual($result, $expect);
     }
 

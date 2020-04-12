@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // must be called POST validation
+use HTMLPurifier\Context;
 
 /**
  * Transform that supplies default values for the src and alt attributes
@@ -13,14 +14,14 @@ declare(strict_types=1);
 class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
 {
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         $src = true;
         if (!isset($attr['src'])) {

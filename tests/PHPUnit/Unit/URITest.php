@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_URI;
-use HTMLPurifier_URIParser;
+use HTMLPurifier\URI;
+use HTMLPurifier\URIParser;
 use HTMLPurifier_URIScheme;
 use HTMLPurifier_URISchemeRegistry;
 use Mockery;
@@ -24,8 +24,8 @@ class URITest extends UriTestCase
      */
     public function test_construct(): void
     {
-        $uri1 = new HTMLPurifier_URI('HTTP', 'bob', 'example.com', 23, '/foo', 'bar=2', 'slash');
-        $uri2 = new HTMLPurifier_URI('http', 'bob', 'example.com',  23,  '/foo', 'bar=2', 'slash');
+        $uri1 = new URI('HTTP', 'bob', 'example.com', 23, '/foo', 'bar=2', 'slash');
+        $uri2 = new URI('http', 'bob', 'example.com',  23,  '/foo', 'bar=2', 'slash');
 
         static::assertEquals($uri1, $uri2);
     }
@@ -265,11 +265,11 @@ class URITest extends UriTestCase
      *
      * @param string $uri
      *
-     * @return bool|\HTMLPurifier_URI
+     * @return bool|\HTMLPurifier\URI
      */
     protected function createURI(string $uri)
     {
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
         return $parser->parse($uri);
     }
 
@@ -329,7 +329,7 @@ class URITest extends UriTestCase
      */
     protected function assertToString($expect_uri, $scheme, $userinfo, $host, $port, $path, $query, $fragment): void
     {
-        $uri = new HTMLPurifier_URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
+        $uri = new URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
 
         $string = $uri->toString();
         static::assertEquals($string, $expect_uri);

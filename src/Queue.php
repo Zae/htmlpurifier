@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
 /**
  * A simple array-backed queue, based off of the classic Okasaki
  * persistent amortized queue.  The basic idea is to maintain two
@@ -19,13 +20,13 @@ declare(strict_types=1);
  * behaviour caused by repeatedly shuffling data from the input stack
  * to the output stack and back.
  */
-class HTMLPurifier_Queue
+class Queue
 {
     private $input;
     private $output;
 
     /**
-     * HTMLPurifier_Queue constructor.
+     * HTMLPurifier\HTMLPurifier_Queue constructor.
      *
      * @param array $input
      */

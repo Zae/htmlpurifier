@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\StringHashParser;
+
 /**
  * @note Sample input files are located in the StringHashParser/ directory.
  */
@@ -13,7 +15,7 @@ class HTMLPurifier_StringHashParserTest extends UnitTestCase
 
     public function setup()
     {
-        $this->parser = new HTMLPurifier_StringHashParser();
+        $this->parser = new StringHashParser();
     }
 
     /**

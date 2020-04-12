@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -43,14 +44,14 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
     }
 
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array|Token[]
      * @throws HTMLPurifier_Exception
      */
-    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, Context $context): array
     {
         // special normalization for script tags without any armor
         // our "armor" heurstic is a < sign any number of whitespaces after
@@ -385,9 +386,9 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
     /**
      * Takes the inside of an HTML tag and makes an assoc array of attributes.
      *
-     * @param string               $string Inside of tag excluding name.
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string Inside of tag excluding name.
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array Assoc array of attributes.
      * @throws HTMLPurifier_Exception
@@ -395,7 +396,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
     public function parseAttributeString(
         string $string,
         HTMLPurifier_Config $config,
-        HTMLPurifier_Context$context
+        Context$context
     ): array {
         $string = (string)$string; // quick typecast
 

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\Context;
 
 /**
  * Class HTMLPurifier_Printer_HTMLDefinition
@@ -204,7 +205,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
      */
     protected function renderChildren(HTMLPurifier_ChildDef $def): string
     {
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
 
         $ret = '';
         $ret .= $this->start('tr');

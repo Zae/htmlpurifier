@@ -2,18 +2,25 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\DefinitionCache;
+
+use HTMLPurifier\Definition;
+use HTMLPurifier_Config;
+use HTMLPurifier_DefinitionCache;
+use HTMLPurifier_Exception;
+
 /**
- * Class HTMLPurifier_DefinitionCache_Serializer
+ * Class HTMLPurifier\DefinitionCache\HTMLPurifier_DefinitionCache_Serializer
  */
-class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCache
+class Serializer extends HTMLPurifier_DefinitionCache
 {
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return int|bool
      */
-    public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, HTMLPurifier_Config $config)
     {
         if (!$this->checkDefType($def)) {
             return;
@@ -32,12 +39,12 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return int|bool
      */
-    public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, HTMLPurifier_Config $config)
     {
         if (!$this->checkDefType($def)) {
             return;
@@ -52,12 +59,12 @@ class HTMLPurifier_DefinitionCache_Serializer extends HTMLPurifier_DefinitionCac
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return int|bool
      */
-    public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, HTMLPurifier_Config $config)
     {
         if (!$this->checkDefType($def)) {
             return;

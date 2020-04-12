@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -27,13 +28,13 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
     public $needed = ['a' => ['href']];
 
     /**
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string|bool
      * @throws HTMLPurifier_Exception
      */
-    public function prepare(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function prepare(HTMLPurifier_Config $config, Context $context)
     {
         $this->docURL = $config->get('AutoFormat.PurifierLinkify.DocURL');
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 // if want to implement error collecting here, we'll need to use some sort
 // of global data (probably trigger_error) because it's impossible to pass
 // $config or $context to the callback functions.
+use HTMLPurifier\Encoder;
 
 /**
  * Handles referencing and derefencing character entities
@@ -128,11 +129,11 @@ class HTMLPurifier_EntityParser
         $dec_part = @$matches[2];
         $named_part = empty($matches[3]) ? (empty($matches[4]) ? '' : $matches[4]) : $matches[3];
         if ($hex_part !== null && $hex_part !== '') {
-            return HTMLPurifier_Encoder::unichr(hexdec($hex_part));
+            return Encoder::unichr(hexdec($hex_part));
         }
 
         if ($dec_part !== null && $dec_part !== '') {
-            return HTMLPurifier_Encoder::unichr((int)$dec_part);
+            return Encoder::unichr((int)$dec_part);
         }
 
         if (!$this->_entity_lookup) {
@@ -235,7 +236,7 @@ class HTMLPurifier_EntityParser
                 return $entity;
             }
 
-            return HTMLPurifier_Encoder::unichr($code);
+            return Encoder::unichr($code);
         }
 
         if (isset($this->_special_ent2dec[$matches[3]])) {

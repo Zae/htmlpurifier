@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\URIParser;
+
 class HTMLPurifier_URIHarness extends HTMLPurifier_Harness
 {
 
@@ -11,7 +13,7 @@ class HTMLPurifier_URIHarness extends HTMLPurifier_Harness
      */
     protected function prepareURI(&$uri, &$expect_uri)
     {
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
         if ($expect_uri === true) $expect_uri = $uri;
         $uri = $parser->parse($uri);
         if ($expect_uri !== false) {
@@ -24,7 +26,7 @@ class HTMLPurifier_URIHarness extends HTMLPurifier_Harness
      */
     protected function createURI($uri)
     {
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
         return $parser->parse($uri);
     }
 

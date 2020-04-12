@@ -1,6 +1,7 @@
 <?php
 
 // needs to be seperated into files
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -31,7 +32,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
      * @param $expect_added_attributes Attributes of output tag when $attributes
      *                          are omitted.
      * @param $config_array     Configuration array for HTMLPurifier_Config
-     * @param $context_array    Context array for HTMLPurifier_Context
+     * @param $context_array    Context array for HTMLPurifier\HTMLPurifier_Context
      */
     protected function assertTransformation($transformer,
                                          $name,        $attributes,
@@ -42,7 +43,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
         $config = HTMLPurifier_Config::createDefault();
         $config->loadArray($config_array);
 
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
         $context->loadArray($context_array);
 
         // start tag transform

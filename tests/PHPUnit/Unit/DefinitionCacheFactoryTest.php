@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_DefinitionCache_Decorator_Memory;
 use HTMLPurifier_DefinitionCache_Null;
-use HTMLPurifier_DefinitionCache_Serializer;
+use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier_DefinitionCacheFactory;
 use Mockery;
 
@@ -49,7 +49,7 @@ class DefinitionCacheFactoryTest extends TestCase
     public function test_create(): void
     {
         $cache = $this->factory->create('Test', $this->config);
-        static::assertEquals($cache, new HTMLPurifier_DefinitionCache_Serializer('Test'));
+        static::assertEquals($cache, new Serializer('Test'));
     }
 
     /**
@@ -61,7 +61,7 @@ class DefinitionCacheFactoryTest extends TestCase
         $this->factory->addDecorator('Memory');
         $cache = $this->factory->create('Test', $this->config);
         $cache_real = new HTMLPurifier_DefinitionCache_Decorator_Memory();
-        $ser = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $ser = new Serializer('Test');
         $cache_real = $cache_real->decorate($ser);
 
         static::assertEquals($cache, $cache_real);
@@ -76,7 +76,7 @@ class DefinitionCacheFactoryTest extends TestCase
         $this->factory->addDecorator(new HTMLPurifier_DefinitionCache_Decorator_Memory());
         $cache = $this->factory->create('Test', $this->config);
         $cache_real = new HTMLPurifier_DefinitionCache_Decorator_Memory();
-        $ser = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $ser = new Serializer('Test');
         $cache_real = $cache_real->decorate($ser);
 
         static::assertEquals($cache, $cache_real);
@@ -107,7 +107,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
         $cache = $this->factory->create('Test', $this->config);
 
-        static::assertInstanceOf( HTMLPurifier_DefinitionCache_Serializer::class, $cache);
+        static::assertInstanceOf( Serializer::class, $cache);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Node;
 
 /**
@@ -45,11 +46,11 @@ abstract class HTMLPurifier_ChildDef
     /**
      * Validates nodes according to definition and returns modification.
      *
-     * @param Node[]               $children Array of HTMLPurifier\HTMLPurifier_Node
-     * @param HTMLPurifier_Config  $config   HTMLPurifier_Config object
-     * @param HTMLPurifier_Context $context  HTMLPurifier_Context object
+     * @param Node[]              $children Array of HTMLPurifier\HTMLPurifier_Node
+     * @param HTMLPurifier_Config $config   HTMLPurifier_Config object
+     * @param Context             $context  HTMLPurifier\HTMLPurifier_Context object
      *
      * @return bool|array true to leave nodes as is, false to remove parent node, array of replacement children
      */
-    abstract public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context);
+    abstract public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context);
 }

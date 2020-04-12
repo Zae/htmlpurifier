@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Definition;
+
 /**
  * Class HTMLPurifier_DefinitionCache_Decorator
  */
@@ -52,34 +54,34 @@ class HTMLPurifier_DefinitionCache_Decorator extends HTMLPurifier_DefinitionCach
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return mixed
      */
-    public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, HTMLPurifier_Config $config)
     {
         return $this->cache->add($def, $config);
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return mixed
      */
-    public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, HTMLPurifier_Config $config)
     {
         return $this->cache->set($def, $config);
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return mixed
      */
-    public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, HTMLPurifier_Config $config)
     {
         return $this->cache->replace($def, $config);
     }

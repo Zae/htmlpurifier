@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\DefinitionCache;
 
-use HTMLPurifier_DefinitionCache_Serializer;
+use HTMLPurifier\DefinitionCache\Serializer;
 
 /**
  * Class SerializerTest
@@ -26,7 +26,7 @@ class SerializerTest extends TestCase
         // homebrew notion of equality and use that instead.  For now,
         // the identical asserts are commented out.
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
 
         $config = $this->generateConfigMock('serial');
         $config->expects()
@@ -94,7 +94,7 @@ class SerializerTest extends TestCase
      */
     public function test_errors(): void
     {
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
         $def = $this->generateDefinition();
         $def->setup = true;
         $def->type = 'NotTest';
@@ -120,7 +120,7 @@ class SerializerTest extends TestCase
     {
         static::markTestSkipped('Not allowed to serialize Mockery Object, need to find another way');
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
 
         $config1 = $this->generateConfigMock('test1');
         $config2 = $this->generateConfigMock('test2');
@@ -154,7 +154,7 @@ class SerializerTest extends TestCase
     {
         static::markTestSkipped('Not allowed to serialize Mockery Object, need to find another way');
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
 
         // in order of age, oldest first
         // note that configurations are all identical, but version/revision
@@ -194,7 +194,7 @@ class SerializerTest extends TestCase
     {
         static::markTestSkipped('Not allowed to serialize Mockery Object, need to find another way');
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
 
         $config1 = $this->generateConfigMock('serial1');
         $config1->version = '1.0.0';
@@ -231,7 +231,7 @@ class SerializerTest extends TestCase
     {
         static::markTestSkipped('Not allowed to serialize Mockery Object, need to find another way');
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
         $config = $this->generateConfigMock('serial');
         $config->version = '1.0.0';
         $config->expects()
@@ -258,7 +258,7 @@ class SerializerTest extends TestCase
     {
         static::markTestSkipped('Not allowed to serialize Mockery Object, need to find another way');
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
         $config = $this->generateConfigMock('serial');
         $config->version = '1.0.0';
         $config->expects()
@@ -294,7 +294,7 @@ class SerializerTest extends TestCase
     {
         $this->markAsRisky();
 
-        $cache = new HTMLPurifier_DefinitionCache_Serializer('Test');
+        $cache = new Serializer('Test');
 
         $config = $this->generateConfigMock('serial');
         $config->version = '1.0.0';

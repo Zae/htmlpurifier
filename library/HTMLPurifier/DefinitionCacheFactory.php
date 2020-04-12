@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\DefinitionCache\Serializer;
+
 /**
  * Responsible for creating definition caches.
  */
@@ -89,7 +91,7 @@ class HTMLPurifier_DefinitionCacheFactory
                 trigger_error("Unrecognized DefinitionCache $method, using Serializer instead", E_USER_WARNING);
             }
 
-            $cache = new HTMLPurifier_DefinitionCache_Serializer($type);
+            $cache = new Serializer($type);
         }
 
         foreach ($this->decorators as $decorator) {

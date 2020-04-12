@@ -2,40 +2,42 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Definition;
+
 /**
  * Null cache object to use when no caching is on.
  */
 class HTMLPurifier_DefinitionCache_Null extends HTMLPurifier_DefinitionCache
 {
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return bool
      */
-    public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config): bool
+    public function add(Definition $def, HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return bool
      */
-    public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config): bool
+    public function set(Definition $def, HTMLPurifier_Config $config): bool
     {
         return false;
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return bool
      */
-    public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config): bool
+    public function replace(Definition $def, HTMLPurifier_Config $config): bool
     {
         return false;
     }

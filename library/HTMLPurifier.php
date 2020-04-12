@@ -39,6 +39,10 @@ declare(strict_types=1);
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+use HTMLPurifier\Encoder;
+use HTMLPurifier\Context;
+use HTMLPurifier\Filter;
+
 /**
  * Facade that coordinates HTML Purifier's subsystems in order to purify HTML.
  *
@@ -79,7 +83,7 @@ class HTMLPurifier
      * Array of extra filter objects to run on HTML,
      * for backwards compatibility.
      *
-     * @type HTMLPurifier_Filter[]
+     * @type Filter[]
      */
     private $filters = [];
 
@@ -104,7 +108,7 @@ class HTMLPurifier
      * Resultant context of last run purification.
      * Is an array of contexts if the last called method was purifyArray().
      *
-     * @type HTMLPurifier_Context
+     * @type Context
      */
     public $context;
 
@@ -127,7 +131,7 @@ class HTMLPurifier
     /**
      * Adds a filter to process the output. First come first serve
      *
-     * @param HTMLPurifier_Filter $filter HTMLPurifier_Filter object
+     * @param Filter $filter HTMLPurifier\HTMLPurifier_Filter object
      */
     public function addFilter($filter): void
     {
@@ -161,7 +165,7 @@ class HTMLPurifier
         // configuration dependant
         $lexer = HTMLPurifier_Lexer::create($config);
 
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
 
         // setup HTML generator
         $this->generator = new HTMLPurifier_Generator($config, $context);
@@ -183,7 +187,7 @@ class HTMLPurifier
         $id_accumulator = HTMLPurifier_IDAccumulator::build($config, $context);
         $context->register('IDAccumulator', $id_accumulator);
 
-        $html = HTMLPurifier_Encoder::convertToUTF8($html, $config, $context);
+        $html = Encoder::convertToUTF8($html, $config, $context);
 
         // setup filters
         $filter_flags = $config->getBatch('Filter');
@@ -233,7 +237,7 @@ class HTMLPurifier
             $html = $filters[$i]->postFilter($html, $config, $context);
         }
 
-        $html = HTMLPurifier_Encoder::convertFromUTF8($html, $config, $context);
+        $html = Encoder::convertFromUTF8($html, $config, $context);
         $this->context =& $context;
 
         return $html;

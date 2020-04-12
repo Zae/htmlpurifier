@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token\Tag;
 use HTMLPurifier\Token\Start;
 
@@ -28,13 +29,13 @@ class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
     }
 
     /**
-     * @param Tag                  $tag
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Tag                 $tag
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return string
      */
-    public function transform(Tag $tag, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function transform(Tag $tag, HTMLPurifier_Config $config, Context $context)
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;

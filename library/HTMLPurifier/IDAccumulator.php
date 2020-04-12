@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+
 /**
  * Component of HTMLPurifier_AttrContext that accumulates IDs to prevent dupes
  * @note In Slashdot-speak, dupe means duplicate.
@@ -19,8 +21,8 @@ class HTMLPurifier_IDAccumulator
     /**
      * Builds an IDAccumulator, also initializing the default blacklist
      *
-     * @param HTMLPurifier_Config  $config  Instance of HTMLPurifier_Config
-     * @param HTMLPurifier_Context $context Instance of HTMLPurifier_Context
+     * @param HTMLPurifier_Config $config  Instance of HTMLPurifier_Config
+     * @param Context             $context Instance of HTMLPurifier\HTMLPurifier_Context
      *
      * @return HTMLPurifier_IDAccumulator Fully initialized HTMLPurifier_IDAccumulator
      * @throws HTMLPurifier_Exception

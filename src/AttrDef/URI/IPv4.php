@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Validates an IPv4 address
@@ -23,9 +23,9 @@ class IPv4 extends AttrDef
     protected $ip4;
 
     /**
-     * @param string               $aIP
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string                $aIP
+     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */

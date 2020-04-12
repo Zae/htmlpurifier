@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParser;
+
 /**
  * @todo Rewrite to use Interchange objects
  */
@@ -55,7 +57,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $this->compress = $compress;
         // initialize sub-printers
         $this->fields[0] = new HTMLPurifier_Printer_ConfigForm_default();
-        $this->fields[HTMLPurifier_VarParser::C_BOOL] = new HTMLPurifier_Printer_ConfigForm_bool();
+        $this->fields[VarParser::C_BOOL] = new HTMLPurifier_Printer_ConfigForm_bool();
     }
 
     /**
@@ -348,17 +350,17 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
 
         if (is_array($value)) {
             switch ($type) {
-                case HTMLPurifier_VarParser::LOOKUP:
+                case VarParser::LOOKUP:
                     $array = $value;
                     $value = [];
                     foreach ($array as $val => $b) {
                         $value[] = $val;
                     }
                     //TODO does this need a break?
-                case HTMLPurifier_VarParser::ALIST:
+                case VarParser::ALIST:
                     $value = implode(PHP_EOL, $value);
                     break;
-                case HTMLPurifier_VarParser::HASH:
+                case VarParser::HASH:
                     $nvalue = '';
                     foreach ($value as $i => $v) {
                         if (is_array($v)) {
@@ -374,7 +376,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
             }
         }
 
-        if ($type === HTMLPurifier_VarParser::C_MIXED) {
+        if ($type === VarParser::C_MIXED) {
             return 'Not supported';
             $value = serialize($value);
         }
@@ -400,11 +402,11 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
             }
 
             $ret .= $this->end('select');
-        } elseif ($type === HTMLPurifier_VarParser::TEXT ||
-                  $type === HTMLPurifier_VarParser::ITEXT ||
-                  $type === HTMLPurifier_VarParser::ALIST ||
-                  $type === HTMLPurifier_VarParser::HASH ||
-                  $type === HTMLPurifier_VarParser::LOOKUP) {
+        } elseif ($type === VarParser::TEXT ||
+                  $type === VarParser::ITEXT ||
+                  $type === VarParser::ALIST ||
+                  $type === VarParser::HASH ||
+                  $type === VarParser::LOOKUP) {
             $attr['cols'] = $this->cols;
             $attr['rows'] = $this->rows;
             $ret .= $this->start('textarea', $attr);

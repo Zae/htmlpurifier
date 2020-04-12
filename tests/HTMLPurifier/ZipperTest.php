@@ -1,9 +1,11 @@
 <?php
 
+use HTMLPurifier\Zipper;
+
 class HTMLPurifier_ZipperTest extends HTMLPurifier_Harness
 {
     public function testBasicNavigation() {
-        list($z, $t) = HTMLPurifier_Zipper::fromArray(array(0,1,2,3));
+        list($z, $t) = Zipper::fromArray(array(0,1,2,3));
         $this->assertIdentical($t, 0);
         $t = $z->next($t);
         $this->assertIdentical($t, 1);

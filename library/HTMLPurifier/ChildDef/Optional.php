@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+
 /**
  * Definition that allows a set of elements, and allows no children.
  *
@@ -23,13 +25,13 @@ class HTMLPurifier_ChildDef_Optional extends HTMLPurifier_ChildDef_Required
     public $type = 'optional';
 
     /**
-     * @param array                $children
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $children
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
     {
         $result = parent::validateChildren($children, $config, $context);
         // we assume that $children is not modified

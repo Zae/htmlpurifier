@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 
 /**
  * Special-case enum attribute definition that lazy loads allowed frame targets
@@ -28,9 +28,9 @@ class FrameTarget extends Enum
     }
 
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      */

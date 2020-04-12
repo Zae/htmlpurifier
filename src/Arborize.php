@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\Node\Element;
-use HTMLPurifier_Queue;
+use HTMLPurifier\Queue;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -64,7 +64,7 @@ class Arborize
     public static function flatten($node): array
     {
         $level = 0;
-        $nodes = [$level => new HTMLPurifier_Queue([$node])];
+        $nodes = [$level => new Queue([$node])];
         $closingTokens = [];
         $tokens = [];
         do {
@@ -79,7 +79,7 @@ class Arborize
                 }
                 if ($node instanceof Element) {
                     $level++;
-                    $nodes[$level] = new HTMLPurifier_Queue();
+                    $nodes[$level] = new Queue();
                     foreach ($node->children as $childNode) {
                         $nodes[$level]->push($childNode);
                     }

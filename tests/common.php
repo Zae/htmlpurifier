@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Context;
+
 if (!defined('HTMLPurifierTest')) {
     echo "Invalid entry point\n";
     exit;
@@ -182,7 +184,7 @@ function htmlpurifier_add_test($test, $test_file, $only_phpt = false)
 function printTokens($tokens, $index = null)
 {
     $string = '<pre>';
-    $generator = new HTMLPurifier_Generator(HTMLPurifier_Config::createDefault(), new HTMLPurifier_Context);
+    $generator = new HTMLPurifier_Generator(HTMLPurifier_Config::createDefault(), new Context);
     foreach ($tokens as $i => $token) {
         $string .= printToken($generator, $token, $i, $index == $i);
     }
@@ -203,7 +205,7 @@ function printToken($generator, $token, $i, $isCursor)
 function printZipper($zipper, $token)
 {
     $string = '<pre>';
-    $generator = new HTMLPurifier_Generator(HTMLPurifier_Config::createDefault(), new HTMLPurifier_Context);
+    $generator = new HTMLPurifier_Generator(HTMLPurifier_Config::createDefault(), new Context);
     foreach ($zipper->front as $i => $t) {
         $string .= printToken($generator, $t, $i, false);
     }

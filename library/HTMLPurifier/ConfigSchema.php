@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParser;
+
 /**
  * Configuration definition, defines directives and their defaults.
  */
@@ -33,7 +35,7 @@ class HTMLPurifier_ConfigSchema
      * The stdClass may have the following properties:
      *
      *  - If isAlias isn't set:
-     *      - type: Integer type of directive, see HTMLPurifier_VarParser for definitions
+     *      - type: Integer type of directive, see HTMLPurifier\HTMLPurifier_VarParser for definitions
      *      - allow_null: If set, this directive allows null values
      *      - aliases: If set, an associative array of value aliases to real values
      *      - allowed: If set, a lookup array of allowed (string) values
@@ -104,13 +106,13 @@ class HTMLPurifier_ConfigSchema
      * @param string $key Name of directive
      * @param mixed $default Default value of directive
      * @param string|int $type Allowed type of the directive. See
-     *      HTMLPurifier_VarParser::$types for allowed values
+     *      HTMLPurifier\HTMLPurifier_VarParser::$types for allowed values
      * @param bool $allow_null Whether or not to allow null values
      */
     public function add(string $key, $default, $type, bool $allow_null): void
     {
         $obj = new stdClass();
-        $obj->type = is_int($type) ? $type : HTMLPurifier_VarParser::$types[$type];
+        $obj->type = is_int($type) ? $type : VarParser::$types[$type];
         
         if ($allow_null) {
             $obj->allow_null = true;

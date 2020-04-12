@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 // must be called POST validation
+use HTMLPurifier\Context;
 
 /**
  * Adds rel="noopener" to any links which target a different window
@@ -14,13 +15,13 @@ declare(strict_types=1);
 class HTMLPurifier_AttrTransform_TargetNoopener extends HTMLPurifier_AttrTransform
 {
     /**
-     * @param array                $attr
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $attr
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, HTMLPurifier_Context $context): array
+    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {
         if (isset($attr['rel'])) {
             $rels = explode(' ', $attr['rel']);

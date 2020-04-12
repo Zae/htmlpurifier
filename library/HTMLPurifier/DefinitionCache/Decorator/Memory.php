@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Definition;
+
 /**
  * Definition cache decorator class that saves all cache retrievals
  * to PHP's memory; good for unit tests or circumstances where
@@ -28,13 +30,13 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return mixed
      * @throws HTMLPurifier_Exception
      */
-    public function add(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, HTMLPurifier_Config $config)
     {
         $status = parent::add($def, $config);
         if ($status) {
@@ -45,13 +47,13 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return mixed
      * @throws HTMLPurifier_Exception
      */
-    public function set(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, HTMLPurifier_Config $config)
     {
         $status = parent::set($def, $config);
         if ($status) {
@@ -62,13 +64,13 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
     }
 
     /**
-     * @param HTMLPurifier_Definition $def
-     * @param HTMLPurifier_Config     $config
+     * @param Definition          $def
+     * @param HTMLPurifier_Config $config
      *
      * @return mixed
      * @throws HTMLPurifier_Exception
      */
-    public function replace(HTMLPurifier_Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, HTMLPurifier_Config $config)
     {
         $status = parent::replace($def, $config);
         if ($status) {

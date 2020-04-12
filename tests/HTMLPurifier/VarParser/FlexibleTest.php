@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\VarParser;
+
 class HTMLPurifier_VarParser_FlexibleTest extends HTMLPurifier_VarParserHarness
 {
 
@@ -53,7 +55,7 @@ class HTMLPurifier_VarParser_FlexibleTest extends HTMLPurifier_VarParserHarness
 
     public function testValidate_withMagicNumbers()
     {
-        $this->assertValid('foobar', HTMLPurifier_VarParser::C_STRING);
+        $this->assertValid('foobar', VarParser::C_STRING);
     }
 
     public function testValidate_null()

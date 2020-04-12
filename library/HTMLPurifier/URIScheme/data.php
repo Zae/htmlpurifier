@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
+use HTMLPurifier\URI;
+
 /**
  * Implements data: URI for base64 encoded images supported by GD.
  */
@@ -32,13 +35,13 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param HTMLPurifier_URI     $uri
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param URI                 $uri
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      */
-    public function doValidate(HTMLPurifier_URI &$uri, HTMLPurifier_Config $config, HTMLPurifier_Context $context): bool
+    public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
     {
         $result = explode(',', $uri->path, 2);
         $is_base64 = false;

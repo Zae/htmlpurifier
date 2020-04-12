@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+use tuple;
+
 /**
  * A zipper is a purely-functional data structure which contains
  * a focus that can be efficiently manipulated.  It is known as
@@ -19,13 +22,13 @@ declare(strict_types=1);
  * Nota bene: the current class gets confused if you try to store NULLs
  * in the list.
  */
-class HTMLPurifier_Zipper
+class Zipper
 {
     public $front;
     public $back;
 
     /**
-     * HTMLPurifier_Zipper constructor.
+     * HTMLPurifier\HTMLPurifier_Zipper constructor.
      *
      * @param $front
      * @param $back
@@ -174,7 +177,7 @@ class HTMLPurifier_Zipper
      *      $arr1 = $arr;
      *      $old1 = array_splice($arr1, $i, $delete, $replacement);
      *
-     *      list($z, $t) = HTMLPurifier_Zipper::fromArray($arr);
+     *      list($z, $t) = HTMLPurifier\HTMLPurifier_Zipper::fromArray($arr);
      *      $t = $z->advance($t, $i);
      *      list($old2, $t) = $z->splice($t, $delete, $replacement);
      *      $arr2 = $z->toArray($t);

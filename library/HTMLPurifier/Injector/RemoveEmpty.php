@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -12,7 +13,7 @@ use HTMLPurifier\Token\Start;
 class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
 {
     /**
-     * @type HTMLPurifier_Context
+     * @type Context
      */
     private $context;
 
@@ -44,13 +45,13 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
     private $exclude;
 
     /**
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return void
      * @throws HTMLPurifier_Exception
      */
-    public function prepare(HTMLPurifier_Config $config, HTMLPurifier_Context $context): void
+    public function prepare(HTMLPurifier_Config $config, Context $context): void
     {
         parent::prepare($config, $context);
 

@@ -6,8 +6,8 @@ namespace HTMLPurifier\Tests\Unit\Strategy;
 
 use HTMLPurifier\Tests\Unit\TestCase;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
-use HTMLPurifier_Strategy;
+use HTMLPurifier\Context;
+use HTMLPurifier\Strategy;
 use HTMLPurifier_Strategy_Composite;
 use Mockery;
 
@@ -21,9 +21,9 @@ class CompositeTest extends TestCase
     {
         // setup a bunch of mock strategies to inject into our composite test
 
-        $mock_1 = Mockery::mock(HTMLPurifier_Strategy::class);
-        $mock_2 = Mockery::mock(HTMLPurifier_Strategy::class);
-        $mock_3 = Mockery::mock(HTMLPurifier_Strategy::class);
+        $mock_1 = Mockery::mock(Strategy::class);
+        $mock_2 = Mockery::mock(Strategy::class);
+        $mock_3 = Mockery::mock(Strategy::class);
 
         // setup the object
 
@@ -38,7 +38,7 @@ class CompositeTest extends TestCase
         $input_4 = 'Processed by 1, 2 and 3'; // expected output
 
         $config = Mockery::mock(HTMLPurifier_Config::class);
-        $context = Mockery::mock(HTMLPurifier_Context::class);
+        $context = Mockery::mock(Context::class);
 
         $params_1 = [$input_1, $config, $context];
         $params_2 = [$input_2, $config, $context];

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Node;
 
 /**
@@ -47,13 +48,13 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
     }
 
     /**
-     * @param Node[]               $children
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param Node[]              $children
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
     {
         if ($context->get('IsInline') === false) {
             return $this->block->validateChildren(

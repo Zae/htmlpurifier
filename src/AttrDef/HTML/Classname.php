@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\HTML;
 use HTMLPurifier\AttrDef\HTML\Nmtokens;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use HTMLPurifier_Exception;
 
 /**
@@ -14,9 +14,9 @@ use HTMLPurifier_Exception;
 class Classname extends Nmtokens
 {
     /**
-     * @param string               $string
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param string              $string
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return bool|string
      * @throws HTMLPurifier_Exception
@@ -33,9 +33,9 @@ class Classname extends Nmtokens
     }
 
     /**
-     * @param array                $tokens
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param array               $tokens
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return array
      * @throws HTMLPurifier_Exception

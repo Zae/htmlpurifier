@@ -7,7 +7,7 @@ namespace HTMLPurifier\Tests\Unit\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\Tests\Unit\AttrDef\TestCase;
 use HTMLPurifier_Config;
-use HTMLPurifier_Context;
+use HTMLPurifier\Context;
 use Mockery;
 
 /**
@@ -25,7 +25,7 @@ class CompositeTest extends TestCase
     public function testIt(): void
     {
         $config = HTMLPurifier_Config::createDefault();
-        $context = new HTMLPurifier_Context();
+        $context = new Context();
 
         // first test: value properly validates on first definition
         // so second def is never called

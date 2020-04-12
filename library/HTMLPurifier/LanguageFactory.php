@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\Lang;
+use HTMLPurifier\Context;
 
 /**
  * Class responsible for generating HTMLPurifier_Language objects, managing
@@ -95,14 +96,14 @@ class HTMLPurifier_LanguageFactory
     /**
      * Creates a language object, handles class fallbacks
      *
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
-     * @param bool|string          $code Code to override configuration with. Private parameter.
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
+     * @param bool|string         $code Code to override configuration with. Private parameter.
      *
      * @return HTMLPurifier_Language
      * @throws HTMLPurifier_Exception
      */
-    public function create(HTMLPurifier_Config $config, HTMLPurifier_Context $context, $code = false)
+    public function create(HTMLPurifier_Config $config, Context $context, $code = false)
     {
         // validate language code
         if ($code === false) {

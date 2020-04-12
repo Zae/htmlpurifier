@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use ArrayObject;
+
 /**
  * This is in almost every respect equivalent to an array except
  * that it keeps track of which keys were accessed.
@@ -10,7 +14,7 @@ declare(strict_types=1);
  *     of PHP 5, you must not use the $hash[$key] syntax; if you do
  *     our version of offsetGet is never called.
  */
-class HTMLPurifier_StringHash extends ArrayObject
+class StringHash extends ArrayObject
 {
     /**
      * @type array

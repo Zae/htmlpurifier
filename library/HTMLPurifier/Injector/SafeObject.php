@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 
 /**
@@ -54,13 +55,13 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
     ];
 
     /**
-     * @param HTMLPurifier_Config  $config
-     * @param HTMLPurifier_Context $context
+     * @param HTMLPurifier_Config $config
+     * @param Context             $context
      *
      * @return void
      * @throws HTMLPurifier_Exception
      */
-    public function prepare(HTMLPurifier_Config $config, HTMLPurifier_Context $context)
+    public function prepare(HTMLPurifier_Config $config, Context $context)
     {
         parent::prepare($config, $context);
     }

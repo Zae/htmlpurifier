@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier_DefinitionCache;
 use HTMLPurifier_DefinitionCacheFactory;
 use HTMLPurifier_URIDefinition;
-use HTMLPurifier_URIParser;
+use HTMLPurifier\URIParser;
 use Mockery;
 
 /**
@@ -160,7 +160,7 @@ class URITest extends TestCase
      */
     public function testURIDefinitionValidation(): void
     {
-        $parser = new HTMLPurifier_URIParser();
+        $parser = new URIParser();
         $uri = $parser->parse('http://example.com');
         $this->config->set('URI.DefinitionID', 'HTMLPurifier_AttrDef_URITest1->testURIDefinitionValidation');
 

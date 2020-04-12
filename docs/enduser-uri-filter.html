@@ -27,11 +27,11 @@
 <h2>Creating the class</h2>
 
 <p>
-  Any URI filter you make will be a subclass of <code>HTMLPurifier_URIFilter</code>.
+  Any URI filter you make will be a subclass of <code>HTMLPurifier\HTMLPurifier_URIFilter</code>.
   The scaffolding is thus:
 </p>
 
-<pre>class HTMLPurifier_URIFilter_<strong>NameOfFilter</strong> extends HTMLPurifier_URIFilter
+<pre>class HTMLPurifier_URIFilter_<strong>NameOfFilter</strong> extends HTMLPurifier\HTMLPurifier_URIFilter
 {
     public $name = '<strong>NameOfFilter</strong>';
     public function prepare($config) {}
@@ -51,13 +51,13 @@
   If you've worked with HTML Purifier, you'll recognize the <code>$config</code>
   and <code>$context</code> parameters.  On the other hand, <code>$uri</code>
   is something unique to this section of the application: it's a
-  <code>HTMLPurifier_URI</code> object. The interface is thus:
+  <code>HTMLPurifier\HTMLPurifier_URI</code> object. The interface is thus:
 </p>
 
-<pre>class HTMLPurifier_URI
+<pre>class HTMLPurifier\HTMLPurifier_URI
 {
     public $scheme, $userinfo, $host, $port, $path, $query, $fragment;
-    public function HTMLPurifier_URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
+    public function HTMLPurifier\HTMLPurifier_URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
     public function toString();
     public function copy();
     public function getSchemeObj($config, $context);
@@ -135,14 +135,14 @@
   our website:
 </p>
 
-<pre>class HTMLPurifier_URIFilter_TransformImageScheme extends HTMLPurifier_URIFilter
+<pre>class HTMLPurifier_URIFilter_TransformImageScheme extends HTMLPurifier\HTMLPurifier_URIFilter
 {
     public $name = 'TransformImageScheme';
     public function filter(&$uri, $config, $context) {
         if ($uri->scheme !== 'image') return true;
         $img_name = $uri->path;
         // Overwrite the previous URI object
-        $uri = new HTMLPurifier_URI('http', null, null, null, '/img/' . $img_name . '.png', null, null);
+        $uri = new HTMLPurifier\HTMLPurifier_URI('http', null, null, null, '/img/' . $img_name . '.png', null, null);
         return true;
     }
 }</pre>
@@ -180,7 +180,7 @@ $uri->addFilter(new HTMLPurifier_URIFilter_<strong>NameOfFilter</strong>(), $con
     set the <code>$post</code> member variable to TRUE.
 </p>
 
-<pre>class HTMLPurifier_URIFilter_MyPostFilter extends HTMLPurifier_URIFilter
+<pre>class HTMLPurifier_URIFilter_MyPostFilter extends HTMLPurifier\HTMLPurifier_URIFilter
 {
     public $name = 'MyPostFilter';
     public $post = true;

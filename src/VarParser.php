@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_Exception;
+use HTMLPurifier_VarParserException;
+
 /**
  * Parses string representations into their corresponding native PHP
  * variable type. The base implementation does a simple type-check.
  */
-class HTMLPurifier_VarParser
+class VarParser
 {
     public const C_STRING = 1;
     public const ISTRING  = 2;
@@ -54,7 +59,7 @@ class HTMLPurifier_VarParser
      * It may return NULL as a valid type if $allow_null is true.
      *
      * @param mixed      $var        Variable to validate
-     * @param int|string $type       Type of variable, see HTMLPurifier_VarParser->types
+     * @param int|string $type       Type of variable, see HTMLPurifier\HTMLPurifier_VarParser->types
      * @param bool       $allow_null Whether or not to permit null as a value
      *
      * @return mixed Validated and type-coerced variable
@@ -169,7 +174,7 @@ class HTMLPurifier_VarParser
      * Throws an inconsistency exception.
      *
      * @note This should not ever be called. It would be called if we
-     *       extend the allowed values of HTMLPurifier_VarParser without
+     *       extend the allowed values of HTMLPurifier\HTMLPurifier_VarParser without
      *       updating subclasses.
      *
      * @param string $class

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\CSS\Number;
+use HTMLPurifier\UnitConverter;
 
 /**
  * Represents a measurable length, with a string numeric magnitude
@@ -176,7 +177,7 @@ class HTMLPurifier_Length
         }
 
         if ($l->unit !== $this->unit) {
-            $converter = new HTMLPurifier_UnitConverter();
+            $converter = new UnitConverter();
             $l = $converter->convert($l, $this->unit);
             if ($l === false) {
                 return false;

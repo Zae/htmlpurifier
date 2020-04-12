@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\VarParser;
+
 class HTMLPurifier_ConfigSchemaTest extends HTMLPurifier_Harness
 {
 
@@ -15,12 +17,12 @@ class HTMLPurifier_ConfigSchemaTest extends HTMLPurifier_Harness
         $this->schema->add('Car.Seats', 5, 'int', false);
 
         $this->assertIdentical($this->schema->defaults['Car.Seats'], 5);
-        $this->assertIdentical($this->schema->info['Car.Seats']->type, HTMLPurifier_VarParser::C_INT);
+        $this->assertIdentical($this->schema->info['Car.Seats']->type, VarParser::C_INT);
 
         $this->schema->add('Car.Age', null, 'int', true);
 
         $this->assertIdentical($this->schema->defaults['Car.Age'], null);
-        $this->assertIdentical($this->schema->info['Car.Age']->type, HTMLPurifier_VarParser::C_INT);
+        $this->assertIdentical($this->schema->info['Car.Age']->type, VarParser::C_INT);
 
     }
 
@@ -35,7 +37,7 @@ class HTMLPurifier_ConfigSchemaTest extends HTMLPurifier_Harness
         );
 
         $this->assertIdentical($this->schema->defaults['QuantumNumber.Difficulty'], null);
-        $this->assertIdentical($this->schema->info['QuantumNumber.Difficulty']->type, HTMLPurifier_VarParser::C_STRING);
+        $this->assertIdentical($this->schema->info['QuantumNumber.Difficulty']->type, VarParser::C_STRING);
         $this->assertIdentical($this->schema->info['QuantumNumber.Difficulty']->allow_null, true);
         $this->assertIdentical($this->schema->info['QuantumNumber.Difficulty']->allowed,
             array(
@@ -70,7 +72,7 @@ class HTMLPurifier_ConfigSchemaTest extends HTMLPurifier_Harness
         );
 
         $this->assertIdentical($this->schema->defaults['Abbrev.HTH'], 'Happy to Help');
-        $this->assertIdentical($this->schema->info['Abbrev.HTH']->type, HTMLPurifier_VarParser::C_STRING);
+        $this->assertIdentical($this->schema->info['Abbrev.HTH']->type, VarParser::C_STRING);
         $this->assertIdentical($this->schema->info['Abbrev.HTH']->allowed,
             array(
                 'Happy to Help' => true,
