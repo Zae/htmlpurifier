@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * Module adds the nofollow attribute transformation to a tags.  It
  * is enabled by HTML.Nofollow
  */
-class HTMLPurifier_HTMLModule_Nofollow extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Nofollow extends HTMLModule
 {
     /**
      * @type string

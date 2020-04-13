@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\ElementDef;
+use HTMLPurifier_Config;
 
 /**
  * Represents an XHTML 1.1 module, with information on elements, tags
@@ -20,7 +23,7 @@ use HTMLPurifier\ElementDef;
  *       objects (include it anyway if that's the correspondence though).
  * @todo Consider making some member functions protected
  */
-class HTMLPurifier_HTMLModule
+class HTMLModule
 {
     // -- Overloadable ----------------------------------------------------
 
@@ -71,7 +74,7 @@ class HTMLPurifier_HTMLModule
     public $attr_collections = [];
 
     /**
-     * Associative array of deprecated tag name to HTMLPurifier_TagTransform.
+     * Associative array of deprecated tag name to HTMLPurifier\HTMLPurifier_TagTransform.
      *
      * @type array
      */
@@ -92,7 +95,7 @@ class HTMLPurifier_HTMLModule
     public $info_attr_transform_post = [];
 
     /**
-     * List of HTMLPurifier_Injector to be performed during well-formedness fixing.
+     * List of HTMLPurifier\HTMLPurifier_Injector to be performed during well-formedness fixing.
      * An injector will only be invoked if all of it's pre-requisites are met;
      * if an injector fails setup, there will be no error; it will simply be
      * silently disabled.

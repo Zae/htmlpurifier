@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 
 /**
@@ -17,7 +18,7 @@ class HTMLPurifier_VarParser_Flexible extends VarParser
      * @param bool  $allow_null
      *
      * @return array|bool|float|int|mixed|null|string
-     * @throws HTMLPurifier_VarParserException|HTMLPurifier_Exception
+     * @throws VarParserException|HTMLPurifier_Exception
      */
     protected function parseImplementation($var, int $type, bool $allow_null)
     {
@@ -56,7 +57,7 @@ class HTMLPurifier_VarParser_Flexible extends VarParser
                     } elseif ($var === 'off' || $var === 'false' || $var === '0') {
                         $var = false;
                     } else {
-                        throw new HTMLPurifier_VarParserException("Unrecognized value '$var' for $type");
+                        throw new VarParserException("Unrecognized value '$var' for $type");
                     }
                 }
 

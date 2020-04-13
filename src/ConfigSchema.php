@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_PropertyList;
+use HTMLPurifier\PropertyList;
 use stdClass;
 
 /**
@@ -70,7 +70,7 @@ class ConfigSchema
 
     public function __construct()
     {
-        $this->defaultPlist = new HTMLPurifier_PropertyList();
+        $this->defaultPlist = new PropertyList();
     }
 
     /**

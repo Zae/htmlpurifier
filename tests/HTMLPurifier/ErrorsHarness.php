@@ -16,7 +16,7 @@ class HTMLPurifier_ErrorsHarness extends HTMLPurifier_Harness
     {
         $this->config = HTMLPurifier_Config::create(array('Core.CollectErrors' => true));
         $this->context = new Context();
-        generate_mock_once('HTMLPurifier_ErrorCollector');
+        generate_mock_once('HTMLPurifier\ErrorCollector');
         $this->collector = new HTMLPurifier_ErrorCollectorEMock();
         $this->collector->prepare($this->context);
         $this->context->register('ErrorCollector', $this->collector);

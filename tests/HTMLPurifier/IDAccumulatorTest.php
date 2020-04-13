@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\IDAccumulator;
+
 class HTMLPurifier_IDAccumulatorTest extends HTMLPurifier_Harness
 {
 
     public function test()
     {
         // initialize the accumulator
-        $accumulator = new HTMLPurifier_IDAccumulator();
+        $accumulator = new IDAccumulator();
 
         $this->assertTrue( $accumulator->add('id1'));
         $this->assertTrue( $accumulator->add('id2'));
@@ -19,7 +21,7 @@ class HTMLPurifier_IDAccumulatorTest extends HTMLPurifier_Harness
 
     public function testLoad()
     {
-        $accumulator = new HTMLPurifier_IDAccumulator();
+        $accumulator = new IDAccumulator();
 
         $accumulator->load(array('id1', 'id2', 'id3'));
 
@@ -31,7 +33,7 @@ class HTMLPurifier_IDAccumulatorTest extends HTMLPurifier_Harness
     public function testBuild()
     {
         $this->config->set('Attr.IDBlacklist', array('foo'));
-        $accumulator = HTMLPurifier_IDAccumulator::build($this->config, $this->context);
+        $accumulator = IDAccumulator::build($this->config, $this->context);
         $this->assertTrue( isset($accumulator->ids['foo']) );
     }
 

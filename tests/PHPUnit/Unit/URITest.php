@@ -6,8 +6,8 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\URI;
 use HTMLPurifier\URIParser;
-use HTMLPurifier_URIScheme;
-use HTMLPurifier_URISchemeRegistry;
+use HTMLPurifier\URIScheme;
+use HTMLPurifier\URISchemeRegistry;
 use Mockery;
 
 /**
@@ -277,10 +277,10 @@ class URITest extends UriTestCase
      * @return mixed
      */
     protected function &setUpSchemeRegistryMock() {
-        $this->oldRegistry = HTMLPurifier_URISchemeRegistry::instance();
+        $this->oldRegistry = URISchemeRegistry::instance();
 
-        $registry = HTMLPurifier_URISchemeRegistry::instance(
-            Mockery::mock(HTMLPurifier_URISchemeRegistry::class)
+        $registry = URISchemeRegistry::instance(
+            Mockery::mock(URISchemeRegistry::class)
         );
 
         return $registry;
@@ -289,12 +289,12 @@ class URITest extends UriTestCase
     /**
      * @param $name
      *
-     * @return HTMLPurifier_URIScheme|Mockery\LegacyMockInterface|Mockery\MockInterface
+     * @return \HTMLPurifier\URIScheme|Mockery\LegacyMockInterface|Mockery\MockInterface
      */
-    protected function setUpSchemeMock($name): HTMLPurifier_URIScheme
+    protected function setUpSchemeMock($name): URIScheme
     {
         $registry = $this->setUpSchemeRegistryMock();
-        $scheme_mock = Mockery::mock(HTMLPurifier_URIScheme::class);
+        $scheme_mock = Mockery::mock(URIScheme::class);
 
         $registry->expects()
             ->getScheme($name, $this->config, $this->context)
@@ -314,7 +314,7 @@ class URITest extends UriTestCase
 
     protected function tearDownSchemeRegistryMock(): void
     {
-        HTMLPurifier_URISchemeRegistry::instance($this->oldRegistry);
+        URISchemeRegistry::instance($this->oldRegistry);
     }
 
     /**

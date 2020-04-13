@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -10,7 +11,7 @@ use HTMLPurifier\Token\Start;
  * Injector that converts configuration directive syntax %Namespace.Directive
  * to links
  */
-class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_PurifierLinkify extends Injector
 {
     /**
      * @type string

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_PercentEncoder;
+use HTMLPurifier\PercentEncoder;
 
 /**
  * Parses a URI into the components and fragment identifier as specified
@@ -13,13 +13,13 @@ use HTMLPurifier_PercentEncoder;
 class URIParser
 {
     /**
-     * Instance of HTMLPurifier_PercentEncoder to do normalization with.
+     * Instance of HTMLPurifier\HTMLPurifier_PercentEncoder to do normalization with.
      */
     protected $percentEncoder;
 
     public function __construct()
     {
-        $this->percentEncoder = new HTMLPurifier_PercentEncoder();
+        $this->percentEncoder = new PercentEncoder();
     }
 
     /**

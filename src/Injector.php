@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\HTMLDefinition;
-use HTMLPurifier\Context;
-use HTMLPurifier\Zipper;
-use HTMLPurifier\Token;
+namespace HTMLPurifier;
+
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+use HTMLPurifier_Token_Text;
 
 /**
  * Injects tokens into the document while parsing for well-formedness.
@@ -22,10 +23,11 @@ use HTMLPurifier\Token\Start;
  * @todo Allow injectors to request a re-run on their output. This
  *       would help if an operation is recursive.
  */
-abstract class HTMLPurifier_Injector
+abstract class Injector
 {
     /**
      * Advisory name of injector, this is for friendly error messages.
+     *
      * @type string
      */
     public $name;
@@ -38,6 +40,7 @@ abstract class HTMLPurifier_Injector
     /**
      * Reference to CurrentNesting variable in Context. This is an array
      * list of tokens that we are currently "inside"
+     *
      * @type array
      */
     protected $currentNesting;
@@ -60,12 +63,14 @@ abstract class HTMLPurifier_Injector
      * Array of elements and attributes this injector creates and therefore
      * need to be allowed by the definition. Takes form of
      * array('element' => array('attr', 'attr2'), 'element2')
+     *
      * @type array
      */
     public $needed = [];
 
     /**
      * Number of elements to rewind backwards (relative).
+     *
      * @type bool|int
      */
     protected $rewindOffset = false;
@@ -75,7 +80,9 @@ abstract class HTMLPurifier_Injector
      * deleted a node, and now need to see if this change affected any
      * earlier nodes. Rewinding does not affect other injectors, and can
      * result in infinite loops if not used carefully.
+     *
      * @param bool|int $offset
+     *
      * @warning HTML Purifier will prevent you from fast-forwarding with this
      *          function.
      */
@@ -86,6 +93,7 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Retrieves rewind offset, and then unsets it.
+     *
      * @return bool|int
      */
     public function getRewindOffset()
@@ -121,8 +129,8 @@ abstract class HTMLPurifier_Injector
         }
 
         $this->currentNesting =& $context->get('CurrentNesting');
-        $this->currentToken   =& $context->get('CurrentToken');
-        $this->inputZipper    =& $context->get('InputZipper');
+        $this->currentToken =& $context->get('CurrentToken');
+        $this->inputZipper =& $context->get('InputZipper');
 
         return false;
     }
@@ -165,7 +173,9 @@ abstract class HTMLPurifier_Injector
 
     /**
      * Tests if the context node allows a certain element
+     *
      * @param string $name Name of element to test for
+     *
      * @return bool True if element is allowed, false if it is not
      */
     public function allowsElement(string $name)
@@ -186,7 +196,7 @@ abstract class HTMLPurifier_Injector
         if (!empty($this->currentNesting)) {
             for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
-                $def  = $this->htmlDefinition->info[$node->name];
+                $def = $this->htmlDefinition->info[$node->name];
 
                 if (isset($def->excludes[$name])) {
                     return false;
@@ -204,9 +214,9 @@ abstract class HTMLPurifier_Injector
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
      *
-     * @param int $i Current integer index variable for inputTokens
+     * @param int   $i       Current integer index variable for inputTokens
      * @param Token $current Current token variable.
-     *          Do NOT use $token, as that variable is also a reference
+     *                       Do NOT use $token, as that variable is also a reference
      *
      * @return bool
      */
@@ -232,10 +242,10 @@ abstract class HTMLPurifier_Injector
      * should be initialized at 0) and stops when we hit the end tag
      * for the node $this->inputIndex starts in.
      *
-     * @param int $i Current integer index variable for inputTokens
+     * @param int   $i       Current integer index variable for inputTokens
      * @param Token $current Current token variable.
-     *          Do NOT use $token, as that variable is also a reference
-     * @param int $nesting
+     *                       Do NOT use $token, as that variable is also a reference
+     * @param int   $nesting
      *
      * @return bool
      */
@@ -271,9 +281,9 @@ abstract class HTMLPurifier_Injector
      * @warning Please prevent previous references from interfering with this
      *          functions by setting $i = null beforehand!
      *
-     * @param int $i Current integer index variable for inputTokens
+     * @param int   $i       Current integer index variable for inputTokens
      * @param Token $current Current token variable.
-     *          Do NOT use $token, as that variable is also a reference
+     *                       Do NOT use $token, as that variable is also a reference
      *
      * @return bool
      */

@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 
+require_once 'vendor/autoload.php';
 require_once dirname(__FILE__) . '/common.php';
 require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
 assertCli();

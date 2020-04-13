@@ -3,13 +3,14 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 
 /**
  * Adds important param elements to inside of object in order to make
  * things safe.
  */
-class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_SafeObject extends Injector
 {
     /**
      * @type string

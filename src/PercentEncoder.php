@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 /**
  * Class that handles operations involving percent-encoding in URIs.
  *
@@ -10,7 +12,7 @@ declare(strict_types=1);
  *      you use for normalize() SHOULD NOT be used for encode(), or
  *      vice-versa.
  */
-class HTMLPurifier_PercentEncoder
+class PercentEncoder
 {
     /**
      * Reserved characters to preserve when using encode().

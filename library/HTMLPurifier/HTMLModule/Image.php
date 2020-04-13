@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\URI;
+use HTMLPurifier\HTMLModule;
 
 /**
  * XHTML 1.1 Image Module provides basic image embedding.
@@ -10,7 +11,7 @@ use HTMLPurifier\AttrDef\URI;
  * @note There is specialized code for removing empty images in
  *       HTMLPurifier_Strategy_RemoveForeignElements
  */
-class HTMLPurifier_HTMLModule_Image extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Image extends HTMLModule
 {
     /**
      * @type string

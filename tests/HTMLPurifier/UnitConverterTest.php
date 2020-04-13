@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Length;
 use HTMLPurifier\UnitConverter;
 
 class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
@@ -7,8 +8,8 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
 
     protected function assertConversion($input, $expect, $unit = null, $test_negative = true)
     {
-        $length = HTMLPurifier_Length::make($input);
-        if ($expect !== false) $expectl = HTMLPurifier_Length::make($expect);
+        $length = Length::make($input);
+        if ($expect !== false) $expectl = Length::make($expect);
         else $expectl = false;
         $to_unit = $unit !== null ? $unit : $expectl->getUnit();
 

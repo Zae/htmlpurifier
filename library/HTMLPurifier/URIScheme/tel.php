@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 
 /**
@@ -13,7 +14,7 @@ use HTMLPurifier\URI;
  * numbers so that they only include (possibly) a leading plus,
  * and then any number of digits and x'es.
  */
-class HTMLPurifier_URIScheme_tel extends HTMLPurifier_URIScheme
+class HTMLPurifier_URIScheme_tel extends URIScheme
 {
     /**
      * @type bool

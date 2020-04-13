@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\AttrDef\HTML\ID;
+use HTMLPurifier\IDAccumulator;
 
 class HTMLPurifier_AttrDef_HTML_IDTest extends HTMLPurifier_AttrDefHarness
 {
@@ -9,7 +10,7 @@ class HTMLPurifier_AttrDef_HTML_IDTest extends HTMLPurifier_AttrDefHarness
     {
         parent::setUp();
 
-        $id_accumulator = new HTMLPurifier_IDAccumulator();
+        $id_accumulator = new IDAccumulator();
         $this->context->register('IDAccumulator', $id_accumulator);
         $this->config->set('Attr.EnableID', true);
         $this->def = new ID();

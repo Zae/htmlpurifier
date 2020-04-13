@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 
 /**
  * Injector that displays the URL of an anchor instead of linking to it, in addition to showing the text of the link.
  */
-class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_DisplayLinkURI extends Injector
 {
     /**
      * @type string

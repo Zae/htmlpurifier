@@ -6,8 +6,6 @@ namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
-use HTMLPurifier\Context;
-use HTMLPurifier_Length;
 
 /**
  * Represents a Length as defined by CSS.
@@ -15,23 +13,23 @@ use HTMLPurifier_Length;
 class Length extends AttrDef
 {
     /**
-     * @type HTMLPurifier_Length|string
+     * @type \HTMLPurifier\Length|string
      */
     protected $min;
 
     /**
-     * @type HTMLPurifier_Length|string
+     * @type Length|string
      */
     protected $max;
 
     /**
-     * @param HTMLPurifier_Length|string $min Minimum length, or null for no bound. String is also acceptable.
-     * @param HTMLPurifier_Length|string $max Maximum length, or null for no bound. String is also acceptable.
+     * @param Length|string $min Minimum length, or null for no bound. String is also acceptable.
+     * @param Length|string $max Maximum length, or null for no bound. String is also acceptable.
      */
     public function __construct($min = null, $max = null)
     {
-        $this->min = $min !== null ? HTMLPurifier_Length::make($min) : null;
-        $this->max = $max !== null ? HTMLPurifier_Length::make($max) : null;
+        $this->min = $min !== null ? \HTMLPurifier\Length::make($min) : null;
+        $this->max = $max !== null ? \HTMLPurifier\Length::make($max) : null;
     }
 
     /**
@@ -58,7 +56,7 @@ class Length extends AttrDef
             return false;
         }
 
-        $length = HTMLPurifier_Length::make($string);
+        $length = \HTMLPurifier\Length::make($string);
         if (!$length->isValid()) {
             return false;
         }

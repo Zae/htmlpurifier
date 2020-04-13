@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\AttrDef\CSS\Number;
-use HTMLPurifier\UnitConverter;
 
 /**
  * Represents a measurable length, with a string numeric magnitude
  * and a unit. This object is immutable.
  */
-class HTMLPurifier_Length
+class Length
 {
     /**
      * String numeric magnitude.
@@ -57,7 +58,7 @@ class HTMLPurifier_Length
     /**
      * @param string $s Unit string, like '2em' or '3.4in'
      *
-     * @return HTMLPurifier_Length
+     * @return Length
      * @warning Does not perform validation.
      */
     public static function make($s): self
@@ -164,7 +165,7 @@ class HTMLPurifier_Length
     /**
      * Compares two lengths, and returns 1 if greater, -1 if less and 0 if equal.
      *
-     * @param HTMLPurifier_Length $l
+     * @param Length $l
      *
      * @return int|bool
      * @warning If both values are too large or small, this calculation will

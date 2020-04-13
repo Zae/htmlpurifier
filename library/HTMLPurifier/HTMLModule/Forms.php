@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Forms module, defines all form-related elements found in HTML 4.
  */
-class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Forms extends HTMLModule
 {
     /**
      * @type string

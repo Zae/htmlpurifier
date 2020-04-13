@@ -1,9 +1,10 @@
 <?php
 
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
 
-class HTMLPurifier_Strategy_MakeWellFormed_EndRewindInjector extends HTMLPurifier_Injector
+class HTMLPurifier_Strategy_MakeWellFormed_EndRewindInjector extends Injector
 {
     public $name = 'EndRewindInjector';
     public $needed = array('span');

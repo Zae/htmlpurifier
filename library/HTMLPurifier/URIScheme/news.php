@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 
 /**
  * Validates news (Usenet) as defined by generic RFC 1738
  */
-class HTMLPurifier_URIScheme_news extends HTMLPurifier_URIScheme
+class HTMLPurifier_URIScheme_news extends URIScheme
 {
     /**
      * @type bool

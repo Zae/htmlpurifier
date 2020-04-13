@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\Strategy\MakeWellFormed;
 
 use HTMLPurifier\Tests\Unit\Strategy\TestCase;
-use HTMLPurifier_Injector;
+use HTMLPurifier\Injector;
 use HTMLPurifier_Strategy_MakeWellFormed;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -35,7 +35,7 @@ class InjectorTest extends TestCase
     public function testEndHandler(): void
     {
         $this->markAsRisky();
-        $mock = Mockery::mock(HTMLPurifier_Injector::class);
+        $mock = Mockery::mock(Injector::class);
 
         $b = new End('b');
         $b->skip = [0 => true];

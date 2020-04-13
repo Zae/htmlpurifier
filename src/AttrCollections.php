@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrTypes;
-use HTMLPurifier_HTMLModule;
+use HTMLPurifier\HTMLModule;
 
 /**
  * Defines common attribute collections that modules reference
@@ -24,8 +24,8 @@ class AttrCollections
      * It also collects all attribute collection extensions from
      * modules
      *
-     * @param AttrTypes                 $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
-     * @param HTMLPurifier_HTMLModule[] $modules    Hash array of HTMLPurifier_HTMLModule members
+     * @param AttrTypes    $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
+     * @param HTMLModule[] $modules    Hash array of HTMLPurifier\HTMLPurifier_HTMLModule members
      */
     public function __construct($attr_types, $modules)
     {

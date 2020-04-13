@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\VarParserException;
+
 class HTMLPurifier_VarParserHarness extends UnitTestCase
 {
 
@@ -22,7 +24,7 @@ class HTMLPurifier_VarParserHarness extends UnitTestCase
         $caught = false;
         try {
             $this->parser->parse($var, $type);
-        } catch (HTMLPurifier_VarParserException $e) {
+        } catch (VarParserException $e) {
             $caught = true;
             if ($msg !== null) $this->assertIdentical($e->getMessage(), $msg);
         }

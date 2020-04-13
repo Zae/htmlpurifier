@@ -1,32 +1,34 @@
 <?php
 
+use HTMLPurifier\Length;
+
 class HTMLPurifier_LengthTest extends HTMLPurifier_Harness
 {
 
     public function testConstruct()
     {
-        $l = new HTMLPurifier_Length('23', 'in');
+        $l = new Length('23', 'in');
         $this->assertIdentical($l->getN(), '23');
         $this->assertIdentical($l->getUnit(), 'in');
     }
 
     public function testMake()
     {
-        $l = HTMLPurifier_Length::make('+23.4in');
+        $l = Length::make('+23.4in');
         $this->assertIdentical($l->getN(), '+23.4');
         $this->assertIdentical($l->getUnit(), 'in');
     }
 
     public function testToString()
     {
-        $l = new HTMLPurifier_Length('23', 'in');
+        $l = new Length('23', 'in');
         $this->assertIdentical($l->toString(), '23in');
     }
 
     protected function assertValidate($string, $expect = true)
     {
         if ($expect === true) $expect = $string;
-        $l = HTMLPurifier_Length::make($string);
+        $l = Length::make($string);
         $result = $l->isValid();
         if ($result === false) $this->assertIdentical($expect, false);
         else $this->assertIdentical($l->toString(), $expect);
@@ -59,8 +61,8 @@ class HTMLPurifier_LengthTest extends HTMLPurifier_Harness
      */
     protected function assertComparison($s1, $s2, $expect = 0)
     {
-        $l1 = HTMLPurifier_Length::make($s1);
-        $l2 = HTMLPurifier_Length::make($s2);
+        $l1 = Length::make($s1);
+        $l2 = Length::make($s2);
         $r1 = $l1->compareTo($l2);
         $r2 = $l2->compareTo($l1);
         $this->assertIdentical($r1 == 0 ? 0 : ($r1 > 0 ? 1 : -1), $expect);

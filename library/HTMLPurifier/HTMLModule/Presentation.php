@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Presentation Module, defines simple presentation-related
  * markup. Text Extension Module.
@@ -13,7 +15,7 @@ declare(strict_types=1);
  *       We have chosen not to heed this distinction, as content_sets
  *       provides satisfactory disambiguation.
  */
-class HTMLPurifier_HTMLModule_Presentation extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Presentation extends HTMLModule
 {
     /**
      * @type string

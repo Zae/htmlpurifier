@@ -7,7 +7,7 @@ use HTMLPurifier\AttrCollections;
 use HTMLPurifier\AttrDef\HTML\Color;
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrTypes;
-use HTMLPurifier_HTMLModule;
+use HTMLPurifier\HTMLModule;
 use Mockery;
 
 /**
@@ -37,7 +37,7 @@ class AttrCollectionsTest extends TestCase
 
         $modules = [];
 
-        $modules['Module1'] = new HTMLPurifier_HTMLModule();
+        $modules['Module1'] = new HTMLModule();
         $modules['Module1']->attr_collections = [
             'Core' => [
                 0 => ['Soup', 'Undefined'],
@@ -49,7 +49,7 @@ class AttrCollectionsTest extends TestCase
             ]
         ];
 
-        $modules['Module2'] = new HTMLPurifier_HTMLModule();
+        $modules['Module2'] = new HTMLModule();
         $modules['Module2']->attr_collections = [
             'Core' => [
                 0 => ['Brocolli']

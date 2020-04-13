@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\EntityLookup;
+use HTMLPurifier\Generator;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -29,7 +30,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
      */
     protected function createGenerator()
     {
-        return new HTMLPurifier_Generator($this->config, $this->context);
+        return new Generator($this->config, $this->context);
     }
 
     protected function assertGenerateFromToken($token, $html)
@@ -208,7 +209,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
 
     protected function assertGeneration($tokens, $expect)
     {
-        $generator = new HTMLPurifier_Generator($this->config, $this->context);
+        $generator = new Generator($this->config, $this->context);
         $result = $generator->generateFromTokens($tokens);
         $this->assertIdentical($expect, $result);
     }

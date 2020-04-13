@@ -2,18 +2,23 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
  * Component of HTMLPurifier_AttrContext that accumulates IDs to prevent dupes
+ *
  * @note In Slashdot-speak, dupe means duplicate.
  * @note The default constructor does not accept $config or $context objects:
  *       use must use the static build() factory method to perform initialization.
  */
-class HTMLPurifier_IDAccumulator
+class IDAccumulator
 {
     /**
      * Lookup table of IDs we've accumulated.
+     *
      * @public
      */
     public $ids = [];
@@ -24,7 +29,7 @@ class HTMLPurifier_IDAccumulator
      * @param HTMLPurifier_Config $config  Instance of HTMLPurifier_Config
      * @param Context             $context Instance of HTMLPurifier\HTMLPurifier_Context
      *
-     * @return HTMLPurifier_IDAccumulator Fully initialized HTMLPurifier_IDAccumulator
+     * @return IDAccumulator Fully initialized HTMLPurifier\HTMLPurifier_IDAccumulator
      * @throws HTMLPurifier_Exception
      */
     public static function build(HTMLPurifier_Config $config, $context)
@@ -37,7 +42,9 @@ class HTMLPurifier_IDAccumulator
 
     /**
      * Add an ID to the lookup table.
+     *
      * @param string $id ID to be added.
+     *
      * @return bool status, true if success, false if there's a dupe
      */
     public function add(string $id)
@@ -51,7 +58,9 @@ class HTMLPurifier_IDAccumulator
 
     /**
      * Load a list of IDs into the lookup table
+     *
      * @param array $array_of_ids of IDs to load
+     *
      * @note This function doesn't care about duplicates
      */
     public function load(array $array_of_ids)

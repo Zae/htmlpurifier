@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Context;
-use HTMLPurifier_IDAccumulator;
+use HTMLPurifier\IDAccumulator;
 use Mockery;
 
 /**
@@ -29,7 +29,7 @@ class ContextTest extends TestCase
     {
         static::assertFalse($this->context->exists('IDAccumulator'));
 
-        $accumulator = Mockery::mock(HTMLPurifier_IDAccumulator::class);
+        $accumulator = Mockery::mock(IDAccumulator::class);
         $this->context->register('IDAccumulator', $accumulator);
         static::assertTrue($this->context->exists('IDAccumulator'));
 

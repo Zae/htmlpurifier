@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrValidator;
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -11,7 +12,7 @@ use HTMLPurifier\Token\Start;
 /**
  * Class HTMLPurifier_Injector_RemoveEmpty
  */
-class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_RemoveEmpty extends Injector
 {
     /**
      * @type Context

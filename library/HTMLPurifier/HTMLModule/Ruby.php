@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Ruby Annotation Module, defines elements that indicate
  * short runs of text alongside base text for annotation or pronounciation.
  */
-class HTMLPurifier_HTMLModule_Ruby extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Ruby extends HTMLModule
 {
     /**
      * @type string

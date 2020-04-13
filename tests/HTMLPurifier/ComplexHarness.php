@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\Arborize;
+use HTMLPurifier\Generator;
 use HTMLPurifier\Node;
 use HTMLPurifier\Node\Element;
 
@@ -123,7 +124,7 @@ class HTMLPurifier_ComplexHarness extends HTMLPurifier_Harness
      */
     protected function generate($tokens)
     {
-        $generator = new HTMLPurifier_Generator($this->config, $this->context);
+        $generator = new Generator($this->config, $this->context);
         return $generator->generateFromTokens($tokens);
     }
 

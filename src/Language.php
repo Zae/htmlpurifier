@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
-use HTMLPurifier\Token;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier\LanguageFactory;
 
 /**
  * Represents a language and defines localizable string formatting and
  * other functions, as well as the localized messages for HTML Purifier.
  */
-class HTMLPurifier_Language
+class Language
 {
     /**
      * ISO 639 language code of language. Prefers shortest possible version.
@@ -87,7 +89,7 @@ class HTMLPurifier_Language
             return;
         }
 
-        $factory = HTMLPurifier_LanguageFactory::instance();
+        $factory = LanguageFactory::instance();
         $factory->loadLanguage($this->code);
 
         foreach ($factory->keys as $key) {

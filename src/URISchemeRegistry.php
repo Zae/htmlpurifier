@@ -2,22 +2,27 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+
 /**
  * Registry for retrieving specific URI scheme validator objects.
  */
-class HTMLPurifier_URISchemeRegistry
+class URISchemeRegistry
 {
     /**
      * Retrieve sole instance of the registry.
      *
-     * @param HTMLPurifier_URISchemeRegistry $prototype Optional prototype to overload sole instance with,
+     * @param URISchemeRegistry $prototype              Optional prototype to overload sole instance with,
      *                                                  or bool true to reset to default registry.
      *
-     * @return HTMLPurifier_URISchemeRegistry
+     * @return URISchemeRegistry
      * @note Pass a registry object $prototype with a compatible interface and
      *       the function will copy it and return it all further times.
      */
-    public static function instance(?HTMLPurifier_URISchemeRegistry $prototype = null)
+    public static function instance(?URISchemeRegistry $prototype = null)
     {
         static $instance = null;
 
@@ -33,17 +38,17 @@ class HTMLPurifier_URISchemeRegistry
     /**
      * Cache of retrieved schemes.
      *
-     * @type HTMLPurifier_URIScheme[]
+     * @type URIScheme[]
      */
     protected $schemes = [];
 
     /**
      * Retrieves a scheme validator object
      *
-     * @param string               $scheme String scheme name like http or mailto
-     * @param HTMLPurifier_Config  $config
+     * @param string              $scheme String scheme name like http or mailto
+     * @param HTMLPurifier_Config $config
      *
-     * @return HTMLPurifier_URIScheme|null
+     * @return URIScheme|null
      * @throws HTMLPurifier_Exception
      */
     public function getScheme(?string $scheme, HTMLPurifier_Config $config)
@@ -80,10 +85,10 @@ class HTMLPurifier_URISchemeRegistry
     /**
      * Registers a custom scheme to the cache, bypassing reflection.
      *
-     * @param string                 $scheme Scheme name
-     * @param HTMLPurifier_URIScheme $scheme_obj
+     * @param string    $scheme Scheme name
+     * @param URIScheme $scheme_obj
      */
-    public function register(string $scheme, HTMLPurifier_URIScheme $scheme_obj)
+    public function register(string $scheme, URIScheme $scheme_obj)
     {
         $this->schemes[$scheme] = $scheme_obj;
     }

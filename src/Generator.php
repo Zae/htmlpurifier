@@ -2,11 +2,17 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\HTMLDefinition;
-use HTMLPurifier\Context;
-use HTMLPurifier\Token;
+namespace HTMLPurifier;
+
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+use HTMLPurifier_Token_Comment;
+use HTMLPurifier_Token_Empty;
+use HTMLPurifier_Token_Text;
+use stdClass;
+use Tidy;
 
 /**
  * Generates HTML from tokens.
@@ -16,7 +22,7 @@ use HTMLPurifier\Token\Start;
  * @todo Make some of the more internal functions protected, and have
  *       unit tests work around that
  */
-class HTMLPurifier_Generator
+class Generator
 {
     /**
      * Whether or not generator should produce XML output.

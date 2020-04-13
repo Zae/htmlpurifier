@@ -14,7 +14,7 @@ use HTMLPurifier_Lexer;
 use HTMLPurifier\Queue;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_TokenFactory;
+use HTMLPurifier\TokenFactory;
 
 /**
  * Parser that uses PHP 5's DOM extension (part of the core).
@@ -42,7 +42,7 @@ use HTMLPurifier_TokenFactory;
 class DOMLex extends HTMLPurifier_Lexer
 {
     /**
-     * @type HTMLPurifier_TokenFactory
+     * @type \HTMLPurifier\TokenFactory
      */
     private $factory;
 
@@ -50,7 +50,7 @@ class DOMLex extends HTMLPurifier_Lexer
     {
         // setup the factory
         parent::__construct();
-        $this->factory = new HTMLPurifier_TokenFactory();
+        $this->factory = new TokenFactory();
     }
 
     /**

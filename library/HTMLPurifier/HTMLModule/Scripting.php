@@ -12,6 +12,7 @@ INSIDE HTML PURIFIER DOCUMENTS. USE ONLY WITH TRUSTED USER INPUT!!!
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\ElementDef;
+use HTMLPurifier\HTMLModule;
 
 /**
  * XHTML 1.1 Scripting module, defines elements that are used to contain
@@ -20,7 +21,7 @@ use HTMLPurifier\ElementDef;
  *
  * @note This module does not contain inline scripting elements
  */
-class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Scripting extends HTMLModule
 {
     /**
      * @type string

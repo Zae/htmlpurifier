@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
-use HTMLPurifier\URI;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
  * Validator for the components of a URI for a specific scheme
  */
-abstract class HTMLPurifier_URIScheme
+abstract class URIScheme
 {
     /**
      * Scheme's default port (integer). If an explicit port number is

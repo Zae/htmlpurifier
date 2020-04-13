@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 use HTMLPurifier\StringHashParser;
 use HTMLPurifier\StringHash;
@@ -153,7 +154,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
                     $directive->type,
                     $directive->typeAllowsNull
                 );
-            } catch (HTMLPurifier_VarParserException $e) {
+            } catch (VarParserException $e) {
                 throw new HTMLPurifier_ConfigSchema_Exception($e->getMessage() . " in DEFAULT in directive hash '$id'");
             }
         }

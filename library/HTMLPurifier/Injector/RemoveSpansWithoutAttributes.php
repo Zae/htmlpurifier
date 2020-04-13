@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrValidator;
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -11,7 +12,7 @@ use HTMLPurifier\Token\Start;
 /**
  * Injector that removes spans with no attributes
  */
-class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends Injector
 {
     /**
      * @type string

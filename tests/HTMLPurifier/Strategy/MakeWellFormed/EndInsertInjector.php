@@ -1,10 +1,11 @@
 <?php
 
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
-class HTMLPurifier_Strategy_MakeWellFormed_EndInsertInjector extends HTMLPurifier_Injector
+class HTMLPurifier_Strategy_MakeWellFormed_EndInsertInjector extends Injector
 {
     public $name = 'EndInsertInjector';
     public $needed = array('span');

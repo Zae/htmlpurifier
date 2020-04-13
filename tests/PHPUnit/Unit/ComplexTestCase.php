@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Arborize;
-use HTMLPurifier_Generator;
+use HTMLPurifier\Generator;
 use HTMLPurifier_Lexer_DirectLex;
 use HTMLPurifier\Node;
 use HTMLPurifier\Node\Element;
@@ -145,7 +145,7 @@ class ComplexTestCase extends TestCase
      */
     protected function generate($tokens): string
     {
-        $generator = new HTMLPurifier_Generator($this->config, $this->context);
+        $generator = new Generator($this->config, $this->context);
         return $generator->generateFromTokens($tokens);
     }
 

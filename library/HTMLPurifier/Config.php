@@ -7,6 +7,9 @@ use HTMLPurifier\Definition;
 use HTMLPurifier\CSSDefinition;
 use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\DefinitionCacheFactory;
+use HTMLPurifier\VarParserException;
+use HTMLPurifier\URIDefinition;
+use HTMLPurifier\PropertyList;
 use HTMLPurifier\VarParser;
 
 /**
@@ -110,14 +113,14 @@ class HTMLPurifier_Config
     /**
      * Constructor
      *
-     * @param ConfigSchema              $definition ConfigSchema that defines
+     * @param ConfigSchema $definition ConfigSchema that defines
      * what directives are allowed.
-     * @param HTMLPurifier_PropertyList $parent
+     * @param PropertyList $parent
      */
-    public function __construct(ConfigSchema $definition, ?HTMLPurifier_PropertyList $parent = null)
+    public function __construct(ConfigSchema $definition, ?PropertyList $parent = null)
     {
         $parent = $parent ? $parent : $definition->defaultPlist;
-        $this->plist = new HTMLPurifier_PropertyList($parent);
+        $this->plist = new PropertyList($parent);
         $this->def = $definition; // keep a copy around for checking
         $this->parser = new HTMLPurifier_VarParser_Flexible();
     }
@@ -383,7 +386,7 @@ class HTMLPurifier_Config
 
         try {
             $value = $this->parser->parse($value, $type, $allow_null);
-        } catch (HTMLPurifier_VarParserException $e) {
+        } catch (VarParserException $e) {
             $this->triggerError(
                 'Value for ' . $key . ' is of invalid type, should be ' .
                 VarParser::getTypeName($type),
@@ -489,7 +492,7 @@ class HTMLPurifier_Config
      *                        maybeGetRawURIDefinition, which is more explicitly
      *                        named, instead.
      *
-     * @return HTMLPurifier_URIDefinition|null
+     * @return URIDefinition|null
      * @throws HTMLPurifier_Exception
      */
     public function getURIDefinition(bool $raw = false, bool $optimized = false)
@@ -671,7 +674,7 @@ class HTMLPurifier_Config
      *
      * @param string $type What type of definition to create
      *
-     * @return CSSDefinition|HTMLDefinition|HTMLPurifier_URIDefinition
+     * @return CSSDefinition|HTMLDefinition|URIDefinition
      * @throws HTMLPurifier_Exception
      */
     private function initDefinition(string $type)
@@ -682,7 +685,7 @@ class HTMLPurifier_Config
         } elseif ($type === 'CSS') {
             $def = new CSSDefinition();
         } elseif ($type === 'URI') {
-            $def = new HTMLPurifier_URIDefinition();
+            $def = new URIDefinition();
         } else {
             throw new HTMLPurifier_Exception(
                 "Definition of $type type not supported"
@@ -717,7 +720,7 @@ class HTMLPurifier_Config
     }
 
     /**
-     * @return HTMLPurifier_URIDefinition|null
+     * @return URIDefinition|null
      * @throws HTMLPurifier_Exception
      */
     public function maybeGetRawURIDefinition()

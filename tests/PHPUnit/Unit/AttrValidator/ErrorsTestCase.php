@@ -7,9 +7,9 @@ namespace HTMLPurifier\Tests\Unit\AttrValidator;
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier\AttrValidator;
 use HTMLPurifier_Config;
-use HTMLPurifier_ErrorCollector;
-use HTMLPurifier_Generator;
-use HTMLPurifier_LanguageFactory;
+use HTMLPurifier\ErrorCollector;
+use HTMLPurifier\Generator;
+use HTMLPurifier\LanguageFactory;
 use HTMLPurifier\Token\Start;
 use Mockery;
 
@@ -27,10 +27,10 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
         parent::setUp();
 
         $config = HTMLPurifier_Config::createDefault();
-        $this->language = HTMLPurifier_LanguageFactory::instance()->create($config, $this->context);
+        $this->language = LanguageFactory::instance()->create($config, $this->context);
         $this->context->register('Locale', $this->language);
-        $this->collector = new HTMLPurifier_ErrorCollector($this->context);
-        $gen = new HTMLPurifier_Generator($config, $this->context);
+        $this->collector = new ErrorCollector($this->context);
+        $gen = new Generator($config, $this->context);
         $this->context->register('Generator', $gen);
     }
 

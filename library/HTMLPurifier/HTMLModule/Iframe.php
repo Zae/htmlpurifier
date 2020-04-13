@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Iframe Module provides inline frames.
  *
@@ -9,7 +11,7 @@ declare(strict_types=1);
  * whitelisting mechanism is specified.  Currently, the only
  * such mechanism is %URL.SafeIframeRegexp
  */
-class HTMLPurifier_HTMLModule_Iframe extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Iframe extends HTMLModule
 {
     /**
      * @type string

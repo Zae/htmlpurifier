@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\CSS;
+use HTMLPurifier\HTMLModule;
 
 /**
  * XHTML 1.1 Edit Module, defines editing-related elements. Text Extension
  * Module.
  */
-class HTMLPurifier_HTMLModule_StyleAttribute extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_StyleAttribute extends HTMLModule
 {
     /**
      * @type string
