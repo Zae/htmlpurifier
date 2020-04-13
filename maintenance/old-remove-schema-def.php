@@ -20,11 +20,11 @@ $files = $FS->globr('.', '*.php');
 foreach ($files as $file) {
     if (substr_count(basename($file), '.') > 1) continue;
     $old_code = file_get_contents($file);
-    $new_code = preg_replace("#^HTMLPurifier_ConfigSchema::.+?\);[\n\r]*#ms", '', $old_code);
+    $new_code = preg_replace("#^HTMLPurifier\HTMLPurifier_ConfigSchema::.+?\);[\n\r]*#ms", '', $old_code);
     if ($old_code !== $new_code) {
         file_put_contents($file, $new_code);
     }
-    if (preg_match('#^\s+HTMLPurifier_ConfigSchema::#m', $new_code)) {
+    if (preg_match('#^\s+HTMLPurifier\HTMLPurifier_ConfigSchema::#m', $new_code)) {
         echo "Indented ConfigSchema call in $file\n";
     }
 }

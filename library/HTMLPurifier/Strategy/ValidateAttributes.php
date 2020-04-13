@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrValidator;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
@@ -22,7 +23,7 @@ class HTMLPurifier_Strategy_ValidateAttributes extends Strategy
     public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {
         // setup validator
-        $validator = new HTMLPurifier_AttrValidator();
+        $validator = new AttrValidator();
 
         $token = false;
         $context->register('CurrentToken', $token);

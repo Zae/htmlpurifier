@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 
 /**
  * Class HTMLPurifier_Printer_HTMLDefinition
@@ -199,11 +200,11 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
     /**
      * Renders a row describing the allowed children of an element
      *
-     * @param HTMLPurifier_ChildDef $def HTMLPurifier_ChildDef of pertinent element
+     * @param ChildDef $def HTMLPurifier\HTMLPurifier_ChildDef of pertinent element
      *
      * @return string
      */
-    protected function renderChildren(HTMLPurifier_ChildDef $def): string
+    protected function renderChildren(ChildDef $def): string
     {
         $context = new Context();
 

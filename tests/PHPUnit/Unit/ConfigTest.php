@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_ConfigSchema;
+use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\CSSDefinition;
 use HTMLPurifier_DefinitionCache;
-use HTMLPurifier_DefinitionCacheFactory;
+use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier_Exception;
 use HTMLPurifier\HTMLDefinition;
 use Mockery;
@@ -22,7 +22,7 @@ use stdClass;
 class ConfigTest extends TestCase
 {
     /**
-     * @var HTMLPurifier_ConfigSchema
+     * @var ConfigSchema
      */
     private $schema;
     private $oldFactory;
@@ -30,7 +30,7 @@ class ConfigTest extends TestCase
     public function setUp(): void
     {
         // set up a dummy schema object for testing
-        $this->schema = new HTMLPurifier_ConfigSchema();
+        $this->schema = new ConfigSchema();
     }
 
     // test functionality based on ConfigSchema
@@ -732,10 +732,10 @@ class ConfigTest extends TestCase
     {
         // inject our definition cache mock globally (borrowed from
         // DefinitionFactoryTest)
-        $factory = Mockery::mock(HTMLPurifier_DefinitionCacheFactory::class);
-        $this->oldFactory = HTMLPurifier_DefinitionCacheFactory::instance();
+        $factory = Mockery::mock(DefinitionCacheFactory::class);
+        $this->oldFactory = DefinitionCacheFactory::instance();
 
-        HTMLPurifier_DefinitionCacheFactory::instance($factory);
+        DefinitionCacheFactory::instance($factory);
         $mock = Mockery::mock(HTMLPurifier_DefinitionCache::class);
         $mock->content_model = '123';
 
@@ -751,6 +751,6 @@ class ConfigTest extends TestCase
 
     protected function teardownCacheMock(): void
     {
-        HTMLPurifier_DefinitionCacheFactory::instance($this->oldFactory);
+        DefinitionCacheFactory::instance($this->oldFactory);
     }
 }

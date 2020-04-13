@@ -25,6 +25,8 @@
 
 // HTML Purifier runs error free on E_STRICT, so if code reports
 // errors, we want to know about it.
+use HTMLPurifier\DefinitionCacheFactory;
+
 error_reporting(E_ALL | E_STRICT);
 
 // Because we always want to know about errors, and because SimpleTest
@@ -138,7 +140,7 @@ if ($AC['flush']) {
 // Now, userland code begins to be executed
 
 // setup special DefinitionCacheFactory decorator
-$factory = HTMLPurifier_DefinitionCacheFactory::instance();
+$factory = DefinitionCacheFactory::instance();
 $factory->addDecorator('Memory'); // since we deal with a lot of config objects
 
 if (!$AC['disable-phpt']) {

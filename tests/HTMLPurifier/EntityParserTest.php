@@ -1,5 +1,8 @@
 <?php
 
+use HTMLPurifier\EntityLookup;
+use HTMLPurifier\EntityParser;
+
 class HTMLPurifier_EntityParserTest extends HTMLPurifier_Harness
 {
 
@@ -7,8 +10,8 @@ class HTMLPurifier_EntityParserTest extends HTMLPurifier_Harness
 
     public function setUp()
     {
-        $this->EntityParser = new HTMLPurifier_EntityParser();
-        $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
+        $this->EntityParser = new EntityParser();
+        $this->_entity_lookup = EntityLookup::instance();
     }
 
     public function test_substituteNonSpecialEntities()

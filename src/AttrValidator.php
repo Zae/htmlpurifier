@@ -2,16 +2,19 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
-use HTMLPurifier\Token;
+namespace HTMLPurifier;
+
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
+use HTMLPurifier_IDAccumulator;
+use HTMLPurifier_Token_Empty;
 
 /**
  * Validates the attributes of a token. Doesn't manage required attributes
  * very well. The only reason we factored this out was because RemoveForeignElements
  * also needed it besides ValidateAttributes.
  */
-class HTMLPurifier_AttrValidator
+class AttrValidator
 {
     /**
      * Validates the attributes of a token, mutating it as necessary.

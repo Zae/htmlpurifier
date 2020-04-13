@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_AttrTypes;
+use HTMLPurifier\AttrTypes;
 use HTMLPurifier_HTMLModule;
 
 /**
@@ -24,7 +24,7 @@ class AttrCollections
      * It also collects all attribute collection extensions from
      * modules
      *
-     * @param HTMLPurifier_AttrTypes    $attr_types HTMLPurifier_AttrTypes instance
+     * @param AttrTypes                 $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
      * @param HTMLPurifier_HTMLModule[] $modules    Hash array of HTMLPurifier_HTMLModule members
      */
     public function __construct($attr_types, $modules)
@@ -115,12 +115,12 @@ class AttrCollections
 
     /**
      * Expands all string identifiers in an attribute array by replacing
-     * them with the appropriate values inside HTMLPurifier_AttrTypes
+     * them with the appropriate values inside HTMLPurifier\HTMLPurifier_AttrTypes
      *
      * @param array &                $attr       Reference to attribute array
-     * @param HTMLPurifier_AttrTypes $attr_types HTMLPurifier_AttrTypes instance
+     * @param AttrTypes              $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
      */
-    public function expandIdentifiers(array &$attr, HTMLPurifier_AttrTypes $attr_types)
+    public function expandIdentifiers(array &$attr, AttrTypes $attr_types)
     {
         // because foreach will process new elements we add, make sure we
         // skip duplicates

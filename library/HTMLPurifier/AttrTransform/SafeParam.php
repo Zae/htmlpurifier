@@ -5,6 +5,7 @@ declare(strict_types=1);
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Validates name/value pairs in param tags to be used in safe objects. This
@@ -18,7 +19,7 @@ use HTMLPurifier\Context;
  * @warning
  *      This class expects an injector to add the necessary parameters tags.
  */
-class HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_SafeParam extends AttrTransform
 {
     /**
      * @type string

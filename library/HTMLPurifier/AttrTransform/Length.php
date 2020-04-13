@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Class for handling width/height length attribute transformations to CSS
  */
-class HTMLPurifier_AttrTransform_Length extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_Length extends AttrTransform
 {
     /**
      * @type string

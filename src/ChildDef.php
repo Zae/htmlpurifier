@@ -2,17 +2,19 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
-use HTMLPurifier\Node;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
 
 /**
  * Defines allowed child nodes and validates nodes against it.
  */
-abstract class HTMLPurifier_ChildDef
+abstract class ChildDef
 {
     /**
      * Type of child definition, usually right-most part of class name lowercase.
      * Used occasionally in terms of context.
+     *
      * @type string
      */
     public $type;
@@ -22,12 +24,14 @@ abstract class HTMLPurifier_ChildDef
      *
      * This is necessary for redundant checking when changes affecting
      * a child node may cause a parent node to now be disallowed.
+     *
      * @type bool
      */
     public $allow_empty;
 
     /**
      * Lookup array of all elements that this definition could possibly allow.
+     *
      * @type array
      */
     public $elements = [];
@@ -35,7 +39,9 @@ abstract class HTMLPurifier_ChildDef
     /**
      * Get lookup of tag names that should not close this element automatically.
      * All other elements will do so.
+     *
      * @param HTMLPurifier_Config $config HTMLPurifier_Config object
+     *
      * @return array
      */
     public function getAllowedElements(HTMLPurifier_Config $config)

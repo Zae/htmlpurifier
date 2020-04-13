@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Sets height/width defaults for <textarea>
  */
-class HTMLPurifier_AttrTransform_Textarea extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_Textarea extends AttrTransform
 {
     /**
      * @param array               $attr

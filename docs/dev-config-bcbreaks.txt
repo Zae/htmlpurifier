@@ -46,11 +46,11 @@ it's now an informal construct for organizing related configuration directives.
 Also, the validation routines for keys (formerly "$namespace.$directive")
 have been completely relaxed. I don't think it really should be necessary.
 
-2.1 HTMLPurifier_ConfigSchema
+2.1 HTMLPurifier\HTMLPurifier_ConfigSchema
 
 First off, if you're interfacing with this class, you really shouldn't.
 HTMLPurifier_ConfigSchema_Builder_ConfigSchema is really the only class that
-should ever be creating HTMLPurifier_ConfigSchema, and HTMLPurifier_Config the
+should ever be creating HTMLPurifier\HTMLPurifier_ConfigSchema, and HTMLPurifier_Config the
 only class that should be reading it.
 
 All namespace related methods were removed; they are completely unnecessary

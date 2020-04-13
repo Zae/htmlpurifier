@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit\AttrDef;
 
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier_DefinitionCache;
-use HTMLPurifier_DefinitionCacheFactory;
+use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier_URIDefinition;
 use HTMLPurifier\URIParser;
 use Mockery;
@@ -197,10 +197,10 @@ class URITest extends TestCase
             ->get($this->config)
             ->andReturn($uri_def);
 
-        $factory_mock = Mockery::mock(HTMLPurifier_DefinitionCacheFactory::class);
+        $factory_mock = Mockery::mock(DefinitionCacheFactory::class);
 
-        $old = HTMLPurifier_DefinitionCacheFactory::instance();
-        HTMLPurifier_DefinitionCacheFactory::instance($factory_mock);
+        $old = DefinitionCacheFactory::instance();
+        DefinitionCacheFactory::instance($factory_mock);
 
         $factory_mock->expects()
             ->create('URI', $this->config)
@@ -208,7 +208,7 @@ class URITest extends TestCase
 
         $this->assertDef('http://example.com');
 
-        HTMLPurifier_DefinitionCacheFactory::instance($old);
+        DefinitionCacheFactory::instance($old);
     }
 
     /**

@@ -2,13 +2,14 @@
 
 use HTMLPurifier\AttrDef\Text;
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\AttrTypes;
 
 class HTMLPurifier_AttrTypesTest extends HTMLPurifier_Harness
 {
 
     public function test_get()
     {
-        $types = new HTMLPurifier_AttrTypes();
+        $types = new AttrTypes();
 
         $this->assertIdentical(
             $types->get('CDATA'),

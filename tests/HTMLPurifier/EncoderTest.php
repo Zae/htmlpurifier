@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\Encoder;
+use HTMLPurifier\EntityLookup;
 
 class HTMLPurifier_EncoderTest extends HTMLPurifier_Harness
 {
@@ -9,7 +10,7 @@ class HTMLPurifier_EncoderTest extends HTMLPurifier_Harness
 
     public function setUp()
     {
-        $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
+        $this->_entity_lookup = EntityLookup::instance();
         parent::setUp();
     }
 

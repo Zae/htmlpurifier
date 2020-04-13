@@ -1,6 +1,8 @@
 #!/usr/bin/php
 <?php
 
+use HTMLPurifier\ConfigSchema;
+
 chdir(dirname(__FILE__));
 require_once 'common.php';
 assertCli();
@@ -11,7 +13,7 @@ exit;
 /**
  * @file
  * Extracts all definitions inside a configuration schema
- * (HTMLPurifier_ConfigSchema) and exports them as plain text files.
+ * (HTMLPurifier\HTMLPurifier_ConfigSchema) and exports them as plain text files.
  *
  * @todo Extract version numbers.
  */
@@ -19,7 +21,7 @@ exit;
 define('HTMLPURIFIER_SCHEMA_STRICT', true); // description data needs to be collected
 require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
 
-// We need includes to ensure all HTMLPurifier_ConfigSchema calls are
+// We need includes to ensure all HTMLPurifier\HTMLPurifier_ConfigSchema calls are
 // performed.
 require_once 'HTMLPurifier.includes.php';
 
@@ -58,7 +60,7 @@ function saveHash($hash)
     $file->close();
 }
 
-$schema  = HTMLPurifier_ConfigSchema::instance();
+$schema  = ConfigSchema::instance();
 $adapter = new HTMLPurifier_ConfigSchema_StringHashReverseAdapter($schema);
 
 foreach ($schema->info as $ns => $ns_array) {

@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
 
 /**
  * Processes an entire attribute array for corrections needing multiple values.
@@ -11,13 +13,13 @@ use HTMLPurifier\Context;
  * another value.  Instead of creating a complex return syntax for
  * HTMLPurifier_AttrDef, we just pass the whole attribute array to a
  * specialized object and have that do the special work.  That is the
- * family of HTMLPurifier_AttrTransform.
+ * family of HTMLPurifier\HTMLPurifier_AttrTransform.
  *
  * An attribute transformation can be assigned to run before or after
  * HTMLPurifier_AttrDef validation.  See HTMLPurifier\HTMLPurifier_HTMLDefinition for
  * more details.
  */
-abstract class HTMLPurifier_AttrTransform
+abstract class AttrTransform
 {
     /**
      * Abstract: makes changes to the attributes dependent on multiple values.
@@ -34,8 +36,9 @@ abstract class HTMLPurifier_AttrTransform
     /**
      * Prepends CSS properties to the style attribute, creating the
      * attribute if it doesn't exist.
+     *
      * @param array &$attr Attribute array to process (passed by reference)
-     * @param string $css CSS to prepend
+     * @param string $css  CSS to prepend
      */
     public function prependCSS(array &$attr, string $css)
     {
@@ -45,8 +48,10 @@ abstract class HTMLPurifier_AttrTransform
 
     /**
      * Retrieves and removes an attribute
+     *
      * @param array &$attr Attribute array to process (passed by reference)
-     * @param mixed $key Key of attribute to confiscate
+     * @param mixed  $key  Key of attribute to confiscate
+     *
      * @return mixed
      */
     public function confiscateAttr(array &$attr, $key)

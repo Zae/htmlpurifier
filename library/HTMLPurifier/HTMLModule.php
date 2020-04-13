@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ChildDef;
+use HTMLPurifier\ElementDef;
+
 /**
  * Represents an XHTML 1.1 module, with information on elements, tags
  * and attributes.
@@ -75,14 +78,14 @@ class HTMLPurifier_HTMLModule
     public $info_tag_transform = [];
 
     /**
-     * List of HTMLPurifier_AttrTransform to be performed before validation.
+     * List of HTMLPurifier\HTMLPurifier_AttrTransform to be performed before validation.
      *
      * @type array
      */
     public $info_attr_transform_pre = [];
 
     /**
-     * List of HTMLPurifier_AttrTransform to be performed after validation.
+     * List of HTMLPurifier\HTMLPurifier_AttrTransform to be performed after validation.
      *
      * @type array
      */
@@ -124,16 +127,16 @@ class HTMLPurifier_HTMLModule
     public $safe = true;
 
     /**
-     * Retrieves a proper HTMLPurifier_ChildDef subclass based on
+     * Retrieves a proper HTMLPurifier\HTMLPurifier_ChildDef subclass based on
      * content_model and content_model_type member variables of
-     * the HTMLPurifier_ElementDef class. There is a similar function
+     * the HTMLPurifier\HTMLPurifier_ElementDef class. There is a similar function
      * in HTMLPurifier\HTMLPurifier_HTMLDefinition.
      *
-     * @param HTMLPurifier_ElementDef $def
+     * @param ElementDef $def
      *
-     * @return HTMLPurifier_ChildDef subclass
+     * @return ChildDef subclass
      */
-    public function getChildDef(HTMLPurifier_ElementDef $def)
+    public function getChildDef(ElementDef $def)
     {
         return false;
     }
@@ -143,18 +146,18 @@ class HTMLPurifier_HTMLModule
     /**
      * Convenience function that sets up a new element
      *
-     * @param string                       $element       Name of element to add
-     * @param string|bool                  $type          What content set should element be registered to?
+     * @param string          $element                    Name of element to add
+     * @param string|bool     $type                       What content set should element be registered to?
      *                                                    Set as false to skip this step.
-     * @param string|HTMLPurifier_ChildDef $contents      Allowed children in form of:
+     * @param string|ChildDef $contents                   Allowed children in form of:
      *                                                    "$content_model_type: $content_model"
-     * @param array|string                 $attr_includes What attribute collections to register to
+     * @param array|string    $attr_includes              What attribute collections to register to
      *                                                    element?
-     * @param array                        $attr          What unique attributes does the element define?
+     * @param array           $attr                       What unique attributes does the element define?
      *
-     * @return HTMLPurifier_ElementDef Created element definition object, so you
+     * @return ElementDef Created element definition object, so you
      *         can set advanced parameters
-     * @see HTMLPurifier_ElementDef:: for in-depth descriptions of these parameters.
+     * @see ElementDef:: for in-depth descriptions of these parameters.
      */
     public function addElement(string $element, $type, $contents, $attr_includes = [], array $attr = [])
     {
@@ -172,7 +175,7 @@ class HTMLPurifier_HTMLModule
         }
 
         // create element
-        $this->info[$element] = HTMLPurifier_ElementDef::create(
+        $this->info[$element] = ElementDef::create(
             $content_model,
             $content_model_type,
             $attr
@@ -192,13 +195,13 @@ class HTMLPurifier_HTMLModule
      *
      * @param string $element Name of element to create
      *
-     * @return HTMLPurifier_ElementDef Created element
+     * @return ElementDef Created element
      */
     public function addBlankElement(string $element)
     {
         if (!isset($this->info[$element])) {
             $this->elements[] = $element;
-            $this->info[$element] = new HTMLPurifier_ElementDef();
+            $this->info[$element] = new ElementDef();
             $this->info[$element]->standalone = false;
         } else {
             trigger_error("Definition for $element already exists in module, cannot redefine");

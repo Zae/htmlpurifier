@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ElementDef;
+
 /**
  * Class HTMLPurifier_HTMLModule_Tidy_Strict
  */
@@ -34,11 +36,11 @@ class HTMLPurifier_HTMLModule_Tidy_Strict extends HTMLPurifier_HTMLModule_Tidy_X
     public $defines_child_def = true;
 
     /**
-     * @param HTMLPurifier_ElementDef $def
+     * @param ElementDef $def
      *
      * @return HTMLPurifier_ChildDef_StrictBlockquote
      */
-    public function getChildDef(HTMLPurifier_ElementDef $def): HTMLPurifier_ChildDef_StrictBlockquote
+    public function getChildDef(ElementDef $def): HTMLPurifier_ChildDef_StrictBlockquote
     {
         if ($def->content_model_type !== 'strictblockquote') {
             return parent::getChildDef($def);

@@ -2,12 +2,14 @@
 
 // this page is UTF-8 encoded!
 
+use HTMLPurifier\EntityLookup;
+
 class HTMLPurifier_EntityLookupTest extends HTMLPurifier_Harness
 {
 
     public function test()
     {
-        $lookup = HTMLPurifier_EntityLookup::instance();
+        $lookup = EntityLookup::instance();
 
         // latin char
         $this->assertIdentical('â', $lookup->table['acirc']);

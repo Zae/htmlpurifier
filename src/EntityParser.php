@@ -5,17 +5,17 @@ declare(strict_types=1);
 // if want to implement error collecting here, we'll need to use some sort
 // of global data (probably trigger_error) because it's impossible to pass
 // $config or $context to the callback functions.
-use HTMLPurifier\Encoder;
+namespace HTMLPurifier;
 
 /**
  * Handles referencing and derefencing character entities
  */
-class HTMLPurifier_EntityParser
+class EntityParser
 {
     /**
      * Reference to entity lookup table.
      *
-     * @type HTMLPurifier_EntityLookup
+     * @type EntityLookup
      */
     protected $_entity_lookup;
 
@@ -137,7 +137,7 @@ class HTMLPurifier_EntityParser
         }
 
         if (!$this->_entity_lookup) {
-            $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
+            $this->_entity_lookup = EntityLookup::instance();
         }
         if (isset($this->_entity_lookup->table[$named_part])) {
             return $this->_entity_lookup->table[$named_part];
@@ -167,7 +167,7 @@ class HTMLPurifier_EntityParser
      */
     protected $_substituteEntitiesRegex =
         '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
-        //     1. hex             2. dec      3. string (XML style)
+    //     1. hex             2. dec      3. string (XML style)
 
     /**
      * Decimal to parsed string conversion table for special entities.
@@ -244,7 +244,7 @@ class HTMLPurifier_EntityParser
         }
 
         if (!$this->_entity_lookup) {
-            $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
+            $this->_entity_lookup = EntityLookup::instance();
         }
 
         return $this->_entity_lookup->table[$matches[3]] ?? $entity;

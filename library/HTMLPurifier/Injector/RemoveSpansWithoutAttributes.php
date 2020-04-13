@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrValidator;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -23,7 +24,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
     public $needed = ['span'];
 
     /**
-     * @type HTMLPurifier_AttrValidator
+     * @type AttrValidator
      */
     private $attrValidator;
 
@@ -41,7 +42,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
 
     public function prepare(HTMLPurifier_Config $config, Context $context)
     {
-        $this->attrValidator = new HTMLPurifier_AttrValidator();
+        $this->attrValidator = new AttrValidator();
         $this->config = $config;
         $this->context = $context;
 

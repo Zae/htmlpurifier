@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrValidator;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -23,7 +24,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
     private $config;
 
     /**
-     * @type HTMLPurifier_AttrValidator
+     * @type AttrValidator
      */
     private $attrValidator;
 
@@ -68,7 +69,7 @@ class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
             }
         }
 
-        $this->attrValidator = new HTMLPurifier_AttrValidator();
+        $this->attrValidator = new AttrValidator();
     }
 
     /**

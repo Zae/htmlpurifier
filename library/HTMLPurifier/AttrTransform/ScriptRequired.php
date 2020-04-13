@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Implements required attribute stipulation for <script>
  */
-class HTMLPurifier_AttrTransform_ScriptRequired extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_ScriptRequired extends AttrTransform
 {
     /**
      * @param array               $attr

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // must be called POST validation
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Adds rel="noopener" to any links which target a different window
@@ -12,7 +13,7 @@ use HTMLPurifier\Context;
  * to do phishing.
  * This transform is controlled by %HTML.TargetNoopener.
  */
-class HTMLPurifier_AttrTransform_TargetNoopener extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_TargetNoopener extends AttrTransform
 {
     /**
      * @param array               $attr

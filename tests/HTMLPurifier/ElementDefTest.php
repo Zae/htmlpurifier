@@ -1,13 +1,15 @@
 <?php
 
+use HTMLPurifier\ElementDef;
+
 class HTMLPurifier_ElementDefTest extends HTMLPurifier_Harness
 {
 
     public function test_mergeIn()
     {
-        $def1 = new HTMLPurifier_ElementDef();
-        $def2 = new HTMLPurifier_ElementDef();
-        $def3 = new HTMLPurifier_ElementDef();
+        $def1 = new ElementDef();
+        $def2 = new ElementDef();
+        $def3 = new ElementDef();
 
         $old = 1;
         $new = 2;

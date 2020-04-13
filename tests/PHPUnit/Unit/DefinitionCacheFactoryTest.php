@@ -7,7 +7,7 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier_DefinitionCache_Decorator_Memory;
 use HTMLPurifier_DefinitionCache_Null;
 use HTMLPurifier\DefinitionCache\Serializer;
-use HTMLPurifier_DefinitionCacheFactory;
+use HTMLPurifier\DefinitionCacheFactory;
 use Mockery;
 
 /**
@@ -18,12 +18,12 @@ use Mockery;
 class DefinitionCacheFactoryTest extends TestCase
 {
     /**
-     * @var HTMLPurifier_DefinitionCacheFactory
+     * @var \HTMLPurifier\DefinitionCacheFactory
      */
     private $factory;
 
     /**
-     * @var HTMLPurifier_DefinitionCacheFactory
+     * @var DefinitionCacheFactory
      */
     private $oldFactory;
 
@@ -31,14 +31,14 @@ class DefinitionCacheFactoryTest extends TestCase
     {
         parent::setUp();
 
-        $this->factory = new HTMLPurifier_DefinitionCacheFactory();
-        $this->oldFactory = HTMLPurifier_DefinitionCacheFactory::instance();
-        HTMLPurifier_DefinitionCacheFactory::instance($this->factory);
+        $this->factory = new DefinitionCacheFactory();
+        $this->oldFactory = DefinitionCacheFactory::instance();
+        DefinitionCacheFactory::instance($this->factory);
     }
 
     public function tearDown(): void
     {
-        HTMLPurifier_DefinitionCacheFactory::instance($this->oldFactory);
+        DefinitionCacheFactory::instance($this->oldFactory);
         parent::tearDown();
     }
 

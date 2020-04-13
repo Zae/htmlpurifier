@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 
 /**
@@ -14,7 +15,7 @@ use HTMLPurifier\Node\Element;
  * see other disallowed elements, because the autoclose behavior
  * in MakeWellFormed handles it.
  */
-class HTMLPurifier_ChildDef_List extends HTMLPurifier_ChildDef
+class HTMLPurifier_ChildDef_List extends ChildDef
 {
     /**
      * @type string

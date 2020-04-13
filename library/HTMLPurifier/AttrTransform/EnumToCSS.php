@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Generic pre-transform that converts an attribute with a fixed number of
  * values (enumerated) to CSS.
  */
-class HTMLPurifier_AttrTransform_EnumToCSS extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_EnumToCSS extends AttrTransform
 {
     /**
      * Name of attribute to transform from.

@@ -2,15 +2,19 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\VarParser;
+namespace HTMLPurifier;
+
+use HTMLPurifier_PropertyList;
+use stdClass;
 
 /**
  * Configuration definition, defines directives and their defaults.
  */
-class HTMLPurifier_ConfigSchema
+class ConfigSchema
 {
     /**
      * Defaults of the directives and namespaces.
+     *
      * @type array
      * @note This shares the exact same structure as HTMLPurifier_Config::$conf
      */
@@ -18,6 +22,7 @@ class HTMLPurifier_ConfigSchema
 
     /**
      * The default property list. Do not edit this property list.
+     *
      * @type array
      */
     public $defaultPlist;
@@ -51,13 +56,15 @@ class HTMLPurifier_ConfigSchema
      * This class is friendly with HTMLPurifier_Config. If you need introspection
      * about the schema, you're better of using the ConfigSchema_Interchange,
      * which uses more memory but has much richer information.
+     *
      * @type array
      */
     public $info = [];
 
     /**
      * Application-wide singleton
-     * @type HTMLPurifier_ConfigSchema
+     *
+     * @type ConfigSchema
      */
     protected static $singleton;
 
@@ -68,7 +75,8 @@ class HTMLPurifier_ConfigSchema
 
     /**
      * Unserializes the default ConfigSchema.
-     * @return HTMLPurifier_ConfigSchema
+     *
+     * @return ConfigSchema
      */
     public static function makeFromSerial(): self
     {
@@ -84,8 +92,10 @@ class HTMLPurifier_ConfigSchema
 
     /**
      * Retrieves an instance of the application-wide configuration definition.
-     * @param HTMLPurifier_ConfigSchema $prototype
-     * @return HTMLPurifier_ConfigSchema
+     *
+     * @param ConfigSchema $prototype
+     *
+     * @return ConfigSchema
      */
     public static function instance(?self $prototype = null): self
     {
@@ -100,20 +110,22 @@ class HTMLPurifier_ConfigSchema
 
     /**
      * Defines a directive for configuration
+     *
      * @warning Will fail of directive's namespace is defined.
      * @warning This method's signature is slightly different from the legacy
      *          define() static method! Beware!
-     * @param string $key Name of directive
-     * @param mixed $default Default value of directive
-     * @param string|int $type Allowed type of the directive. See
-     *      HTMLPurifier\HTMLPurifier_VarParser::$types for allowed values
-     * @param bool $allow_null Whether or not to allow null values
+     *
+     * @param string     $key        Name of directive
+     * @param mixed      $default    Default value of directive
+     * @param string|int $type       Allowed type of the directive. See
+     *                               HTMLPurifier\HTMLPurifier_VarParser::$types for allowed values
+     * @param bool       $allow_null Whether or not to allow null values
      */
     public function add(string $key, $default, $type, bool $allow_null): void
     {
         $obj = new stdClass();
         $obj->type = is_int($type) ? $type : VarParser::$types[$type];
-        
+
         if ($allow_null) {
             $obj->allow_null = true;
         }
@@ -128,8 +140,9 @@ class HTMLPurifier_ConfigSchema
      *
      * Directive value aliases are convenient for developers because it lets
      * them set a directive to several values and get the same result.
-     * @param string $key Name of Directive
-     * @param array $aliases Hash of aliased values to the real alias
+     *
+     * @param string $key     Name of Directive
+     * @param array  $aliases Hash of aliased values to the real alias
      */
     public function addValueAliases(string $key, array $aliases): void
     {
@@ -144,10 +157,12 @@ class HTMLPurifier_ConfigSchema
 
     /**
      * Defines a set of allowed values for a directive.
+     *
      * @warning This is slightly different from the corresponding static
      *          method definition.
-     * @param string $key Name of directive
-     * @param array $allowed Lookup array of allowed values
+     *
+     * @param string $key     Name of directive
+     * @param array  $allowed Lookup array of allowed values
      */
     public function addAllowedValues(string $key, array $allowed): void
     {
@@ -156,7 +171,8 @@ class HTMLPurifier_ConfigSchema
 
     /**
      * Defines a directive alias for backwards compatibility
-     * @param string $key Directive that will be aliased
+     *
+     * @param string $key     Directive that will be aliased
      * @param string $new_key Directive that the alias will be to
      */
     public function addAlias(string $key, string $new_key): void
@@ -173,9 +189,9 @@ class HTMLPurifier_ConfigSchema
     public function postProcess(): void
     {
         foreach ($this->info as $key => $v) {
-            if (count((array) $v) === 1) {
+            if (count((array)$v) === 1) {
                 $this->info[$key] = $v->type;
-            } elseif (isset($v->allow_null) && count((array) $v) === 2) {
+            } elseif (isset($v->allow_null) && count((array)$v) === 2) {
                 $this->info[$key] = -$v->type;
             }
         }

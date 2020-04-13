@@ -2,12 +2,18 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\DefinitionCache\Serializer;
+use HTMLPurifier_Config;
+use HTMLPurifier_DefinitionCache_Decorator;
+use HTMLPurifier_DefinitionCache_Null;
+use HTMLPurifier_Exception;
 
 /**
  * Responsible for creating definition caches.
  */
-class HTMLPurifier_DefinitionCacheFactory
+class DefinitionCacheFactory
 {
     /**
      * @type array
@@ -35,11 +41,11 @@ class HTMLPurifier_DefinitionCacheFactory
     /**
      * Retrieves an instance of global definition cache factory.
      *
-     * @param HTMLPurifier_DefinitionCacheFactory $prototype
+     * @param DefinitionCacheFactory $prototype
      *
-     * @return HTMLPurifier_DefinitionCacheFactory
+     * @return DefinitionCacheFactory
      */
-    public static function instance(HTMLPurifier_DefinitionCacheFactory $prototype = null)
+    public static function instance(DefinitionCacheFactory $prototype = null)
     {
         static $instance;
         if ($prototype !== null) {

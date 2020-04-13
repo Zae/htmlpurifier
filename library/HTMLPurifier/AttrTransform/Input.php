@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\HTML\Pixels;
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Performs miscellaneous cross attribute validation and filtering for
  * input elements. This is meant to be a post-transform.
  */
-class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_Input extends AttrTransform
 {
     /**
      * @type Pixels
