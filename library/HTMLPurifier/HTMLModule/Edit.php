@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ElementDef;
+
 /**
  * XHTML 1.1 Edit Module, defines editing-related elements. Text Extension
  * Module.
@@ -40,11 +42,11 @@ class HTMLPurifier_HTMLModule_Edit extends HTMLPurifier_HTMLModule
     public $defines_child_def = true;
 
     /**
-     * @param HTMLPurifier_ElementDef $def
+     * @param ElementDef $def
      *
      * @return HTMLPurifier_ChildDef_Chameleon
      */
-    public function getChildDef(HTMLPurifier_ElementDef $def): ?HTMLPurifier_ChildDef_Chameleon
+    public function getChildDef(ElementDef $def): ?HTMLPurifier_ChildDef_Chameleon
     {
         if ($def->content_model_type != 'chameleon') {
             return null;

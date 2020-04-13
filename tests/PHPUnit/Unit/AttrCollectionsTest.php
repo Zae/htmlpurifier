@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier\AttrCollections;
 use HTMLPurifier\AttrDef\HTML\Color;
 use HTMLPurifier\AttrDef\URI;
-use HTMLPurifier_AttrTypes;
+use HTMLPurifier\AttrTypes;
 use HTMLPurifier_HTMLModule;
 use Mockery;
 
@@ -33,7 +33,7 @@ class AttrCollectionsTest extends TestCase
             ->times(3)
             ->andReturn(true);
 
-        $types = Mockery::mock(HTMLPurifier_AttrTypes::class);
+        $types = Mockery::mock(AttrTypes::class);
 
         $modules = [];
 
@@ -83,7 +83,7 @@ class AttrCollectionsTest extends TestCase
      */
     public function testPerformInclusions(): void
     {
-        $types = Mockery::mock(HTMLPurifier_AttrTypes::class);
+        $types = Mockery::mock(AttrTypes::class);
 
         $collections = new AttrCollections($types, []);
         $collections->info = [
@@ -122,7 +122,7 @@ class AttrCollectionsTest extends TestCase
      */
     public function testExpandIdentifiers(): void
     {
-        $types = Mockery::mock(HTMLPurifier_AttrTypes::class);
+        $types = Mockery::mock(AttrTypes::class);
 
         $collections = new AttrCollections($types, []);
 

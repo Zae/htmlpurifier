@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
 
 /**
@@ -14,7 +15,7 @@ use HTMLPurifier\Node;
  * definitions depending on context.  While this somewhat generalized,
  * it is specifically intended for those two tags.
  */
-class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
+class HTMLPurifier_ChildDef_Chameleon extends ChildDef
 {
     /**
      * Instance of the definition object to use when inline. Usually stricter.

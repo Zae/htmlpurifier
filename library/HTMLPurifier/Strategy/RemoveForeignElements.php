@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrValidator;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
@@ -50,7 +51,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
             unset($hidden_elements['script']);
         }
 
-        $attr_validator = new HTMLPurifier_AttrValidator();
+        $attr_validator = new AttrValidator();
 
         // removes tokens until it reaches a closing tag with its value
         $remove_until = false;

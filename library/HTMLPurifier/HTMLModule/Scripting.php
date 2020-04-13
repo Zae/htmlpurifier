@@ -11,6 +11,7 @@ INSIDE HTML PURIFIER DOCUMENTS. USE ONLY WITH TRUSTED USER INPUT!!!
 
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\ElementDef;
 
 /**
  * XHTML 1.1 Scripting module, defines elements that are used to contain
@@ -57,12 +58,12 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLPurifier_HTMLModule
 
         // In theory, this could be safe, but I don't see any reason to
         // allow it.
-        $this->info['noscript'] = new HTMLPurifier_ElementDef();
+        $this->info['noscript'] = new ElementDef();
         $this->info['noscript']->attr = [0 => ['Common']];
         $this->info['noscript']->content_model = 'Heading | List | Block';
         $this->info['noscript']->content_model_type = 'required';
 
-        $this->info['script'] = new HTMLPurifier_ElementDef();
+        $this->info['script'] = new ElementDef();
         $this->info['script']->attr = [
             'defer' => new Enum(['defer']),
             'src' => new URI(true),

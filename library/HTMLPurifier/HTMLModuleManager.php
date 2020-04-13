@@ -3,11 +3,15 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrCollections;
+use HTMLPurifier\AttrTypes;
+use HTMLPurifier\ContentSets;
+use HTMLPurifier\DoctypeRegistry;
+use HTMLPurifier\ElementDef;
 
 class HTMLPurifier_HTMLModuleManager
 {
     /**
-     * @type HTMLPurifier_DoctypeRegistry
+     * @type DoctypeRegistry
      */
     public $doctypes;
 
@@ -19,7 +23,7 @@ class HTMLPurifier_HTMLModuleManager
     public $doctype;
 
     /**
-     * @type HTMLPurifier_AttrTypes
+     * @type AttrTypes
      */
     public $attrTypes;
 
@@ -65,7 +69,7 @@ class HTMLPurifier_HTMLModuleManager
     public $prefixes = ['HTMLPurifier_HTMLModule_'];
 
     /**
-     * @type HTMLPurifier_ContentSets
+     * @type ContentSets
      */
     public $contentSets;
 
@@ -84,8 +88,8 @@ class HTMLPurifier_HTMLModuleManager
     public function __construct()
     {
         // editable internal objects
-        $this->attrTypes = new HTMLPurifier_AttrTypes();
-        $this->doctypes = new HTMLPurifier_DoctypeRegistry();
+        $this->attrTypes = new AttrTypes();
+        $this->doctypes = new DoctypeRegistry();
 
         // setup basic modules
         $common = [
@@ -348,7 +352,7 @@ class HTMLPurifier_HTMLModuleManager
         }
 
         // note the different choice
-        $this->contentSets = new HTMLPurifier_ContentSets(
+        $this->contentSets = new ContentSets(
         // content set assembly deals with all possible modules,
         // not just ones deemed to be "safe"
             $this->modules
@@ -379,7 +383,7 @@ class HTMLPurifier_HTMLModuleManager
     /**
      * Retrieves merged element definitions.
      *
-     * @return HTMLPurifier_ElementDef[]
+     * @return ElementDef[]
      */
     public function getElements()
     {
@@ -414,7 +418,7 @@ class HTMLPurifier_HTMLModuleManager
      * @param bool   $trusted Boolean trusted overriding parameter: set to true
      *                        if you want the full version of an element
      *
-     * @return HTMLPurifier_ElementDef Merged HTMLPurifier_ElementDef
+     * @return ElementDef Merged HTMLPurifier\HTMLPurifier_ElementDef
      * @note You may notice that modules are getting iterated over twice (once
      *       in getElements() and once here). This
      *       is because

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // must be called POST validation
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Adds rel="noreferrer" to any links which target a different window
@@ -12,7 +13,7 @@ use HTMLPurifier\Context;
  * to do phishing.
  * This transform is controlled by %HTML.TargetNoreferrer.
  */
-class HTMLPurifier_AttrTransform_TargetNoreferrer extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_TargetNoreferrer extends AttrTransform
 {
     /**
      * @param array               $attr

@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\VarParser;
 
 class HTMLPurifier_ConfigSchemaTest extends HTMLPurifier_Harness
@@ -9,7 +10,7 @@ class HTMLPurifier_ConfigSchemaTest extends HTMLPurifier_Harness
 
     public function setup()
     {
-        $this->schema = new HTMLPurifier_ConfigSchema();
+        $this->schema = new ConfigSchema();
     }
 
     public function test_define()

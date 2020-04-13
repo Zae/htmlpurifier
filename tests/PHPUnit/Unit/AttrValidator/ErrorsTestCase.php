@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\AttrValidator;
 
-use HTMLPurifier_AttrTransform;
-use HTMLPurifier_AttrValidator;
+use HTMLPurifier\AttrTransform;
+use HTMLPurifier\AttrValidator;
 use HTMLPurifier_Config;
 use HTMLPurifier_ErrorCollector;
 use HTMLPurifier_Generator;
@@ -41,7 +41,7 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
     {
         $def = $this->config->getHTMLDefinition(true);
 
-        $transform = Mockery::mock(HTMLPurifier_AttrTransform::class);
+        $transform = Mockery::mock(AttrTransform::class);
 
         $input = ['original' => 'value'];
         $output = ['class' => 'value']; // must be valid
@@ -104,7 +104,7 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
      */
     private function invoke($input): void
     {
-        $validator = new HTMLPurifier_AttrValidator();
+        $validator = new AttrValidator();
         $validator->validateToken($input, $this->config, $this->context);
     }
 }

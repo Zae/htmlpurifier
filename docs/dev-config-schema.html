@@ -20,7 +20,7 @@
       HTML Purifier has a fairly complex system for configuration. Users
       interact with a <code>HTMLPurifier_Config</code> object to
       set configuration directives. The values they set are validated according
-      to a configuration schema, <code>HTMLPurifier_ConfigSchema</code>.
+      to a configuration schema, <code>HTMLPurifier\HTMLPurifier_ConfigSchema</code>.
     </p>
 
     <p>
@@ -257,7 +257,7 @@ Test.Example</pre>
     <p>
       You may have noticed that your directive file isn't doing anything
       yet. That's because it hasn't been added to the runtime
-      <code>HTMLPurifier_ConfigSchema</code> instance. Run
+      <code>HTMLPurifier\HTMLPurifier_ConfigSchema</code> instance. Run
       <code>maintenance/generate-schema-cache.php</code> to fix this.
       If there were no errors, you're good to go! Don't forget to add
       some unit tests for your functionality!
@@ -400,7 +400,7 @@ Test.Example</pre>
       From the interchange object, the data can be siphoned into other forms
       using <code>HTMLPurifier_ConfigSchema_Builder</code> subclasses.
       For example, <code>HTMLPurifier_ConfigSchema_Builder_ConfigSchema</code>
-      generates a runtime <code>HTMLPurifier_ConfigSchema</code> object,
+      generates a runtime <code>HTMLPurifier\HTMLPurifier_ConfigSchema</code> object,
       which <code>HTMLPurifier_Config</code> uses to validate its incoming
       data. There is also an XML serializer, which is used to build documentation.
     </p>

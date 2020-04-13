@@ -5,6 +5,8 @@ declare(strict_types=1);
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Definition;
 use HTMLPurifier\CSSDefinition;
+use HTMLPurifier\ConfigSchema;
+use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier\VarParser;
 
 /**
@@ -58,8 +60,9 @@ class HTMLPurifier_Config
     protected $parser = null;
 
     /**
-     * Reference HTMLPurifier_ConfigSchema for value checking.
-     * @type HTMLPurifier_ConfigSchema
+     * Reference HTMLPurifier\HTMLPurifier_ConfigSchema for value checking.
+     *
+     * @type ConfigSchema
      * @note This is public for introspective purposes. Please don't
      *       abuse!
      */
@@ -106,11 +109,12 @@ class HTMLPurifier_Config
 
     /**
      * Constructor
-     * @param HTMLPurifier_ConfigSchema $definition ConfigSchema that defines
+     *
+     * @param ConfigSchema              $definition ConfigSchema that defines
      * what directives are allowed.
      * @param HTMLPurifier_PropertyList $parent
      */
-    public function __construct(HTMLPurifier_ConfigSchema $definition, ?HTMLPurifier_PropertyList $parent = null)
+    public function __construct(ConfigSchema $definition, ?HTMLPurifier_PropertyList $parent = null)
     {
         $parent = $parent ? $parent : $definition->defaultPlist;
         $this->plist = new HTMLPurifier_PropertyList($parent);
@@ -120,14 +124,16 @@ class HTMLPurifier_Config
 
     /**
      * Convenience constructor that creates a config object based on a mixed var
+     *
      * @param mixed $config Variable that defines the state of the config
      *                      object. Can be: a HTMLPurifier_Config() object,
      *                      an array of directives based on loadArray(),
      *                      or a string filename of an ini file.
-     * @param HTMLPurifier_ConfigSchema $schema Schema object
+     * @param ConfigSchema $schema Schema object
+     *
      * @return HTMLPurifier_Config Configured object
      */
-    public static function create($config, ?HTMLPurifier_ConfigSchema $schema = null)
+    public static function create($config, ?ConfigSchema $schema = null)
     {
         if ($config instanceof static) {
             // pass-through
@@ -164,7 +170,7 @@ class HTMLPurifier_Config
      */
     public static function createDefault()
     {
-        $definition = HTMLPurifier_ConfigSchema::instance();
+        $definition = ConfigSchema::instance();
 
         return new static($definition);
     }
@@ -521,7 +527,7 @@ class HTMLPurifier_Config
         // temporarily suspend locks, so we can handle recursive definition calls
         $lock = $this->lock;
         $this->lock = null;
-        $factory = HTMLPurifier_DefinitionCacheFactory::instance();
+        $factory = DefinitionCacheFactory::instance();
         $cache = $factory->create($type, $this);
         $this->lock = $lock;
         if (!$raw) {
@@ -751,14 +757,14 @@ class HTMLPurifier_Config
      * namespaces/directives list.
      *
      * @param array|string $allowed List of allowed namespaces/directives
-     * @param HTMLPurifier_ConfigSchema $schema Schema to use, if not global copy
+     * @param ConfigSchema $schema Schema to use, if not global copy
      *
      * @return array
      */
-    public static function getAllowedDirectivesForForm($allowed, ?HTMLPurifier_ConfigSchema $schema = null)
+    public static function getAllowedDirectivesForForm($allowed, ?ConfigSchema $schema = null)
     {
         if (!$schema) {
-            $schema = HTMLPurifier_ConfigSchema::instance();
+            $schema = ConfigSchema::instance();
         }
 
         if ($allowed !== true) {
@@ -817,11 +823,11 @@ class HTMLPurifier_Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
-     * @param HTMLPurifier_ConfigSchema $schema Schema to use, if not global copy
+     * @param ConfigSchema $schema Schema to use, if not global copy
      *
      * @return mixed
      */
-    public static function loadArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?HTMLPurifier_ConfigSchema $schema = null)
+    public static function loadArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null)
     {
         $ret = static::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $schema);
 
@@ -851,11 +857,11 @@ class HTMLPurifier_Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
-     * @param HTMLPurifier_ConfigSchema $schema Schema to use, if not global copy
+     * @param ConfigSchema $schema Schema to use, if not global copy
      *
      * @return array
      */
-    public static function prepareArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?HTMLPurifier_ConfigSchema $schema = null)
+    public static function prepareArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null)
     {
         if ($index !== false) {
             $array = (isset($array[$index]) && is_array($array[$index])) ? $array[$index] : [];

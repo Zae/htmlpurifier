@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Generic schema interchange format that can be converted to a runtime
- * representation (HTMLPurifier_ConfigSchema) or HTML documentation. Members
+ * representation (HTMLPurifier\HTMLPurifier_ConfigSchema) or HTML documentation. Members
  * are completely validated.
  */
 class HTMLPurifier_ConfigSchema_Interchange

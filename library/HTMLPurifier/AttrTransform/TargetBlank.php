@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // must be called POST validation
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 use HTMLPurifier\URIParser;
 
 /**
@@ -11,7 +12,7 @@ use HTMLPurifier\URIParser;
  * only attached if Attr.TargetBlank is TRUE.  This works regardless
  * of whether or not Attr.AllowedFrameTargets
  */
-class HTMLPurifier_AttrTransform_TargetBlank extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_TargetBlank extends AttrTransform
 {
     /**
      * @type URIParser

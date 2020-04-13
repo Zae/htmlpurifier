@@ -2,25 +2,33 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier\ChildDef;
+use HTMLPurifier\ContentSets;
+
 /**
  * Structure that stores an HTML element definition. Used by
  * HTMLPurifier\HTMLPurifier_HTMLDefinition and HTMLPurifier_HTMLModule.
- * @note This class is inspected by HTMLPurifier_Printer_HTMLDefinition.
+ *
+ * @note    This class is inspected by HTMLPurifier_Printer_HTMLDefinition.
  *       Please update that class too.
  * @warning If you add new properties to this class, you MUST update
  *          the mergeIn() method.
  */
-class HTMLPurifier_ElementDef
+class ElementDef
 {
     /**
      * Does the definition work by itself, or is it created solely
      * for the purpose of merging into another definition?
+     *
      * @type bool
      */
     public $standalone = true;
 
     /**
      * Associative array of attribute name to HTMLPurifier_AttrDef.
+     *
      * @type array
      * @note Before being processed by HTMLPurifier_AttrCollections
      *       when modules are finalized during
@@ -28,7 +36,7 @@ class HTMLPurifier_ElementDef
      *       contain an array at index 0 that indicates which attribute
      *       collections to load into the full array. It may also
      *       contain string indentifiers in lieu of HTMLPurifier_AttrDef,
-     *       see HTMLPurifier_AttrTypes on how they are expanded during
+     *       see HTMLPurifier\HTMLPurifier_AttrTypes on how they are expanded during
      *       HTMLPurifier\HTMLPurifier_HTMLDefinition->setup() processing.
      */
     public $attr = [];
@@ -46,27 +54,31 @@ class HTMLPurifier_ElementDef
     // nuking.
 
     /**
-     * List of tags HTMLPurifier_AttrTransform to be done before validation.
+     * List of tags HTMLPurifier\HTMLPurifier_AttrTransform to be done before validation.
+     *
      * @type array
      */
     public $attr_transform_pre = [];
 
     /**
-     * List of tags HTMLPurifier_AttrTransform to be done after validation.
+     * List of tags HTMLPurifier\HTMLPurifier_AttrTransform to be done after validation.
+     *
      * @type array
      */
     public $attr_transform_post = [];
 
     /**
-     * HTMLPurifier_ChildDef of this tag.
-     * @type HTMLPurifier_ChildDef
+     * HTMLPurifier\HTMLPurifier_ChildDef of this tag.
+     *
+     * @type ChildDef
      */
     public $child;
 
     /**
      * Abstract string representation of internal ChildDef rules.
-     * @see HTMLPurifier_ContentSets for how this is parsed and then transformed
-     * into an HTMLPurifier_ChildDef.
+     *
+     * @see     ContentSets for how this is parsed and then transformed
+     * into an HTMLPurifier\HTMLPurifier_ChildDef.
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
      * @type string
@@ -76,6 +88,7 @@ class HTMLPurifier_ElementDef
     /**
      * Value of $child->type, used to determine which ChildDef to use,
      * used in combination with $content_model.
+     *
      * @warning This must be lowercase
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
@@ -88,6 +101,7 @@ class HTMLPurifier_ElementDef
      * is important for chameleon ins and del processing in
      * HTMLPurifier_ChildDef_Chameleon. Dynamically set: modules don't
      * have to worry about this one.
+     *
      * @type bool
      */
     public $descendants_are_inline = false;
@@ -95,12 +109,14 @@ class HTMLPurifier_ElementDef
     /**
      * List of the names of required attributes this element has.
      * Dynamically populated by HTMLPurifier\HTMLPurifier_HTMLDefinition::getElement()
+     *
      * @type array
      */
     public $required_attr = [];
 
     /**
      * Lookup table of tags excluded from all descendants of this tag.
+     *
      * @type array
      * @note SGML permits exclusions for all descendants, but this is
      *       not possible with DTDs or XML Schemas. W3C has elected to
@@ -115,6 +131,7 @@ class HTMLPurifier_ElementDef
 
     /**
      * This tag is explicitly auto-closed by the following tags.
+     *
      * @type array
      */
     public $autoclose = [];
@@ -123,6 +140,7 @@ class HTMLPurifier_ElementDef
      * If a foreign element is found in this element, test if it is
      * allowed by this sub-element; if it is, instead of closing the
      * current element, place it inside this element.
+     *
      * @type string
      */
     public $wrap;
@@ -130,6 +148,7 @@ class HTMLPurifier_ElementDef
     /**
      * Whether or not this is a formatting element affected by the
      * "Active Formatting Elements" algorithm.
+     *
      * @type bool
      */
     public $formatting;
@@ -141,7 +160,7 @@ class HTMLPurifier_ElementDef
      * @param string|null $content_model_type
      * @param array       $attr
      *
-     * @return HTMLPurifier_ElementDef
+     * @return ElementDef
      */
     public static function create(?string $content_model, ?string $content_model_type, array $attr)
     {
@@ -149,6 +168,7 @@ class HTMLPurifier_ElementDef
         $def->content_model = $content_model;
         $def->content_model_type = $content_model_type;
         $def->attr = $attr;
+
         return $def;
     }
 
@@ -156,9 +176,10 @@ class HTMLPurifier_ElementDef
      * Merges the values of another element definition into this one.
      * Values from the new element def take precedence if a value is
      * not mergeable.
-     * @param HTMLPurifier_ElementDef $def
+     *
+     * @param ElementDef $def
      */
-    public function mergeIn(HTMLPurifier_ElementDef $def)
+    public function mergeIn(ElementDef $def)
     {
         // later keys takes precedence
         foreach ($def->attr as $k => $v) {
@@ -212,6 +233,7 @@ class HTMLPurifier_ElementDef
 
     /**
      * Merges one array into another, removes values which equal false
+     *
      * @param array $a1 by reference that is merged into
      * @param array $a2 that merges into $a1
      */

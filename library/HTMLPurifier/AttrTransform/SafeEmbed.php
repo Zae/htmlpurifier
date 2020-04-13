@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Class HTMLPurifier_AttrTransform_SafeEmbed
  */
-class HTMLPurifier_AttrTransform_SafeEmbed extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_SafeEmbed extends AttrTransform
 {
     /**
      * @type string

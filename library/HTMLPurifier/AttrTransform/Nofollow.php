@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 // must be called POST validation
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 use HTMLPurifier\URIParser;
 
 /**
  * Adds rel="nofollow" to all outbound links.  This transform is
  * only attached if Attr.Nofollow is TRUE.
  */
-class HTMLPurifier_AttrTransform_Nofollow extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_Nofollow extends AttrTransform
 {
     /**
      * @type URIParser

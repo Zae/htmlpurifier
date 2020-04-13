@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\AttrDef;
+namespace HTMLPurifier;
+
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrDef\Text;
 use HTMLPurifier\AttrDef\Lang;
@@ -22,7 +23,7 @@ use HTMLPurifier\AttrDef\HTML\ID;
 /**
  * Provides lookup array of attribute types to HTMLPurifier_AttrDef objects
  */
-class HTMLPurifier_AttrTypes
+class AttrTypes
 {
     /**
      * Lookup array of attribute string identifiers to concrete implementations.
@@ -46,20 +47,20 @@ class HTMLPurifier_AttrTypes
 
         // pseudo-types, must be instantiated via shorthand
         $this->info['Enum'] = new Enum();
-        $this->info['Bool']    = new Boolean();
+        $this->info['Bool'] = new Boolean();
 
         $this->info['CDATA'] = new Text();
-        $this->info['ID']       = new ID();
-        $this->info['Length']   = new Length();
+        $this->info['ID'] = new ID();
+        $this->info['Length'] = new Length();
         $this->info['MultiLength'] = new MultiLength();
         $this->info['NMTOKENS'] = new Nmtokens();
-        $this->info['Pixels']   = new Pixels();
+        $this->info['Pixels'] = new Pixels();
         $this->info['Text'] = new Text();
         $this->info['URI'] = new URI();
         $this->info['LanguageCode'] = new Lang();
-        $this->info['Color']    = new Color();
-        $this->info['IAlign']   = self::makeEnum('top,middle,bottom,left,right');
-        $this->info['LAlign']   = self::makeEnum('top,bottom,left,right');
+        $this->info['Color'] = new Color();
+        $this->info['IAlign'] = self::makeEnum('top,middle,bottom,left,right');
+        $this->info['LAlign'] = self::makeEnum('top,bottom,left,right');
         $this->info['FrameTarget'] = new FrameTarget();
 
         // unimplemented aliases
@@ -99,6 +100,7 @@ class HTMLPurifier_AttrTypes
 
         if (!isset($this->info[$type])) {
             trigger_error('Cannot retrieve undefined attribute type ' . $type, E_USER_ERROR);
+
             return null;
         }
 
@@ -108,7 +110,7 @@ class HTMLPurifier_AttrTypes
     /**
      * Sets a new implementation for a type
      *
-     * @param string $type String type name
+     * @param string  $type String type name
      * @param AttrDef $impl Object AttrDef for type
      */
     public function set(string $type, AttrDef $impl)

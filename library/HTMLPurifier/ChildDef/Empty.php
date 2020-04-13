@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
 
 /**
@@ -13,7 +14,7 @@ use HTMLPurifier\Node;
  *          before child definitions are parsed in earnest by
  *          HTMLPurifier_Strategy_FixNesting.
  */
-class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef
+class HTMLPurifier_ChildDef_Empty extends ChildDef
 {
     /**
      * @type bool

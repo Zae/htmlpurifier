@@ -1,10 +1,19 @@
 <?php
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_ChildDef_Custom;
+use HTMLPurifier_ChildDef_Empty;
+use HTMLPurifier_ChildDef_Optional;
+use HTMLPurifier_ChildDef_Required;
+use HTMLPurifier\ElementDef;
+use HTMLPurifier_HTMLModule;
+
 /**
  * @todo Unit test
  */
-class HTMLPurifier_ContentSets
+class ContentSets
 {
     /**
      * List of content set strings (pipe separators) indexed by name.
@@ -27,6 +36,7 @@ class HTMLPurifier_ContentSets
      * @type array
      */
     protected $keys = [];
+
     /**
      * Synchronized list of defined content values (values of info).
      *
@@ -86,10 +96,10 @@ class HTMLPurifier_ContentSets
     /**
      * Accepts a definition; generates and assigns a ChildDef for it
      *
-     * @param HTMLPurifier_ElementDef $def    HTMLPurifier_ElementDef reference
+     * @param ElementDef              $def    HTMLPurifier\HTMLPurifier_ElementDef reference
      * @param HTMLPurifier_HTMLModule $module Module that defined the ElementDef
      */
-    public function generateChildDef(HTMLPurifier_ElementDef &$def, HTMLPurifier_HTMLModule $module): void
+    public function generateChildDef(ElementDef &$def, HTMLPurifier_HTMLModule $module): void
     {
         if (!empty($def->child)) { // already done!
             return;
@@ -122,17 +132,17 @@ class HTMLPurifier_ContentSets
 
     /**
      * Instantiates a ChildDef based on content_model and content_model_type
-     * member variables in HTMLPurifier_ElementDef
+     * member variables in HTMLPurifier\HTMLPurifier_ElementDef
      *
-     * @note This will also defer to modules for custom HTMLPurifier_ChildDef
+     * @note This will also defer to modules for custom HTMLPurifier\HTMLPurifier_ChildDef
      *       subclasses that need content set expansion
      *
-     * @param HTMLPurifier_ElementDef $def    HTMLPurifier_ElementDef to have ChildDef extracted
+     * @param ElementDef              $def    HTMLPurifier\HTMLPurifier_ElementDef to have ChildDef extracted
      * @param HTMLPurifier_HTMLModule $module Module that defined the ElementDef
      *
-     * @return HTMLPurifier_ChildDef corresponding to ElementDef
+     * @return ChildDef corresponding to ElementDef
      */
-    public function getChildDef(HTMLPurifier_ElementDef $def, HTMLPurifier_HTMLModule $module): HTMLPurifier_ChildDef
+    public function getChildDef(ElementDef $def, HTMLPurifier_HTMLModule $module): ChildDef
     {
         $value = $def->content_model;
         if (is_object($value)) {

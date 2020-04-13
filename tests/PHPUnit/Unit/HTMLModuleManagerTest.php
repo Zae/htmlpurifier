@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\HTML\Nmtokens;
 use HTMLPurifier_ChildDef_Optional;
 use HTMLPurifier_Config;
-use HTMLPurifier_ElementDef;
+use HTMLPurifier\ElementDef;
 use HTMLPurifier_HTMLModule;
 use HTMLPurifier_HTMLModuleManager;
 use Mockery;
@@ -78,14 +78,14 @@ class HTMLModuleManagerTest extends TestCase
 
         $attrdef_nmtokens = new Nmtokens();
 
-        $p = new HTMLPurifier_ElementDef();
+        $p = new ElementDef();
         $p->attr['class'] = $attrdef_nmtokens;
         $p->child = new HTMLPurifier_ChildDef_Optional(['em', '#PCDATA']);
         $p->content_model = 'em | #PCDATA';
         $p->content_model_type = 'optional';
         $p->descendants_are_inline = true;
 
-        $em = new HTMLPurifier_ElementDef();
+        $em = new ElementDef();
         $em->attr['class'] = $attrdef_nmtokens;
         $em->child = new HTMLPurifier_ChildDef_Optional(['em', '#PCDATA']);
         $em->content_model = 'em | #PCDATA';
@@ -99,7 +99,7 @@ class HTMLModuleManagerTest extends TestCase
 
         // test trusted parameter override
 
-        $div = new HTMLPurifier_ElementDef();
+        $div = new ElementDef();
         $div->child = new HTMLPurifier_ChildDef_Optional(['p', 'div', 'em', '#PCDATA']);
         $div->content_model = 'p | div | em | #PCDATA';
         $div->content_model_type = 'optional';

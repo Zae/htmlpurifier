@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Comment;
 
@@ -35,7 +36,7 @@ use HTMLPurifier\Node\Comment;
  * mode, and we *must* wrap any stray tr segments with a tbody. But if
  * we don't run into any of them, just have tr tags is OK.
  */
-class HTMLPurifier_ChildDef_Table extends HTMLPurifier_ChildDef
+class HTMLPurifier_ChildDef_Table extends ChildDef
 {
     /**
      * @type bool

@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\EntityLookup;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -14,7 +15,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function __construct()
     {
         parent::__construct();
-        $this->_entity_lookup = HTMLPurifier_EntityLookup::instance();
+        $this->_entity_lookup = EntityLookup::instance();
     }
 
     public function setUp()

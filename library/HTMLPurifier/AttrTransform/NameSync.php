@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\HTML\ID;
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Post-transform that performs validation to the name attribute; if
  * it is present with an equivalent id attribute, it is passed through;
  * otherwise validation is performed.
  */
-class HTMLPurifier_AttrTransform_NameSync extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_NameSync extends AttrTransform
 {
     /**
      * @var ID

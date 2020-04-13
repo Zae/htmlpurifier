@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Writes default type for all objects. Currently only supports flash.
  */
-class HTMLPurifier_AttrTransform_SafeObject extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_SafeObject extends AttrTransform
 {
     /**
      * @type string

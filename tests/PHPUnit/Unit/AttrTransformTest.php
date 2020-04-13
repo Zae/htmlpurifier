@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_AttrTransform;
+use HTMLPurifier\AttrTransform;
 use Mockery;
 
 /**
@@ -19,7 +19,7 @@ class AttrTransformTest extends TestCase
      */
     public function testParseCDATA(): void
     {
-        $t = Mockery::mock(HTMLPurifier_AttrTransform::class)->makePartial();
+        $t = Mockery::mock(AttrTransform::class)->makePartial();
 
 //        $t->expects()
 //            ->transform(Mockery::any(), Mockery::any(), Mockery::any())
@@ -40,7 +40,7 @@ class AttrTransformTest extends TestCase
 
     public function testConfiscateAttr(): void
     {
-        $t = Mockery::mock(HTMLPurifier_AttrTransform::class)->makePartial();
+        $t = Mockery::mock(AttrTransform::class)->makePartial();
 
 //        $t->expects()
 //            ->transform(Mockery::any(), Mockery::any(), Mockery::any())

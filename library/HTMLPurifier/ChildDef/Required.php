@@ -3,13 +3,14 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
 
 /**
  * Definition that allows a set of elements, but disallows empty children.
  */
-class HTMLPurifier_ChildDef_Required extends HTMLPurifier_ChildDef
+class HTMLPurifier_ChildDef_Required extends ChildDef
 {
     /**
      * Lookup table of allowed elements.

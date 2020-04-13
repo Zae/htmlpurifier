@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\Encoder;
 use HTMLPurifier\Context;
+use HTMLPurifier\EntityParser;
 use HTMLPurifier\Token;
 use HTMLPurifier\Lexer\DOMLex;
 
@@ -56,7 +57,7 @@ class HTMLPurifier_Lexer
 
     // -- STATIC ----------------------------------------------------------
     /**
-     * @var HTMLPurifier_EntityParser
+     * @var EntityParser
      */
     private $_entity_parser;
 
@@ -162,7 +163,7 @@ class HTMLPurifier_Lexer
 
     public function __construct()
     {
-        $this->_entity_parser = new HTMLPurifier_EntityParser();
+        $this->_entity_parser = new EntityParser();
     }
 
     /**

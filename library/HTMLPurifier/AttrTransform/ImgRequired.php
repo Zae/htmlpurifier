@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 // must be called POST validation
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Transform that supplies default values for the src and alt attributes
@@ -11,7 +12,7 @@ use HTMLPurifier\Context;
  * because of a missing alt tag. This needs to be registered as both
  * a pre and post attribute transform.
  */
-class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_ImgRequired extends AttrTransform
 {
     /**
      * @param array               $attr

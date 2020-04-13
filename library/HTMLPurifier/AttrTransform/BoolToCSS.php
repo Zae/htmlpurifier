@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Pre-transform that changes converts a boolean attribute to fixed CSS
  */
-class HTMLPurifier_AttrTransform_BoolToCSS extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_BoolToCSS extends AttrTransform
 {
     /**
      * Name of boolean attribute that is trigger.

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_AttrTransform;
+use HTMLPurifier\AttrTransform;
 use HTMLPurifier_Config;
 use HTMLPurifier\Definition;
-use HTMLPurifier_Doctype;
-use HTMLPurifier_ElementDef;
+use HTMLPurifier\Doctype;
+use HTMLPurifier\ElementDef;
 use HTMLPurifier_Exception;
 use HTMLPurifier_HTMLModule;
 use HTMLPurifier_HTMLModuleManager;
@@ -42,9 +42,9 @@ class HTMLDefinition extends Definition
     // FULLY-PUBLIC VARIABLES ---------------------------------------------
 
     /**
-     * Associative array of element names to HTMLPurifier_ElementDef.
+     * Associative array of element names to HTMLPurifier\HTMLPurifier_ElementDef.
      *
-     * @type HTMLPurifier_ElementDef[]
+     * @type ElementDef[]
      */
     public $info = [];
 
@@ -66,7 +66,7 @@ class HTMLDefinition extends Definition
      * Definition for parent element, allows parent element to be a
      * tag that's not allowed inside the HTML fragment.
      *
-     * @type HTMLPurifier_ElementDef
+     * @type ElementDef
      */
     public $info_parent_def;
 
@@ -86,16 +86,16 @@ class HTMLDefinition extends Definition
     public $info_tag_transform = [];
 
     /**
-     * Indexed list of HTMLPurifier_AttrTransform to be performed before validation.
+     * Indexed list of HTMLPurifier\HTMLPurifier_AttrTransform to be performed before validation.
      *
-     * @type HTMLPurifier_AttrTransform[]
+     * @type AttrTransform[]
      */
     public $info_attr_transform_pre = [];
 
     /**
-     * Indexed list of HTMLPurifier_AttrTransform to be performed after validation.
+     * Indexed list of HTMLPurifier\HTMLPurifier_AttrTransform to be performed after validation.
      *
-     * @type HTMLPurifier_AttrTransform[]
+     * @type AttrTransform[]
      */
     public $info_attr_transform_post = [];
 
@@ -117,7 +117,7 @@ class HTMLDefinition extends Definition
     /**
      * Doctype object
      *
-     * @type HTMLPurifier_Doctype
+     * @type Doctype
      */
     public $doctype;
 
@@ -132,7 +132,7 @@ class HTMLDefinition extends Definition
      * @param string $element_name Element name to add attribute to
      * @param string $attr_name    Name of attribute
      * @param mixed  $def          Attribute definition, can be string or object, see
-     *                             HTMLPurifier_AttrTypes for details
+     *                             HTMLPurifier\HTMLPurifier_AttrTypes for details
      */
     public function addAttribute(string $element_name, string $attr_name, $def)
     {
@@ -167,7 +167,7 @@ class HTMLDefinition extends Definition
      *
      * @param string $element_name
      *
-     * @return HTMLPurifier_ElementDef
+     * @return ElementDef
      * @see HTMLPurifier_HTMLModule::addBlankElement() for detailed
      *       parameter and return value descriptions.
      */

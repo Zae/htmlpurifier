@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Post-transform that copies lang's value to xml:lang (and vice-versa)
@@ -10,7 +11,7 @@ use HTMLPurifier\Context;
  * @note Theoretically speaking, this could be a pre-transform, but putting
  *       post is more efficient.
  */
-class HTMLPurifier_AttrTransform_Lang extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_Lang extends AttrTransform
 {
     /**
      * @param array               $attr

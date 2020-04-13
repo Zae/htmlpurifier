@@ -1,11 +1,14 @@
 <?php
 
+use HTMLPurifier\Doctype;
+use HTMLPurifier\DoctypeRegistry;
+
 class HTMLPurifier_DoctypeRegistryTest extends HTMLPurifier_Harness
 {
 
     public function test_register()
     {
-        $registry = new HTMLPurifier_DoctypeRegistry();
+        $registry = new DoctypeRegistry();
 
         $d = $registry->register(
             $name = 'XHTML 1.0 Transitional',
@@ -15,7 +18,7 @@ class HTMLPurifier_DoctypeRegistryTest extends HTMLPurifier_Harness
             $aliases = array('X10T')
         );
 
-        $d2 = new HTMLPurifier_Doctype($name, $xml, $modules, $tidyModules, $aliases);
+        $d2 = new Doctype($name, $xml, $modules, $tidyModules, $aliases);
 
         $this->assertIdentical($d, $d2);
         $this->assertSame($d, $registry->get('XHTML 1.0 Transitional'));
@@ -24,7 +27,7 @@ class HTMLPurifier_DoctypeRegistryTest extends HTMLPurifier_Harness
         $d = $registry->register(
             $name = 'XHTML 1.0 Strict', true, 'module', 'Tidy', 'X10S'
         );
-        $d2 = new HTMLPurifier_Doctype($name, true, array('module'), array('Tidy'), array('X10S'));
+        $d2 = new Doctype($name, true, array('module'), array('Tidy'), array('X10S'));
 
         $this->assertIdentical($d, $d2);
 
@@ -34,7 +37,7 @@ class HTMLPurifier_DoctypeRegistryTest extends HTMLPurifier_Harness
     {
         // see also alias and register tests
 
-        $registry = new HTMLPurifier_DoctypeRegistry();
+        $registry = new DoctypeRegistry();
 
         $this->expectError('Doctype XHTML 2.0 does not exist');
         $registry->get('XHTML 2.0');
@@ -47,7 +50,7 @@ class HTMLPurifier_DoctypeRegistryTest extends HTMLPurifier_Harness
 
     public function testAliases()
     {
-        $registry = new HTMLPurifier_DoctypeRegistry();
+        $registry = new DoctypeRegistry();
 
         $d1 = $registry->register('Doc1', true, array(), array(), array('1'));
 

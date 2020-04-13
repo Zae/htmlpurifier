@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_ElementDef;
+use HTMLPurifier\ElementDef;
 use HTMLPurifier_HTMLModule;
 use Mockery;
 
@@ -44,7 +44,7 @@ class HTMLModuleTest extends TestCase
         );
 
         $module2 = new HTMLPurifier_HTMLModule();
-        $def2 = new HTMLPurifier_ElementDef();
+        $def2 = new ElementDef();
         $def2->content_model = '#PCDATA';
         $def2->content_model_type = 'optional';
         $def2->attr = [
@@ -138,7 +138,7 @@ class HTMLModuleTest extends TestCase
         $module = new HTMLPurifier_HTMLModule();
         $def = $module->addBlankElement('a');
 
-        $def2 = new HTMLPurifier_ElementDef();
+        $def2 = new ElementDef();
         $def2->standalone = false;
 
         static::assertEquals($module->info['a'], $def);

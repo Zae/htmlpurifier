@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
 
 /**
@@ -11,7 +12,7 @@ use HTMLPurifier\Node;
  * @warning Currently this class is an all or nothing proposition, that is,
  *          it will only give a bool return value.
  */
-class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
+class HTMLPurifier_ChildDef_Custom extends ChildDef
 {
     /**
      * @type string

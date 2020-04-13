@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\AttrTransform;
 
 /**
  * Pre-transform that changes deprecated bgcolor attribute to CSS.
  */
-class HTMLPurifier_AttrTransform_BgColor extends HTMLPurifier_AttrTransform
+class HTMLPurifier_AttrTransform_BgColor extends AttrTransform
 {
     /**
      * @param array               $attr
