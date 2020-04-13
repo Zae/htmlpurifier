@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * Module defines proprietary tags and attributes in HTML.
  *
  * @warning If this module is enabled, standards-compliance is off!
  */
-class HTMLPurifier_HTMLModule_Proprietary extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Proprietary extends HTMLModule
 {
     /**
      * @type string

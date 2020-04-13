@@ -42,6 +42,10 @@ declare(strict_types=1);
 use HTMLPurifier\Encoder;
 use HTMLPurifier\Context;
 use HTMLPurifier\Filter;
+use HTMLPurifier\ErrorCollector;
+use HTMLPurifier\Generator;
+use HTMLPurifier\LanguageFactory;
+use HTMLPurifier\IDAccumulator;
 
 /**
  * Facade that coordinates HTML Purifier's subsystems in order to purify HTML.
@@ -100,7 +104,7 @@ class HTMLPurifier
     protected $strategy;
 
     /**
-     * @type HTMLPurifier_Generator
+     * @type Generator
      */
     protected $generator;
 
@@ -168,23 +172,23 @@ class HTMLPurifier
         $context = new Context();
 
         // setup HTML generator
-        $this->generator = new HTMLPurifier_Generator($config, $context);
+        $this->generator = new Generator($config, $context);
         $context->register('Generator', $this->generator);
 
         // set up global context variables
         if ($config->get('Core.CollectErrors')) {
             // may get moved out if other facilities use it
-            $language_factory = HTMLPurifier_LanguageFactory::instance();
+            $language_factory = LanguageFactory::instance();
             $language = $language_factory->create($config, $context);
             $context->register('Locale', $language);
 
-            $error_collector = new HTMLPurifier_ErrorCollector($context);
+            $error_collector = new ErrorCollector($context);
             $context->register('ErrorCollector', $error_collector);
         }
 
         // setup id_accumulator context, necessary due to the fact that
         // AttrValidator can be called from many places
-        $id_accumulator = HTMLPurifier_IDAccumulator::build($config, $context);
+        $id_accumulator = IDAccumulator::build($config, $context);
         $context->register('IDAccumulator', $id_accumulator);
 
         $html = Encoder::convertToUTF8($html, $config, $context);

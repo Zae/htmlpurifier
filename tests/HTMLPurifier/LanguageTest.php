@@ -1,10 +1,13 @@
 <?php
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Generator;
+use HTMLPurifier\LanguageFactory;
+use HTMLPurifier\Language;
 use HTMLPurifier\Token\Start;
 
 /**
- * @todo Fix usage of HTMLPurifier_Language->_loaded using something else
+ * @todo Fix usage of HTMLPurifier\HTMLPurifier_Language->_loaded using something else
  */
 class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
 {
@@ -13,7 +16,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
 
     protected function generateEnLanguage()
     {
-        $factory = HTMLPurifier_LanguageFactory::instance();
+        $factory = LanguageFactory::instance();
         $config = HTMLPurifier_Config::create(array('Core.Language' => 'en'));
         $context = new Context();
         return $factory->create($config, $context);
@@ -23,7 +26,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     {
         $config = HTMLPurifier_Config::createDefault();
         $context = new Context();
-        $lang = new HTMLPurifier_Language($config, $context);
+        $lang = new Language($config, $context);
         $lang->_loaded = true;
         $lang->messages['HTMLPurifier'] = 'HTML Purifier';
         $this->assertIdentical($lang->getMessage('HTMLPurifier'), 'HTML Purifier');
@@ -34,7 +37,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     {
         $config = HTMLPurifier_Config::createDefault();
         $context = new Context();
-        $lang = new HTMLPurifier_Language($config, $context);
+        $lang = new Language($config, $context);
         $lang->_loaded = true;
         $lang->messages['LanguageTest: Error'] = 'Error is $1 on line $2';
         $this->assertIdentical($lang->formatMessage('LanguageTest: Error', array(1=>'fatal', 32)), 'Error is fatal on line 32');
@@ -44,9 +47,9 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     {
         $config = HTMLPurifier_Config::createDefault();
         $context = new Context();
-        $generator = new HTMLPurifier_Generator($config, $context); // replace with mock if this gets icky
+        $generator = new Generator($config, $context); // replace with mock if this gets icky
         $context->register('Generator', $generator);
-        $lang = new HTMLPurifier_Language($config, $context);
+        $lang = new Language($config, $context);
         $lang->_loaded = true;
         $lang->messages['LanguageTest: Element info'] = 'Element Token: $1.Name, $1.Serialized, $1.Compact, $1.Line';
         $lang->messages['LanguageTest: Data info']    = 'Data Token: $1.Data, $1.Serialized, $1.Compact, $1.Line';

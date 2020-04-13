@@ -2,16 +2,24 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Definition;
-use HTMLPurifier\Context;
-use HTMLPurifier\URIParser;
-use HTMLPurifier\URIFilter;
-use HTMLPurifier\URI;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+use HTMLPurifier_URIFilter_DisableExternal;
+use HTMLPurifier_URIFilter_DisableExternalResources;
+use HTMLPurifier_URIFilter_DisableResources;
+use HTMLPurifier_URIFilter_HostBlacklist;
+use HTMLPurifier_URIFilter_MakeAbsolute;
+use HTMLPurifier_URIFilter_Munge;
+use HTMLPurifier_URIFilter_SafeIframe;
+use HTMLPurifier\URIScheme;
+use HTMLPurifier\URISchemeRegistry;
 
 /**
- * Class HTMLPurifier_URIDefinition
+ * Class HTMLPurifier\HTMLPurifier_URIDefinition
  */
-class HTMLPurifier_URIDefinition extends Definition
+class URIDefinition extends Definition
 {
     public $type = 'URI';
     protected $filters = [];
@@ -134,11 +142,11 @@ class HTMLPurifier_URIDefinition extends Definition
      * @param HTMLPurifier_Config $config
      * @param Context             $context
      *
-     * @return HTMLPurifier_URIScheme|null
+     * @return URIScheme|null
      */
     public function getDefaultScheme(HTMLPurifier_Config $config, Context $context)
     {
-        return HTMLPurifier_URISchemeRegistry::instance()->getScheme($this->defaultScheme, $config, $context);
+        return URISchemeRegistry::instance()->getScheme($this->defaultScheme, $config, $context);
     }
 
     /**

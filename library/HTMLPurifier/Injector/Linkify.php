@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
 /**
  * Injector that converts http, https and ftp text URLs to actual links.
  */
-class HTMLPurifier_Injector_Linkify extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_Linkify extends Injector
 {
     /**
      * @type string

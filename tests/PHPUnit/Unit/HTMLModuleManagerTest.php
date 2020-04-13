@@ -9,8 +9,8 @@ use HTMLPurifier\AttrDef\HTML\Nmtokens;
 use HTMLPurifier_ChildDef_Optional;
 use HTMLPurifier_Config;
 use HTMLPurifier\ElementDef;
-use HTMLPurifier_HTMLModule;
-use HTMLPurifier_HTMLModuleManager;
+use HTMLPurifier\HTMLModule;
+use HTMLPurifier\HTMLModuleManager;
 use Mockery;
 
 /**
@@ -20,9 +20,9 @@ use Mockery;
  */
 class HTMLModuleManagerTest extends TestCase
 {
-    private function createManager(): HTMLPurifier_HTMLModuleManager
+    private function createManager(): HTMLModuleManager
     {
-        $manager = new HTMLPurifier_HTMLModuleManager();
+        $manager = new HTMLModuleManager();
 
         $this->config->set('HTML.CustomDoctype', 'Blank');
         $manager->doctypes->register('Blank');
@@ -48,23 +48,23 @@ class HTMLModuleManagerTest extends TestCase
 
         // ...but we add user modules
 
-        $common_module = new HTMLPurifier_HTMLModule();
+        $common_module = new HTMLModule();
         $common_module->name = 'Common';
         $common_module->attr_collections['Common'] = ['class' => 'NMTOKENS'];
         $common_module->content_sets['Flow'] = 'Block | Inline';
         $manager->addModule($common_module);
 
-        $structural_module = new HTMLPurifier_HTMLModule();
+        $structural_module = new HTMLModule();
         $structural_module->name = 'Structural';
         $structural_module->addElement('p', 'Block', 'Inline', 'Common');
         $manager->addModule($structural_module);
 
-        $formatting_module = new HTMLPurifier_HTMLModule();
+        $formatting_module = new HTMLModule();
         $formatting_module->name = 'Formatting';
         $formatting_module->addElement('em', 'Inline', 'Inline', 'Common');
         $manager->addModule($formatting_module);
 
-        $unsafe_module = new HTMLPurifier_HTMLModule();
+        $unsafe_module = new HTMLModule();
         $unsafe_module->name = 'Unsafe';
         $unsafe_module->safe = false;
         $unsafe_module->addElement('div', 'Block', 'Flow');
@@ -114,18 +114,18 @@ class HTMLModuleManagerTest extends TestCase
      */
     public function testAllowedModules(): void
     {
-        $manager = new HTMLPurifier_HTMLModuleManager();
+        $manager = new HTMLModuleManager();
         $manager->doctypes->register(
             'Fantasy Inventory 1.0', true,
             ['Weapons', 'Magic']
         );
 
         // register these modules so it doesn't blow up
-        $weapons_module = new HTMLPurifier_HTMLModule();
+        $weapons_module = new HTMLModule();
         $weapons_module->name = 'Weapons';
         $manager->registerModule($weapons_module);
 
-        $magic_module = new HTMLPurifier_HTMLModule();
+        $magic_module = new HTMLModule();
         $magic_module->name = 'Magic';
         $manager->registerModule($magic_module);
 

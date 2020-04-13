@@ -6,9 +6,9 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_URIScheme;
+use HTMLPurifier\URIScheme;
 use HTMLPurifier_URIScheme_http;
-use HTMLPurifier_URISchemeRegistry;
+use HTMLPurifier\URISchemeRegistry;
 use Mockery;
 
 /**
@@ -29,12 +29,12 @@ class URISchemeRegistryTest extends TestCase
         ]);
         $context = new Context();
 
-        $registry = new HTMLPurifier_URISchemeRegistry();
+        $registry = new URISchemeRegistry();
         static::assertInstanceOf(HTMLPurifier_URIScheme_http::class, $registry->getScheme('http', $config, $context));
 
-        $scheme_http = Mockery::mock(HTMLPurifier_URIScheme::class);
-        $scheme_telnet = Mockery::mock(HTMLPurifier_URIScheme::class);
-        $scheme_foobar = Mockery::mock(HTMLPurifier_URIScheme::class);
+        $scheme_http = Mockery::mock(URIScheme::class);
+        $scheme_telnet = Mockery::mock(URIScheme::class);
+        $scheme_foobar = Mockery::mock(URIScheme::class);
 
         // register a new scheme
         $registry->register('telnet', $scheme_telnet);

@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\LanguageFactory;
+
 class HTMLPurifier_LanguageFactoryTest extends HTMLPurifier_Harness
 {
 
@@ -10,7 +12,7 @@ class HTMLPurifier_LanguageFactoryTest extends HTMLPurifier_Harness
 
     public function setUp()
     {
-        $this->factory = HTMLPurifier_LanguageFactory::instance();
+        $this->factory = LanguageFactory::instance();
         parent::setUp();
     }
 
@@ -19,7 +21,7 @@ class HTMLPurifier_LanguageFactoryTest extends HTMLPurifier_Harness
         $this->config->set('Core.Language', 'en');
         $language = $this->factory->create($this->config, $this->context);
 
-        $this->assertIsA($language, 'HTMLPurifier_Language');
+        $this->assertIsA($language, 'HTMLPurifier\Language');
         $this->assertIdentical($language->code, 'en');
 
         // lazy loading test
@@ -51,7 +53,7 @@ class HTMLPurifier_LanguageFactoryTest extends HTMLPurifier_Harness
     {
         $this->config->set('Core.Language', 'en-x-testmini');
         $language = $this->factory->create($this->config, $this->context);
-        $this->assertIsA($language, 'HTMLPurifier_Language');
+        $this->assertIsA($language, 'HTMLPurifier\Language');
         $this->assertIdentical($language->code, 'en-x-testmini');
         $language->load();
         $this->assertIdentical($language->getMessage('HTMLPurifier'), 'HTML Purifier XNone');
@@ -63,7 +65,7 @@ class HTMLPurifier_LanguageFactoryTest extends HTMLPurifier_Harness
     {
         $this->config->set('Core.Language', 'en-x-testnone');
         $language = $this->factory->create($this->config, $this->context);
-        $this->assertIsA($language, 'HTMLPurifier_Language');
+        $this->assertIsA($language, 'HTMLPurifier\Language');
         $this->assertIdentical($language->code, 'en-x-testnone');
         $this->assertIdentical($language->error, true);
     }

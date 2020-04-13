@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * Module adds the target-based noopener attribute transformation to a tags.  It
  * is enabled by HTML.TargetNoopener
  */
-class HTMLPurifier_HTMLModule_TargetNoopener extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_TargetNoopener extends HTMLModule
 {
     /**
      * @type string

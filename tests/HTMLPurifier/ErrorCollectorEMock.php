@@ -1,6 +1,6 @@
 <?php
 
-generate_mock_once('HTMLPurifier_ErrorCollector');
+generate_mock_once('HTMLPurifier\ErrorCollector');
 
 /**
  * Extended error collector mock that has the ability to expect context

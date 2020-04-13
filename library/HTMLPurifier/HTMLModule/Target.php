@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\HTML\FrameTarget;
+use HTMLPurifier\HTMLModule;
 
 /**
  * XHTML 1.1 Target Module, defines target attribute in link elements.
  */
-class HTMLPurifier_HTMLModule_Target extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Target extends HTMLModule
 {
     /**
      * @type string

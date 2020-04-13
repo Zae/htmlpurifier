@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\AttrCollections;
-use HTMLPurifier\AttrTypes;
-use HTMLPurifier\ContentSets;
-use HTMLPurifier\DoctypeRegistry;
-use HTMLPurifier\ElementDef;
+namespace HTMLPurifier;
 
-class HTMLPurifier_HTMLModuleManager
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+
+class HTMLModuleManager
 {
     /**
      * @type DoctypeRegistry
@@ -31,16 +30,16 @@ class HTMLPurifier_HTMLModuleManager
      * Active instances of modules for the specified doctype are
      * indexed, by name, in this array.
      *
-     * @type HTMLPurifier_HTMLModule[]
+     * @type HTMLModule[]
      */
     public $modules = [];
 
     /**
-     * Array of recognized HTMLPurifier_HTMLModule instances,
+     * Array of recognized HTMLPurifier\HTMLPurifier_HTMLModule instances,
      * indexed by module's class name. This array is usually lazy loaded, but a
      * user can overload a module by pre-emptively registering it.
      *
-     * @type HTMLPurifier_HTMLModule[]
+     * @type HTMLModule[]
      */
     public $registeredModules = [];
 
@@ -49,7 +48,7 @@ class HTMLPurifier_HTMLModuleManager
      * using addModule(). These get unconditionally merged into the current doctype, whatever
      * it may be.
      *
-     * @type HTMLPurifier_HTMLModule[]
+     * @type HTMLModule[]
      */
     public $userModules = [];
 
@@ -165,8 +164,8 @@ class HTMLPurifier_HTMLModuleManager
      * overloading pre-existing modules.
      *
      * @param $module   Mixed: string module name, with or without
-     *                  HTMLPurifier_HTMLModule prefix, or instance of
-     *                  subclass of HTMLPurifier_HTMLModule.
+     *                  HTMLPurifier\HTMLPurifier_HTMLModule prefix, or instance of
+     *                  subclass of HTMLPurifier\HTMLPurifier_HTMLModule.
      * @param $overload Boolean whether or not to overload previous modules.
      *                  If this is not set, and you do overload a module,
      *                  HTML Purifier will complain with a warning.

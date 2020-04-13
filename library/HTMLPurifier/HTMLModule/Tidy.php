@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * Abstract class for a set of proprietary modules that clean up (tidy)
  * poorly written HTML.
  *
  * @todo Figure out how to protect some of these methods/properties
  */
-class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Tidy extends HTMLModule
 {
     /**
      * List of supported levels.

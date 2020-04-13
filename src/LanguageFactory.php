@@ -2,21 +2,24 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\AttrDef\Lang;
-use HTMLPurifier\Context;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
- * Class responsible for generating HTMLPurifier_Language objects, managing
+ * Class responsible for generating HTMLPurifier\HTMLPurifier_Language objects, managing
  * caching and fallbacks.
  *
  * @note Thanks to MediaWiki for the general logic, although this version
  *       has been entirely rewritten
  * @todo Serialized cache for languages
  */
-class HTMLPurifier_LanguageFactory
+class LanguageFactory
 {
     /**
-     * Cache of language code information used to load HTMLPurifier_Language objects.
+     * Cache of language code information used to load HTMLPurifier\HTMLPurifier_Language objects.
      * Structure is: $factory->cache[$language_code][$key] = $value
      *
      * @type array
@@ -24,7 +27,7 @@ class HTMLPurifier_LanguageFactory
     public $cache;
 
     /**
-     * Valid keys in the HTMLPurifier_Language object. Designates which
+     * Valid keys in the HTMLPurifier\HTMLPurifier_Language object. Designates which
      * variables to slurp out of a message file.
      *
      * @type array
@@ -64,12 +67,12 @@ class HTMLPurifier_LanguageFactory
     /**
      * Retrieve sole instance of the factory.
      *
-     * @param HTMLPurifier_LanguageFactory $prototype Optional prototype to overload sole instance with,
+     * @param LanguageFactory $prototype              Optional prototype to overload sole instance with,
      *                                                or bool true to reset to default factory.
      *
-     * @return HTMLPurifier_LanguageFactory
+     * @return LanguageFactory
      */
-    public static function instance(HTMLPurifier_LanguageFactory $prototype = null)
+    public static function instance(LanguageFactory $prototype = null)
     {
         static $instance = null;
         if ($prototype !== null) {
@@ -100,7 +103,7 @@ class HTMLPurifier_LanguageFactory
      * @param Context             $context
      * @param bool|string         $code Code to override configuration with. Private parameter.
      *
-     * @return HTMLPurifier_Language
+     * @return Language
      * @throws HTMLPurifier_Exception
      */
     public function create(HTMLPurifier_Config $config, Context $context, $code = false)
@@ -124,7 +127,7 @@ class HTMLPurifier_LanguageFactory
         static $depth = 0; // recursion protection
 
         if ($code === 'en') {
-            $lang = new HTMLPurifier_Language($config, $context);
+            $lang = new Language($config, $context);
         } else {
             $class = 'HTMLPurifier_Language_' . $pcode;
             $file = $this->dir . '/Language/classes/' . $code . '.php';

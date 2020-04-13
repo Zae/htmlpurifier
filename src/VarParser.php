@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Exception;
-use HTMLPurifier_VarParserException;
+use HTMLPurifier\VarParserException;
 
 /**
  * Parses string representations into their corresponding native PHP
@@ -63,13 +63,13 @@ class VarParser
      * @param bool       $allow_null Whether or not to permit null as a value
      *
      * @return mixed Validated and type-coerced variable
-     * @throws HTMLPurifier_VarParserException|HTMLPurifier_Exception
+     * @throws VarParserException|HTMLPurifier_Exception
      */
     final public function parse($var, $type, bool $allow_null = false)
     {
         if (is_string($type)) {
             if (!isset(static::$types[$type])) {
-                throw new HTMLPurifier_VarParserException("Invalid type '$type'");
+                throw new VarParserException("Invalid type '$type'");
             }
 
             $type = static::$types[$type];
@@ -163,11 +163,11 @@ class VarParser
      *
      * @param string $msg
      *
-     * @throws HTMLPurifier_VarParserException
+     * @throws VarParserException
      */
     protected function error(string $msg): void
     {
-        throw new HTMLPurifier_VarParserException($msg);
+        throw new VarParserException($msg);
     }
 
     /**
@@ -195,7 +195,7 @@ class VarParser
      * @param mixed $var
      * @param int   $type
      *
-     * @throws HTMLPurifier_VarParserException
+     * @throws VarParserException
      */
     protected function errorGeneric($var, int $type): void
     {

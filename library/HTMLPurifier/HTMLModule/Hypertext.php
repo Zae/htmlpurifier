@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\HTML\LinkTypes;
+use HTMLPurifier\HTMLModule;
 
 /**
  * XHTML 1.1 Hypertext Module, defines hypertext links. Core Module.
  */
-class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Hypertext extends HTMLModule
 {
     /**
      * @type string

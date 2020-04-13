@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier\ErrorStruct;
+use HTMLPurifier\Generator;
+use HTMLPurifier\Language;
 
 /**
  * Error collection class that enables HTML Purifier to report HTML
  * problems back to the user
  */
-class HTMLPurifier_ErrorCollector
+class ErrorCollector
 {
     /**
      * Identifiers for the returned error array. These are purposely numeric
@@ -35,12 +40,12 @@ class HTMLPurifier_ErrorCollector
     protected $_stacks = [[]];
 
     /**
-     * @type HTMLPurifier_Language
+     * @type Language
      */
     protected $locale;
 
     /**
-     * @type HTMLPurifier_Generator
+     * @type Generator
      */
     protected $generator;
 
@@ -59,16 +64,17 @@ class HTMLPurifier_ErrorCollector
      */
     public function __construct(Context $context)
     {
-        $this->locale    =& $context->get('Locale');
-        $this->context   = $context;
-        $this->_current  =& $this->_stacks[0];
-        $this->errors    =& $this->_stacks[0];
+        $this->locale =& $context->get('Locale');
+        $this->context = $context;
+        $this->_current =& $this->_stacks[0];
+        $this->errors =& $this->_stacks[0];
     }
 
     /**
      * Sends an error message to the collector for later use
-     * @param int $severity Error severity, PHP error style (don't use E_USER_)
-     * @param string $msg Error message text
+     *
+     * @param int    $severity Error severity, PHP error style (don't use E_USER_)
+     * @param string $msg      Error message text
      */
     public function send(int $severity, string $msg)
     {
@@ -80,9 +86,9 @@ class HTMLPurifier_ErrorCollector
         }
 
         $token = $this->context->get('CurrentToken', true);
-        $line  = $token ? $token->line : $this->context->get('CurrentLine', true);
-        $col   = $token ? $token->col  : $this->context->get('CurrentCol', true);
-        $attr  = $this->context->get('CurrentAttr', true);
+        $line = $token ? $token->line : $this->context->get('CurrentLine', true);
+        $col = $token ? $token->col : $this->context->get('CurrentCol', true);
+        $attr = $this->context->get('CurrentAttr', true);
 
         // perform special substitutions, also add custom parameters
         $subst = [];
@@ -109,9 +115,9 @@ class HTMLPurifier_ErrorCollector
 
         // (numerically indexed)
         $error = [
-            self::LINENO   => $line,
+            self::LINENO => $line,
             self::SEVERITY => $severity,
-            self::MESSAGE  => $msg,
+            self::MESSAGE => $msg,
             self::CHILDREN => []
         ];
         $this->_current[] = $error;
@@ -120,8 +126,8 @@ class HTMLPurifier_ErrorCollector
         // Top-level errors are either:
         //  TOKEN type, if $value is set appropriately, or
         //  "syntax" type, if $value is null
-        $new_struct = new HTMLPurifier_ErrorStruct();
-        $new_struct->type = HTMLPurifier_ErrorStruct::TOKEN;
+        $new_struct = new ErrorStruct();
+        $new_struct->type = ErrorStruct::TOKEN;
         if ($token) {
             $new_struct->value = clone $token;
         }
@@ -142,7 +148,7 @@ class HTMLPurifier_ErrorCollector
 
         // Now, check if we need to operate on a lower structure
         if (!empty($attr)) {
-            $struct = $struct->getChild(HTMLPurifier_ErrorStruct::ATTR, $attr);
+            $struct = $struct->getChild(ErrorStruct::ATTR, $attr);
             if (!$struct->value) {
                 $struct->value = [$attr, 'PUT VALUE HERE'];
             }
@@ -162,15 +168,17 @@ class HTMLPurifier_ErrorCollector
 
     /**
      * Default HTML formatting implementation for error messages
+     *
      * @param HTMLPurifier_Config $config Configuration, vital for HTML output nature
-     * @param array $errors Errors array to display; used for recursion.
+     * @param array               $errors Errors array to display; used for recursion.
+     *
      * @return string
      */
     public function getHTMLFormatted(HTMLPurifier_Config $config, ?array $errors = null)
     {
         $ret = [];
 
-        $this->generator = new HTMLPurifier_Generator($config, $this->context);
+        $this->generator = new Generator($config, $this->context);
         if ($errors === null) {
             $errors = $this->errors;
         }

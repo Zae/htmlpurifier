@@ -13,7 +13,7 @@ use HTMLPurifier\URIParser;
 /**
  * Validates a URI as defined by RFC 3986.
  *
- * @note Scheme-specific mechanics deferred to HTMLPurifier_URIScheme
+ * @note Scheme-specific mechanics deferred to HTMLPurifier\HTMLPurifier_URIScheme
  */
 class URI extends AttrDef
 {

@@ -61,7 +61,7 @@ class HTMLPurifier_VarParser_FlexibleTest extends HTMLPurifier_VarParserHarness
     public function testValidate_null()
     {
         $this->assertIdentical($this->parser->parse(null, 'string', true), null);
-        $this->expectException('HTMLPurifier_VarParserException');
+        $this->expectException('HTMLPurifier\VarParserException');
         $this->parser->parse(null, 'string', false);
     }
 

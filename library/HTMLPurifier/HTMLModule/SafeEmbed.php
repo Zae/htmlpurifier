@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * A "safe" embed module. See SafeObject. This is a proprietary element.
  */
-class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLModule
 {
     /**
      * @type string

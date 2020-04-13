@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 
 /**
@@ -121,7 +122,7 @@ class HTMLPurifier_ConfigSchema_Validator
         try {
             // This also tests validity of $d->type
             $this->parser->parse($d->default, $d->type, $d->typeAllowsNull);
-        } catch (HTMLPurifier_VarParserException $e) {
+        } catch (VarParserException $e) {
             $this->error('default', 'had error: ' . $e->getMessage());
         }
         // END - handled by InterchangeBuilder

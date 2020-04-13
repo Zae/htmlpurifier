@@ -2,6 +2,7 @@
 
 // needs to be seperated into files
 use HTMLPurifier\Context;
+use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -23,7 +24,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
      * treated the same, and is really ensuring that the tag transform doesn't
      * do anything wonky to the tag type.
      *
-     * @param $transformer      HTMLPurifier_TagTransform class to test
+     * @param $transformer      TagTransform class to test
      * @param $name             Name of the original tag
      * @param $attributes       Attributes of the original tag
      * @param $expect_name      Name of output tag

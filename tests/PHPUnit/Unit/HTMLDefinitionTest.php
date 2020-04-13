@@ -7,7 +7,7 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 use HTMLPurifier\HTMLDefinition;
-use HTMLPurifier_Injector;
+use HTMLPurifier\Injector;
 use HTMLPurifier_Injector_Linkify;
 
 /**
@@ -439,7 +439,7 @@ a[href|title]
      */
     public function test_injector(): void
     {
-        $injector = \Mockery::mock(HTMLPurifier_Injector::class);
+        $injector = \Mockery::mock(Injector::class);
         $injector->name = 'MyInjector';
         $injector->expects()
             ->checkNeeded($this->config)
@@ -462,7 +462,7 @@ a[href|title]
      */
     public function test_injectorMissingNeeded(): void
     {
-        $injector = \Mockery::mock(HTMLPurifier_Injector::class);
+        $injector = \Mockery::mock(Injector::class);
         $injector->name = 'MyInjector';
         $injector->expects()
             ->checkNeeded($this->config)

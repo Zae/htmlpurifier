@@ -7,7 +7,7 @@ namespace HTMLPurifier\Tests\Unit\AttrDef;
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier_DefinitionCache;
 use HTMLPurifier\DefinitionCacheFactory;
-use HTMLPurifier_URIDefinition;
+use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
 use Mockery;
 
@@ -164,7 +164,7 @@ class URITest extends TestCase
         $uri = $parser->parse('http://example.com');
         $this->config->set('URI.DefinitionID', 'HTMLPurifier_AttrDef_URITest1->testURIDefinitionValidation');
 
-        $uri_def = Mockery::mock(HTMLPurifier_URIDefinition::class);
+        $uri_def = Mockery::mock(URIDefinition::class);
 
         $uri_def->shouldReceive('filter')
             ->withArgs(static function($a) use ($uri) {

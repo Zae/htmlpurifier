@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_ErrorCollector;
+use HTMLPurifier\ErrorCollector;
 use Mockery;
 
 /**
@@ -23,7 +23,7 @@ abstract class ErrorsTestCase extends TestCase
     {
         $this->config = HTMLPurifier_Config::create(['Core.CollectErrors' => true]);
         $this->context = new Context();
-        $this->collector = Mockery::mock(HTMLPurifier_ErrorCollector::class);
+        $this->collector = Mockery::mock(ErrorCollector::class);
 
         //$this->collector->prepare($this->context);
         $this->context->register('ErrorCollector', $this->collector);

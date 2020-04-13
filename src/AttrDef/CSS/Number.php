@@ -35,7 +35,7 @@ class Number extends AttrDef
      *
      * @return string|bool
      * @warning Some contexts do not pass $config, $context. These
-     *          variables should not be used without checking HTMLPurifier_Length
+     *          variables should not be used without checking HTMLPurifier\HTMLPurifier_Length
      */
     public function validate($number, $config, $context)
     {

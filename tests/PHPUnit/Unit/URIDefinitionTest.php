@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_URIDefinition;
+use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIFilter;
 use Mockery;
 
@@ -20,7 +20,7 @@ class URIDefinitionTest extends UriTestCase
      */
     public function test_filter(): void
     {
-        $def = new HTMLPurifier_URIDefinition();
+        $def = new URIDefinition();
 
         $def->addFilter($this->createFilterMock(), $this->config);
         $def->addFilter($this->createFilterMock(), $this->config);
@@ -34,7 +34,7 @@ class URIDefinitionTest extends UriTestCase
      */
     public function test_filter_earlyAbortIfFail(): void
     {
-        $def = new HTMLPurifier_URIDefinition();
+        $def = new URIDefinition();
         $def->addFilter($this->createFilterMock(true, false), $this->config);
         $def->addFilter($this->createFilterMock(false), $this->config); // never called
 
@@ -51,7 +51,7 @@ class URIDefinitionTest extends UriTestCase
         $this->config->set('URI.Base', $base = 'http://sub.example.com/foo/bar.html');
         $this->config->set('URI.DefaultScheme', 'ftp');
 
-        $def = new HTMLPurifier_URIDefinition();
+        $def = new URIDefinition();
         $def->setup($this->config);
 
         static::assertEquals($def->host, $host);
@@ -65,7 +65,7 @@ class URIDefinitionTest extends UriTestCase
     public function test_setupMemberVariables_onlyScheme(): void
     {
         $this->config->set('URI.DefaultScheme', 'ftp');
-        $def = new HTMLPurifier_URIDefinition();
+        $def = new URIDefinition();
         $def->setup($this->config);
 
         static::assertEquals('ftp', $def->defaultScheme);
@@ -77,7 +77,7 @@ class URIDefinitionTest extends UriTestCase
     public function test_setupMemberVariables_onlyBase(): void
     {
         $this->config->set('URI.Base', 'http://sub.example.com/foo/bar.html');
-        $def = new HTMLPurifier_URIDefinition();
+        $def = new URIDefinition();
         $def->setup($this->config);
 
         static::assertEquals('sub.example.com', $def->host);

@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_IDAccumulator;
+use HTMLPurifier\IDAccumulator;
 use HTMLPurifier_Token_Empty;
 
 /**
@@ -32,7 +32,7 @@ class AttrValidator
         // initialize IDAccumulator if necessary
         $ok =& $context->get('IDAccumulator', true);
         if (!$ok) {
-            $id_accumulator = HTMLPurifier_IDAccumulator::build($config, $context);
+            $id_accumulator = IDAccumulator::build($config, $context);
             $context->register('IDAccumulator', $id_accumulator);
         }
 

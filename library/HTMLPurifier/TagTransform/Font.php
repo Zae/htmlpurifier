@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Tag;
 
@@ -21,7 +22,7 @@ use HTMLPurifier\Token\Tag;
  *          TagTransform operates before well-formedness is enforced, so
  *          the "active formatting elements" algorithm doesn't get applied.
  */
-class HTMLPurifier_TagTransform_Font extends HTMLPurifier_TagTransform
+class HTMLPurifier_TagTransform_Font extends TagTransform
 {
     /**
      * @type string

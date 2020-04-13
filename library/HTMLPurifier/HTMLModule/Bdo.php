@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Bi-directional Text Module, defines elements that
  * declare directionality of content. Text Extension Module.
  */
-class HTMLPurifier_HTMLModule_Bdo extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Bdo extends HTMLModule
 {
     /**
      * @type string

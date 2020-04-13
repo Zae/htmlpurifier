@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_ErrorCollector;
-use HTMLPurifier_Generator;
-use HTMLPurifier_Language;
+use HTMLPurifier\ErrorCollector;
+use HTMLPurifier\Generator;
+use HTMLPurifier\Language;
 use HTMLPurifier\Token\Start;
 use Mockery;
 
@@ -24,7 +24,7 @@ class ErrorCollectorTest extends TestCase
     {
         parent::setUp();
 
-        $this->language = Mockery::mock(HTMLPurifier_Language::class);
+        $this->language = Mockery::mock(Language::class);
 
 //        $this->language->expects()
 //            ->getErrorName(E_ERROR)
@@ -42,12 +42,12 @@ class ErrorCollectorTest extends TestCase
 //            ->andReturn('Notice');
 
         // this might prove to be troublesome if we need to set config
-        $this->generator = new HTMLPurifier_Generator($this->config, $this->context);
+        $this->generator = new Generator($this->config, $this->context);
         $this->line = false;
         $this->context->register('Locale', $this->language);
         $this->context->register('CurrentLine', $this->line);
         $this->context->register('Generator', $this->generator);
-        $this->collector = new HTMLPurifier_ErrorCollector($this->context);
+        $this->collector = new ErrorCollector($this->context);
     }
 
     /**

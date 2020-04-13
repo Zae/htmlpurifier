@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\HTMLModule;
 
 /**
  * A "safe" script module. No inline JS is allowed, and pointed to JS
  * files must match whitelist.
  */
-class HTMLPurifier_HTMLModule_SafeScripting extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_SafeScripting extends HTMLModule
 {
     /**
      * @type string

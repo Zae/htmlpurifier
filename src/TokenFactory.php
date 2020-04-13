@@ -2,8 +2,13 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Token_Comment;
+use HTMLPurifier_Token_Empty;
+use HTMLPurifier_Token_Text;
 
 /**
  * Factory for token generation.
@@ -16,7 +21,7 @@ use HTMLPurifier\Token\Start;
  *       you'd want to use an abstract factory).
  * @todo Port DirectLex to use this
  */
-class HTMLPurifier_TokenFactory
+class TokenFactory
 {
     // p stands for prototype
 

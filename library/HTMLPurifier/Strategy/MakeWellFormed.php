@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Generator;
+use HTMLPurifier\Injector;
 use HTMLPurifier\Zipper;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
@@ -53,7 +55,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
     /**
      * Injectors active in this stream processing.
      *
-     * @type HTMLPurifier_Injector[]
+     * @type Injector[]
      */
     protected $injectors;
 
@@ -84,7 +86,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
         $definition = $config->getHTMLDefinition();
 
         // local variables
-        $generator = new HTMLPurifier_Generator($config, $context);
+        $generator = new Generator($config, $context);
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');
         // used for autoclose early abortion
         $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config);
@@ -574,8 +576,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
      * If $token is an integer, that number of tokens (with the first token
      * being the current one) will be deleted.
      *
-     * @param Token|array|int|bool      $token            Token substitution value
-     * @param HTMLPurifier_Injector|int $injector         Injector that performed the substitution; default is if
+     * @param Token|array|int|bool $token                 Token substitution value
+     * @param Injector|int         $injector              Injector that performed the substitution; default is if
      *                                                    this is not an injector related operation.
      *
      * @return mixed

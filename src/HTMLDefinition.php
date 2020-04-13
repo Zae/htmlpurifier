@@ -10,9 +10,9 @@ use HTMLPurifier\Definition;
 use HTMLPurifier\Doctype;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier_Exception;
-use HTMLPurifier_HTMLModule;
-use HTMLPurifier_HTMLModuleManager;
-use HTMLPurifier_Injector;
+use HTMLPurifier\HTMLModule;
+use HTMLPurifier\HTMLModuleManager;
+use HTMLPurifier\Injector;
 
 /**
  * Definition of the purified HTML that describes allowed children,
@@ -79,7 +79,7 @@ class HTMLDefinition extends Definition
     public $info_block_wrapper = 'p';
 
     /**
-     * Associative array of deprecated tag name to HTMLPurifier_TagTransform.
+     * Associative array of deprecated tag name to HTMLPurifier\HTMLPurifier_TagTransform.
      *
      * @type array
      */
@@ -108,9 +108,9 @@ class HTMLDefinition extends Definition
     public $info_content_sets = [];
 
     /**
-     * Indexed list of HTMLPurifier_Injector to be used.
+     * Indexed list of HTMLPurifier\HTMLPurifier_Injector to be used.
      *
-     * @type HTMLPurifier_Injector[]
+     * @type Injector[]
      */
     public $info_injector = [];
 
@@ -127,7 +127,7 @@ class HTMLDefinition extends Definition
      * Adds a custom attribute to a pre-existing element
      *
      * @note This is strictly convenience, and does not have a corresponding
-     *       method in HTMLPurifier_HTMLModule
+     *       method in HTMLPurifier\HTMLPurifier_HTMLModule
      *
      * @param string $element_name Element name to add attribute to
      * @param string $attr_name    Name of attribute
@@ -149,7 +149,7 @@ class HTMLDefinition extends Definition
     /**
      * Adds a custom element to your HTML definition
      *
-     * @see HTMLPurifier_HTMLModule::addElement() for detailed
+     * @see HTMLModule::addElement() for detailed
      *       parameter and return value descriptions.
      */
     public function addElement(string $element_name, $type, $contents, $attr_collections, array $attributes = [])
@@ -168,7 +168,7 @@ class HTMLDefinition extends Definition
      * @param string $element_name
      *
      * @return ElementDef
-     * @see HTMLPurifier_HTMLModule::addBlankElement() for detailed
+     * @see HTMLModule::addBlankElement() for detailed
      *       parameter and return value descriptions.
      */
     public function addBlankElement(string $element_name)
@@ -183,12 +183,12 @@ class HTMLDefinition extends Definition
      * bust out advanced features without having to make your own
      * module.
      *
-     * @return HTMLPurifier_HTMLModule
+     * @return HTMLModule
      */
     public function getAnonymousModule()
     {
         if (!$this->_anonModule) {
-            $this->_anonModule = new HTMLPurifier_HTMLModule();
+            $this->_anonModule = new HTMLModule();
             $this->_anonModule->name = 'Anonymous';
         }
 
@@ -205,7 +205,7 @@ class HTMLDefinition extends Definition
     public $type = 'HTML';
 
     /**
-     * @type HTMLPurifier_HTMLModuleManager
+     * @type HTMLModuleManager
      */
     public $manager;
 
@@ -214,7 +214,7 @@ class HTMLDefinition extends Definition
      */
     public function __construct()
     {
-        $this->manager = new HTMLPurifier_HTMLModuleManager();
+        $this->manager = new HTMLModuleManager();
     }
 
     /**

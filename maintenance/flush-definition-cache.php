@@ -11,7 +11,7 @@ assertCli();
  * @file
  * Flushes the definition serial cache. This file should be
  * called if changes to any subclasses of HTMLPurifier\HTMLPurifier_Definition
- * or related classes (such as HTMLPurifier_HTMLModule) are made. This
+ * or related classes (such as HTMLPurifier\HTMLPurifier_HTMLModule) are made. This
  * may also be necessary if you've modified a customized version.
  *
  * @param Accepts one argument, cache type to flush; otherwise flushes all

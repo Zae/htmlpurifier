@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 List Module, defines list-oriented elements. Core Module.
  */
-class HTMLPurifier_HTMLModule_List extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_List extends HTMLModule
 {
     /**
      * @type string

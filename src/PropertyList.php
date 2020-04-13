@@ -2,10 +2,14 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use HTMLPurifier_Exception;
+
 /**
  * Generic property list implementation
  */
-class HTMLPurifier_PropertyList
+class PropertyList
 {
     /**
      * Internal data-structure for properties.
@@ -17,7 +21,7 @@ class HTMLPurifier_PropertyList
     /**
      * Parent plist.
      *
-     * @type HTMLPurifier_PropertyList
+     * @type PropertyList
      */
     protected $parent;
 
@@ -29,7 +33,7 @@ class HTMLPurifier_PropertyList
     protected $cache;
 
     /**
-     * @param HTMLPurifier_PropertyList $parent Parent plist
+     * @param PropertyList $parent Parent plist
      */
     public function __construct($parent = null)
     {
@@ -120,9 +124,9 @@ class HTMLPurifier_PropertyList
     /**
      * Returns the parent plist.
      *
-     * @return HTMLPurifier_PropertyList
+     * @return PropertyList
      */
-    public function getParent(): ?HTMLPurifier_PropertyList
+    public function getParent(): ?PropertyList
     {
         return $this->parent;
     }
@@ -130,9 +134,9 @@ class HTMLPurifier_PropertyList
     /**
      * Sets the parent plist.
      *
-     * @param HTMLPurifier_PropertyList $plist Parent plist
+     * @param PropertyList $plist Parent plist
      */
-    public function setParent(HTMLPurifier_PropertyList $plist): void
+    public function setParent(PropertyList $plist): void
     {
         $this->parent = $plist;
     }

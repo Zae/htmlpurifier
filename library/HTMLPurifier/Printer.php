@@ -6,6 +6,7 @@ declare(strict_types=1);
 // USE XMLWRITER!
 use HTMLPurifier\Encoder;
 use HTMLPurifier\Context;
+use HTMLPurifier\Generator;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -17,7 +18,7 @@ class HTMLPurifier_Printer
     /**
      * For HTML generation convenience funcs.
      *
-     * @type HTMLPurifier_Generator
+     * @type Generator
      */
     protected $generator;
 
@@ -40,7 +41,7 @@ class HTMLPurifier_Printer
         $all = $config->getAll();
 
         $context = new Context();
-        $this->generator = new HTMLPurifier_Generator($config, $context);
+        $this->generator = new Generator($config, $context);
     }
 
     /**

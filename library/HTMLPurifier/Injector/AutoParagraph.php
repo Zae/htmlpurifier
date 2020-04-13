@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
@@ -13,7 +14,7 @@ use HTMLPurifier\Token\Start;
  * @todo Ensure all states are unit tested, including variations as well.
  * @todo Make a graph of the flow control for this Injector.
  */
-class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
+class HTMLPurifier_Injector_AutoParagraph extends Injector
 {
     /**
      * @type string

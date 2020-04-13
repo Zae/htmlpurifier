@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Tables Module, fully defines accessible table elements.
  */
-class HTMLPurifier_HTMLModule_Tables extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Tables extends HTMLModule
 {
     /**
      * @type string

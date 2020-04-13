@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 
 /**
  * Implements data: URI for base64 encoded images supported by GD.
  */
-class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme
+class HTMLPurifier_URIScheme_data extends URIScheme
 {
     /**
      * @type bool

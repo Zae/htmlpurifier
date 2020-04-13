@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * XHTML 1.1 Text Module, defines basic text containers. Core Module.
  *
@@ -15,7 +17,7 @@ declare(strict_types=1);
  *       sub-modules, but the code is internally structured to reflect
  *       these distinctions.
  */
-class HTMLPurifier_HTMLModule_Text extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Text extends HTMLModule
 {
     /**
      * @type string

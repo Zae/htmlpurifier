@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\Tag;
 use HTMLPurifier\Token\Start;
 
@@ -11,7 +12,7 @@ use HTMLPurifier\Token\Start;
  * and possibly add some styling. This will cover most of the deprecated
  * tag cases.
  */
-class HTMLPurifier_TagTransform_Simple extends HTMLPurifier_TagTransform
+class HTMLPurifier_TagTransform_Simple extends TagTransform
 {
     /**
      * @type string

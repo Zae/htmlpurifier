@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Length;
+use HTMLPurifier\Length;
 
 /**
  * Class for converting between different unit-lengths as specified by
@@ -78,13 +78,13 @@ class UnitConverter
     /**
      * Converts a length object of one unit into another unit.
      *
-     * @param HTMLPurifier_Length $length
-     *      Instance of HTMLPurifier_Length to convert. You must validate()
+     * @param Length $length
+     *      Instance of HTMLPurifier\HTMLPurifier_Length to convert. You must validate()
      *      it before passing it here!
-     * @param string              $to_unit
+     * @param string $to_unit
      *      Unit to convert to.
      *
-     * @return HTMLPurifier_Length|bool
+     * @return Length|bool
      * @note
      *      About precision: This conversion function pays very special
      *      attention to the incoming precision of values and attempts
@@ -96,7 +96,7 @@ class UnitConverter
      *            and this causes some decimals to be excluded, those
      *            decimals will be added on.
      */
-    public function convert(HTMLPurifier_Length $length, string $to_unit)
+    public function convert(Length $length, string $to_unit)
     {
         if (!$length->isValid()) {
             return false;
@@ -106,7 +106,7 @@ class UnitConverter
         $unit = $length->getUnit();
 
         if ($n === '0' || $unit === false) {
-            return new HTMLPurifier_Length('0', false);
+            return new Length('0', false);
         }
 
         $state = $dest_state = false;
@@ -198,7 +198,7 @@ class UnitConverter
         }
         $n = rtrim($n, '.');
 
-        return new HTMLPurifier_Length($n, $unit);
+        return new Length($n, $unit);
     }
 
     /**

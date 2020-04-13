@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\HTMLModule;
+
 /**
  * Class HTMLPurifier_HTMLModule_Name
  */
-class HTMLPurifier_HTMLModule_Name extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_Name extends HTMLModule
 {
     /**
      * @type string

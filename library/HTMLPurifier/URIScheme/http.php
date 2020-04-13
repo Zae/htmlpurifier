@@ -3,12 +3,13 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 
 /**
  * Validates http (HyperText Transfer Protocol) as defined by RFC 2616
  */
-class HTMLPurifier_URIScheme_http extends HTMLPurifier_URIScheme
+class HTMLPurifier_URIScheme_http extends URIScheme
 {
     /**
      * @type int

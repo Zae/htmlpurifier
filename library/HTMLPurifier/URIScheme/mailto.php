@@ -5,6 +5,7 @@ declare(strict_types=1);
 // VERY RELAXED! Shouldn't cause problems, not even Firefox checks if the
 // email is valid, but be careful!
 use HTMLPurifier\Context;
+use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 
 /**
@@ -13,7 +14,7 @@ use HTMLPurifier\URI;
  * @todo Validate the email address
  * @todo Filter allowed query parameters
  */
-class HTMLPurifier_URIScheme_mailto extends HTMLPurifier_URIScheme
+class HTMLPurifier_URIScheme_mailto extends URIScheme
 {
     /**
      * @type bool

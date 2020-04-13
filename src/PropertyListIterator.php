@@ -2,10 +2,15 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
+use FilterIterator;
+use Iterator;
+
 /**
  * Property list iterator. Do not instantiate this class directly.
  */
-class HTMLPurifier_PropertyListIterator extends FilterIterator
+class PropertyListIterator extends FilterIterator
 {
     /**
      * @type int

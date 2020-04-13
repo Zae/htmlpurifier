@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrValidator;
+use HTMLPurifier\Generator;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
@@ -29,7 +30,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
     public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
-        $generator = new HTMLPurifier_Generator($config, $context);
+        $generator = new Generator($config, $context);
         $result = [];
 
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');

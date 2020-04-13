@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\HTMLModule;
 
 /**
  * A "safe" object module. In theory, objects permitted by this module will
@@ -10,7 +11,7 @@ use HTMLPurifier\AttrDef\Enum;
  * (maybe other types too, but only Flash is supported as of right now).
  * Highly experimental.
  */
-class HTMLPurifier_HTMLModule_SafeObject extends HTMLPurifier_HTMLModule
+class HTMLPurifier_HTMLModule_SafeObject extends HTMLModule
 {
     /**
      * @type string

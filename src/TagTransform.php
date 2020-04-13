@@ -2,16 +2,19 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Context;
+namespace HTMLPurifier;
+
 use HTMLPurifier\Token\Tag;
+use HTMLPurifier_Config;
 
 /**
  * Defines a mutation of an obsolete tag into a valid tag.
  */
-abstract class HTMLPurifier_TagTransform
+abstract class TagTransform
 {
     /**
      * Tag name to transform the tag to.
+     *
      * @type string
      */
     public $transform_to;
@@ -28,9 +31,11 @@ abstract class HTMLPurifier_TagTransform
     /**
      * Prepends CSS properties to the style attribute, creating the
      * attribute if it doesn't exist.
+     *
      * @warning Copied over from AttrTransform, be sure to keep in sync
-     * @param array $attr Attribute array to process (passed by reference)
-     * @param string $css CSS to prepend
+     *
+     * @param array  $attr Attribute array to process (passed by reference)
+     * @param string $css  CSS to prepend
      */
     protected function prependCSS(array &$attr, string $css): void
     {

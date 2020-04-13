@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 
 /**
@@ -17,7 +18,7 @@ class HTMLPurifier_VarParser_Native extends VarParser
      * @param bool  $allow_null
      *
      * @return null|string
-     * @throws HTMLPurifier_VarParserException
+     * @throws VarParserException
      */
     protected function parseImplementation($var, int $type, bool $allow_null)
     {
@@ -28,7 +29,7 @@ class HTMLPurifier_VarParser_Native extends VarParser
      * @param string $expr
      *
      * @return mixed
-     * @throws HTMLPurifier_VarParserException
+     * @throws VarParserException
      */
     protected function evalExpression($expr)
     {
@@ -36,7 +37,7 @@ class HTMLPurifier_VarParser_Native extends VarParser
         $result = eval("\$var = $expr;");
 
         if ($result === false) {
-            throw new HTMLPurifier_VarParserException('Fatal error in evaluated code');
+            throw new VarParserException('Fatal error in evaluated code');
         }
 
         return $var;

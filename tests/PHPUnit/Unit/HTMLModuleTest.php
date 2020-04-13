@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\ElementDef;
-use HTMLPurifier_HTMLModule;
+use HTMLPurifier\HTMLModule;
 use Mockery;
 
 /**
@@ -21,7 +21,7 @@ class HTMLModuleTest extends TestCase
      */
     public function test_addElementToContentSet(): void
     {
-        $module = new HTMLPurifier_HTMLModule();
+        $module = new HTMLModule();
 
         $module->addElementToContentSet('b', 'Inline');
         static::assertEquals(['Inline' => 'b'], $module->content_sets);
@@ -35,7 +35,7 @@ class HTMLModuleTest extends TestCase
      */
     public function test_addElement(): void
     {
-        $module = new HTMLPurifier_HTMLModule();
+        $module = new HTMLModule();
         $def = $module->addElement(
             'a', 'Inline', 'Optional: #PCDATA', ['Common'],
             [
@@ -43,7 +43,7 @@ class HTMLModuleTest extends TestCase
             ]
         );
 
-        $module2 = new HTMLPurifier_HTMLModule();
+        $module2 = new HTMLModule();
         $def2 = new ElementDef();
         $def2->content_model = '#PCDATA';
         $def2->content_model_type = 'optional';
@@ -66,7 +66,7 @@ class HTMLModuleTest extends TestCase
      */
     public function test_parseContents(): void
     {
-        $module = new HTMLPurifier_HTMLModule();
+        $module = new HTMLModule();
 
         // pre-defined templates
         static::assertEquals(
@@ -119,7 +119,7 @@ class HTMLModuleTest extends TestCase
      */
     public function test_mergeInAttrIncludes(): void
     {
-        $module = new HTMLPurifier_HTMLModule();
+        $module = new HTMLModule();
 
         $attr = [];
         $module->mergeInAttrIncludes($attr, 'Common');
@@ -135,7 +135,7 @@ class HTMLModuleTest extends TestCase
      */
     public function test_addBlankElement(): void
     {
-        $module = new HTMLPurifier_HTMLModule();
+        $module = new HTMLModule();
         $def = $module->addBlankElement('a');
 
         $def2 = new ElementDef();
@@ -151,7 +151,7 @@ class HTMLModuleTest extends TestCase
      */
     public function test_makeLookup(): void
     {
-        $module = new HTMLPurifier_HTMLModule();
+        $module = new HTMLModule();
 
         static::assertEquals(
             ['foo' => true],

@@ -8,9 +8,9 @@ use HTMLPurifier\AttrDef\URI\Host;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
 use HTMLPurifier_Exception;
-use HTMLPurifier_PercentEncoder;
-use HTMLPurifier_URIScheme;
-use HTMLPurifier_URISchemeRegistry;
+use HTMLPurifier\PercentEncoder;
+use HTMLPurifier\URIScheme;
+use HTMLPurifier\URISchemeRegistry;
 
 /**
  * HTML Purifier's internal representation of a URI.
@@ -94,12 +94,12 @@ class URI
      * @param HTMLPurifier_Config $config
      * @param Context             $context
      *
-     * @return HTMLPurifier_URIScheme|bool Scheme object appropriate for validating this URI
+     * @return URIScheme|bool Scheme object appropriate for validating this URI
      * @throws HTMLPurifier_Exception
      */
     public function getSchemeObj(HTMLPurifier_Config $config, Context $context)
     {
-        $registry = HTMLPurifier_URISchemeRegistry::instance();
+        $registry = URISchemeRegistry::instance();
         if ($this->scheme !== null) {
             $scheme_obj = $registry->getScheme($this->scheme, $config, $context);
             if (!$scheme_obj) {
@@ -167,7 +167,7 @@ class URI
 
         // validate username
         if (!is_null($this->userinfo)) {
-            $encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . ':');
+            $encoder = new PercentEncoder($chars_sub_delims . ':');
             $this->userinfo = $encoder->encode($this->userinfo);
         }
 
@@ -179,7 +179,7 @@ class URI
         }
 
         // validate path
-        $segments_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/');
+        $segments_encoder = new PercentEncoder($chars_pchar . '/');
         if (!is_null($this->host)) { // this catches $this->host === ''
             // path-abempty (hier and relative)
             // http://www.example.com/my/path
@@ -213,7 +213,7 @@ class URI
                 // path-noscheme (relative)
                 // my/path
                 // (once again, not checking nz)
-                $segment_nc_encoder = new HTMLPurifier_PercentEncoder($chars_sub_delims . '@');
+                $segment_nc_encoder = new PercentEncoder($chars_sub_delims . '@');
                 $c = strpos($this->path, '/');
                 if ($c !== false) {
                     $this->path =
@@ -229,7 +229,7 @@ class URI
         }
 
         // qf = query and fragment
-        $qf_encoder = new HTMLPurifier_PercentEncoder($chars_pchar . '/?');
+        $qf_encoder = new PercentEncoder($chars_pchar . '/?');
 
         if (!is_null($this->query)) {
             $this->query = $qf_encoder->encode($this->query);
