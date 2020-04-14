@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\BoolToCSS;
+
 class HTMLPurifier_AttrTransform_BoolToCSSTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_BoolToCSS('foo', 'bar:3in;');
+        $this->obj = new BoolToCSS('foo', 'bar:3in;');
     }
 
     public function testEmptyInput()

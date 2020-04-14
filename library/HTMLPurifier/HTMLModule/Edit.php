@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ChildDef\Chameleon;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
 
@@ -45,9 +46,9 @@ class HTMLPurifier_HTMLModule_Edit extends HTMLModule
     /**
      * @param ElementDef $def
      *
-     * @return HTMLPurifier_ChildDef_Chameleon
+     * @return Chameleon
      */
-    public function getChildDef(ElementDef $def): ?HTMLPurifier_ChildDef_Chameleon
+    public function getChildDef(ElementDef $def): ?Chameleon
     {
         if ($def->content_model_type != 'chameleon') {
             return null;
@@ -55,6 +56,6 @@ class HTMLPurifier_HTMLModule_Edit extends HTMLModule
 
         $value = explode('!', $def->content_model);
 
-        return new HTMLPurifier_ChildDef_Chameleon($value[0], $value[1]);
+        return new Chameleon($value[0], $value[1]);
     }
 }

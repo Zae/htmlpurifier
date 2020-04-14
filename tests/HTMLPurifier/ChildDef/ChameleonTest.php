@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\ChildDef\Chameleon;
+
 class HTMLPurifier_ChildDef_ChameleonTest extends HTMLPurifier_ChildDefHarness
 {
 
@@ -8,7 +10,7 @@ class HTMLPurifier_ChildDef_ChameleonTest extends HTMLPurifier_ChildDefHarness
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_ChildDef_Chameleon(
+        $this->obj = new Chameleon(
             'b | i',      // allowed only when in inline context
             'b | i | div' // allowed only when in block context
         );

@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\HTML\Nmtokens;
-use HTMLPurifier_ChildDef_Optional;
+use HTMLPurifier\ChildDef\Optional;
 use HTMLPurifier_Config;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
@@ -80,14 +80,14 @@ class HTMLModuleManagerTest extends TestCase
 
         $p = new ElementDef();
         $p->attr['class'] = $attrdef_nmtokens;
-        $p->child = new HTMLPurifier_ChildDef_Optional(['em', '#PCDATA']);
+        $p->child = new Optional(['em', '#PCDATA']);
         $p->content_model = 'em | #PCDATA';
         $p->content_model_type = 'optional';
         $p->descendants_are_inline = true;
 
         $em = new ElementDef();
         $em->attr['class'] = $attrdef_nmtokens;
-        $em->child = new HTMLPurifier_ChildDef_Optional(['em', '#PCDATA']);
+        $em->child = new Optional(['em', '#PCDATA']);
         $em->content_model = 'em | #PCDATA';
         $em->content_model_type = 'optional';
         $em->descendants_are_inline = true;
@@ -100,7 +100,7 @@ class HTMLModuleManagerTest extends TestCase
         // test trusted parameter override
 
         $div = new ElementDef();
-        $div->child = new HTMLPurifier_ChildDef_Optional(['p', 'div', 'em', '#PCDATA']);
+        $div->child = new Optional(['p', 'div', 'em', '#PCDATA']);
         $div->content_model = 'p | div | em | #PCDATA';
         $div->content_model_type = 'optional';
         $div->descendants_are_inline = false;

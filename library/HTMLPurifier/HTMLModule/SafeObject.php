@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\AttrTransform\SafeParam;
+use HTMLPurifier\AttrTransform\SafeObject;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -48,7 +50,7 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLModule
                 ),
             ]
         );
-        $object->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeObject();
+        $object->attr_transform_post[] = new SafeObject();
 
         $param = $this->addElement(
             'param',
@@ -61,7 +63,7 @@ class HTMLPurifier_HTMLModule_SafeObject extends HTMLModule
                 'value' => 'Text'
             ]
         );
-        $param->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeParam();
+        $param->attr_transform_post[] = new SafeParam();
         $this->info_injector[] = 'SafeObject';
     }
 }

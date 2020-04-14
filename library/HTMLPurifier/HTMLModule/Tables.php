@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ChildDef\Table;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -24,7 +25,7 @@ class HTMLPurifier_HTMLModule_Tables extends HTMLModule
         $this->addElement(
             'table',
             'Block',
-            new HTMLPurifier_ChildDef_Table(),
+            new Table(),
             'Common',
             [
                 'border' => 'Pixels',

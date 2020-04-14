@@ -6,8 +6,8 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier_Config;
-use HTMLPurifier_DefinitionCache_Decorator;
-use HTMLPurifier_DefinitionCache_Null;
+use HTMLPurifier\DefinitionCache\Decorator;
+use HTMLPurifier\DefinitionCache\DevNull;
 use HTMLPurifier_Exception;
 
 /**
@@ -26,7 +26,7 @@ class DefinitionCacheFactory
     protected $implementations = [];
 
     /**
-     * @type HTMLPurifier_DefinitionCache_Decorator[]
+     * @type \HTMLPurifier\DefinitionCache\Decorator[]
      */
     protected $decorators = [];
 
@@ -82,7 +82,7 @@ class DefinitionCacheFactory
     {
         $method = $config->get('Cache.DefinitionImpl');
         if ($method === null) {
-            return new HTMLPurifier_DefinitionCache_Null($type);
+            return new DevNull($type);
         }
 
         if (!empty($this->caches[$method][$type])) {
@@ -115,7 +115,7 @@ class DefinitionCacheFactory
     /**
      * Registers a decorator to add to all new cache objects
      *
-     * @param HTMLPurifier_DefinitionCache_Decorator|string $decorator An instance or the name of a decorator
+     * @param \HTMLPurifier\ChildDef\Decorator|string $decorator An instance or the name of a decorator
      */
     public function addDecorator($decorator)
     {

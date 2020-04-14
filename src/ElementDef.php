@@ -99,7 +99,7 @@ class ElementDef
     /**
      * Does the element have a content model (#PCDATA | Inline)*? This
      * is important for chameleon ins and del processing in
-     * HTMLPurifier_ChildDef_Chameleon. Dynamically set: modules don't
+     * HTMLPurifier\ChildDef\HTMLPurifier_ChildDef_Chameleon. Dynamically set: modules don't
      * have to worry about this one.
      *
      * @type bool

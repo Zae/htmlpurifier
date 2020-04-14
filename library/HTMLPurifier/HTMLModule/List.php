@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ChildDef\Lists;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -33,8 +34,8 @@ class HTMLPurifier_HTMLModule_List extends HTMLModule
      */
     public function setup($config): void
     {
-        $ol = $this->addElement('ol', 'List', new HTMLPurifier_ChildDef_List(), 'Common');
-        $ul = $this->addElement('ul', 'List', new HTMLPurifier_ChildDef_List(), 'Common');
+        $ol = $this->addElement('ol', 'List', new Lists(), 'Common');
+        $ul = $this->addElement('ul', 'List', new Lists(), 'Common');
         // XXX The wrap attribute is handled by MakeWellFormed.  This is all
         // quite unsatisfactory, because we generated this
         // *specifically* for lists, and now a big chunk of the handling

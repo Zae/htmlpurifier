@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\Lang;
+
 /**
  * Class HTMLPurifier_HTMLModule_Tidy_XHTML
  */
@@ -23,7 +25,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
     public function makeFixes(): array
     {
         $r = [];
-        $r['@lang'] = new HTMLPurifier_AttrTransform_Lang();
+        $r['@lang'] = new Lang();
         return $r;
     }
 }

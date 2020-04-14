@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\ChildDef\Optional;
+
 class HTMLPurifier_ChildDef_OptionalTest extends HTMLPurifier_ChildDefHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_ChildDef_Optional('b | i');
+        $this->obj = new Optional('b | i');
     }
 
     public function testBasicUsage()

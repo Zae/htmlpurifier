@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\Background;
+use HTMLPurifier\AttrTransform\Length;
+
 /**
  * Class HTMLPurifier_HTMLModule_Tidy_Proprietary
  */
@@ -23,14 +26,14 @@ class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_T
     public function makeFixes(): array
     {
         $r = [];
-        $r['table@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['td@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['th@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['tr@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['thead@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['tfoot@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['tbody@background'] = new HTMLPurifier_AttrTransform_Background();
-        $r['table@height'] = new HTMLPurifier_AttrTransform_Length('height');
+        $r['table@background'] = new Background();
+        $r['td@background'] = new Background();
+        $r['th@background'] = new Background();
+        $r['tr@background'] = new Background();
+        $r['thead@background'] = new Background();
+        $r['tfoot@background'] = new Background();
+        $r['tbody@background'] = new Background();
+        $r['table@height'] = new Length('height');
 
         return $r;
     }

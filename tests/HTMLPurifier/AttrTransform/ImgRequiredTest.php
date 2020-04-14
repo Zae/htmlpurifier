@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\ImgRequired;
+
 class HTMLPurifier_AttrTransform_ImgRequiredTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_ImgRequired();
+        $this->obj = new ImgRequired();
     }
 
     public function testAddMissingAttr()

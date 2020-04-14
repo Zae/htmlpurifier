@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\AttrTransform\NameSync;
 use HTMLPurifier\IDAccumulator;
 
 class HTMLPurifier_AttrTransform_NameSyncTest extends HTMLPurifier_AttrTransformHarness
@@ -8,7 +9,7 @@ class HTMLPurifier_AttrTransform_NameSyncTest extends HTMLPurifier_AttrTransform
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_NameSync();
+        $this->obj = new NameSync();
         $this->accumulator = new IDAccumulator();
         $this->context->register('IDAccumulator', $this->accumulator);
         $this->config->set('Attr.EnableID', true);
