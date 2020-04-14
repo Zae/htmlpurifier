@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\ChildDef\StrictBlockquote;
+
 class   HTMLPurifier_ChildDef_StrictBlockquoteTest
 extends HTMLPurifier_ChildDefHarness
 {
@@ -7,7 +9,7 @@ extends HTMLPurifier_ChildDefHarness
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_ChildDef_StrictBlockquote('div | p');
+        $this->obj = new StrictBlockquote('div | p');
     }
 
     public function testEmptyInput()
@@ -85,7 +87,7 @@ extends HTMLPurifier_ChildDefHarness
     public function testError()
     {
         $this->expectError('Cannot use non-block element as block wrapper');
-        $this->obj = new HTMLPurifier_ChildDef_StrictBlockquote('div | p');
+        $this->obj = new StrictBlockquote('div | p');
         $this->config->set('HTML.BlockWrapper', 'dav');
         $this->config->set('Cache.DefinitionImpl', null);
         $this->assertResult('Needs wrap', '<p>Needs wrap</p>');

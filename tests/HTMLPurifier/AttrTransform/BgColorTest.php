@@ -4,13 +4,15 @@
 // This means that this transform, strictly speaking, supports
 // a superset of the functionality.
 
+use HTMLPurifier\AttrTransform\BgColor;
+
 class HTMLPurifier_AttrTransform_BgColorTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_BgColor();
+        $this->obj = new BgColor();
     }
 
     public function testEmptyInput()

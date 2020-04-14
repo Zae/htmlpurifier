@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\EnumToCSS;
+
 class HTMLPurifier_AttrTransform_EnumToCSSTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_EnumToCSS('align', array(
+        $this->obj = new EnumToCSS('align', array(
             'left'  => 'text-align:left;',
             'right' => 'text-align:right;'
         ));
@@ -57,7 +59,7 @@ class HTMLPurifier_AttrTransform_EnumToCSSTest extends HTMLPurifier_AttrTransfor
 
     public function testCaseInsensitive()
     {
-        $this->obj = new HTMLPurifier_AttrTransform_EnumToCSS('align', array(
+        $this->obj = new EnumToCSS('align', array(
             'right' => 'text-align:right;'
         ));
         $this->assertResult(
@@ -68,7 +70,7 @@ class HTMLPurifier_AttrTransform_EnumToCSSTest extends HTMLPurifier_AttrTransfor
 
     public function testCaseSensitive()
     {
-        $this->obj = new HTMLPurifier_AttrTransform_EnumToCSS('align', array(
+        $this->obj = new EnumToCSS('align', array(
             'right' => 'text-align:right;'
         ), true);
         $this->assertResult(

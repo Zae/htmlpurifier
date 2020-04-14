@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_DefinitionCache_Null;
+use HTMLPurifier\DefinitionCache\DevNull;
 use Mockery;
 
 /**
@@ -20,7 +20,7 @@ class DefinitionCacheTest extends TestCase
     public function testParseCDATA(): void
     {
         // using null subclass because parent is abstract
-        $cache = new HTMLPurifier_DefinitionCache_Null('Test');
+        $cache = new DevNull('Test');
 
         $config = Mockery::mock(HTMLPurifier_Config::class)->makePartial();
         $config->version = '1.0.0'; // hopefully no conflicts

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\SafeEmbed;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -37,6 +38,6 @@ class HTMLPurifier_HTMLModule_SafeEmbed extends HTMLModule
                 'name' => 'ID',
             ]
         );
-        $embed->attr_transform_post[] = new HTMLPurifier_AttrTransform_SafeEmbed();
+        $embed->attr_transform_post[] = new SafeEmbed();
     }
 }

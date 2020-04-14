@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
 
 /**
@@ -9,7 +10,7 @@ use HTMLPurifier\Definition;
  * to PHP's memory; good for unit tests or circumstances where
  * there are lots of configuration objects floating around.
  */
-class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_DefinitionCache_Decorator
+class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
 {
     /**
      * @type array
@@ -24,7 +25,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends HTMLPurifier_Definit
     /**
      * @return HTMLPurifier_DefinitionCache_Decorator_Memory
      */
-    public function copy(): HTMLPurifier_DefinitionCache_Decorator
+    public function copy(): Decorator
     {
         return new static();
     }

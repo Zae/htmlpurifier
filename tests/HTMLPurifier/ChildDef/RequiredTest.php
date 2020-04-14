@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\ChildDef\Required;
+
 class HTMLPurifier_ChildDef_RequiredTest extends HTMLPurifier_ChildDefHarness
 {
 
     public function testPrepareString()
     {
-        $def = new HTMLPurifier_ChildDef_Required('foobar | bang |gizmo');
+        $def = new Required('foobar | bang |gizmo');
         $this->assertIdentical($def->elements,
           array(
             'foobar' => true
@@ -16,7 +18,7 @@ class HTMLPurifier_ChildDef_RequiredTest extends HTMLPurifier_ChildDefHarness
 
     public function testPrepareArray()
     {
-        $def = new HTMLPurifier_ChildDef_Required(array('href', 'src'));
+        $def = new Required(array('href', 'src'));
         $this->assertIdentical($def->elements,
           array(
             'href' => true
@@ -27,7 +29,7 @@ class HTMLPurifier_ChildDef_RequiredTest extends HTMLPurifier_ChildDefHarness
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_ChildDef_Required('dt | dd');
+        $this->obj = new Required('dt | dd');
     }
 
     public function testEmptyInput()
@@ -65,12 +67,12 @@ class HTMLPurifier_ChildDef_RequiredTest extends HTMLPurifier_ChildDefHarness
 
     public function testPCDATAAllowed()
     {
-        $this->obj = new HTMLPurifier_ChildDef_Required('#PCDATA | b');
+        $this->obj = new Required('#PCDATA | b');
         $this->assertResult('Out <b>Bold text</b><img />', 'Out <b>Bold text</b>');
     }
     public function testPCDATAAllowedJump()
     {
-        $this->obj = new HTMLPurifier_ChildDef_Required('#PCDATA | b');
+        $this->obj = new Required('#PCDATA | b');
         $this->assertResult('A <i>foo</i>', 'A foo');
     }
 }

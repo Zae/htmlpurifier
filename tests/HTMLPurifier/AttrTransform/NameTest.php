@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\Name;
+
 class HTMLPurifier_AttrTransform_NameTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_Name();
+        $this->obj = new Name();
     }
 
     public function testEmpty()

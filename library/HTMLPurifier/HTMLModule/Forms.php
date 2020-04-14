@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\Textarea;
+use HTMLPurifier\AttrTransform\Input;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -69,7 +71,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLModule
                 'value' => 'CDATA',
             ]
         );
-        $input->attr_transform_post[] = new HTMLPurifier_AttrTransform_Input();
+        $input->attr_transform_post[] = new Input();
 
         $this->addElement(
             'select',
@@ -116,7 +118,7 @@ class HTMLPurifier_HTMLModule_Forms extends HTMLModule
                 'tabindex' => 'Number',
             ]
         );
-        $textarea->attr_transform_pre[] = new HTMLPurifier_AttrTransform_Textarea();
+        $textarea->attr_transform_pre[] = new Textarea();
 
         $button = $this->addElement(
             'button',

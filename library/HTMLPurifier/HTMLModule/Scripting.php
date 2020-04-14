@@ -11,6 +11,7 @@ INSIDE HTML PURIFIER DOCUMENTS. USE ONLY WITH TRUSTED USER INPUT!!!
 
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\AttrTransform\ScriptRequired;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
 
@@ -74,6 +75,6 @@ class HTMLPurifier_HTMLModule_Scripting extends HTMLModule
         $this->info['script']->content_model_type = 'optional';
         $this->info['script']->attr_transform_pre[] =
         $this->info['script']->attr_transform_post[] =
-            new HTMLPurifier_AttrTransform_ScriptRequired();
+            new ScriptRequired();
     }
 }

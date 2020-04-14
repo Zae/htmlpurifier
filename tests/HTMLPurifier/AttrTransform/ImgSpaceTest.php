@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\ImgSpace;
+
 class HTMLPurifier_AttrTransform_ImgSpaceTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_ImgSpace('vspace');
+        $this->obj = new ImgSpace('vspace');
     }
 
     public function testEmptyInput()
@@ -40,7 +42,7 @@ class HTMLPurifier_AttrTransform_ImgSpaceTest extends HTMLPurifier_AttrTransform
 
     public function testHorizontalBasicUsage()
     {
-        $this->obj = new HTMLPurifier_AttrTransform_ImgSpace('hspace');
+        $this->obj = new ImgSpace('hspace');
         $this->assertResult(
             array('hspace' => '1'),
             array('style' => 'margin-left:1px;margin-right:1px;')
@@ -50,7 +52,7 @@ class HTMLPurifier_AttrTransform_ImgSpaceTest extends HTMLPurifier_AttrTransform
     public function testInvalidConstructionParameter()
     {
         $this->expectError('ispace is not valid space attribute');
-        $this->obj = new HTMLPurifier_AttrTransform_ImgSpace('ispace');
+        $this->obj = new ImgSpace('ispace');
         $this->assertResult(
             array('ispace' => '1'),
             array()

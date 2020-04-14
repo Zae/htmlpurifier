@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\NameSync;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -26,7 +27,7 @@ class HTMLPurifier_HTMLModule_Name extends HTMLModule
             $element = $this->addBlankElement($name);
             $element->attr['name'] = 'CDATA';
             if (!$config->get('HTML.Attr.Name.UseCDATA')) {
-                $element->attr_transform_post[] = new HTMLPurifier_AttrTransform_NameSync();
+                $element->attr_transform_post[] = new NameSync();
             }
         }
     }

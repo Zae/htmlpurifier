@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\Length;
+
 class HTMLPurifier_AttrTransform_LengthTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_Length('width');
+        $this->obj = new Length('width');
     }
 
     public function testEmptyInput()

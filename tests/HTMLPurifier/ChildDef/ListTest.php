@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\ChildDef\Lists;
+
 class HTMLPurifier_ChildDef_ListTest extends HTMLPurifier_ChildDefHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_ChildDef_List();
+        $this->obj = new Lists();
     }
 
     public function testEmptyInput()

@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\Border;
+
 class HTMLPurifier_AttrTransform_BorderTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_Border();
+        $this->obj = new Border();
     }
 
     public function testEmptyInput()

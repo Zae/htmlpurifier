@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\BdoDir;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -39,7 +40,7 @@ class HTMLPurifier_HTMLModule_Bdo extends HTMLModule
             ]
         );
 
-        $bdo->attr_transform_post[] = new HTMLPurifier_AttrTransform_BdoDir();
+        $bdo->attr_transform_post[] = new BdoDir();
         $this->attr_collections['I18N']['dir'] = 'Enum#ltr,rtl';
     }
 }

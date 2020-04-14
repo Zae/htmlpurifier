@@ -2,6 +2,13 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\AttrTransform\BgColor;
+use HTMLPurifier\AttrTransform\BoolToCSS;
+use HTMLPurifier\AttrTransform\Border;
+use HTMLPurifier\AttrTransform\EnumToCSS;
+use HTMLPurifier\AttrTransform\Length;
+use HTMLPurifier\AttrTransform\ImgSpace;
+
 /**
  * Class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4
  */
@@ -27,7 +34,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         // == deprecated attribute transforms =============================
 
         $r['caption@align'] =
-            new HTMLPurifier_AttrTransform_EnumToCSS(
+            new EnumToCSS(
                 'align',
                 [
                     // we're following IE's behavior, not Firefox's, due
@@ -43,7 +50,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
 
         // @align for img -------------------------------------------------
         $r['img@align'] =
-            new HTMLPurifier_AttrTransform_EnumToCSS(
+            new EnumToCSS(
                 'align',
                 [
                     'left' => 'float:left;',
@@ -56,7 +63,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
 
         // @align for table -----------------------------------------------
         $r['table@align'] =
-            new HTMLPurifier_AttrTransform_EnumToCSS(
+            new EnumToCSS(
                 'align',
                 [
                     'left' => 'float:left;',
@@ -67,7 +74,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
 
         // @align for hr -----------------------------------------------
         $r['hr@align'] =
-            new HTMLPurifier_AttrTransform_EnumToCSS(
+            new EnumToCSS(
                 'align',
                 [
                     // we use both text-align and margin because these work
@@ -98,21 +105,21 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         $r['h6@align'] =
         $r['p@align'] =
         $r['div@align'] =
-            new HTMLPurifier_AttrTransform_EnumToCSS('align', $align_lookup);
+            new EnumToCSS('align', $align_lookup);
 
         // @bgcolor for table, tr, td, th ---------------------------------
         $r['table@bgcolor'] =
         $r['tr@bgcolor'] =
         $r['td@bgcolor'] =
         $r['th@bgcolor'] =
-            new HTMLPurifier_AttrTransform_BgColor();
+            new BgColor();
 
         // @border for img ------------------------------------------------
-        $r['img@border'] = new HTMLPurifier_AttrTransform_Border();
+        $r['img@border'] = new Border();
 
         // @clear for br --------------------------------------------------
         $r['br@clear'] =
-            new HTMLPurifier_AttrTransform_EnumToCSS(
+            new EnumToCSS(
                 'clear',
                 [
                     'left' => 'clear:left;',
@@ -125,16 +132,16 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         // @height for td, th ---------------------------------------------
         $r['td@height'] =
         $r['th@height'] =
-            new HTMLPurifier_AttrTransform_Length('height');
+            new Length('height');
 
         // @hspace for img ------------------------------------------------
-        $r['img@hspace'] = new HTMLPurifier_AttrTransform_ImgSpace('hspace');
+        $r['img@hspace'] = new ImgSpace('hspace');
 
         // @noshade for hr ------------------------------------------------
         // this transformation is not precise but often good enough.
         // different browsers use different styles to designate noshade
         $r['hr@noshade'] =
-            new HTMLPurifier_AttrTransform_BoolToCSS(
+            new BoolToCSS(
                 'noshade',
                 'color:#808080;background-color:#808080;border:0;'
             );
@@ -142,13 +149,13 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         // @nowrap for td, th ---------------------------------------------
         $r['td@nowrap'] =
         $r['th@nowrap'] =
-            new HTMLPurifier_AttrTransform_BoolToCSS(
+            new BoolToCSS(
                 'nowrap',
                 'white-space:nowrap;'
             );
 
         // @size for hr  --------------------------------------------------
-        $r['hr@size'] = new HTMLPurifier_AttrTransform_Length('size', 'height');
+        $r['hr@size'] = new Length('size', 'height');
 
         // @type for li, ol, ul -------------------------------------------
         // {{{
@@ -168,17 +175,17 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         $li_types = array_merge($ul_types, $ol_types);
         // }}}
 
-        $r['ul@type'] = new HTMLPurifier_AttrTransform_EnumToCSS('type', $ul_types);
-        $r['ol@type'] = new HTMLPurifier_AttrTransform_EnumToCSS('type', $ol_types, true);
-        $r['li@type'] = new HTMLPurifier_AttrTransform_EnumToCSS('type', $li_types, true);
+        $r['ul@type'] = new EnumToCSS('type', $ul_types);
+        $r['ol@type'] = new EnumToCSS('type', $ol_types, true);
+        $r['li@type'] = new EnumToCSS('type', $li_types, true);
 
         // @vspace for img ------------------------------------------------
-        $r['img@vspace'] = new HTMLPurifier_AttrTransform_ImgSpace('vspace');
+        $r['img@vspace'] = new ImgSpace('vspace');
 
         // @width for hr, td, th ------------------------------------------
         $r['td@width'] =
         $r['th@width'] =
-        $r['hr@width'] = new HTMLPurifier_AttrTransform_Length('width');
+        $r['hr@width'] = new Length('width');
 
         return $r;
     }

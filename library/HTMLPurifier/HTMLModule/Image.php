@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\URI;
+use HTMLPurifier\AttrTransform\ImgRequired;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -49,6 +50,6 @@ class HTMLPurifier_HTMLModule_Image extends HTMLModule
         // kind of strange, but splitting things up would be inefficient
         $img->attr_transform_pre[] =
         $img->attr_transform_post[] =
-            new HTMLPurifier_AttrTransform_ImgRequired();
+            new ImgRequired();
     }
 }

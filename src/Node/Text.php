@@ -20,7 +20,7 @@ class Text extends Node
 {
     /**
      * PCDATA tag name compatible with DTD, see
-     * HTMLPurifier_ChildDef_Custom for details.
+     * HTMLPurifier\ChildDef\HTMLPurifier_ChildDef_Custom for details.
      *
      * @type string
      */

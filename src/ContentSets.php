@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_ChildDef_Custom;
-use HTMLPurifier_ChildDef_Empty;
-use HTMLPurifier_ChildDef_Optional;
-use HTMLPurifier_ChildDef_Required;
+use HTMLPurifier\ChildDef\Custom;
+use HTMLPurifier\ChildDef\Nothing;
+use HTMLPurifier\ChildDef\Optional;
+use HTMLPurifier\ChildDef\Required;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
 
@@ -157,13 +157,13 @@ class ContentSets
 
         switch ($def->content_model_type) {
             case 'required':
-                return new HTMLPurifier_ChildDef_Required($value);
+                return new Required($value);
             case 'optional':
-                return new HTMLPurifier_ChildDef_Optional($value);
+                return new Optional($value);
             case 'empty':
-                return new HTMLPurifier_ChildDef_Empty();
+                return new Nothing();
             case 'custom':
-                return new HTMLPurifier_ChildDef_Custom($value);
+                return new Custom($value);
         }
 
         // defer to its module

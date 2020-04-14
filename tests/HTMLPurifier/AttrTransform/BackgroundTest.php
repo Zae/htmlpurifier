@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\Background;
+
 class HTMLPurifier_AttrTransform_BackgroundTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_Background();
+        $this->obj = new Background();
     }
 
     public function testEmptyInput()

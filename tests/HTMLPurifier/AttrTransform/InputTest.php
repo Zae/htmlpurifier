@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\Input;
+
 class HTMLPurifier_AttrTransform_InputTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_Input();
+        $this->obj = new Input();
     }
 
     public function testEmptyInput()

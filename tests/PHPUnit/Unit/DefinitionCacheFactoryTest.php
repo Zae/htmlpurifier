@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier_DefinitionCache_Decorator_Memory;
-use HTMLPurifier_DefinitionCache_Null;
+use HTMLPurifier\DefinitionCache\DevNull;
 use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier\DefinitionCacheFactory;
 use Mockery;
@@ -119,7 +119,7 @@ class DefinitionCacheFactoryTest extends TestCase
         $this->config->set('Cache.DefinitionImpl', null);
         $cache = $this->factory->create('Test', $this->config);
 
-        static::assertEquals($cache, new HTMLPurifier_DefinitionCache_Null('Test'));
+        static::assertEquals($cache, new DevNull('Test'));
     }
 
     /**

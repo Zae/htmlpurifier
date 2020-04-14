@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\AttrTransform\ScriptRequired;
 use HTMLPurifier\HTMLModule;
 
 /**
@@ -41,6 +42,6 @@ class HTMLPurifier_HTMLModule_SafeScripting extends HTMLModule
         );
 
         $script->attr_transform_pre[] =
-        $script->attr_transform_post[] = new HTMLPurifier_AttrTransform_ScriptRequired();
+        $script->attr_transform_post[] = new ScriptRequired();
     }
 }

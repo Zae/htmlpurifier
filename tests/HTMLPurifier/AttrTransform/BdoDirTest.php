@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\AttrTransform\BdoDir;
+
 class HTMLPurifier_AttrTransform_BdoDirTest extends HTMLPurifier_AttrTransformHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_BdoDir();
+        $this->obj = new BdoDir();
     }
 
     public function testAddDefaultDir()

@@ -3,13 +3,15 @@
 // we're using empty tags to compact the tests: under real circumstances
 // there would be contents in them
 
+use HTMLPurifier\ChildDef\Table;
+
 class HTMLPurifier_ChildDef_TableTest extends HTMLPurifier_ChildDefHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_ChildDef_Table();
+        $this->obj = new Table();
     }
 
     public function testEmptyInput()

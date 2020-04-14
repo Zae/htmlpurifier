@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\AttrTransform\Lang;
+
 class HTMLPurifier_AttrTransform_LangTest
     extends HTMLPurifier_AttrTransformHarness
 {
@@ -7,7 +9,7 @@ class HTMLPurifier_AttrTransform_LangTest
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_AttrTransform_Lang();
+        $this->obj = new Lang();
     }
 
     public function testEmptyInput()
