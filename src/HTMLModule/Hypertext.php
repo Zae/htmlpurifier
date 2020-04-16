@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\AttrDef\HTML\LinkTypes;
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
 
 /**
  * XHTML 1.1 Hypertext Module, defines hypertext links. Core Module.
  */
-class HTMLPurifier_HTMLModule_Hypertext extends HTMLModule
+class Hypertext extends HTMLModule
 {
     /**
      * @type string

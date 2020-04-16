@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\ChildDef\Lists;
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
 
 /**
  * XHTML 1.1 List Module, defines list-oriented elements. Core Module.
  */
-class HTMLPurifier_HTMLModule_List extends HTMLModule
+class Lists extends HTMLModule
 {
     /**
      * @type string
      */
-    public $name = 'List';
+    public $name = 'Lists';
 
     // According to the abstract schema, the List content set is a fully formed
     // one or more expr, but it invariably occurs in an optional declaration
@@ -34,8 +36,8 @@ class HTMLPurifier_HTMLModule_List extends HTMLModule
      */
     public function setup($config): void
     {
-        $ol = $this->addElement('ol', 'List', new Lists(), 'Common');
-        $ul = $this->addElement('ul', 'List', new Lists(), 'Common');
+        $ol = $this->addElement('ol', 'List', new \HTMLPurifier\ChildDef\Lists(), 'Common');
+        $ul = $this->addElement('ul', 'List', new \HTMLPurifier\ChildDef\Lists(), 'Common');
         // XXX The wrap attribute is handled by MakeWellFormed.  This is all
         // quite unsatisfactory, because we generated this
         // *specifically* for lists, and now a big chunk of the handling

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\ChildDef;
-use HTMLPurifier\ElementDef;
 use HTMLPurifier_Config;
 
 /**

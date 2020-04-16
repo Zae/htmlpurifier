@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrTransform\ImgRequired;
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
  * XHTML 1.1 Image Module provides basic image embedding.
@@ -12,7 +16,7 @@ use HTMLPurifier\HTMLModule;
  * @note There is specialized code for removing empty images in
  *       HTMLPurifier_Strategy_RemoveForeignElements
  */
-class HTMLPurifier_HTMLModule_Image extends HTMLModule
+class Image extends HTMLModule
 {
     /**
      * @type string

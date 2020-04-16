@@ -3,6 +3,8 @@
 
 use HTMLPurifier\DefinitionCache\Serializer;
 
+require_once './vendor/autoload.php';
+
 chdir(dirname(__FILE__));
 require_once 'common.php';
 assertCli();
