@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\AttrDef\Integer;
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
 
 /**
  * XHTML 1.1 Legacy module defines elements that were previously
@@ -20,7 +23,7 @@ use HTMLPurifier\HTMLModule;
  * as well as transform elements that don't have an implementation.
  * See docs/ref-strictness.txt for more details.
  */
-class HTMLPurifier_HTMLModule_Legacy extends HTMLModule
+class Legacy extends HTMLModule
 {
     /**
      * @type string

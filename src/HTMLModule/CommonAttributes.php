@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\HTMLModule;
 
 /**
- * Class HTMLPurifier_HTMLModule_CommonAttributes
+ * Class CommonAttributes
+ *
+ * @package HTMLPurifier\HTMLModule
  */
-class HTMLPurifier_HTMLModule_CommonAttributes extends HTMLModule
+class CommonAttributes extends HTMLModule
 {
     /**
      * @type string

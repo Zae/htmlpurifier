@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\ChildDef\Chameleon;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
 
 /**
  * XHTML 1.1 Edit Module, defines editing-related elements. Text Extension
  * Module.
  */
-class HTMLPurifier_HTMLModule_Edit extends HTMLModule
+class Edit extends HTMLModule
 {
     /**
      * @type string

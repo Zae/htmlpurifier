@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\AttrTransform\BdoDir;
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
 
 /**
  * XHTML 1.1 Bi-directional Text Module, defines elements that
  * declare directionality of content. Text Extension Module.
  */
-class HTMLPurifier_HTMLModule_Bdo extends HTMLModule
+class Bdo extends HTMLModule
 {
     /**
      * @type string

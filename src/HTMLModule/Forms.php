@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\HTMLModule;
+
 use HTMLPurifier\AttrTransform\Textarea;
 use HTMLPurifier\AttrTransform\Input;
 use HTMLPurifier\HTMLModule;
+use HTMLPurifier_Config;
 
 /**
  * XHTML 1.1 Forms module, defines all form-related elements found in HTML 4.
  */
-class HTMLPurifier_HTMLModule_Forms extends HTMLModule
+class Forms extends HTMLModule
 {
     /**
      * @type string

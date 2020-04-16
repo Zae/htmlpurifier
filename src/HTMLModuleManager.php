@@ -65,7 +65,10 @@ class HTMLModuleManager
      *
      * @type array
      */
-    public $prefixes = ['HTMLPurifier_HTMLModule_'];
+    public $prefixes = [
+        'HTMLPurifier_HTMLModule_',
+        'HTMLPurifier\\HTMLModule\\',
+    ];
 
     /**
      * @type ContentSets
@@ -92,7 +95,7 @@ class HTMLModuleManager
 
         // setup basic modules
         $common = [
-            'CommonAttributes', 'Text', 'Hypertext', 'List',
+            'CommonAttributes', 'Text', 'Hypertext', 'Lists',
             'Presentation', 'Edit', 'Bdo', 'Tables', 'Image',
             'StyleAttribute',
             // Unsafe:
@@ -175,6 +178,7 @@ class HTMLModuleManager
      * @note If a string is passed as a module name, different variants
      *       will be tested in this order:
      *          - Check for HTMLPurifier_HTMLModule_$name
+     *          - Check for HTMLPurifier\\HTMLModule\\$name
      *          - Check all prefixes with $name in order they were added
      *          - Check for literal object name
      *          - Throw fatal error
@@ -190,6 +194,7 @@ class HTMLModuleManager
             $ok = false;
             foreach ($this->prefixes as $prefix) {
                 $module = $prefix . $original_module;
+
                 if (class_exists($module)) {
                     $ok = true;
                     break;
@@ -263,6 +268,7 @@ class HTMLModuleManager
         // generate
         $this->doctype = $this->doctypes->make($config);
         $modules = $this->doctype->modules;
+
 
         // take out the default modules that aren't allowed
         $lookup = $config->get('HTML.AllowedModules');
