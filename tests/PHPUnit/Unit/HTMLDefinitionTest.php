@@ -8,7 +8,7 @@ use HTMLPurifier;
 use HTMLPurifier_Config;
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Injector;
-use HTMLPurifier_Injector_Linkify;
+use HTMLPurifier\Injector\Linkify;
 
 /**
  * Class HTMLDefinitionTest
@@ -487,7 +487,7 @@ a[href|title]
         $module->info_injector[] = 'Linkify';
 
         static::assertEquals(
-            ['Linkify' => new HTMLPurifier_Injector_Linkify()],
+            ['Linkify' => new Linkify()],
             $this->config->getHTMLDefinition()->info_injector
         );
     }

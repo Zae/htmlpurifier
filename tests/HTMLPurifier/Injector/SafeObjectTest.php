@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Injector\SafeObject;
+
 /**
  * This test is kinda weird, because it doesn't test the full safe object
  * functionality, just a small section of it. Or maybe it's actually the right
@@ -12,7 +14,7 @@ class HTMLPurifier_Injector_SafeObjectTest extends HTMLPurifier_InjectorHarness
     {
         parent::setup();
         // there is no AutoFormat.SafeObject directive
-        $this->config->set('AutoFormat.Custom', array(new HTMLPurifier_Injector_SafeObject()));
+        $this->config->set('AutoFormat.Custom', array(new SafeObject()));
         $this->config->set('HTML.Trusted', true);
     }
 
