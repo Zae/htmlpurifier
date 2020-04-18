@@ -127,7 +127,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
             if (strpos($injector, '.') !== false) {
                 continue;
             }
-            $injector = "HTMLPurifier_Injector_$injector";
+            $injector = "HTMLPurifier\\Injector\\$injector";
             if (!$b) {
                 continue;
             }
@@ -144,7 +144,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
                 continue;
             }
             if (is_string($injector)) {
-                $injector = "HTMLPurifier_Injector_$injector";
+                $injector = "HTMLPurifier\\Injector\\$injector";
                 $injector = new $injector;
             }
             $this->injectors[] = $injector;
@@ -686,7 +686,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
 //
 // There were two more complications, however:
 //
-//  - With HTMLPurifier_Injector_RemoveEmpty, we noticed that if
+//  - With HTMLPurifier\Injector\HTMLPurifier_Injector_RemoveEmpty, we noticed that if
 //    you had <b><i></i></b>, after you removed the <i></i>, you
 //    really would like this injector to go back and reprocess
 //    the <b> tag, discovering that it is now empty and can be

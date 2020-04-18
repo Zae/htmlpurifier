@@ -66,7 +66,6 @@ class HTMLModuleManager
      * @type array
      */
     public $prefixes = [
-        'HTMLPurifier_HTMLModule_',
         'HTMLPurifier\\HTMLModule\\',
     ];
 
@@ -99,7 +98,7 @@ class HTMLModuleManager
             'Presentation', 'Edit', 'Bdo', 'Tables', 'Image',
             'StyleAttribute',
             // Unsafe:
-            'Scripting', 'Object', 'Forms',
+            'Scripting', 'Objects', 'Forms',
             // Sorta legacy, but present in strict:
             'Name',
         ];
@@ -113,7 +112,7 @@ class HTMLModuleManager
             'HTML 4.01 Transitional',
             false,
             array_merge($common, $transitional, $non_xml),
-            ['Tidy_Transitional', 'Tidy_Proprietary'],
+            ['Tidy\\Transitional', 'Tidy\\Proprietary'],
             [],
             '-//W3C//DTD HTML 4.01 Transitional//EN',
             'http://www.w3.org/TR/html4/loose.dtd'
@@ -123,7 +122,7 @@ class HTMLModuleManager
             'HTML 4.01 Strict',
             false,
             array_merge($common, $non_xml),
-            ['Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'],
+            ['Tidy\\Strict', 'Tidy\\Proprietary', 'Tidy\\Name'],
             [],
             '-//W3C//DTD HTML 4.01//EN',
             'http://www.w3.org/TR/html4/strict.dtd'
@@ -133,7 +132,7 @@ class HTMLModuleManager
             'XHTML 1.0 Transitional',
             true,
             array_merge($common, $transitional, $xml, $non_xml),
-            ['Tidy_Transitional', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Name'],
+            ['Tidy\\Transitional', 'Tidy\\XHTML', 'Tidy\\Proprietary', 'Tidy\\Name'],
             [],
             '-//W3C//DTD XHTML 1.0 Transitional//EN',
             'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'
@@ -143,7 +142,7 @@ class HTMLModuleManager
             'XHTML 1.0 Strict',
             true,
             array_merge($common, $xml, $non_xml),
-            ['Tidy_Strict', 'Tidy_XHTML', 'Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'],
+            ['Tidy\\Strict', 'Tidy\\XHTML', 'Tidy\\Strict', 'Tidy\\Proprietary', 'Tidy\\Name'],
             [],
             '-//W3C//DTD XHTML 1.0 Strict//EN',
             'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'
@@ -155,7 +154,7 @@ class HTMLModuleManager
             // Iframe is a real XHTML 1.1 module, despite being
             // "transitional"!
             array_merge($common, $xml, ['Ruby', 'Iframe']),
-            ['Tidy_Strict', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Strict', 'Tidy_Name'], // Tidy_XHTML1_1
+            ['Tidy\\Strict', 'Tidy\\XHTML', 'Tidy\\Proprietary', 'Tidy\\Strict', 'Tidy\\Name'], // Tidy_XHTML1_1
             [],
             '-//W3C//DTD XHTML 1.1//EN',
             'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
@@ -338,7 +337,7 @@ class HTMLModuleManager
             $n = [];
             foreach ($module->info_injector as $injector) {
                 if (!is_object($injector)) {
-                    $class = "HTMLPurifier_Injector_$injector";
+                    $class = "HTMLPurifier\\Injector\\$injector";
                     $injector = new $class;
                 }
                 $n[$injector->name] = $injector;

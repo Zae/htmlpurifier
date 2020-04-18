@@ -5,7 +5,7 @@ DEFAULT: false
 --DESCRIPTION--
 <p>
     Whether or not to allow proprietary elements and attributes in your
-    documents, as per <code>HTMLPurifier_HTMLModule_Proprietary</code>.
+    documents, as per <code>HTMLPurifier\HTMLModule\HTMLPurifier_HTMLModule_Proprietary</code>.
     <strong>Warning:</strong> This can cause your documents to stop
     validating!
 </p>
