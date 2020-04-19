@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\DefinitionCache\Decorator;
 
-use HTMLPurifier_DefinitionCache_Decorator_Cleanup;
+use HTMLPurifier\DefinitionCache\Decorator\Cleanup;
 
 /**
  * Class CleanupTest
@@ -14,7 +14,7 @@ class CleanupTest extends TestCase
 {
     public function setUp(): void
     {
-        $this->cache = new HTMLPurifier_DefinitionCache_Decorator_Cleanup();
+        $this->cache = new Cleanup();
 
         parent::setUp();
     }

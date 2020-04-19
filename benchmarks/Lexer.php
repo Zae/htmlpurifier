@@ -2,6 +2,7 @@
 
 use HTMLPurifier\Context;
 use HTMLPurifier\Lexer\DOMLex;
+use HTMLPurifier\Lexer\DirectLex;
 
 require_once '../library/HTMLPurifier.auto.php';
 @include_once '../test-settings.php';
@@ -15,7 +16,7 @@ $RUNS = isset($GLOBALS['HTMLPurifierTest']['Runs'])
     ? $GLOBALS['HTMLPurifierTest']['Runs'] : 2;
 
 require_once 'HTMLPurifier/Lexer/DirectLex.php';
-$LEXERS['DirectLex'] = new HTMLPurifier_Lexer_DirectLex();
+$LEXERS['DirectLex'] = new DirectLex();
 
 if (version_compare(PHP_VERSION, '5', '>=')) {
     require_once 'HTMLPurifier/Lexer/DOMLex.php';

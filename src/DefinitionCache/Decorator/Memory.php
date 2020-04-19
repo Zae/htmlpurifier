@@ -2,16 +2,19 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\DefinitionCache\Decorator;
+
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
 use HTMLPurifier\Exception;
+use HTMLPurifier_Config;
 
 /**
  * Definition cache decorator class that saves all cache retrievals
  * to PHP's memory; good for unit tests or circumstances where
  * there are lots of configuration objects floating around.
  */
-class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
+class Memory extends Decorator
 {
     /**
      * @type array
@@ -24,7 +27,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
     public $name = 'Memory';
 
     /**
-     * @return HTMLPurifier_DefinitionCache_Decorator_Memory
+     * @return Memory
      */
     public function copy(): Decorator
     {

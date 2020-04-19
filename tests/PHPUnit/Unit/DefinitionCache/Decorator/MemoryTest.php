@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\DefinitionCache\Decorator;
 
-use HTMLPurifier_DefinitionCache_Decorator_Memory;
+use HTMLPurifier\DefinitionCache\Decorator\Memory;
 use Mockery;
 
 /**
@@ -16,7 +16,7 @@ class MemoryTest extends TestCase
 {
     public function setUp(): void
     {
-        $this->cache = new HTMLPurifier_DefinitionCache_Decorator_Memory();
+        $this->cache = new Memory();
         
         parent::setUp();
     }

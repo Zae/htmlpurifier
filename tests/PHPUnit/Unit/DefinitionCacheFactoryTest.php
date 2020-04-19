@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_DefinitionCache_Decorator_Memory;
+use HTMLPurifier\DefinitionCache\Decorator\Memory;
 use HTMLPurifier\DefinitionCache\DevNull;
 use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier\DefinitionCacheFactory;
@@ -60,7 +60,7 @@ class DefinitionCacheFactoryTest extends TestCase
     {
         $this->factory->addDecorator('Memory');
         $cache = $this->factory->create('Test', $this->config);
-        $cache_real = new HTMLPurifier_DefinitionCache_Decorator_Memory();
+        $cache_real = new Memory();
         $ser = new Serializer('Test');
         $cache_real = $cache_real->decorate($ser);
 
@@ -73,9 +73,9 @@ class DefinitionCacheFactoryTest extends TestCase
      */
     public function test_create_withDecoratorObject(): void
     {
-        $this->factory->addDecorator(new HTMLPurifier_DefinitionCache_Decorator_Memory());
+        $this->factory->addDecorator(new Memory());
         $cache = $this->factory->create('Test', $this->config);
-        $cache_real = new HTMLPurifier_DefinitionCache_Decorator_Memory();
+        $cache_real = new Memory();
         $ser = new Serializer('Test');
         $cache_real = $cache_real->decorate($ser);
 

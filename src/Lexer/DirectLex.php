@@ -2,14 +2,18 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Lexer;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\Lexer;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
 
 /**
  * Our in-house implementation of a parser.
@@ -21,7 +25,7 @@ use HTMLPurifier\Token\Start;
  *
  * @todo Reread XML spec and document differences.
  */
-class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
+class DirectLex extends Lexer
 {
     /**
      * @type bool
@@ -400,8 +404,9 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
     public function parseAttributeString(
         string $string,
         HTMLPurifier_Config $config,
-        Context$context
-    ): array {
+        Context $context
+    ): array
+    {
         $string = (string)$string; // quick typecast
 
         if ($string === '') {
@@ -448,14 +453,16 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             if ($same_quote && $open_quote) {
                 // well behaved
                 $value = substr($quoted_value, 1, -1);
-            } else if ($open_quote) {
-                if ($e) {
-                    $e->send(E_ERROR, 'Lexer: Missing end quote');
-                }
-
-                $value = substr($quoted_value, 1);
             } else {
-                $value = $quoted_value;
+                if ($open_quote) {
+                    if ($e) {
+                        $e->send(E_ERROR, 'Lexer: Missing end quote');
+                    }
+
+                    $value = substr($quoted_value, 1);
+                } else {
+                    $value = $quoted_value;
+                }
             }
 
             if ($value === false) {
@@ -554,10 +561,14 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
                 $array[$key] = $this->parseAttr($value, $config);
                 $cursor++;
-            } else if ($key !== '') {
-                $array[$key] = $key;
-            } else if ($e) {
-                $e->send(E_ERROR, 'Lexer: Missing attribute key');
+            } else {
+                if ($key !== '') {
+                    $array[$key] = $key;
+                } else {
+                    if ($e) {
+                        $e->send(E_ERROR, 'Lexer: Missing attribute key');
+                    }
+                }
             }
         }
 

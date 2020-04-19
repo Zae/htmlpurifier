@@ -12,4 +12,4 @@ if (!extension_loaded('dom')) {
 require '../library/HTMLPurifier.auto.php';
 echo get_class(HTMLPurifier_Lexer::create(HTMLPurifier_Config::createDefault()));
 --EXPECT--
-HTMLPurifier_Lexer_DirectLex
+HTMLPurifier\Lexer\HTMLPurifier_Lexer_DirectLex

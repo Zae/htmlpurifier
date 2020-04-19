@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Arborize;
 use HTMLPurifier\Generator;
-use HTMLPurifier_Lexer_DirectLex;
+use HTMLPurifier\Lexer\DirectLex;
 use HTMLPurifier\Node;
 use HTMLPurifier\Node\Element;
 use function is_array;
@@ -63,7 +63,7 @@ class ComplexTestCase extends TestCase
 
     public function __construct()
     {
-        $this->lexer = new HTMLPurifier_Lexer_DirectLex();
+        $this->lexer = new DirectLex();
         parent::__construct();
     }
 

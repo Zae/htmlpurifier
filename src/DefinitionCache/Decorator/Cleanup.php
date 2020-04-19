@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\DefinitionCache\Decorator;
+
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
+use HTMLPurifier_Config;
 
 /**
  * Definition cache decorator class that cleans up the cache
  * whenever there is a cache miss.
  */
-class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends Decorator
+class Cleanup extends Decorator
 {
     /**
      * @type string
@@ -17,7 +20,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Cleanup extends Decorator
     public $name = 'Cleanup';
 
     /**
-     * @return HTMLPurifier_DefinitionCache_Decorator_Cleanup
+     * @return Cleanup
      */
     public function copy(): Decorator
     {

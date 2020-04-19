@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Lexer\DirectLex;
+
 class HTMLPurifier_Strategy_ErrorsHarness extends HTMLPurifier_ErrorsHarness
 {
 
@@ -9,7 +11,7 @@ class HTMLPurifier_Strategy_ErrorsHarness extends HTMLPurifier_ErrorsHarness
     protected function invoke($input)
     {
         $strategy = $this->getStrategy();
-        $lexer = new HTMLPurifier_Lexer_DirectLex();
+        $lexer = new DirectLex();
         $tokens = $lexer->tokenizeHTML($input, $this->config, $this->context);
         $strategy->execute($tokens, $this->config, $this->context);
     }
