@@ -72,7 +72,7 @@ class URISchemeRegistry
             return null;
         }
 
-        $class = 'HTMLPurifier_URIScheme_' . $scheme;
+        $class = 'HTMLPurifier\\URIScheme\\' . $scheme;
         if (!class_exists($class)) {
             return null;
         }

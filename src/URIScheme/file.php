@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIScheme;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
  * Validates file as defined by RFC 1630 and RFC 1738.
  */
-class HTMLPurifier_URIScheme_file extends URIScheme
+class file extends URIScheme
 {
     /**
      * Generally file:// URLs are not accessible from most

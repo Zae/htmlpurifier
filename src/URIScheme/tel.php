@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIScheme;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
  * Validates tel (for phone numbers).
@@ -14,7 +17,7 @@ use HTMLPurifier\URI;
  * numbers so that they only include (possibly) a leading plus,
  * and then any number of digits and x'es.
  */
-class HTMLPurifier_URIScheme_tel extends URIScheme
+class tel extends URIScheme
 {
     /**
      * @type bool

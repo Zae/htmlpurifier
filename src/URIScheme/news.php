@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-// VERY RELAXED! Shouldn't cause problems, not even Firefox checks if the
-// email is valid, but be careful!
+namespace HTMLPurifier\URIScheme;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
- * Validates mailto (for E-mail) according to RFC 2368
- *
- * @todo Validate the email address
- * @todo Filter allowed query parameters
+ * Validates news (Usenet) as defined by generic RFC 1738
  */
-class HTMLPurifier_URIScheme_mailto extends URIScheme
+class news extends URIScheme
 {
     /**
      * @type bool
@@ -38,8 +36,9 @@ class HTMLPurifier_URIScheme_mailto extends URIScheme
         $uri->userinfo = null;
         $uri->host = null;
         $uri->port = null;
+        $uri->query = null;
 
-        // we need to validate path against RFC 2368's addr-spec
+        // typecode check needed on path
         return true;
     }
 }

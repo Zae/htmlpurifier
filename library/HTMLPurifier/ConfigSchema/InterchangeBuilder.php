@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\VarParser\Native;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 use HTMLPurifier\StringHashParser;
@@ -21,7 +22,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      */
     public function __construct(VarParser $varParser = null)
     {
-        $this->varParser = $varParser ?: new HTMLPurifier_VarParser_Native();
+        $this->varParser = $varParser ?: new Native();
     }
 
     /**
