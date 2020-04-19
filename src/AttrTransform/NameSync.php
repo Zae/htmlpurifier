@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef\HTML\ID;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Post-transform that performs validation to the name attribute; if
@@ -33,7 +33,7 @@ class NameSync extends AttrTransform
      * @param Context             $context
      *
      * @return array
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {

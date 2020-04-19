@@ -7,6 +7,7 @@ use HTMLPurifier\Definition;
 use HTMLPurifier\CSSDefinition;
 use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\DefinitionCacheFactory;
+use HTMLPurifier\Exception;
 use HTMLPurifier\VarParser\Flexible;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\URIDefinition;
@@ -187,7 +188,7 @@ class HTMLPurifier_Config
      * @param mixed  $a
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function get(string $key, $a = null)
     {
@@ -455,7 +456,7 @@ class HTMLPurifier_Config
      *                        named, instead.
      *
      * @return HTMLDefinition|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function getHTMLDefinition(bool $raw = false, bool $optimized = false)
     {
@@ -475,7 +476,7 @@ class HTMLPurifier_Config
      *                        named, instead.
      *
      * @return CSSDefinition|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function getCSSDefinition(bool $raw = false, bool $optimized = false)
     {
@@ -495,7 +496,7 @@ class HTMLPurifier_Config
      *                        named, instead.
      *
      * @return URIDefinition|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function getURIDefinition(bool $raw = false, bool $optimized = false)
     {
@@ -517,12 +518,12 @@ class HTMLPurifier_Config
      *        maybe semantics is the "right thing to do."
      *
      * @return Definition|null
-     *@throws HTMLPurifier_Exception
+     *@throws Exception
      */
     public function getDefinition(string $type, bool $raw = false, bool $optimized = false)
     {
         if ($optimized && !$raw) {
-            throw new HTMLPurifier_Exception('Cannot set optimized = true when raw = false');
+            throw new Exception('Cannot set optimized = true when raw = false');
         }
 
         if (!$this->finalized) {
@@ -578,7 +579,7 @@ class HTMLPurifier_Config
         $def = null;
         if ($optimized && is_null($this->get($type . '.DefinitionID'))) {
             // fatally error out if definition ID not set
-            throw new HTMLPurifier_Exception(
+            throw new Exception(
                 "Cannot retrieve raw version without specifying %$type.DefinitionID"
             );
         }
@@ -589,7 +590,7 @@ class HTMLPurifier_Config
                 $extra = $this->chatty ?
                     ' (try moving this code block earlier in your initialization)' :
                     '';
-                throw new HTMLPurifier_Exception(
+                throw new Exception(
                     'Cannot retrieve raw definition after it has already been setup' .
                     $extra
                 );
@@ -597,7 +598,7 @@ class HTMLPurifier_Config
             
             if ($def->optimized === null) {
                 $extra = $this->chatty ? ' (try flushing your cache)' : '';
-                throw new HTMLPurifier_Exception(
+                throw new Exception(
                     'Optimization status of definition is unknown' . $extra
                 );
             }
@@ -608,7 +609,7 @@ class HTMLPurifier_Config
                     " (this backtrace is for the first inconsistent call, which was for a $msg raw definition)"
                     : '';
 
-                throw new HTMLPurifier_Exception(
+                throw new Exception(
                     'Inconsistent use of optimized and unoptimized raw definition retrievals' . $extra
                 );
             }
@@ -668,7 +669,7 @@ class HTMLPurifier_Config
         $def->optimized = $optimized;
 
         return $def;
-        throw new HTMLPurifier_Exception('The impossible happened!');
+        throw new Exception('The impossible happened!');
     }
 
     /**
@@ -677,7 +678,7 @@ class HTMLPurifier_Config
      * @param string $type What type of definition to create
      *
      * @return CSSDefinition|HTMLDefinition|URIDefinition
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     private function initDefinition(string $type)
     {
@@ -689,7 +690,7 @@ class HTMLPurifier_Config
         } elseif ($type === 'URI') {
             $def = new URIDefinition();
         } else {
-            throw new HTMLPurifier_Exception(
+            throw new Exception(
                 "Definition of $type type not supported"
             );
         }
@@ -705,7 +706,7 @@ class HTMLPurifier_Config
 
     /**
      * @return HTMLDefinition|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function maybeGetRawHTMLDefinition()
     {
@@ -714,7 +715,7 @@ class HTMLPurifier_Config
 
     /**
      * @return CSSDefinition|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function maybeGetRawCSSDefinition()
     {
@@ -723,7 +724,7 @@ class HTMLPurifier_Config
 
     /**
      * @return URIDefinition|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function maybeGetRawURIDefinition()
     {
@@ -982,7 +983,7 @@ class HTMLPurifier_Config
      * be reconstituted.
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function serialize()
     {

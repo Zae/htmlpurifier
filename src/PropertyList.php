@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Generic property list implementation
@@ -46,7 +46,7 @@ class PropertyList
      * @param string $name
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function get(string $name)
     {
@@ -59,7 +59,7 @@ class PropertyList
             return $this->parent->get($name);
         }
 
-        throw new HTMLPurifier_Exception("Key '{$name}' not found");
+        throw new Exception("Key '{$name}' not found");
     }
 
     /**

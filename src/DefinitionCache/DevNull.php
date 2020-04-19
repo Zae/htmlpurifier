@@ -6,12 +6,12 @@ namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
 use HTMLPurifier_Config;
-use HTMLPurifier_DefinitionCache;
+use HTMLPurifier\DefinitionCache;
 
 /**
  * Null cache object to use when no caching is on.
  */
-class DevNull extends HTMLPurifier_DefinitionCache
+class DevNull extends DefinitionCache
 {
     /**
      * @param Definition          $def

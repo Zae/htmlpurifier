@@ -9,7 +9,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Text;
 
 /**
@@ -38,7 +38,7 @@ class PurifierLinkify extends Injector
      * @param Context             $context
      *
      * @return string|bool
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function prepare(HTMLPurifier_Config $config, Context $context)
     {

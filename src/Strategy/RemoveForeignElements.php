@@ -12,7 +12,7 @@ use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -32,7 +32,7 @@ class RemoveForeignElements extends Strategy
      * @param Context             $context
      *
      * @return array|Token[]
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {

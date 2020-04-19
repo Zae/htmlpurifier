@@ -80,7 +80,7 @@ a[href|title]
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_Allowed(): void
     {
@@ -98,7 +98,7 @@ a[href|title]
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_AllowedElements(): void
     {
@@ -558,7 +558,7 @@ a[href|title]
     }
 
     /**
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     private function assertPurification_AllowedElements_p(): void
     {

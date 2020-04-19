@@ -7,9 +7,9 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier_Config;
 use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\CSSDefinition;
-use HTMLPurifier_DefinitionCache;
+use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\DefinitionCacheFactory;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLDefinition;
 use Mockery;
 use stdClass;
@@ -37,7 +37,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testNormal(): void
     {
@@ -103,7 +103,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testEnumerated(): void
     {
@@ -156,7 +156,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testNull(): void
     {
@@ -232,7 +232,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_loadIni(): void
     {
@@ -253,7 +253,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition(): void
     {
@@ -285,7 +285,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition_deprecatedRawError(): void
     {
@@ -307,22 +307,22 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition_optimizedRawError(): void
     {
-        $this->expectExceptionObject(new HTMLPurifier_Exception('Cannot set optimized = true when raw = false'));
+        $this->expectExceptionObject(new Exception('Cannot set optimized = true when raw = false'));
         $config = HTMLPurifier_Config::createDefault();
         $config->getHTMLDefinition(false, true);
     }
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition_rawAfterSetupError(): void
     {
-        $this->expectExceptionObject(new HTMLPurifier_Exception('Cannot retrieve raw definition after it has already been setup'));
+        $this->expectExceptionObject(new Exception('Cannot retrieve raw definition after it has already been setup'));
         $config = HTMLPurifier_Config::createDefault();
         $config->chatty = false;
         $config->getHTMLDefinition();
@@ -331,13 +331,13 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition_inconsistentOptimizedError(): void
     {
         $this->expectError();
         $this->expectErrorMessage('Useless DefinitionID declaration');
-//        $this->expectExceptionObject(new HTMLPurifier_Exception('Inconsistent use of optimized and unoptimized raw definition retrievals'));
+//        $this->expectExceptionObject(new HTMLPurifier\HTMLPurifier_Exception('Inconsistent use of optimized and unoptimized raw definition retrievals'));
         $config = HTMLPurifier_Config::create(['HTML.DefinitionID' => 'HTMLPurifier_ConfigTest->test_getHTMLDefinition_inconsistentOptimizedError']);
         $config->chatty = false;
         $config->getHTMLDefinition(true, false);
@@ -346,11 +346,11 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition_inconsistentOptimizedError2(): void
     {
-        $this->expectExceptionObject(new HTMLPurifier_Exception('Inconsistent use of optimized and unoptimized raw definition retrievals'));
+        $this->expectExceptionObject(new Exception('Inconsistent use of optimized and unoptimized raw definition retrievals'));
         $config = HTMLPurifier_Config::create(['HTML.DefinitionID' => 'HTMLPurifier_ConfigTest->test_getHTMLDefinition_inconsistentOptimizedError2']);
         $config->chatty = false;
         $config->getHTMLDefinition(true, true);
@@ -359,18 +359,18 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getHTMLDefinition_rawError(): void
     {
         $config = HTMLPurifier_Config::createDefault();
-        $this->expectExceptionObject(new HTMLPurifier_Exception('Cannot retrieve raw version without specifying %HTML.DefinitionID'));
+        $this->expectExceptionObject(new Exception('Cannot retrieve raw version without specifying %HTML.DefinitionID'));
         $def = $config->getHTMLDefinition(true, true);
     }
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getCSSDefinition(): void
     {
@@ -381,13 +381,13 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getDefinition(): void
     {
         $this->schema->add('Cache.DefinitionImpl', null, 'string', true);
         $config = new HTMLPurifier_Config($this->schema);
-        $this->expectExceptionObject(new HTMLPurifier_Exception('Definition of Crust type not supported'));
+        $this->expectExceptionObject(new Exception('Definition of Crust type not supported'));
         $config->getDefinition('Crust');
     }
 
@@ -576,7 +576,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testDeprecatedAPI(): void
     {
@@ -596,7 +596,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testInherit(): void
     {
@@ -615,7 +615,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testSerialize(): void
     {
@@ -689,7 +689,7 @@ class ConfigTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testDefinitionCachingOptimizedHit(): void
     {
@@ -736,7 +736,7 @@ class ConfigTest extends TestCase
         $this->oldFactory = DefinitionCacheFactory::instance();
 
         DefinitionCacheFactory::instance($factory);
-        $mock = Mockery::mock(HTMLPurifier_DefinitionCache::class);
+        $mock = Mockery::mock(DefinitionCache::class);
         $mock->content_model = '123';
 
         $config = HTMLPurifier_Config::createDefault();

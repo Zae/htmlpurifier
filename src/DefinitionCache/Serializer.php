@@ -6,13 +6,13 @@ namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
 use HTMLPurifier_Config;
-use HTMLPurifier_DefinitionCache;
-use HTMLPurifier_Exception;
+use HTMLPurifier\DefinitionCache;
+use HTMLPurifier\Exception;
 
 /**
  * Class HTMLPurifier\DefinitionCache\HTMLPurifier_DefinitionCache_Serializer
  */
-class Serializer extends HTMLPurifier_DefinitionCache
+class Serializer extends DefinitionCache
 {
     /**
      * @param Definition          $def
@@ -152,7 +152,7 @@ class Serializer extends HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config
      *
      * @return bool
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function cleanup(HTMLPurifier_Config $config): bool
     {
@@ -193,7 +193,7 @@ class Serializer extends HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      * @todo Make protected
      */
     public function generateFilePath(HTMLPurifier_Config $config): string
@@ -210,7 +210,7 @@ class Serializer extends HTMLPurifier_DefinitionCache
      *
      * @return string
      * @note No trailing slash
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      * @todo Make protected
      */
     public function generateDirectoryPath(HTMLPurifier_Config $config): string
@@ -227,7 +227,7 @@ class Serializer extends HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config
      *
      * @return mixed|string
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      * @todo Make protected
      */
     public function generateBaseDirectoryPath(HTMLPurifier_Config $config)
@@ -246,7 +246,7 @@ class Serializer extends HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config
      *
      * @return int|bool Number of bytes written if success, or false if failure.
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     private function _write(string $file, string $data, HTMLPurifier_Config $config)
     {
@@ -268,7 +268,7 @@ class Serializer extends HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config
      *
      * @return bool True if successful
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     private function _prepareDir(HTMLPurifier_Config $config): bool
     {

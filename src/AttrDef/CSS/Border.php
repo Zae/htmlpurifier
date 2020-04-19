@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Validates the border property as defined by CSS.
@@ -24,7 +24,7 @@ class Border extends AttrDef
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function __construct($config)
     {

@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Definition for list containers ul and ol.
@@ -39,7 +39,7 @@ class Lists extends ChildDef
      * @param Context             $context
      *
      * @return array
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
     {

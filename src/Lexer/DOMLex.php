@@ -9,7 +9,7 @@ use DOMNamedNodeMap;
 use DOMNode;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier_Lexer;
 use HTMLPurifier\Queue;
 use HTMLPurifier\Token;
@@ -59,7 +59,7 @@ class DOMLex extends HTMLPurifier_Lexer
      * @param Context             $context
      *
      * @return \HTMLPurifier\Token[]
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function tokenizeHTML(?string $string, HTMLPurifier_Config $config, Context $context): array
     {
@@ -127,7 +127,7 @@ class DOMLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config   $config
      *
      * @return void of node appended to previously passed tokens.
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function tokenizeDOM(DOMNode $node, array &$tokens, HTMLPurifier_Config $config): void
     {
@@ -197,7 +197,7 @@ class DOMLex extends HTMLPurifier_Lexer
      * @param HTMLPurifier_Config   $config
      *
      * @return bool if the token needs an endtoken
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      * @todo data and tagName properties don't seem to exist in DOMNode?
      */
     protected function createStartNode(DOMNode $node, array &$tokens, bool $collect, HTMLPurifier_Config $config): bool
@@ -352,7 +352,7 @@ class DOMLex extends HTMLPurifier_Lexer
      * @param bool                  $use_div
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function wrapHTML(string $html, HTMLPurifier_Config $config, Context $context, bool $use_div = true): string
     {

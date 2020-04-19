@@ -6,17 +6,17 @@ namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
 use HTMLPurifier_Config;
-use HTMLPurifier_DefinitionCache;
+use HTMLPurifier\DefinitionCache;
 
 /**
  * Class HTMLPurifier\ChildDef\HTMLPurifier_DefinitionCache_Decorator
  */
-class Decorator extends HTMLPurifier_DefinitionCache
+class Decorator extends DefinitionCache
 {
     /**
      * Cache object we are decorating
      *
-     * @type HTMLPurifier_DefinitionCache
+     * @type \HTMLPurifier\DefinitionCache
      */
     public $cache;
 
@@ -34,11 +34,11 @@ class Decorator extends HTMLPurifier_DefinitionCache
     /**
      * Lazy decorator function
      *
-     * @param HTMLPurifier_DefinitionCache $cache Reference to cache object to decorate
+     * @param \HTMLPurifier\DefinitionCache $cache Reference to cache object to decorate
      *
      * @return Decorator
      */
-    public function decorate(HTMLPurifier_DefinitionCache $cache): Decorator
+    public function decorate(DefinitionCache $cache): Decorator
     {
         $decorator = $this->copy();
 

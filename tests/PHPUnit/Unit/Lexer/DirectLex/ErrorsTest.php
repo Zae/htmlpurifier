@@ -85,7 +85,7 @@ class ErrorsTest extends ErrorsTestCase
     /**
      * @param $input
      *
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     private function invoke($input): void
     {
@@ -96,7 +96,7 @@ class ErrorsTest extends ErrorsTestCase
     /**
      * @param $input
      *
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     private function invokeAttr($input): void
     {

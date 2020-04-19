@@ -8,7 +8,7 @@ use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier_Config;
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\DefinitionCache\DevNull;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Responsible for creating definition caches.
@@ -76,7 +76,7 @@ class DefinitionCacheFactory
      * @param HTMLPurifier_Config $config Config instance
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function create(string $type, HTMLPurifier_Config $config)
     {

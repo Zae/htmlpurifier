@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 
@@ -103,7 +104,7 @@ class HTMLPurifier_ConfigSchema_Validator
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
      *
      * @throws HTMLPurifier_ConfigSchema_Exception
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validateDirective(HTMLPurifier_ConfigSchema_Interchange_Directive $d): void
     {

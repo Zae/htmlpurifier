@@ -28,7 +28,7 @@ use HTMLPurifier\AttrDef\CSS\ImportantDecorator;
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Definition;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Defines allowed CSS attributes and what their values are.
@@ -536,7 +536,7 @@ class CSSDefinition extends Definition
      *
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      * @todo Refactor duplicate elements into common class (probably using composition, not inheritance).
      */
     protected function setupConfigStuff($config): void

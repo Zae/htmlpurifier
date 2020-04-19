@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Exception;
+
 /**
  * Converts HTMLPurifier_ConfigSchema_Interchange to an XML format,
  * which can be further processed to generate documentation.
@@ -21,7 +23,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
     /**
      * @param string $html
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function writeHTMLDiv(string $html): void
     {
@@ -76,7 +78,7 @@ class HTMLPurifier_ConfigSchema_Builder_Xml extends XMLWriter
     /**
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $directive
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function buildDirective(HTMLPurifier_ConfigSchema_Interchange_Directive $directive): void
     {

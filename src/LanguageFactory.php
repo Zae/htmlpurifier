@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\Lang;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Class responsible for generating HTMLPurifier\HTMLPurifier_Language objects, managing
@@ -104,7 +104,7 @@ class LanguageFactory
      * @param bool|string         $code Code to override configuration with. Private parameter.
      *
      * @return Language
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function create(HTMLPurifier_Config $config, Context $context, $code = false)
     {

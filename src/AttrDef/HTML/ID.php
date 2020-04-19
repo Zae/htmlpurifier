@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrDef\HTML;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Validates the HTML attribute ID.
@@ -45,7 +45,7 @@ class ID extends AttrDef
      * @param Context             $context
      *
      * @return bool|string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validate($id, $config, $context)
     {

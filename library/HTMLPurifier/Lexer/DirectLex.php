@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Comment;
@@ -52,7 +53,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
      * @param Context             $context
      *
      * @return array|Token[]
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function tokenizeHTML(string $string, HTMLPurifier_Config $config, Context $context): array
     {
@@ -394,7 +395,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
      * @param Context             $context
      *
      * @return array Assoc array of attributes.
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function parseAttributeString(
         string $string,

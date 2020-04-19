@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\DefinitionCache;
 
-use HTMLPurifier_DefinitionCache;
+use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\DefinitionCache\Decorator;
 use Mockery;
 
@@ -20,7 +20,7 @@ class DecoratorTest extends TestCase
      */
     public function testIt(): void
     {
-        $mock = Mockery::mock(HTMLPurifier_DefinitionCache::class);
+        $mock = Mockery::mock(DefinitionCache::class);
         $mock->type = 'Test';
 
         $cache = new Decorator();

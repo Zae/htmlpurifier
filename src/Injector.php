@@ -7,7 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Text;
 
 /**
@@ -114,7 +114,7 @@ abstract class Injector
      * @param Context             $context
      *
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function prepare(HTMLPurifier_Config $config, Context $context)
     {
@@ -143,7 +143,7 @@ abstract class Injector
      * @param HTMLPurifier_Config $config
      *
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function checkNeeded(HTMLPurifier_Config $config)
     {

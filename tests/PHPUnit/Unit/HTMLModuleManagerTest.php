@@ -40,7 +40,7 @@ class HTMLModuleManagerTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_addModule(): void
     {
@@ -110,7 +110,7 @@ class HTMLModuleManagerTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testAllowedModules(): void
     {

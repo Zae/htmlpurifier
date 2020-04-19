@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 
 /**
@@ -65,7 +65,7 @@ class SafeObject extends Injector
      * @param Context             $context
      *
      * @return void
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function prepare(HTMLPurifier_Config $config, Context $context)
     {

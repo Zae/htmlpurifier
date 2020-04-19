@@ -7,7 +7,7 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\AttrTransform\NameSync;
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Class HTMLPurifier\HTMLModule\HTMLPurifier_HTMLModule_Name
@@ -22,7 +22,7 @@ class Name extends HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function setup($config): void
     {

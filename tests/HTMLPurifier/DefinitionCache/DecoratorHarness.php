@@ -1,6 +1,6 @@
 <?php
 
-generate_mock_once('HTMLPurifier_DefinitionCache');
+generate_mock_once('HTMLPurifier\DefinitionCache');
 
 class HTMLPurifier_DefinitionCache_DecoratorHarness extends HTMLPurifier_DefinitionCacheHarness
 {

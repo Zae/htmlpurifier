@@ -148,7 +148,7 @@ class SerializerTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testCleanup(): void
     {
@@ -188,7 +188,7 @@ class SerializerTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testCleanupOnlySameID(): void
     {
@@ -288,7 +288,7 @@ class SerializerTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testNoInfiniteLoop(): void
     {

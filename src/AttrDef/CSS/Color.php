@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\CSS\AlphaValue;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Validates Color as defined by CSS.
@@ -31,7 +31,7 @@ class Color extends AttrDef
      * @param Context             $context
      *
      * @return bool|string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validate($color, $config, $context)
     {

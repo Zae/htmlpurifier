@@ -5,6 +5,7 @@ declare(strict_types=1);
 use HTMLPurifier\Encoder;
 use HTMLPurifier\Context;
 use HTMLPurifier\EntityParser;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token;
 use HTMLPurifier\Lexer\DOMLex;
 
@@ -76,7 +77,7 @@ class HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      *
      * @return HTMLPurifier_Lexer
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public static function create($config)
     {
@@ -135,7 +136,7 @@ class HTMLPurifier_Lexer
                     $inst = new _PH5P();
                     break;
                 default:
-                    throw new HTMLPurifier_Exception(
+                    throw new Exception(
                         'Cannot instantiate unrecognized Lexer type ' .
                         htmlspecialchars($lexer)
                     );
@@ -143,13 +144,13 @@ class HTMLPurifier_Lexer
         }
 
         if (!$inst) {
-            throw new HTMLPurifier_Exception('No lexer was instantiated');
+            throw new Exception('No lexer was instantiated');
         }
 
         // once PHP DOM implements native line numbers, or we
         // hack out something using XSLT, remove this stipulation
         if ($needs_tracking && !$inst->tracksLineNumbers) {
-            throw new HTMLPurifier_Exception(
+            throw new Exception(
                 'Cannot use lexer that does not support line numbers with ' .
                 'Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)'
             );
@@ -186,7 +187,7 @@ class HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function parseText(string $string, HTMLPurifier_Config $config): string
     {
@@ -198,7 +199,7 @@ class HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function parseAttr(string $string, HTMLPurifier_Config $config): string
     {
@@ -216,7 +217,7 @@ class HTMLPurifier_Lexer
      * @param HTMLPurifier_Config $config
      *
      * @return string Parsed character data.
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function parseData(string $string, bool $is_attr, HTMLPurifier_Config $config): string
     {
@@ -346,7 +347,7 @@ class HTMLPurifier_Lexer
      * @param Context             $context
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      * @todo Consider making protected
      */
     public function normalize(?string $html, HTMLPurifier_Config $config, Context $context): string

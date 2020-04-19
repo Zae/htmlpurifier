@@ -7,7 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\AttrDef\URI\Host;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\PercentEncoder;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URISchemeRegistry;
@@ -95,7 +95,7 @@ class URI
      * @param Context             $context
      *
      * @return URIScheme|bool Scheme object appropriate for validating this URI
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function getSchemeObj(HTMLPurifier_Config $config, Context $context)
     {
@@ -133,7 +133,7 @@ class URI
      * @param Context             $context
      *
      * @return bool True if validation/filtering succeeds, false if failure
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validate(HTMLPurifier_Config $config, Context $context): bool
     {
@@ -307,7 +307,7 @@ class URI
      * @param HTMLPurifier_Config $config
      *
      * @return bool
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function isLocal(HTMLPurifier_Config $config): bool
     {
@@ -331,7 +331,7 @@ class URI
      * @param Context             $context
      *
      * @return bool
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function isBenign(HTMLPurifier_Config $config, Context $context): bool
     {

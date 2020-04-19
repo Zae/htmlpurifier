@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Component of HTMLPurifier_AttrContext that accumulates IDs to prevent dupes
@@ -30,7 +30,7 @@ class IDAccumulator
      * @param Context             $context Instance of HTMLPurifier\HTMLPurifier_Context
      *
      * @return IDAccumulator Fully initialized HTMLPurifier\HTMLPurifier_IDAccumulator
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public static function build(HTMLPurifier_Config $config, $context)
     {

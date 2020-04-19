@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrTransform\SafeParam;
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * A "safe" object module. In theory, objects permitted by this module will
@@ -26,7 +26,7 @@ class SafeObject extends HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function setup(HTMLPurifier_Config $config): void
     {

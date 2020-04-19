@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\VarParser;
 
 /**
@@ -102,7 +103,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
      * @param bool                      $render_controls
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function render($config, $allowed = true, bool $render_controls = true): string
     {
@@ -257,7 +258,7 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
      * @param HTMLPurifier_Config|array $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function render(string $ns, string $directive, string $value, string $name, string $config): string
     {
@@ -326,7 +327,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
      * @param HTMLPurifier_Config|array $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function render(string $ns, string $directive, string $value, string $name, $config): string
     {
@@ -435,7 +436,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
      * @param HTMLPurifier_Config|array $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function render(string $ns, string $directive, string $value, string $name, $config): string
     {

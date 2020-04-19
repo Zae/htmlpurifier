@@ -9,7 +9,7 @@ use HTMLPurifier_Config;
 use HTMLPurifier\Definition;
 use HTMLPurifier\Doctype;
 use HTMLPurifier\ElementDef;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier\HTMLModuleManager;
 use HTMLPurifier\Injector;
@@ -293,7 +293,7 @@ class HTMLDefinition extends Definition
      *
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function setupConfigStuff(HTMLPurifier_Config $config)
     {

@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrTransform\ScriptRequired;
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * A "safe" script module. No inline JS is allowed, and pointed to JS
@@ -24,7 +24,7 @@ class SafeScripting extends HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function setup(HTMLPurifier_Config $config): void
     {

@@ -7,7 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -86,7 +86,7 @@ class Generator
      * @param HTMLPurifier_Config $config
      * @param Context             $context
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function __construct(HTMLPurifier_Config $config, Context $context)
     {
@@ -105,7 +105,7 @@ class Generator
      * @param Token[] $tokens Array of HTMLPurifier\HTMLPurifier_Token
      *
      * @return string Generated HTML
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function generateFromTokens(array $tokens)
     {
