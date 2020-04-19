@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier;
 use \HTMLPurifier\Config;
 use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\HTMLPurifier;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Injector\Linkify;
 

@@ -37,7 +37,7 @@ class HTMLPurifier_Harness extends UnitTestCase
         list($this->config, $this->context) = $this->createCommon();
         $this->config->set('Output.Newline', '
 ');
-        $this->purifier = new HTMLPurifier();
+        $this->purifier = new \HTMLPurifier\HTMLPurifier();
     }
 
     /**

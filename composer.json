@@ -20,13 +20,33 @@
         "ext-iconv": "*"
     },
     "require-dev": {
-        "simpletest/simpletest": "dev-master#72de02a7b80c6bb8864ef9bf66d41d2f58f826bd"
+        "simpletest/simpletest": "^1.2.0",
+        "phpunit/phpunit": "^9.0",
+        "spatie/phpunit-snapshot-assertions": "^4.0",
+        "mockery/mockery": "^1.3"
+    },
+    "suggest": {
+        "ext-bcmath": "Makes math much faster",
+        "ext-posix": "Can use Posix if provided",
+        "ext-exif": "For reading image info"
     },
     "autoload": {
-        "psr-0": { "HTMLPurifier": "library/" },
-        "files": ["library/HTMLPurifier.composer.php"],
-        "exclude-from-classmap": [
-            "/library/HTMLPurifier/Language/"
+        "psr-4": {
+            "HTMLPurifier\\": "src"
+        },
+        "files": [
+            "library/HTMLPurifier.composer.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-0": { "HTMLPurifier": "tests" },
+        "psr-4": {
+            "HTMLPurifier\\Tests\\": "tests/PHPUnit"
+        }
+    },
+    "scripts": {
+        "simpletest": "@php tests/index.php",
+        "snapshots": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Snapshots",
+        "unit": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Unit"
     }
 }
