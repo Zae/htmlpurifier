@@ -69,7 +69,7 @@ class RemoveEmpty extends Injector
         $this->exclude = $config->get('AutoFormat.RemoveEmpty.Predicate');
 
         foreach ($this->exclude as $key => $attrs) {
-            if (!is_array($attrs)) {
+            if (!\is_array($attrs)) {
                 // HACK, see HTMLPurifier/Printer/ConfigForm.php
                 $this->exclude[$key] = explode(';', $attrs);
             }
@@ -90,7 +90,7 @@ class RemoveEmpty extends Injector
         $next = false;
         $deleted = 1; // the current tag
 
-        for ($i = count($this->inputZipper->back) - 1; $i >= 0; $i--, $deleted++) {
+        for ($i = \count($this->inputZipper->back) - 1; $i >= 0; $i--, $deleted++) {
             $next = $this->inputZipper->back[$i];
             if ($next instanceof Text) {
                 if ($next->is_whitespace) {
@@ -131,7 +131,7 @@ class RemoveEmpty extends Injector
 
             $token = $deleted + 1;
 
-            for ($b = 0, $c = count($this->inputZipper->front); $b < $c; $b++) {
+            for ($b = 0, $c = \count($this->inputZipper->front); $b < $c; $b++) {
                 $prev = $this->inputZipper->front[$b];
                 if ($prev instanceof Text && $prev->is_whitespace) {
                     continue;

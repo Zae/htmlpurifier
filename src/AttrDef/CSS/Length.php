@@ -52,7 +52,7 @@ class Length extends AttrDef
             return '0';
         }
 
-        if (strlen($string) === 1) {
+        if (\strlen($string) === 1) {
             return false;
         }
 

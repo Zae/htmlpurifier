@@ -48,7 +48,7 @@ class Nofollow extends AttrTransform
         if ($scheme->browsable && !$url->isLocal($config)) {
             if (isset($attr['rel'])) {
                 $rels = explode(' ', $attr['rel']);
-                if (!in_array('nofollow', $rels, true)) {
+                if (!\in_array('nofollow', $rels, true)) {
                     $rels[] = 'nofollow';
                 }
 

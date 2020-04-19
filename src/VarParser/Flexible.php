@@ -40,21 +40,21 @@ class Flexible extends VarParser
             case self::ITEXT:
                 return $var;
             case self::C_INT:
-                if (is_string($var) && ctype_digit($var)) {
+                if (\is_string($var) && ctype_digit($var)) {
                     $var = (int)$var;
                 }
 
                 return $var;
             case self::C_FLOAT:
-                if ((is_string($var) && is_numeric($var)) || is_int($var)) {
+                if ((\is_string($var) && is_numeric($var)) || \is_int($var)) {
                     $var = (float)$var;
                 }
 
                 return $var;
             case self::C_BOOL:
-                if (is_int($var) && ($var === 0 || $var === 1)) {
+                if (\is_int($var) && ($var === 0 || $var === 1)) {
                     $var = (bool)$var;
-                } elseif (is_string($var)) {
+                } elseif (\is_string($var)) {
                     if ($var === 'on' || $var === 'true' || $var === '1') {
                         $var = true;
                     } elseif ($var === 'off' || $var === 'false' || $var === '0') {
@@ -68,7 +68,7 @@ class Flexible extends VarParser
             case self::ALIST:
             case self::HASH:
             case self::LOOKUP:
-                if (is_string($var)) {
+                if (\is_string($var)) {
                     // special case: technically, this is an array with
                     // a single empty string item, but having an empty
                     // array is more intuitive
@@ -104,7 +104,7 @@ class Flexible extends VarParser
                     }
                 }
 
-                if (!is_array($var)) {
+                if (!\is_array($var)) {
                     break;
                 }
 

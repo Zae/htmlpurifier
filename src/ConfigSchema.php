@@ -124,7 +124,7 @@ class ConfigSchema
     public function add(string $key, $default, $type, bool $allow_null): void
     {
         $obj = new stdClass();
-        $obj->type = is_int($type) ? $type : VarParser::$types[$type];
+        $obj->type = \is_int($type) ? $type : VarParser::$types[$type];
 
         if ($allow_null) {
             $obj->allow_null = true;
@@ -189,9 +189,9 @@ class ConfigSchema
     public function postProcess(): void
     {
         foreach ($this->info as $key => $v) {
-            if (count((array)$v) === 1) {
+            if (\count((array)$v) === 1) {
                 $this->info[$key] = $v->type;
-            } elseif (isset($v->allow_null) && count((array)$v) === 2) {
+            } elseif (isset($v->allow_null) && \count((array)$v) === 2) {
                 $this->info[$key] = -$v->type;
             }
         }

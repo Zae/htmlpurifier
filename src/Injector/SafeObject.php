@@ -88,9 +88,9 @@ class SafeObject extends Injector
 
             $token = $new;
         } elseif ($token->name === 'param') {
-            $nest = count($this->currentNesting) - 1;
+            $nest = \count($this->currentNesting) - 1;
             if ($nest >= 0 && $this->currentNesting[$nest]->name === 'object') {
-                $i = count($this->objectStack) - 1;
+                $i = \count($this->objectStack) - 1;
                 if (!isset($token->attr['name'])) {
                     $token = false;
 

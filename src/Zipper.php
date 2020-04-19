@@ -69,7 +69,7 @@ class Zipper
             $a[] = $t;
         }
 
-        for ($i = count($this->back) - 1; $i >= 0; $i--) {
+        for ($i = \count($this->back) - 1; $i >= 0; $i--) {
             $a[] = $this->back[$i];
         }
 
@@ -205,7 +205,7 @@ class Zipper
         }
 
         // insert
-        for ($i = count($replacement) - 1; $i >= 0; $i--) {
+        for ($i = \count($replacement) - 1; $i >= 0; $i--) {
             $this->insertAfter($r);
             $r = $replacement[$i];
         }

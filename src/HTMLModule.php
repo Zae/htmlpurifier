@@ -183,7 +183,7 @@ class HTMLModule
         );
 
         // literal object $contents means direct child manipulation
-        if (!is_string($contents)) {
+        if (!\is_string($contents)) {
             $this->info[$element]->child = $contents;
         }
 
@@ -243,7 +243,7 @@ class HTMLModule
      */
     public function parseContents($contents)
     {
-        if (!is_string($contents)) {
+        if (!\is_string($contents)) {
             return [null, null];
         } // defer
 
@@ -273,7 +273,7 @@ class HTMLModule
      */
     public function mergeInAttrIncludes(&$attr, $attr_includes)
     {
-        if (!is_array($attr_includes)) {
+        if (!\is_array($attr_includes)) {
             if (empty($attr_includes)) {
                 $attr_includes = [];
             } else {
@@ -296,8 +296,8 @@ class HTMLModule
      */
     public function makeLookup($list)
     {
-        if (is_string($list)) {
-            $list = func_get_args();
+        if (\is_string($list)) {
+            $list = \func_get_args();
         }
 
         $ret = [];

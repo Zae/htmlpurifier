@@ -233,7 +233,7 @@ class Serializer extends DefinitionCache
     public function generateBaseDirectoryPath(Config $config)
     {
         $base = $config->get('Cache.SerializerPath');
-        $base = is_null($base) ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
+        $base = \is_null($base) ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
 
         return $base;
     }
@@ -349,7 +349,7 @@ class Serializer extends DefinitionCache
             return false;
         }
 
-        if (function_exists('posix_getuid') && $chmod !== null) {
+        if (\function_exists('posix_getuid') && $chmod !== null) {
             // POSIX system, we can give more specific advice
             if (fileowner($dir) === posix_getuid()) {
                 // we can chmod it ourselves

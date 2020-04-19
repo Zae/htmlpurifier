@@ -82,7 +82,7 @@ class PropertyList
      */
     public function has($name): bool
     {
-        return array_key_exists($name, $this->data);
+        return \array_key_exists($name, $this->data);
     }
 
     /**

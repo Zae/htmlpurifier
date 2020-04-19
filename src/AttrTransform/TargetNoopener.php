@@ -33,7 +33,7 @@ class TargetNoopener extends AttrTransform
             $rels = [];
         }
 
-        if (isset($attr['target']) && !in_array('noopener', $rels, true)) {
+        if (isset($attr['target']) && !\in_array('noopener', $rels, true)) {
             $rels[] = 'noopener';
         }
 

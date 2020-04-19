@@ -62,7 +62,7 @@ class Multiple extends AttrDef
         }
 
         $parts = explode(' ', $string); // parseCDATA replaced \r, \t and \n
-        $length = count($parts);
+        $length = \count($parts);
         $final = '';
 
         for ($i = 0, $num = 0; $i < $length && $num < $this->max; $i++) {

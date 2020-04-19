@@ -44,7 +44,7 @@ class Pixels extends AttrDef
             return false;
         }
 
-        $length = strlen($string);
+        $length = \strlen($string);
         if (substr($string, $length - 2) === 'px') {
             $string = substr($string, 0, $length - 2);
         }
@@ -83,7 +83,7 @@ class Pixels extends AttrDef
             $max = (int)$string;
         }
 
-        $class = get_class($this);
+        $class = \get_class($this);
 
         return new $class($max);
     }

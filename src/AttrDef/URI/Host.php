@@ -45,7 +45,7 @@ class Host extends AttrDef
      */
     public function validate($string, $config, $context)
     {
-        $length = strlen($string);
+        $length = \strlen($string);
         // empty hostname is OK; it's usually semantically equivalent:
         // the default host as defined by a URI scheme is used:
         //
@@ -115,8 +115,8 @@ class Host extends AttrDef
         }
 
         // PHP 5.3 and later support this functionality natively
-        if (function_exists('idn_to_ascii')) {
-            if (defined('IDNA_NONTRANSITIONAL_TO_ASCII') && defined('INTL_IDNA_VARIANT_UTS46')) {
+        if (\function_exists('idn_to_ascii')) {
+            if (\defined('IDNA_NONTRANSITIONAL_TO_ASCII') && \defined('INTL_IDNA_VARIANT_UTS46')) {
                 $string = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
             } else {
                 $string = idn_to_ascii($string);
@@ -133,8 +133,8 @@ class Host extends AttrDef
                 $new_parts = [];
                 foreach ($parts as $part) {
                     $encodable = false;
-                    for ($i = 0, $c = strlen($part); $i < $c; $i++) {
-                        if (ord($part[$i]) > 0x7a) {
+                    for ($i = 0, $c = \strlen($part); $i < $c; $i++) {
+                        if (\ord($part[$i]) > 0x7a) {
                             $encodable = true;
                             break;
                         }

@@ -33,7 +33,7 @@ class TargetNoreferrer extends AttrTransform
             $rels = [];
         }
 
-        if (isset($attr['target']) && !in_array('noreferrer', $rels, true)) {
+        if (isset($attr['target']) && !\in_array('noreferrer', $rels, true)) {
             $rels[] = 'noreferrer';
         }
 

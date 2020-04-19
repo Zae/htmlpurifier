@@ -52,7 +52,7 @@ class ContentSets
      */
     public function __construct(array $modules)
     {
-        if (!is_array($modules)) {
+        if (!\is_array($modules)) {
             $modules = [$modules];
         }
 
@@ -106,7 +106,7 @@ class ContentSets
         }
 
         $content_model = $def->content_model;
-        if (is_string($content_model)) {
+        if (\is_string($content_model)) {
             // Assume that $this->keys is alphanumeric
             $def->content_model = preg_replace_callback(
                 '/\b(' . implode('|', $this->keys) . ')\b/',
@@ -145,7 +145,7 @@ class ContentSets
     public function getChildDef(ElementDef $def, HTMLModule $module): ChildDef
     {
         $value = $def->content_model;
-        if (is_object($value)) {
+        if (\is_object($value)) {
             trigger_error(
                 'Literal object child definitions should be stored in ' .
                 'ElementDef->child not ElementDef->content_model',

@@ -44,7 +44,7 @@ class Percentage extends AttrDef
             return false;
         }
 
-        $length = strlen($string);
+        $length = \strlen($string);
         if ($length === 1) {
             return false;
         }

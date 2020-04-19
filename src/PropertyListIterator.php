@@ -30,7 +30,7 @@ class PropertyListIterator extends FilterIterator
     {
         parent::__construct($iterator);
 
-        $this->l = strlen($filter);
+        $this->l = \strlen($filter);
         $this->filter = $filter;
     }
 

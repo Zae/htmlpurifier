@@ -96,7 +96,7 @@ class Tidy extends HTMLModule
         }
 
         $activated_levels = [];
-        for ($i = 1, $c = count($this->levels); $i < $c; $i++) {
+        for ($i = 1, $c = \count($this->levels); $i < $c; $i++) {
             $activated_levels[] = $this->levels[$i];
             if ($this->levels[$i] === $level) {
                 break;
@@ -225,13 +225,13 @@ class Tidy extends HTMLModule
             $params['element'] = $name;
         }
 
-        if (!is_null($attr)) {
+        if (!\is_null($attr)) {
             $params['attr'] = $attr;
         }
 
         // special case: attribute transform
-        if (!is_null($attr)) {
-            if (is_null($property)) {
+        if (!\is_null($attr)) {
+            if (\is_null($property)) {
                 $property = 'pre';
             }
 
@@ -239,7 +239,7 @@ class Tidy extends HTMLModule
         }
 
         // special case: tag transform
-        if (is_null($property)) {
+        if (\is_null($property)) {
             return ['tag_transform', $params];
         }
 

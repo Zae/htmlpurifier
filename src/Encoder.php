@@ -76,7 +76,7 @@ class Encoder
 
             // split into 8000 byte chunks, but be careful to handle
             // multibyte boundaries properly
-            if (($c = strlen($text)) <= $max_chunk_size) {
+            if (($c = \strlen($text)) <= $max_chunk_size) {
                 return self::unsafeIconv($in, $out, $text);
             }
 
@@ -90,13 +90,13 @@ class Encoder
                 }
 
                 // wibble the boundary
-                if ((0xC0 & ord($text[$i + $max_chunk_size])) !== 0x80) {
+                if ((0xC0 & \ord($text[$i + $max_chunk_size])) !== 0x80) {
                     $chunk_size = $max_chunk_size;
-                } elseif ((0xC0 & ord($text[$i + $max_chunk_size - 1])) !== 0x80) {
+                } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 1])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 1;
-                } elseif ((0xC0 & ord($text[$i + $max_chunk_size - 2])) !== 0x80) {
+                } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 2])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 2;
-                } elseif ((0xC0 & ord($text[$i + $max_chunk_size - 3])) !== 0x80) {
+                } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 3])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 3;
                 } else {
                     return false; // rather confusing UTF-8...
@@ -176,9 +176,9 @@ class Encoder
         $out = '';
         $char = '';
 
-        $len = strlen($str);
+        $len = \strlen($str);
         for ($i = 0; $i < $len; $i++) {
-            $in = ord($str[$i]);
+            $in = \ord($str[$i]);
             $char .= $str[$i]; // append byte to char
             if ($mState === 0) {
                 // When mState is zero we expect either a US-ASCII character
@@ -367,18 +367,18 @@ class Encoder
         // set up the actual character
         $ret = '';
         if ($w) {
-            $ret .= chr($w);
+            $ret .= \chr($w);
         }
 
         if ($z) {
-            $ret .= chr($z);
+            $ret .= \chr($z);
         }
 
         if ($y) {
-            $ret .= chr($y);
+            $ret .= \chr($y);
         }
 
-        $ret .= chr($x);
+        $ret .= \chr($x);
 
         return $ret;
     }
@@ -390,7 +390,7 @@ class Encoder
     {
         static $iconv = null;
         if ($iconv === null) {
-            $iconv = function_exists('iconv') && self::testIconvTruncateBug() !== self::ICONV_UNUSABLE;
+            $iconv = \function_exists('iconv') && self::testIconvTruncateBug() !== self::ICONV_UNUSABLE;
         }
 
         return $iconv;
@@ -529,11 +529,11 @@ class Encoder
         $bytesleft = 0;
         $result = '';
         $working = 0;
-        $len = strlen($str);
+        $len = \strlen($str);
         for ($i = 0; $i < $len; $i++) {
-            $bytevalue = ord($str[$i]);
+            $bytevalue = \ord($str[$i]);
             if ($bytevalue <= 0x7F) { //0xxx xxxx
-                $result .= chr($bytevalue);
+                $result .= \chr($bytevalue);
                 $bytesleft = 0;
             } elseif ($bytevalue <= 0xBF) { //10xx xxxx
                 $working <<= 6;
@@ -590,7 +590,7 @@ class Encoder
             $r = self::unsafeIconv('utf-8', 'ascii//IGNORE', "\xCE\xB1" . str_repeat('a', 9000));
             if ($r === false) {
                 $code = self::ICONV_UNUSABLE;
-            } elseif (($c = strlen($r)) < 9000) {
+            } elseif (($c = \strlen($r)) < 9000) {
                 $code = self::ICONV_TRUNCATES;
             } elseif ($c > 9000) {
                 trigger_error(
@@ -649,7 +649,7 @@ class Encoder
         }
 
         for ($i = 0x20; $i <= 0x7E; $i++) { // all printable ASCII chars
-            $c = chr($i); // UTF-8 char
+            $c = \chr($i); // UTF-8 char
             $r = self::unsafeIconv('UTF-8', "$encoding//IGNORE", $c); // initial conversion
             if ($r === '' ||
                 // This line is needed for iconv implementations that do not

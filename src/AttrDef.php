@@ -116,7 +116,7 @@ abstract class AttrDef
     {
         // flexibly parse it
         $ret = '';
-        for ($i = 0, $c = strlen($string); $i < $c; $i++) {
+        for ($i = 0, $c = \strlen($string); $i < $c; $i++) {
             if ($string[$i] === '\\') {
                 $i++;
                 if ($i >= $c) {

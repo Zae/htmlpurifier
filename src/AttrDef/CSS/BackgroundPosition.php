@@ -145,7 +145,7 @@ class BackgroundPosition extends AttrDef
         } elseif ($keywords['ch']) {
             $ret[] = $keywords['ch'];
             $keywords['cv'] = false; // prevent re-use: center = center center
-        } elseif (count($measures)) {
+        } elseif (\count($measures)) {
             $ret[] = array_shift($measures);
         }
 
@@ -153,7 +153,7 @@ class BackgroundPosition extends AttrDef
             $ret[] = $keywords['v'];
         } elseif ($keywords['cv']) {
             $ret[] = $keywords['cv'];
-        } elseif (count($measures)) {
+        } elseif (\count($measures)) {
             $ret[] = array_shift($measures);
         }
 

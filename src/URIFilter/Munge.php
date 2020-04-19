@@ -64,7 +64,7 @@ class Munge extends URIFilter
         $this->doEmbed = $config->get('URI.MungeResources');
         $this->secretKey = $config->get('URI.MungeSecretKey');
 
-        if ($this->secretKey && !function_exists('hash_hmac')) {
+        if ($this->secretKey && !\function_exists('hash_hmac')) {
             throw new Exception("Cannot use %URI.MungeSecretKey without hash_hmac support.");
         }
 

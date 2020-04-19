@@ -46,7 +46,7 @@ class URI extends BaseURI
             return false;
         }
 
-        $new_length = strlen($uri_string) - 1;
+        $new_length = \strlen($uri_string) - 1;
         if ($uri_string[$new_length] != ')') {
             return false;
         }
@@ -55,7 +55,7 @@ class URI extends BaseURI
 
         if (!empty($uri) && ($uri[0] === "'" || $uri[0] === '"')) {
             $quote = $uri[0];
-            $new_length = strlen($uri) - 1;
+            $new_length = \strlen($uri) - 1;
             if ($uri[$new_length] !== $quote) {
                 return false;
             }

@@ -49,19 +49,19 @@ class DoctypeRegistry
         ?string $dtd_system = null
     )
     {
-        if (!is_array($modules)) {
+        if (!\is_array($modules)) {
             $modules = [$modules];
         }
 
-        if (!is_array($tidy_modules)) {
+        if (!\is_array($tidy_modules)) {
             $tidy_modules = [$tidy_modules];
         }
 
-        if (!is_array($aliases)) {
+        if (!\is_array($aliases)) {
             $aliases = [$aliases];
         }
 
-        if (!is_object($doctype)) {
+        if (!\is_object($doctype)) {
             $doctype = new Doctype(
                 $doctype,
                 $xml,

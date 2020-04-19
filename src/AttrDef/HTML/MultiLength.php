@@ -34,7 +34,7 @@ class MultiLength extends Length
             return $parent_result;
         }
 
-        $length = strlen($string);
+        $length = \strlen($string);
         $last_char = $string[$length - 1];
 
         if ($last_char !== '*') {
