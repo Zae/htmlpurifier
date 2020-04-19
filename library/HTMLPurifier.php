@@ -45,6 +45,7 @@ use HTMLPurifier\Filter;
 use HTMLPurifier\ErrorCollector;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Exception;
+use HTMLPurifier\Lexer;
 use HTMLPurifier\LanguageFactory;
 use HTMLPurifier\IDAccumulator;
 use HTMLPurifier\Strategy\Core;
@@ -169,7 +170,7 @@ class HTMLPurifier
 
         // implementation is partially environment dependant, partially
         // configuration dependant
-        $lexer = HTMLPurifier_Lexer::create($config);
+        $lexer = Lexer::create($config);
 
         $context = new Context();
 

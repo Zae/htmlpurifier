@@ -2,6 +2,8 @@
 
 use HTMLPurifier\Arborize;
 use HTMLPurifier\Generator;
+use HTMLPurifier\Lexer;
+use HTMLPurifier\Lexer\DirectLex;
 use HTMLPurifier\Node;
 use HTMLPurifier\Node\Element;
 
@@ -50,13 +52,14 @@ class HTMLPurifier_ComplexHarness extends HTMLPurifier_Harness
 
     /**
      * Instance of an HTMLPurifier_Lexer implementation.
-     * @type HTMLPurifier_Lexer
+     *
+     * @type Lexer
      */
     protected $lexer;
 
     public function __construct()
     {
-        $this->lexer     = new HTMLPurifier_Lexer_DirectLex();
+        $this->lexer     = new DirectLex();
         parent::__construct();
     }
 

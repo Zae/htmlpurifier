@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Lexer\DirectLex;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -13,7 +14,7 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
 
     public function setUp()
     {
-        $this->DirectLex = new HTMLPurifier_Lexer_DirectLex();
+        $this->DirectLex = new DirectLex();
     }
 
     // internals testing

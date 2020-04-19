@@ -2,6 +2,7 @@
 
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\Lexer\DirectLex;
 use HTMLPurifier\Token;
 use HTMLPurifier\Lexer\DOMLex;
 
@@ -33,7 +34,7 @@ class _PH5P extends DOMLex
             $doc = $parser->save();
         } catch (DOMException $e) {
             // Uh oh, it failed. Punt to DirectLex.
-            $lexer = new HTMLPurifier_Lexer_DirectLex();
+            $lexer = new DirectLex();
             $context->register('PH5PError', $e); // save the error, so we can detect it
 
             return $lexer->tokenizeHTML($string, $config, $context); // use original HTML

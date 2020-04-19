@@ -1,7 +1,9 @@
 <?php
 
 use HTMLPurifier\Exception;
+use HTMLPurifier\Lexer;
 use HTMLPurifier\Lexer\DOMLex;
+use HTMLPurifier\Lexer\DirectLex;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
@@ -26,22 +28,22 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     public function test_create()
     {
         $this->config->set('Core.MaintainLineNumbers', true);
-        $lexer = HTMLPurifier_Lexer::create($this->config);
-        $this->assertIsA($lexer, 'HTMLPurifier_Lexer_DirectLex');
+        $lexer = Lexer::create($this->config);
+        $this->assertIsA($lexer, 'HTMLPurifier\Lexer\DirectLex');
     }
 
     public function test_create_objectLexerImpl()
     {
-        $this->config->set('Core.LexerImpl', new HTMLPurifier_Lexer_DirectLex());
-        $lexer = HTMLPurifier_Lexer::create($this->config);
-        $this->assertIsA($lexer, 'HTMLPurifier_Lexer_DirectLex');
+        $this->config->set('Core.LexerImpl', new DirectLex());
+        $lexer = Lexer::create($this->config);
+        $this->assertIsA($lexer, 'HTMLPurifier\Lexer\DirectLex');
     }
 
     public function test_create_unknownLexer()
     {
         $this->config->set('Core.LexerImpl', 'AsdfAsdf');
         $this->expectException(new Exception('Cannot instantiate unrecognized Lexer type AsdfAsdf'));
-        HTMLPurifier_Lexer::create($this->config);
+        Lexer::create($this->config);
     }
 
     public function test_create_incompatibleLexer()
@@ -49,7 +51,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->config->set('Core.LexerImpl', 'DOMLex');
         $this->config->set('Core.MaintainLineNumbers', true);
         $this->expectException(new Exception('Cannot use lexer that does not support line numbers with Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)'));
-        HTMLPurifier_Lexer::create($this->config);
+        Lexer::create($this->config);
     }
 
     // HTMLPurifier_Lexer->parseData() -----------------------------------------
@@ -57,7 +59,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     public function assertParseData($input, $expect = true, $is_attr = false)
     {
         if ($expect === true) $expect = $input;
-        $lexer = new HTMLPurifier_Lexer();
+        $lexer = new Lexer();
         $this->assertIdentical($expect, $lexer->parseData($input, $is_attr, $this->config));
     }
 
@@ -161,7 +163,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
 
     public function assertExtractBody($text, $extract = true)
     {
-        $lexer = new HTMLPurifier_Lexer();
+        $lexer = new Lexer();
         $result = $lexer->extractBody($text);
         if ($extract === true) $extract = $text;
         $this->assertIdentical($extract, $result);
@@ -243,7 +245,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     public function assertTokenization($input, $expect, $alt_expect = array())
     {
         $lexers = array();
-        $lexers['DirectLex']  = new HTMLPurifier_Lexer_DirectLex();
+        $lexers['DirectLex']  = new DirectLex();
         if (class_exists('DOMDocument')) {
             $lexers['DOMLex'] = new DOMLex();
             $lexers['PH5P']   = new _PH5P();

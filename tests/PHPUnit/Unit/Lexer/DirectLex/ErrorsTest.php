@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\Lexer\DirectLex;
 
 use HTMLPurifier\Tests\Unit\ErrorsTestCase;
-use HTMLPurifier_Lexer_DirectLex;
+use HTMLPurifier\Lexer\DirectLex;
 
 /**
  * Class ErrorsTest
@@ -89,7 +89,7 @@ class ErrorsTest extends ErrorsTestCase
      */
     private function invoke($input): void
     {
-        $lexer = new HTMLPurifier_Lexer_DirectLex();
+        $lexer = new DirectLex();
         $lexer->tokenizeHTML($input, $this->config, $this->context);
     }
 
@@ -100,7 +100,7 @@ class ErrorsTest extends ErrorsTestCase
      */
     private function invokeAttr($input): void
     {
-        $lexer = new HTMLPurifier_Lexer_DirectLex();
+        $lexer = new DirectLex();
         $lexer->parseAttributeString($input, $this->config, $this->context);
     }
 }

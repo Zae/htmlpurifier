@@ -10,7 +10,7 @@ use DOMNode;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
-use HTMLPurifier_Lexer;
+use HTMLPurifier\Lexer;
 use HTMLPurifier\Queue;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
@@ -23,7 +23,7 @@ use HTMLPurifier\TokenFactory;
  * It gives us a forgiving HTML parser, which we use to transform the HTML
  * into a DOM, and then into the tokens.  It is blazingly fast (for large
  * documents, it performs twenty times faster than
- * HTMLPurifier_Lexer_DirectLex,and is the default choice for PHP 5.
+ * HTMLPurifier\Lexer\HTMLPurifier_Lexer_DirectLex,and is the default choice for PHP 5.
  *
  * @note    Any empty elements will have empty tokens associated with them, even if
  * this is prohibited by the spec. This is cannot be fixed until the spec
@@ -39,7 +39,7 @@ use HTMLPurifier\TokenFactory;
  *          around, you may want to run Tidy on the resulting output or use
  *          HTMLPurifier_DirectLex
  */
-class DOMLex extends HTMLPurifier_Lexer
+class DOMLex extends Lexer
 {
     /**
      * @type \HTMLPurifier\TokenFactory

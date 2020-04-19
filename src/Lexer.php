@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Encoder;
-use HTMLPurifier\Context;
-use HTMLPurifier\EntityParser;
-use HTMLPurifier\Exception;
-use HTMLPurifier\Token;
+namespace HTMLPurifier;
+
+use _PH5P;
 use HTMLPurifier\Lexer\DOMLex;
+use HTMLPurifier_Config;
+use HTMLPurifier\Lexer\DirectLex;
 
 /**
  * Forgivingly lexes HTML (SGML-style) markup into tokens.
@@ -48,7 +48,7 @@ use HTMLPurifier\Lexer\DOMLex;
  * without a lot of lookaheads to see when a tag is closed. This is a
  * limitation of the token system and some workarounds would be nice.
  */
-class HTMLPurifier_Lexer
+class Lexer
 {
     /**
      * Whether or not this lexer implements line-number/column-number tracking.
@@ -76,7 +76,7 @@ class HTMLPurifier_Lexer
      *
      * @param HTMLPurifier_Config $config
      *
-     * @return HTMLPurifier_Lexer
+     * @return Lexer
      * @throws Exception
      */
     public static function create($config)
@@ -130,7 +130,7 @@ class HTMLPurifier_Lexer
                     $inst = new DOMLex();
                     break;
                 case 'DirectLex':
-                    $inst = new HTMLPurifier_Lexer_DirectLex();
+                    $inst = new DirectLex();
                     break;
                 case 'PH5P':
                     $inst = new _PH5P();
@@ -284,7 +284,7 @@ class HTMLPurifier_Lexer
     {
         return preg_replace_callback(
             '/<!\[CDATA\[(.+?)\]\]>/s',
-            ['HTMLPurifier_Lexer', 'CDATACallback'],
+            ['HTMLPurifier\Lexer', 'CDATACallback'],
             $string
         );
     }
@@ -300,7 +300,7 @@ class HTMLPurifier_Lexer
     {
         return preg_replace_callback(
             '#<!--//--><!\[CDATA\[//><!--(.+?)//--><!\]\]>#s',
-            ['HTMLPurifier_Lexer', 'CDATACallback'],
+            ['HTMLPurifier\Lexer', 'CDATACallback'],
             $string
         );
     }
