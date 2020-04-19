@@ -65,7 +65,7 @@ class Munge extends URIFilter
         $this->secretKey = $config->get('URI.MungeSecretKey');
 
         if ($this->secretKey && !\function_exists('hash_hmac')) {
-            throw new Exception("Cannot use %URI.MungeSecretKey without hash_hmac support.");
+            throw new Exception('Cannot use %URI.MungeSecretKey without hash_hmac support.');
         }
 
         return true;

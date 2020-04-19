@@ -36,20 +36,20 @@ class Font extends TagTransform
      * @type array
      */
     protected $_size_lookup = [
+        '-2' => '60%',
+        '-1' => 'smaller',
         '0' => 'xx-small',
         '1' => 'xx-small',
+        '+1' => 'larger',
         '2' => 'small',
+        '+2' => '150%',
         '3' => 'medium',
+        '+3' => '200%',
         '4' => 'large',
+        '+4' => '300%',
         '5' => 'x-large',
         '6' => 'xx-large',
         '7' => '300%',
-        '-1' => 'smaller',
-        '-2' => '60%',
-        '+1' => 'larger',
-        '+2' => '150%',
-        '+3' => '200%',
-        '+4' => '300%'
     ];
 
     /**

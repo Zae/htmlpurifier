@@ -484,7 +484,7 @@ class DirectLex extends Lexer
         $old_cursor = -1;
         while ($cursor < $size) {
             if ($old_cursor >= $cursor) {
-                throw new Exception("Infinite loop detected");
+                throw new Exception('Infinite loop detected');
             }
             $old_cursor = $cursor;
 

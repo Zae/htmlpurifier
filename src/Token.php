@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\Text;
+use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Start;
+
 /**
  * Abstract base token class that all others inherit from.
  */
@@ -59,15 +65,15 @@ abstract class Token
         if ($n === 'type') {
             trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
             switch (\get_class($this)) {
-                case 'HTMLPurifier\Token\Start':
+                case Start::class:
                     return 'start';
-                case 'HTMLPurifier\Token\EmptyToken':
+                case EmptyToken::class:
                     return 'empty';
-                case 'HTMLPurifier\Token\End':
+                case End::class:
                     return 'end';
-                case 'HTMLPurifier\Token\Text':
+                case Text::class:
                     return 'text';
-                case 'HTMLPurifier\Token\Comment':
+                case Comment::class:
                     return 'comment';
                 default:
                     return null;

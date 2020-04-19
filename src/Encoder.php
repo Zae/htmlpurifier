@@ -7,6 +7,7 @@ namespace HTMLPurifier;
 use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\Encoder;
 
 /**
  * A UTF-8 specific character encoder that handles cleaning and transforming.
@@ -41,7 +42,7 @@ class Encoder
      */
     public static function unsafeIconv($in, $out, $text)
     {
-        set_error_handler(['HTMLPurifier\Encoder', 'muteErrorHandler']);
+        set_error_handler([Encoder::class, 'muteErrorHandler']);
         $r = iconv($in, $out, $text);
         restore_error_handler();
 
