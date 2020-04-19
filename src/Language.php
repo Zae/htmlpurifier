@@ -83,7 +83,7 @@ class Language
      *
      * @note This is a lazy loader
      */
-    public function load()
+    public function load(): void
     {
         if ($this->_loaded) {
             return;
@@ -106,7 +106,7 @@ class Language
      *
      * @return string localised message
      */
-    public function getMessage(string $key)
+    public function getMessage(string $key): string
     {
         if (!$this->_loaded) {
             $this->load();
@@ -126,7 +126,7 @@ class Language
      *
      * @return string localised message
      */
-    public function getErrorName(int $int)
+    public function getErrorName(int $int): string
     {
         if (!$this->_loaded) {
             $this->load();
@@ -146,7 +146,7 @@ class Language
      *
      * @return string
      */
-    public function listify(array $array)
+    public function listify(array $array): string
     {
         $sep = $this->getMessage('Item separator');
         $sep_last = $this->getMessage('Item separator last');
@@ -177,7 +177,7 @@ class Language
      * @todo Implement conditionals? Right now, some messages make
      *     reference to line numbers, but those aren't always available
      */
-    public function formatMessage(string $key, array $args = [])
+    public function formatMessage(string $key, array $args = []): string
     {
         if (!$this->_loaded) {
             $this->load();

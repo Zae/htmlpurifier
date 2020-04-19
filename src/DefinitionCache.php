@@ -40,7 +40,7 @@ abstract class DefinitionCache
      * @return string
      * @throws Exception
      */
-    public function generateKey(\HTMLPurifier\Config $config)
+    public function generateKey(\HTMLPurifier\Config $config): string
     {
         return $config->version . ',' . // possibly replace with function calls
                $config->getBatchSerial($this->type) . ',' .
@@ -57,7 +57,7 @@ abstract class DefinitionCache
      * @return bool
      * @throws Exception
      */
-    public function isOld(string $key, \HTMLPurifier\Config $config)
+    public function isOld(string $key, \HTMLPurifier\Config $config): bool
     {
         if (substr_count($key, ',') < 2) {
             return true;
@@ -89,7 +89,7 @@ abstract class DefinitionCache
      *
      * @return bool true if good, false if not
      */
-    public function checkDefType(Definition $def)
+    public function checkDefType(Definition $def): bool
     {
         if ($def->type !== $this->type) {
             trigger_error("Cannot use definition of type {$def->type} in cache for {$this->type}");

@@ -107,7 +107,7 @@ class Generator
      * @return string Generated HTML
      * @throws Exception
      */
-    public function generateFromTokens(array $tokens)
+    public function generateFromTokens(array $tokens): string
     {
         if (!$tokens) {
             return '';
@@ -166,7 +166,7 @@ class Generator
      *
      * @return string Generated HTML
      */
-    public function generateFromToken($token)
+    public function generateFromToken($token): string
     {
         if (!$token instanceof Token) {
             trigger_error('Cannot generate HTML from non-HTMLPurifier\HTMLPurifier_Token object', E_USER_WARNING);
@@ -228,7 +228,7 @@ class Generator
      * @warning This runs into problems if there's already a literal
      *          --> somewhere inside the script contents.
      */
-    public function generateScriptFromToken(Token $token)
+    public function generateScriptFromToken(Token $token): string
     {
         if (!$token instanceof Text) {
             return $this->generateFromToken($token);
@@ -251,7 +251,7 @@ class Generator
      *
      * @return string Generated HTML fragment for insertion.
      */
-    public function generateAttributes(array $assoc_array_of_attributes, string $element = '')
+    public function generateAttributes(array $assoc_array_of_attributes, string $element = ''): string
     {
         $html = '';
         if ($this->_sortAttr) {
@@ -322,7 +322,7 @@ class Generator
      *       for properly generating HTML here w/o using tokens, it stays
      *       public.
      */
-    public function escape(string $string, int $quote = null)
+    public function escape(string $string, int $quote = null): string
     {
         // Workaround for APC bug on Mac Leopard reported by sidepodcast
         // http://htmlpurifier.org/phorum/read.php?3,4823,4846

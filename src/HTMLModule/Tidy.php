@@ -129,7 +129,7 @@ class Tidy extends HTMLModule
      *
      * @param array $fixes
      */
-    public function makeFixesForLevel(array $fixes)
+    public function makeFixesForLevel(array $fixes): void
     {
         if (!isset($this->defaultLevel)) {
             return;
@@ -153,7 +153,7 @@ class Tidy extends HTMLModule
      *
      * @param array $fixes Lookup table of fixes to activate
      */
-    public function populate(array $fixes)
+    public function populate(array $fixes): void
     {
         foreach ($fixes as $name => $fix) {
             // determine what the fix is for

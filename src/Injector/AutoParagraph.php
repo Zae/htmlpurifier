@@ -353,7 +353,7 @@ class AutoParagraph extends Injector
      *
      * @return bool|null
      */
-    private function _checkNeedsP(Token $current)
+    private function _checkNeedsP(Token $current): ?bool
     {
         if ($current instanceof Start) {
             if (!$this->_isInline($current)) {

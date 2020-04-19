@@ -153,7 +153,7 @@ class data extends URIScheme
      * @param int    $errno
      * @param string $errstr
      */
-    public function muteErrorHandler(int $errno, string $errstr)
+    public function muteErrorHandler(int $errno, string $errstr): void
     {
     }
 }

@@ -112,7 +112,7 @@ class StrictBlockquote extends Required
      *
      * @throws \HTMLPurifier\Exception
      */
-    private function init(\HTMLPurifier\Config $config)
+    private function init(\HTMLPurifier\Config $config): void
     {
         if (!$this->init) {
             $def = $config->getHTMLDefinition();

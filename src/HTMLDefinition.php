@@ -134,7 +134,7 @@ class HTMLDefinition extends Definition
      * @param mixed  $def          Attribute definition, can be string or object, see
      *                             HTMLPurifier\HTMLPurifier_AttrTypes for details
      */
-    public function addAttribute(string $element_name, string $attr_name, $def)
+    public function addAttribute(string $element_name, string $attr_name, $def): void
     {
         $module = $this->getAnonymousModule();
         if (!isset($module->info[$element_name])) {
@@ -152,7 +152,7 @@ class HTMLDefinition extends Definition
      * @see HTMLModule::addElement() for detailed
      *       parameter and return value descriptions.
      */
-    public function addElement(string $element_name, $type, $contents, $attr_collections, array $attributes = [])
+    public function addElement(string $element_name, $type, $contents, $attr_collections, array $attributes = []): ElementDef
     {
         $module = $this->getAnonymousModule();
 
@@ -171,7 +171,7 @@ class HTMLDefinition extends Definition
      * @see HTMLModule::addBlankElement() for detailed
      *       parameter and return value descriptions.
      */
-    public function addBlankElement(string $element_name)
+    public function addBlankElement(string $element_name): ElementDef
     {
         $module = $this->getAnonymousModule();
 
@@ -185,7 +185,7 @@ class HTMLDefinition extends Definition
      *
      * @return HTMLModule
      */
-    public function getAnonymousModule()
+    public function getAnonymousModule(): HTMLModule
     {
         if (!$this->_anonModule) {
             $this->_anonModule = new HTMLModule();
@@ -240,7 +240,7 @@ class HTMLDefinition extends Definition
      *
      * @param Config $config
      */
-    protected function processModules(\HTMLPurifier\Config $config)
+    protected function processModules(\HTMLPurifier\Config $config): void
     {
         if ($this->_anonModule) {
             // for user specific changes
@@ -295,7 +295,7 @@ class HTMLDefinition extends Definition
      *
      * @throws Exception
      */
-    protected function setupConfigStuff(\HTMLPurifier\Config $config)
+    protected function setupConfigStuff(\HTMLPurifier\Config $config): void
     {
         $block_wrapper = $config->get('HTML.BlockWrapper');
         if (isset($this->info_content_sets['Block'][$block_wrapper])) {
@@ -501,7 +501,7 @@ class HTMLDefinition extends Definition
      * @return array
      * @todo    Give this its own class, probably static interface
      */
-    public function parseTinyMCEAllowedList($list)
+    public function parseTinyMCEAllowedList($list): array
     {
         $list = str_replace([' ', "\t"], '', $list);
 

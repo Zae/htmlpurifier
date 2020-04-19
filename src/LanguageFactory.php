@@ -72,7 +72,7 @@ class LanguageFactory
      *
      * @return LanguageFactory
      */
-    public static function instance(LanguageFactory $prototype = null)
+    public static function instance(LanguageFactory $prototype = null): LanguageFactory
     {
         static $instance = null;
         if ($prototype !== null) {
@@ -90,7 +90,7 @@ class LanguageFactory
      *
      * @note Prevents people from getting this outside of the singleton
      */
-    public function setup()
+    public function setup(): void
     {
         $this->validator = new Lang();
         $this->dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier';
@@ -106,7 +106,7 @@ class LanguageFactory
      * @return Language
      * @throws Exception
      */
-    public function create(\HTMLPurifier\Config $config, Context $context, $code = false)
+    public function create(\HTMLPurifier\Config $config, Context $context, $code = false): Language
     {
         // validate language code
         if ($code === false) {
@@ -175,7 +175,7 @@ class LanguageFactory
      *
      * @param string $code language code
      */
-    public function loadLanguage(string $code)
+    public function loadLanguage(string $code): void
     {
         static $languages_seen = []; // recursion guard
 

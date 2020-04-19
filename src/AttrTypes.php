@@ -89,7 +89,7 @@ class AttrTypes
      *
      * @return AttrDef Object AttrDef for type
      */
-    public function get(string $type)
+    public function get(string $type): ?AttrDef
     {
         // determine if there is any extra info tacked on
         if (strpos($type, '#') !== false) {
@@ -113,7 +113,7 @@ class AttrTypes
      * @param string  $type String type name
      * @param AttrDef $impl Object AttrDef for type
      */
-    public function set(string $type, AttrDef $impl)
+    public function set(string $type, AttrDef $impl): void
     {
         $this->info[$type] = $impl;
     }

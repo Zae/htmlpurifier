@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
-use HTMLPurifier\Exception;
-use HTMLPurifier\Encoder;
-
 /**
  * A UTF-8 specific character encoder that handles cleaning and transforming.
  *
@@ -27,7 +22,7 @@ class Encoder
     /**
      * Error-handler that mutes errors, alternative to shut-up operator.
      */
-    public static function muteErrorHandler()
+    public static function muteErrorHandler(): void
     {
     }
 
@@ -38,11 +33,11 @@ class Encoder
      * @param string $out  Output encoding
      * @param string $text The text to convert
      *
-     * @return string
+     * @return string|bool
      */
     public static function unsafeIconv($in, $out, $text)
     {
-        set_error_handler([Encoder::class, 'muteErrorHandler']);
+        set_error_handler([__CLASS__, 'muteErrorHandler']);
         $r = iconv($in, $out, $text);
         restore_error_handler();
 
@@ -151,7 +146,7 @@ class Encoder
      *       As of right now, only smart lossless character encoding converters
      *       would need that, and I'm probably not going to implement them.
      */
-    public static function cleanUTF8(string $str, bool $force_php = false)
+    public static function cleanUTF8(string $str, bool $force_php = false): string
     {
         // UTF-8 validity is checked since PHP 4.3.5
         // This is an optimization: if the string is already valid UTF-8, no

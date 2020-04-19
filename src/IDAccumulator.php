@@ -32,7 +32,7 @@ class IDAccumulator
      * @return IDAccumulator Fully initialized HTMLPurifier\HTMLPurifier_IDAccumulator
      * @throws Exception
      */
-    public static function build(\HTMLPurifier\Config $config, $context)
+    public static function build(\HTMLPurifier\Config $config, $context): IDAccumulator
     {
         $id_accumulator = new static();
         $id_accumulator->load($config->get('Attr.IDBlacklist'));
@@ -47,7 +47,7 @@ class IDAccumulator
      *
      * @return bool status, true if success, false if there's a dupe
      */
-    public function add(string $id)
+    public function add(string $id): bool
     {
         if (isset($this->ids[$id])) {
             return false;
@@ -63,7 +63,7 @@ class IDAccumulator
      *
      * @note This function doesn't care about duplicates
      */
-    public function load(array $array_of_ids)
+    public function load(array $array_of_ids): void
     {
         foreach ($array_of_ids as $id) {
             $this->ids[$id] = true;
