@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\Node;
 
 use HTMLPurifier\Node;
-use HTMLPurifier_Token_Comment;
 
 /**
  * Concrete comment node class.
@@ -47,6 +46,6 @@ class Comment extends Node
      */
     public function toTokenPair(): array
     {
-        return [new HTMLPurifier_Token_Comment($this->data, $this->line, $this->col), null];
+        return [new \HTMLPurifier\Token\Comment($this->data, $this->line, $this->col), null];
     }
 }

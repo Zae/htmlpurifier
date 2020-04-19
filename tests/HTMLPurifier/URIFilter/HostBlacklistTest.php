@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\URIFilter\HostBlacklist;
+
 class HTMLPurifier_URIFilter_HostBlacklistTest extends HTMLPurifier_URIFilterHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->filter = new HTMLPurifier_URIFilter_HostBlacklist();
+        $this->filter = new HostBlacklist();
     }
 
     public function testRejectBlacklistedHost()

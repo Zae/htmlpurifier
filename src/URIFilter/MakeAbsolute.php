@@ -3,14 +3,18 @@
 declare(strict_types=1);
 
 // does not support network paths
+namespace HTMLPurifier\URIFilter;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
- * Class HTMLPurifier_URIFilter_MakeAbsolute
+ * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_MakeAbsolute
  */
-class HTMLPurifier_URIFilter_MakeAbsolute extends URIFilter
+class MakeAbsolute extends URIFilter
 {
     /**
      * @type string

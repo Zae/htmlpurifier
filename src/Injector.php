@@ -8,7 +8,7 @@ use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
 use HTMLPurifier_Exception;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Text;
 
 /**
  * Injects tokens into the document while parsing for well-formedness.
@@ -17,7 +17,7 @@ use HTMLPurifier_Token_Text;
  *
  * A note on how handlers create changes; this is done by assigning a new
  * value to the $token reference. These values can take a variety of forms and
- * are best described HTMLPurifier_Strategy_MakeWellFormed->processToken()
+ * are best described HTMLPurifier\Strategy\HTMLPurifier_Strategy_MakeWellFormed->processToken()
  * documentation.
  *
  * @todo Allow injectors to request a re-run on their output. This
@@ -307,9 +307,9 @@ abstract class Injector
     /**
      * Handler that is called when a text token is processed
      *
-     * @param HTMLPurifier_Token_Text $token
+     * @param \HTMLPurifier\Token\Text $token
      */
-    public function handleText(HTMLPurifier_Token_Text &$token)
+    public function handleText(Text &$token)
     {
     }
 

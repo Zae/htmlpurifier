@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\Strategy\ValidateAttributes;
+
 class HTMLPurifier_Strategy_ValidateAttributes_TidyTest extends HTMLPurifier_StrategyHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_ValidateAttributes();
+        $this->obj = new ValidateAttributes();
         $this->config->set('HTML.TidyLevel', 'heavy');
     }
 

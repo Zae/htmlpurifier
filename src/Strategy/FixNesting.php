@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Strategy;
+
 use HTMLPurifier\Arborize;
 use HTMLPurifier\Context;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node\Element;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
  * Takes a well formed list of tokens and fixes their nesting.
@@ -36,7 +40,7 @@ use HTMLPurifier\Node\Element;
  * @todo Enable nodes to be bubbled out of the structure.  This is
  *       easier with our new algorithm.
  */
-class HTMLPurifier_Strategy_FixNesting extends Strategy
+class FixNesting extends Strategy
 {
     /**
      * @param Token[]             $tokens
@@ -174,8 +178,10 @@ class HTMLPurifier_Strategy_FixNesting extends Strategy
                         // XXX This will miss mutations of internal nodes. Perhaps defer to the child validators
                         if (empty($result) && !empty($children)) {
                             $e->send(E_ERROR, 'Strategy_FixNesting: Node contents removed');
-                        } else if ($result !== $children) {
-                            $e->send(E_WARNING, 'Strategy_FixNesting: Node reorganized');
+                        } else {
+                            if ($result !== $children) {
+                                $e->send(E_WARNING, 'Strategy_FixNesting: Node reorganized');
+                            }
                         }
                     }
                 }

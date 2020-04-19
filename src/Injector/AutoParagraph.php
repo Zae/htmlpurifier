@@ -8,7 +8,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Text;
 
 /**
  * Injector that auto paragraphs text in the root node based on
@@ -41,9 +41,9 @@ class AutoParagraph extends Injector
     }
 
     /**
-     * @param HTMLPurifier_Token_Text $token
+     * @param \HTMLPurifier\Token\Text $token
      */
-    public function handleText(HTMLPurifier_Token_Text &$token): void
+    public function handleText(Text &$token): void
     {
         $text = $token->data;
         // Does the current parent allow <p> tags?
@@ -137,7 +137,7 @@ class AutoParagraph extends Injector
 
                     if (!$prev instanceof Start) {
                         // Token wasn't adjacent
-                        if ($prev instanceof HTMLPurifier_Token_Text &&
+                        if ($prev instanceof Text &&
                             substr($prev->data, -2) === "\n\n"
                         ) {
                             // State 1.1.4: <div><p>PAR1</p>\n\n<b>
@@ -186,7 +186,7 @@ class AutoParagraph extends Injector
 
                 $i = null;
                 if ($this->backward($i, $prev)) {
-                    if (!$prev instanceof HTMLPurifier_Token_Text) {
+                    if (!$prev instanceof Text) {
                         // State 3.1.1: ...</p>{p}<b>
                         //                        ---
                         // State 3.2.1: ...</p><div>
@@ -194,7 +194,7 @@ class AutoParagraph extends Injector
                         if (!is_array($token)) {
                             $token = [$token];
                         }
-                        array_unshift($token, new HTMLPurifier_Token_Text("\n\n"));
+                        array_unshift($token, new Text("\n\n"));
                     } else {
                         // State 3.1.2: ...</p>\n\n{p}<b>
                         //                            ---
@@ -233,7 +233,7 @@ class AutoParagraph extends Injector
         if ($c === 1) {
             // There were no double-newlines, abort quickly. In theory this
             // should never happen.
-            $result[] = new HTMLPurifier_Token_Text($data);
+            $result[] = new Text($data);
 
             return;
         }
@@ -251,7 +251,7 @@ class AutoParagraph extends Injector
                         // This means that we have been in a paragraph for
                         // a while, and the newline means we should start a new one.
                         $result[] = new End('p');
-                        $result[] = new HTMLPurifier_Token_Text("\n\n");
+                        $result[] = new Text("\n\n");
                         // However, the start token should only be added if
                         // there is more processing to be done (i.e. there are
                         // real paragraphs in here). If there are none, the
@@ -262,7 +262,7 @@ class AutoParagraph extends Injector
                         // We just started a new paragraph!
                         // Reinstate a double-newline for presentation's sake, since
                         // it was in the source code.
-                        array_unshift($result, new HTMLPurifier_Token_Text("\n\n"));
+                        array_unshift($result, new Text("\n\n"));
                     }
                 } elseif ($i + 1 === $c) {
                     // Double newline at the end
@@ -285,9 +285,9 @@ class AutoParagraph extends Injector
 
         // Append the paragraphs onto the result
         foreach ($paragraphs as $par) {
-            $result[] = new HTMLPurifier_Token_Text($par);
+            $result[] = new Text($par);
             $result[] = new End('p');
-            $result[] = new HTMLPurifier_Token_Text("\n\n");
+            $result[] = new Text("\n\n");
             $result[] = $this->_pStart();
         }
 
@@ -362,7 +362,7 @@ class AutoParagraph extends Injector
                 // Terminate early, since we hit a block element
                 return false;
             }
-        } elseif ($current instanceof HTMLPurifier_Token_Text) {
+        } elseif ($current instanceof Text) {
             if (strpos($current->data, "\n\n") !== false) {
                 // <div>PAR1<b>PAR1\n\nPAR2
                 //      ----

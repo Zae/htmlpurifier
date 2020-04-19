@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Node;
 
 use HTMLPurifier\Node;
-use HTMLPurifier_Token_Empty;
+use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
@@ -77,7 +77,7 @@ class Element extends Node
     {
         // XXX inefficiency here, normalization is not necessary
         if ($this->empty) {
-            return [new HTMLPurifier_Token_Empty($this->name, $this->attr, $this->line, $this->col, $this->armor), null];
+            return [new EmptyToken($this->name, $this->attr, $this->line, $this->col, $this->armor), null];
         }
 
         $start = new Start($this->name, $this->attr, $this->line, $this->col, $this->armor);

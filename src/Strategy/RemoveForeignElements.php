@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Strategy;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrValidator;
 use HTMLPurifier\Generator;
@@ -9,6 +11,11 @@ use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 
 /**
  * Removes all unrecognized tags from the list of tokens.
@@ -17,7 +24,7 @@ use HTMLPurifier\Token\Start;
  * tokens. If a token is not recognized but a TagTransform is defined for
  * that element, the element will be transformed accordingly.
  */
-class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
+class RemoveForeignElements extends Strategy
 {
     /**
      * @param Token[]             $tokens
@@ -90,7 +97,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
                 if (isset($definition->info[$token->name])) {
                     // mostly everything's good, but
                     // we need to make sure required attributes are in order
-                    if (($token instanceof Start || $token instanceof HTMLPurifier_Token_Empty) &&
+                    if (($token instanceof Start || $token instanceof EmptyToken) &&
                         $definition->info[$token->name]->required_attr &&
                         ($token->name !== 'img' || $remove_invalid_img) // ensure config option still works
                     ) {
@@ -130,7 +137,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
                         $e->send(E_WARNING, 'Strategy_RemoveForeignElements: Foreign element to text');
                     }
 
-                    $token = new HTMLPurifier_Token_Text(
+                    $token = new Text(
                         $generator->generateFromToken($token)
                     );
                 } else {
@@ -139,7 +146,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
                     if (isset($hidden_elements[$token->name])) {
                         if ($token instanceof Start) {
                             $remove_until = $token->name;
-                        } elseif ($token instanceof HTMLPurifier_Token_Empty) {
+                        } elseif ($token instanceof EmptyToken) {
                             // do nothing: we're still looking
                         } else {
                             $remove_until = false;
@@ -148,17 +155,19 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
                         if ($e) {
                             $e->send(E_ERROR, 'Strategy_RemoveForeignElements: Foreign meta element removed');
                         }
-                    } else if ($e) {
-                        $e->send(E_ERROR, 'Strategy_RemoveForeignElements: Foreign element removed');
+                    } else {
+                        if ($e) {
+                            $e->send(E_ERROR, 'Strategy_RemoveForeignElements: Foreign element removed');
+                        }
                     }
 
                     continue;
                 }
-            } elseif ($token instanceof HTMLPurifier_Token_Comment) {
+            } elseif ($token instanceof Comment) {
                 // textify comments in script tags when they are allowed
                 if ($textify_comments !== false) {
                     $data = $token->data;
-                    $token = new HTMLPurifier_Token_Text($data);
+                    $token = new Text($data);
                 } elseif ($trusted || $check_comments) {
                     // always cleanup comments
                     $trailing_hyphen = false;
@@ -203,7 +212,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends Strategy
                     }
                     continue;
                 }
-            } elseif ($token instanceof HTMLPurifier_Token_Text) {
+            } elseif ($token instanceof Text) {
             } else {
                 continue;
             }

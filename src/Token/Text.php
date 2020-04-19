@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Token;
+
 use HTMLPurifier\Token;
 use HTMLPurifier\Node;
-use HTMLPurifier\Node\Text;
 
 /**
  * Concrete text token class.
@@ -15,7 +16,7 @@ use HTMLPurifier\Node\Text;
  * does have a "tag name" called #PCDATA, which is how the DTD represents it
  * in permissible child nodes.
  */
-class HTMLPurifier_Token_Text extends Token
+class Text extends Token
 {
     /**
      * @type string
@@ -53,6 +54,6 @@ class HTMLPurifier_Token_Text extends Token
 
     public function toNode(): Node
     {
-        return new Text($this->data, $this->is_whitespace, $this->line, $this->col);
+        return new Node\Text($this->data, $this->is_whitespace, $this->line, $this->col);
     }
 }

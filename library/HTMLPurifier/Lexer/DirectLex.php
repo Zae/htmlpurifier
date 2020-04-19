@@ -5,6 +5,9 @@ declare(strict_types=1);
 use HTMLPurifier\Context;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 /**
@@ -141,7 +144,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             if (!$inside_tag && $position_next_lt !== false) {
                 // We are not inside tag and there still is another tag to parse
                 $token = new
-                HTMLPurifier_Token_Text(
+                Text(
                     $this->parseText(
                         substr(
                             $string,
@@ -166,7 +169,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 }
                 // Create Text of rest of string
                 $token = new
-                HTMLPurifier_Token_Text(
+                Text(
                     $this->parseText(
                         substr(
                             $string,
@@ -186,7 +189,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
                 if ($strlen_segment < 1) {
                     // there's nothing to process!
-                    $token = new HTMLPurifier_Token_Text('<');
+                    $token = new Text('<');
                     $cursor++;
                     continue;
                 }
@@ -218,7 +221,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $strlen_segment = $position_comment_end - $cursor;
                     $segment = substr($string, $cursor, $strlen_segment);
                     $token = new
-                    HTMLPurifier_Token_Comment(
+                    Comment(
                         substr(
                             $segment,
                             3,
@@ -258,7 +261,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     if ($e) {
                         $e->send(E_NOTICE, 'Lexer: Unescaped lt');
                     }
-                    $token = new HTMLPurifier_Token_Text('<');
+                    $token = new Text('<');
                     if ($maintain_line_numbers) {
                         $token->rawPosition($current_line, $current_col);
                         $current_line += $this->substrCount($string, $nl, $cursor, $position_next_gt - $cursor);
@@ -283,7 +286,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 
                 if ($position_first_space >= $strlen_segment) {
                     if ($is_self_closing) {
-                        $token = new HTMLPurifier_Token_Empty($segment);
+                        $token = new EmptyToken($segment);
                     } else {
                         $token = new Start($segment);
                     }
@@ -317,7 +320,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 }
 
                 if ($is_self_closing) {
-                    $token = new HTMLPurifier_Token_Empty($type, $attr);
+                    $token = new EmptyToken($type, $attr);
                 } else {
                     $token = new Start($type, $attr);
                 }
@@ -335,7 +338,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $e->send(E_WARNING, 'Lexer: Missing gt');
                 }
                 $token = new
-                HTMLPurifier_Token_Text(
+                Text(
                     '<' .
                     $this->parseText(
                         substr($string, $cursor), $config

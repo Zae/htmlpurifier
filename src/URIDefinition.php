@@ -6,13 +6,13 @@ namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
 use HTMLPurifier_Exception;
-use HTMLPurifier_URIFilter_DisableExternal;
-use HTMLPurifier_URIFilter_DisableExternalResources;
-use HTMLPurifier_URIFilter_DisableResources;
-use HTMLPurifier_URIFilter_HostBlacklist;
-use HTMLPurifier_URIFilter_MakeAbsolute;
-use HTMLPurifier_URIFilter_Munge;
-use HTMLPurifier_URIFilter_SafeIframe;
+use HTMLPurifier\URIFilter\DisableExternal;
+use HTMLPurifier\URIFilter\DisableExternalResources;
+use HTMLPurifier\URIFilter\DisableResources;
+use HTMLPurifier\URIFilter\HostBlacklist;
+use HTMLPurifier\URIFilter\MakeAbsolute;
+use HTMLPurifier\URIFilter\Munge;
+use HTMLPurifier\URIFilter\SafeIframe;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URISchemeRegistry;
 
@@ -43,13 +43,13 @@ class URIDefinition extends Definition
 
     public function __construct()
     {
-        $this->registerFilter(new HTMLPurifier_URIFilter_DisableExternal());
-        $this->registerFilter(new HTMLPurifier_URIFilter_DisableExternalResources());
-        $this->registerFilter(new HTMLPurifier_URIFilter_DisableResources());
-        $this->registerFilter(new HTMLPurifier_URIFilter_HostBlacklist());
-        $this->registerFilter(new HTMLPurifier_URIFilter_SafeIframe());
-        $this->registerFilter(new HTMLPurifier_URIFilter_MakeAbsolute());
-        $this->registerFilter(new HTMLPurifier_URIFilter_Munge());
+        $this->registerFilter(new DisableExternal());
+        $this->registerFilter(new DisableExternalResources());
+        $this->registerFilter(new DisableResources());
+        $this->registerFilter(new HostBlacklist());
+        $this->registerFilter(new SafeIframe());
+        $this->registerFilter(new MakeAbsolute());
+        $this->registerFilter(new Munge());
     }
 
     /**

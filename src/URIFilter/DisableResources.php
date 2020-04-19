@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIFilter;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
- * Class HTMLPurifier_URIFilter_DisableResources
+ * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_DisableResources
  */
-class HTMLPurifier_URIFilter_DisableResources extends URIFilter
+class DisableResources extends URIFilter
 {
     /**
      * @type string

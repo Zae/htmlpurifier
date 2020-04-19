@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\Strategy\MakeWellFormed;
+
 class HTMLPurifier_InjectorHarness extends HTMLPurifier_StrategyHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_MakeWellFormed();
+        $this->obj = new MakeWellFormed();
     }
 
 }

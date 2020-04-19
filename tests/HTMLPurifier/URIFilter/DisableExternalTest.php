@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\URIFilter\DisableExternal;
+
 class HTMLPurifier_URIFilter_DisableExternalTest extends HTMLPurifier_URIFilterHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->filter = new HTMLPurifier_URIFilter_DisableExternal();
+        $this->filter = new DisableExternal();
     }
 
     public function testRemoveExternal()

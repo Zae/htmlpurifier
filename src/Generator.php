@@ -8,9 +8,9 @@ use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
 use HTMLPurifier_Exception;
-use HTMLPurifier_Token_Comment;
-use HTMLPurifier_Token_Empty;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 use stdClass;
 use Tidy;
 
@@ -196,7 +196,7 @@ class Generator
             return $_extra . '</' . $token->name . '>';
         }
 
-        if ($token instanceof HTMLPurifier_Token_Empty) {
+        if ($token instanceof EmptyToken) {
             if ($this->_flashCompat && $token->name === 'param' && !empty($this->_flashStack)) {
                 $this->_flashStack[count($this->_flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
             }
@@ -208,11 +208,11 @@ class Generator
 
         }
 
-        if ($token instanceof HTMLPurifier_Token_Text) {
+        if ($token instanceof Text) {
             return $this->escape($token->data, ENT_NOQUOTES);
         }
 
-        if ($token instanceof HTMLPurifier_Token_Comment) {
+        if ($token instanceof Comment) {
             return '<!--' . $token->data . '-->';
         }
 
@@ -230,7 +230,7 @@ class Generator
      */
     public function generateScriptFromToken(Token $token)
     {
-        if (!$token instanceof HTMLPurifier_Token_Text) {
+        if (!$token instanceof Text) {
             return $this->generateFromToken($token);
         }
 

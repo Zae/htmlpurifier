@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Strategy;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Injector;
@@ -10,6 +12,10 @@ use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 
 /**
  * Takes tokens makes them well-formed (balance end tags, etc.)
@@ -22,7 +28,7 @@ use HTMLPurifier\Token\Start;
  *        Purifier, we may rely on our infrastructure to close it for us
  *        and shouldn't report an error to the user [TagClosedAuto].
  */
-class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
+class MakeWellFormed extends Strategy
 {
     /**
      * Array stream of tokens being processed.
@@ -234,7 +240,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
 
             // quick-check: if it's not a tag, no need to process
             if (empty($token->is_tag)) {
-                if ($token instanceof HTMLPurifier_Token_Text) {
+                if ($token instanceof Text) {
                     foreach ($this->injectors as $i => $injector) {
                         if (isset($token->skip[$i])) {
                             // See Note [Injector skips]
@@ -268,7 +274,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
             $ok = false;
             if ($type === 'empty' && $token instanceof Start) {
                 // claims to be a start tag but is empty
-                $token = new HTMLPurifier_Token_Empty(
+                $token = new EmptyToken(
                     $token->name,
                     $token->attr,
                     $token->line,
@@ -276,7 +282,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
                     $token->armor
                 );
                 $ok = true;
-            } elseif ($type && $type !== 'empty' && $token instanceof HTMLPurifier_Token_Empty) {
+            } elseif ($type && $type !== 'empty' && $token instanceof EmptyToken) {
                 // claims to be empty but really is a start tag
                 // NB: this assignment is required
                 $old_token = $token;
@@ -288,7 +294,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
                 // punt (since we had to modify the input stream in a non-trivial way)
                 $reprocess = true;
                 continue;
-            } elseif ($token instanceof HTMLPurifier_Token_Empty) {
+            } elseif ($token instanceof EmptyToken) {
                 // real empty token
                 $ok = true;
             } elseif ($token instanceof Start) {
@@ -444,7 +450,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
                     if ($e) {
                         $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag to text');
                     }
-                    $token = new HTMLPurifier_Token_Text($generator->generateFromToken($token));
+                    $token = new Text($generator->generateFromToken($token));
                 } else {
                     if ($e) {
                         $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag removed');
@@ -507,7 +513,7 @@ class HTMLPurifier_Strategy_MakeWellFormed extends Strategy
                     if ($e) {
                         $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag to text');
                     }
-                    $token = new HTMLPurifier_Token_Text($generator->generateFromToken($token));
+                    $token = new Text($generator->generateFromToken($token));
                 } else {
                     if ($e) {
                         $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag removed');

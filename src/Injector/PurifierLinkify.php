@@ -10,7 +10,7 @@ use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
 use HTMLPurifier_Exception;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Text;
 
 /**
  * Injector that converts configuration directive syntax %Namespace.Directive
@@ -48,9 +48,9 @@ class PurifierLinkify extends Injector
     }
 
     /**
-     * @param HTMLPurifier_Token_Text $token
+     * @param Text $token
      */
-    public function handleText(HTMLPurifier_Token_Text &$token)
+    public function handleText(Text &$token)
     {
         if (!$this->allowsElement('a')) {
             return;
@@ -70,13 +70,13 @@ class PurifierLinkify extends Injector
                 if ($bits[$i] === '') {
                     continue;
                 }
-                $token[] = new HTMLPurifier_Token_Text($bits[$i]);
+                $token[] = new Text($bits[$i]);
             } else {
                 $token[] = new Start(
                     'a',
                     ['href' => str_replace('%s', $bits[$i], $this->docURL)]
                 );
-                $token[] = new HTMLPurifier_Token_Text('%' . $bits[$i]);
+                $token[] = new Text('%' . $bits[$i]);
                 $token[] = new End('a');
             }
         }

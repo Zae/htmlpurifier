@@ -6,9 +6,9 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Token_Comment;
-use HTMLPurifier_Token_Empty;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 
 /**
  * Factory for token generation.
@@ -36,17 +36,17 @@ class TokenFactory
     private $p_end;
 
     /**
-     * @type HTMLPurifier_Token_Empty
+     * @type \HTMLPurifier\Token\EmptyToken
      */
     private $p_empty;
 
     /**
-     * @type HTMLPurifier_Token_Text
+     * @type \HTMLPurifier\Token\Text
      */
     private $p_text;
 
     /**
-     * @type HTMLPurifier_Token_Comment
+     * @type \HTMLPurifier\Token\Comment
      */
     private $p_comment;
 
@@ -57,9 +57,9 @@ class TokenFactory
     {
         $this->p_start = new Start('', []);
         $this->p_end = new End('');
-        $this->p_empty = new HTMLPurifier_Token_Empty('', []);
-        $this->p_text = new HTMLPurifier_Token_Text('');
-        $this->p_comment = new HTMLPurifier_Token_Comment('');
+        $this->p_empty = new EmptyToken('', []);
+        $this->p_text = new Text('');
+        $this->p_comment = new Comment('');
     }
 
     /**
@@ -94,14 +94,14 @@ class TokenFactory
     }
 
     /**
-     * Creates a HTMLPurifier_Token_Empty.
+     * Creates a HTMLPurifier\Token\HTMLPurifier_Token_Empty.
      *
      * @param string $name Tag name
      * @param array  $attr Associative array of attributes
      *
-     * @return HTMLPurifier_Token_Empty Generated HTMLPurifier_Token_Empty
+     * @return EmptyToken Generated HTMLPurifier\Token\HTMLPurifier_Token_Empty
      */
-    public function createEmpty(string $name, array $attr = []): HTMLPurifier_Token_Empty
+    public function createEmpty(string $name, array $attr = []): EmptyToken
     {
         $p = clone $this->p_empty;
         $p->__construct($name, $attr);
@@ -110,13 +110,13 @@ class TokenFactory
     }
 
     /**
-     * Creates a HTMLPurifier_Token_Text.
+     * Creates a HTMLPurifier\Token\HTMLPurifier_Token_Text.
      *
      * @param string $data Data of text token
      *
-     * @return HTMLPurifier_Token_Text Generated HTMLPurifier_Token_Text
+     * @return \HTMLPurifier\Token\Text Generated HTMLPurifier\Token\HTMLPurifier_Token_Text
      */
-    public function createText(string $data): HTMLPurifier_Token_Text
+    public function createText(string $data): Text
     {
         $p = clone $this->p_text;
         $p->__construct($data);
@@ -125,13 +125,13 @@ class TokenFactory
     }
 
     /**
-     * Creates a HTMLPurifier_Token_Comment.
+     * Creates a HTMLPurifier\Token\HTMLPurifier_Token_Comment.
      *
      * @param string $data Data of comment token
      *
-     * @return HTMLPurifier_Token_Comment Generated HTMLPurifier_Token_Comment
+     * @return Comment Generated HTMLPurifier\Token\HTMLPurifier_Token_Comment
      */
-    public function createComment(string $data): HTMLPurifier_Token_Comment
+    public function createComment(string $data): Comment
     {
         $p = clone $this->p_comment;
         $p->__construct($data);

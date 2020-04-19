@@ -8,7 +8,7 @@ use HTMLPurifier\Tests\Unit\TestCase;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Strategy;
-use HTMLPurifier_Strategy_Composite;
+use HTMLPurifier\Strategy\Composite;
 use Mockery;
 
 // doesn't use Strategy TestCase
@@ -67,14 +67,14 @@ class CompositeTest extends TestCase
 }
 
 /**
- * Special Testing version of the HTMLPurifier_Strategy_Composite class that uses referenced
+ * Special Testing version of the HTMLPurifier\Strategy\HTMLPurifier_Strategy_Composite class that uses referenced
  * strategies for mocking purposes.
  *
  * Class HTMLPurifier_Strategy_Composite_Test
  *
  * @package HTMLPurifier\Tests\Unit\Strategy
  */
-class HTMLPurifier_Strategy_Composite_Test extends HTMLPurifier_Strategy_Composite
+class HTMLPurifier_Strategy_Composite_Test extends Composite
 {
     /**
      * HTMLPurifier_Strategy_Composite_Test constructor.

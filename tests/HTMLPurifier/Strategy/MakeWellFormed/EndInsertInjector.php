@@ -3,6 +3,7 @@
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 class HTMLPurifier_Strategy_MakeWellFormed_EndInsertInjector extends Injector
@@ -14,7 +15,7 @@ class HTMLPurifier_Strategy_MakeWellFormed_EndInsertInjector extends Injector
         if ($token->name == 'div') return;
         $token = array(
             new Start('b'),
-            new HTMLPurifier_Token_Text('Comment'),
+            new Text('Comment'),
             new End('b'),
             $token
         );

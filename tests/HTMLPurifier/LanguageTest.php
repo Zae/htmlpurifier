@@ -4,6 +4,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
 use HTMLPurifier\LanguageFactory;
 use HTMLPurifier\Language;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 /**
@@ -57,7 +58,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
             array(1=>new Start('a', array('href'=>'http://example.com'), 18))),
             'Element Token: a, <a href="http://example.com">, <a>, 18');
         $this->assertIdentical($lang->formatMessage('LanguageTest: Data info',
-            array(1=>new HTMLPurifier_Token_Text('data>', 23))),
+            array(1=>new Text('data>', 23))),
             'Data Token: data>, data&gt;, data&gt;, 23');
     }
 

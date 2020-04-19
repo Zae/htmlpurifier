@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\Strategy\Core;
+
 class HTMLPurifier_Strategy_CoreTest extends HTMLPurifier_StrategyHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_Core();
+        $this->obj = new Core();
     }
 
     public function testBlankInput()

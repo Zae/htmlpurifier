@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\TagTransform;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Tag;
+use HTMLPurifier_Config;
 
 /**
  * Transforms FONT tags to the proper form (SPAN with CSS styling)
@@ -22,7 +25,7 @@ use HTMLPurifier\Token\Tag;
  *          TagTransform operates before well-formedness is enforced, so
  *          the "active formatting elements" algorithm doesn't get applied.
  */
-class HTMLPurifier_TagTransform_Font extends TagTransform
+class Font extends TagTransform
 {
     /**
      * @type string

@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIFilter;
+
+use Exception;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
- * Class HTMLPurifier_URIFilter_Munge
+ * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_Munge
  */
-class HTMLPurifier_URIFilter_Munge extends URIFilter
+class Munge extends URIFilter
 {
     /**
      * @type string
@@ -120,7 +125,8 @@ class HTMLPurifier_URIFilter_Munge extends URIFilter
         URI $uri,
         HTMLPurifier_Config $config,
         Context $context
-    ): void {
+    ): void
+    {
         $string = $uri->toString();
 
         // always available

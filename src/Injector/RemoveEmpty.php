@@ -12,7 +12,7 @@ use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
 use HTMLPurifier_Exception;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Text;
 
 /**
  * Class HTMLPurifier\Injector\HTMLPurifier_Injector_RemoveEmpty
@@ -92,7 +92,7 @@ class RemoveEmpty extends Injector
 
         for ($i = count($this->inputZipper->back) - 1; $i >= 0; $i--, $deleted++) {
             $next = $this->inputZipper->back[$i];
-            if ($next instanceof HTMLPurifier_Token_Text) {
+            if ($next instanceof Text) {
                 if ($next->is_whitespace) {
                     continue;
                 }
@@ -133,7 +133,7 @@ class RemoveEmpty extends Injector
 
             for ($b = 0, $c = count($this->inputZipper->front); $b < $c; $b++) {
                 $prev = $this->inputZipper->front[$b];
-                if ($prev instanceof HTMLPurifier_Token_Text && $prev->is_whitespace) {
+                if ($prev instanceof Text && $prev->is_whitespace) {
                     continue;
                 }
                 break;
