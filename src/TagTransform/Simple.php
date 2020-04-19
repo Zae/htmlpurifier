@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\Tag;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Token\EmptyToken;
 
 /**
@@ -35,12 +35,12 @@ class Simple extends TagTransform
 
     /**
      * @param Tag                 $tag
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return string
      */
-    public function transform(Tag $tag, HTMLPurifier_Config $config, Context $context)
+    public function transform(Tag $tag, \HTMLPurifier\Config $config, Context $context)
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;

@@ -7,7 +7,7 @@ namespace HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition that disallows all elements.
@@ -31,12 +31,12 @@ class Nothing extends ChildDef
 
     /**
      * @param Node[]              $children
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context): array
+    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context): array
     {
         return [];
     }

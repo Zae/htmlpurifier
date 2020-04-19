@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\CSS;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -19,7 +19,7 @@ class AlphaValue extends Number
 
     /**
      * @param string                $number
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      * @param \HTMLPurifier\Context $context
      *
      * @return string

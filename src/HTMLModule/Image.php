@@ -7,7 +7,7 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrTransform\ImgRequired;
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -24,7 +24,7 @@ class Image extends HTMLModule
     public $name = 'Image';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws Exception
      */

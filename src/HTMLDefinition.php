@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrTransform;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Definition;
 use HTMLPurifier\Doctype;
 use HTMLPurifier\ElementDef;
@@ -218,9 +218,9 @@ class HTMLDefinition extends Definition
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    protected function doSetup(HTMLPurifier_Config $config)
+    protected function doSetup(\HTMLPurifier\Config $config)
     {
         $this->processModules($config);
         $this->setupConfigStuff($config);
@@ -238,9 +238,9 @@ class HTMLDefinition extends Definition
     /**
      * Extract out the information from the manager
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    protected function processModules(HTMLPurifier_Config $config)
+    protected function processModules(\HTMLPurifier\Config $config)
     {
         if ($this->_anonModule) {
             // for user specific changes
@@ -291,11 +291,11 @@ class HTMLDefinition extends Definition
     /**
      * Sets up stuff based on config. We need a better way of doing this.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    protected function setupConfigStuff(HTMLPurifier_Config $config)
+    protected function setupConfigStuff(\HTMLPurifier\Config $config)
     {
         $block_wrapper = $config->get('HTML.BlockWrapper');
         if (isset($this->info_content_sets['Block'][$block_wrapper])) {

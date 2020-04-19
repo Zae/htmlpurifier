@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -28,11 +28,11 @@ class Iframe extends HTMLModule
     public $safe = false;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         if ($config->get('HTML.SafeIframe')) {
             $this->safe = true;

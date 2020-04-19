@@ -10,7 +10,7 @@ class HTMLPurifier_AttrDefHarness extends HTMLPurifier_Harness
 
     public function setUp()
     {
-        $this->config = HTMLPurifier_Config::createDefault();
+        $this->config = \HTMLPurifier\Config::createDefault();
         $this->context = new Context();
     }
 

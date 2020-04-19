@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache\DevNull;
 use Mockery;
 
@@ -22,7 +22,7 @@ class DefinitionCacheTest extends TestCase
         // using null subclass because parent is abstract
         $cache = new DevNull('Test');
 
-        $config = Mockery::mock(HTMLPurifier_Config::class)->makePartial();
+        $config = Mockery::mock(\HTMLPurifier\Config::class)->makePartial();
         $config->version = '1.0.0'; // hopefully no conflicts
 
         $config->expects()

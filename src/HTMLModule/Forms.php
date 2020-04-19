@@ -7,7 +7,7 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\AttrTransform\Textarea;
 use HTMLPurifier\AttrTransform\Input;
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Forms module, defines all form-related elements found in HTML 4.
@@ -33,9 +33,9 @@ class Forms extends HTMLModule
     ];
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         if ($config->get('HTML.Forms')) {
             $this->safe = true;

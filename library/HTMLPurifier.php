@@ -17,7 +17,7 @@ declare(strict_types=1);
  *  -# Generating HTML from the purified tokens.
  *
  * However, most users will only need to interface with the HTMLPurifier
- * and HTMLPurifier_Config.
+ * and \HTMLPurifier\Config.
  */
 
 /*
@@ -82,7 +82,7 @@ class HTMLPurifier
     /**
      * Global configuration object.
      *
-     * @type HTMLPurifier_Config
+     * @type \HTMLPurifier\Config
      */
     public $config;
 
@@ -122,16 +122,16 @@ class HTMLPurifier
     /**
      * Initializes the purifier.
      *
-     * @param HTMLPurifier_Config|mixed $config Optional HTMLPurifier_Config object
+     * @param \HTMLPurifier\Config|mixed $config Optional \HTMLPurifier\Config object
      *                                          for all instances of the purifier, if omitted, a default
      *                                          configuration is supplied (which can be overridden on a
      *                                          per-use basis).
      *                                          The parameter can also be any type that
-     *                                          HTMLPurifier_Config::create() supports.
+     *                                          \HTMLPurifier\Config::create() supports.
      */
     public function __construct($config = null)
     {
-        $this->config = HTMLPurifier_Config::create($config);
+        $this->config = \HTMLPurifier\Config::create($config);
         $this->strategy = new Core();
     }
 
@@ -155,18 +155,18 @@ class HTMLPurifier
      * Filters an HTML snippet/document to be XSS-free and standards-compliant.
      *
      * @param string              $html   String of HTML to purify
-     * @param HTMLPurifier_Config $config Config object for this operation,
+     * @param \HTMLPurifier\Config $config Config object for this operation,
      *                                    if omitted, defaults to the config object specified during this
      *                                    object's construction. The parameter can also be any type
-     *                                    that HTMLPurifier_Config::create() supports.
+     *                                    that \HTMLPurifier\Config::create() supports.
      *
      * @return string Purified HTML
      * @throws Exception
      */
-    public function purify(string $html, ?HTMLPurifier_Config $config = null): ?string
+    public function purify(string $html, ?\HTMLPurifier\Config $config = null): ?string
     {
         // :TODO: make the config merge in, instead of replace
-        $config = $config ? HTMLPurifier_Config::create($config) : $this->config;
+        $config = $config ? \HTMLPurifier\Config::create($config) : $this->config;
 
         // implementation is partially environment dependant, partially
         // configuration dependant
@@ -254,13 +254,13 @@ class HTMLPurifier
      * Filters an array of HTML snippets
      *
      * @param string[]            $array_of_html Array of html snippets
-     * @param HTMLPurifier_Config $config        Optional config object for this operation.
+     * @param \HTMLPurifier\Config $config        Optional config object for this operation.
      *                                           See HTMLPurifier::purify() for more details.
      *
      * @return string[] Array of purified HTML
      * @throws Exception
      */
-    public function purifyArray(array $array_of_html, ?HTMLPurifier_Config $config = null): array
+    public function purifyArray(array $array_of_html, ?\HTMLPurifier\Config $config = null): array
     {
         $context_array = [];
         $array = [];
@@ -282,9 +282,9 @@ class HTMLPurifier
     /**
      * Singleton for enforcing just one HTML Purifier in your system
      *
-     * @param HTMLPurifier|HTMLPurifier_Config $prototype Optional prototype
+     * @param HTMLPurifier|\HTMLPurifier\Config $prototype Optional prototype
      *                                                    HTMLPurifier instance to overload singleton with,
-     *                                                    or HTMLPurifier_Config instance to configure the
+     *                                                    or \HTMLPurifier\Config instance to configure the
      *                                                    generated version with.
      *
      * @return HTMLPurifier
@@ -307,9 +307,9 @@ class HTMLPurifier
     /**
      * Singleton for enforcing just one HTML Purifier in your system
      *
-     * @param HTMLPurifier|HTMLPurifier_Config $prototype Optional prototype
+     * @param HTMLPurifier|\HTMLPurifier\Config $prototype Optional prototype
      *                                                    HTMLPurifier instance to overload singleton with,
-     *                                                    or HTMLPurifier_Config instance to configure the
+     *                                                    or \HTMLPurifier\Config instance to configure the
      *                                                    generated version with.
      *
      * @return HTMLPurifier

@@ -31,7 +31,7 @@ require 'HTMLPurifier/Bootstrap.php';
 require '../src/Definition.php';
 require '../src/CSSDefinition.php';
 require '../src/ChildDef.php';
-require 'HTMLPurifier/Config.php';
+require '../src/Config.php';
 require '../src/ConfigSchema.php';
 require '../src/ContentSets.php';
 require '../src/Context.php';

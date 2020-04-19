@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -26,13 +26,13 @@ class IDAccumulator
     /**
      * Builds an IDAccumulator, also initializing the default blacklist
      *
-     * @param HTMLPurifier_Config $config  Instance of HTMLPurifier_Config
-     * @param Context             $context Instance of HTMLPurifier\HTMLPurifier_Context
+     * @param Config  $config  Instance of \HTMLPurifier\Config
+     * @param Context $context Instance of HTMLPurifier\HTMLPurifier_Context
      *
      * @return IDAccumulator Fully initialized HTMLPurifier\HTMLPurifier_IDAccumulator
      * @throws Exception
      */
-    public static function build(HTMLPurifier_Config $config, $context)
+    public static function build(\HTMLPurifier\Config $config, $context)
     {
         $id_accumulator = new static();
         $id_accumulator->load($config->get('Attr.IDBlacklist'));

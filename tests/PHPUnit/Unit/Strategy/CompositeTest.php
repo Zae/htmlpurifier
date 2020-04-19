@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\Strategy;
 
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier_Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Strategy\Composite;
@@ -37,7 +37,7 @@ class CompositeTest extends TestCase
         $input_3 = 'Processed by 1 and 2';
         $input_4 = 'Processed by 1, 2 and 3'; // expected output
 
-        $config = Mockery::mock(HTMLPurifier_Config::class);
+        $config = Mockery::mock(Config::class);
         $context = Mockery::mock(Context::class);
 
         $params_1 = [$input_1, $config, $context];

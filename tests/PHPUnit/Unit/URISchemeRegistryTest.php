@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URIScheme\http;
@@ -23,7 +23,7 @@ class URISchemeRegistryTest extends TestCase
      */
     public function test(): void
     {
-        $config = HTMLPurifier_Config::create([
+        $config = Config::create([
             'URI.AllowedSchemes' => 'http, telnet',
             'URI.OverrideAllowedSchemes' => true
         ]);
@@ -49,7 +49,7 @@ class URISchemeRegistryTest extends TestCase
         static::assertEquals($scheme_foobar, $registry->getScheme('foobar', $config, $context));
 
         // now, test when overriding is not allowed
-        $config = HTMLPurifier_Config::create([
+        $config = Config::create([
             'URI.AllowedSchemes' => 'http, telnet',
             'URI.OverrideAllowedSchemes' => false
         ]);

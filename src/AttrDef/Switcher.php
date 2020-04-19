@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -42,7 +42,7 @@ class Switcher
 
     /**
      * @param string              $string
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool|string

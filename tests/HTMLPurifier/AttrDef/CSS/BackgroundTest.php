@@ -7,7 +7,7 @@ class HTMLPurifier_AttrDef_CSS_BackgroundTest extends HTMLPurifier_AttrDefHarnes
 
     public function test()
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $this->def = new Background($config);
 
         $valid = '#333 url("chess.png") repeat fixed 50% top';

@@ -30,7 +30,7 @@ EXTERNAL: CSSTidy
 
     $dirty = '<style>body {color:#F00;}</style> Some text';
 
-    $config = HTMLPurifier_Config::createDefault();
+    $config = \HTMLPurifier\Config::createDefault();
     $config->set('Filter', 'ExtractStyleBlocks', true);
     $purifier = new HTMLPurifier($config);
 

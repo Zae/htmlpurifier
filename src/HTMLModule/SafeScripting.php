@@ -7,7 +7,7 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrTransform\ScriptRequired;
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -22,11 +22,11 @@ class SafeScripting extends HTMLModule
     public $name = 'SafeScripting';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws Exception
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         // These definitions are not intrinsically safe: the attribute transforms
         // are a vital part of ensuring safety.

@@ -6,7 +6,7 @@ require '../library/HTMLPurifier.path.php';
 require 'HTMLPurifier.includes.php';
 require 'HTMLPurifier.autoload.php';
 require 'HTMLPurifier/PHPT/loading/_autoload.inc';
-$config = HTMLPurifier_Config::createDefault();
+$config = \HTMLPurifier\Config::createDefault();
 $purifier = new HTMLPurifier($config);
 echo $purifier->purify('<b>Salsa!');
 

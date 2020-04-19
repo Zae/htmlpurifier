@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Injector\Linkify;
@@ -84,12 +84,12 @@ a[href|title]
      */
     public function test_Allowed(): void
     {
-        $config1 = HTMLPurifier_Config::create([
+        $config1 = \HTMLPurifier\Config::create([
             'HTML.AllowedElements' => ['b', 'i', 'p', 'a'],
             'HTML.AllowedAttributes' => ['a@href', '*@id']
         ]);
 
-        $config2 = HTMLPurifier_Config::create([
+        $config2 = \HTMLPurifier\Config::create([
             'HTML.Allowed' => 'b,i,p,a[href],*[id]'
         ]);
 
@@ -390,7 +390,7 @@ a[href|title]
      */
     public function test_addAttribute(): void
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $def = $config->getHTMLDefinition(true);
         $def->addAttribute('span', 'custom', 'Enum#attribute');
 
@@ -406,7 +406,7 @@ a[href|title]
      */
     public function test_addAttribute_multiple(): void
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $def = $config->getHTMLDefinition(true);
         $def->addAttribute('span', 'custom', 'Enum#attribute');
         $def->addAttribute('span', 'foo', 'Text');
@@ -423,7 +423,7 @@ a[href|title]
      */
     public function test_addElement(): void
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $def = $config->getHTMLDefinition(true);
         $def->addElement('marquee', 'Inline', 'Inline', 'Common', ['width' => 'Length']);
 
@@ -525,7 +525,7 @@ a[href|title]
      */
     public function test_manyNestedTags(): void
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $config->set('Core.AllowParseManyTags', true);
         $purifier = new HTMLPurifier($config);
 

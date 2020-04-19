@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\DefinitionCache;
 
-use HTMLPurifier_Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Definition;
 use Mockery;
 use Mockery\Mock;
@@ -22,11 +22,11 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
      *
      * @param string $serial
      *
-     * @return HTMLPurifier_Config|Mockery\LegacyMockInterface|Mockery\MockInterface
+     * @return Config|Mockery\LegacyMockInterface|Mockery\MockInterface
      */
     protected function generateConfigMock(string $serial = 'defaultserial')
     {
-        $config = Mockery::mock(HTMLPurifier_Config::class);
+        $config = Mockery::mock(Config::class);
 
         $config->shouldReceive('getBatchSerial')
             ->withArgs(['Test'])

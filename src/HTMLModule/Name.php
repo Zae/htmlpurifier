@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrTransform\NameSync;
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -20,7 +20,7 @@ class Name extends HTMLModule
     public $name = 'Name';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws Exception
      */

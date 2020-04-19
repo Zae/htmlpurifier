@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrDef\HTML\LinkTypes;
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Hypertext Module, defines hypertext links. Core Module.
@@ -19,9 +19,9 @@ class Hypertext extends HTMLModule
     public $name = 'Hypertext';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         $a = $this->addElement(
             'a',

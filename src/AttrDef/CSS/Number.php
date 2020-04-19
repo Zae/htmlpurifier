@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -30,7 +30,7 @@ class Number extends AttrDef
 
     /**
      * @param string                $number
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      * @param \HTMLPurifier\Context $context
      *
      * @return string|bool

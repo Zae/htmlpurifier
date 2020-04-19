@@ -10,7 +10,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Text;
 
@@ -25,7 +25,7 @@ class RemoveEmpty extends Injector
     private $context;
 
     /**
-     * @type HTMLPurifier_Config
+     * @type Config
      */
     private $config;
 
@@ -52,13 +52,13 @@ class RemoveEmpty extends Injector
     private $exclude;
 
     /**
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return void
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(HTMLPurifier_Config $config, Context $context): void
+    public function prepare(Config $config, Context $context): void
     {
         parent::prepare($config, $context);
 

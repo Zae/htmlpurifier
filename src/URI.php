@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\URI\Host;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use HTMLPurifier\PercentEncoder;
@@ -91,13 +91,13 @@ class URI
     /**
      * Retrieves a scheme object corresponding to the URI's scheme/default
      *
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return URIScheme|bool Scheme object appropriate for validating this URI
      * @throws Exception
      */
-    public function getSchemeObj(HTMLPurifier_Config $config, Context $context)
+    public function getSchemeObj(\HTMLPurifier\Config $config, Context $context)
     {
         $registry = URISchemeRegistry::instance();
         if ($this->scheme !== null) {
@@ -129,13 +129,13 @@ class URI
      * Generic validation method applicable for all schemes. May modify
      * this URI in order to get it into a compliant form.
      *
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool True if validation/filtering succeeds, false if failure
      * @throws Exception
      */
-    public function validate(HTMLPurifier_Config $config, Context $context): bool
+    public function validate(\HTMLPurifier\Config $config, Context $context): bool
     {
         // ABNF definitions from RFC 3986
         $chars_sub_delims = '!$&\'()*+,;=';
@@ -304,12 +304,12 @@ class URI
      * only appropriate for metadata that doesn't care about protocol
      * security.  isBenign is probably what you actually want.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return bool
      * @throws Exception
      */
-    public function isLocal(HTMLPurifier_Config $config): bool
+    public function isLocal(\HTMLPurifier\Config $config): bool
     {
         if ($this->host === null) {
             return true;
@@ -327,13 +327,13 @@ class URI
      *      - It is a local URL (isLocal), and
      *      - It has a equal or better level of security
      *
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      * @throws Exception
      */
-    public function isBenign(HTMLPurifier_Config $config, Context $context): bool
+    public function isBenign(\HTMLPurifier\Config $config, Context $context): bool
     {
         if (!$this->isLocal($config)) {
             return false;

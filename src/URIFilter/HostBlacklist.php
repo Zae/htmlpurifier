@@ -11,7 +11,7 @@ namespace HTMLPurifier\URIFilter;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 class HostBlacklist extends URIFilter
@@ -27,12 +27,12 @@ class HostBlacklist extends URIFilter
     protected $blacklist = [];
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(HTMLPurifier_Config $config): bool
+    public function prepare(\HTMLPurifier\Config $config): bool
     {
         $this->blacklist = $config->get('URI.HostBlacklist');
 
@@ -41,12 +41,12 @@ class HostBlacklist extends URIFilter
 
     /**
      * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
+    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
         foreach ($this->blacklist as $blacklisted_host_fragment) {
             if (strpos($uri->host, $blacklisted_host_fragment) !== false) {

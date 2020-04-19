@@ -7,7 +7,7 @@ namespace HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Custom validation class, accepts DTD child definitions
@@ -86,12 +86,12 @@ class Custom extends ChildDef
 
     /**
      * @param Node[]              $children
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context): bool
+    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context): bool
     {
         $list_of_children = '';
 

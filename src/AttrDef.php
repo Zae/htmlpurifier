@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Encoder;
 
@@ -38,9 +38,9 @@ abstract class AttrDef
     /**
      * Validates and cleans passed string according to a definition.
      *
-     * @param string              $string  String to be validated and cleaned.
-     * @param HTMLPurifier_Config $config  Mandatory HTMLPurifier_Config object.
-     * @param Context             $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
+     * @param string  $string  String to be validated and cleaned.
+     * @param Config  $config  Mandatory \HTMLPurifier\Config object.
+     * @param Context $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
      */
     abstract public function validate($string, $config, $context);
 

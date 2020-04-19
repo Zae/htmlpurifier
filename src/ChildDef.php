@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Defines allowed child nodes and validates nodes against it.
@@ -40,11 +40,11 @@ abstract class ChildDef
      * Get lookup of tag names that should not close this element automatically.
      * All other elements will do so.
      *
-     * @param HTMLPurifier_Config $config HTMLPurifier_Config object
+     * @param Config $config \HTMLPurifier\Config object
      *
      * @return array
      */
-    public function getAllowedElements(HTMLPurifier_Config $config)
+    public function getAllowedElements(Config $config)
     {
         return $this->elements;
     }
@@ -52,11 +52,11 @@ abstract class ChildDef
     /**
      * Validates nodes according to definition and returns modification.
      *
-     * @param Node[]              $children Array of HTMLPurifier\HTMLPurifier_Node
-     * @param HTMLPurifier_Config $config   HTMLPurifier_Config object
-     * @param Context             $context  HTMLPurifier\HTMLPurifier_Context object
+     * @param Node[]  $children Array of HTMLPurifier\HTMLPurifier_Node
+     * @param Config  $config   \HTMLPurifier\Config object
+     * @param Context $context  HTMLPurifier\HTMLPurifier_Context object
      *
      * @return bool|array true to leave nodes as is, false to remove parent node, array of replacement children
      */
-    abstract public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context);
+    abstract public function validateChildren(array $children, Config $config, Context $context);
 }

@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
 use HTMLPurifier\ChildDef\Optional;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition that uses different definitions depending on context.
@@ -54,12 +54,12 @@ class Chameleon extends ChildDef
 
     /**
      * @param Node[]              $children
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
+    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context)
     {
         if ($context->get('IsInline') === false) {
             return $this->block->validateChildren(

@@ -12,7 +12,7 @@ VERSION: 2.0.0
     clear your cache. Example:
 </p>
 <pre>
-$config = HTMLPurifier_Config::createDefault();
+$config = \HTMLPurifier\Config::createDefault();
 $config->set('HTML', 'DefinitionID', '1');
 $def = $config->getHTMLDefinition();
 $def->addAttribute('a', 'tabindex', 'Number');

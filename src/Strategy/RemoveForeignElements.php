@@ -11,7 +11,7 @@ use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
@@ -28,13 +28,13 @@ class RemoveForeignElements extends Strategy
 {
     /**
      * @param Token[]             $tokens
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array|Token[]
      * @throws Exception
      */
-    public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
+    public function execute($tokens, \HTMLPurifier\Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
         $generator = new Generator($config, $context);

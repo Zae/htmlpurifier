@@ -10,6 +10,6 @@ if (!extension_loaded('dom')) {
 --FILE--
 <?php
 require '../library/HTMLPurifier.auto.php';
-echo get_class(HTMLPurifier_Lexer::create(HTMLPurifier_Config::createDefault()));
+echo get_class(HTMLPurifier_Lexer::create(\HTMLPurifier\Config::createDefault()));
 --EXPECT--
 HTMLPurifier\Lexer\HTMLPurifier_Lexer_DirectLex

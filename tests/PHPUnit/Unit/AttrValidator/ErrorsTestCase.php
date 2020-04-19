@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit\AttrValidator;
 
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier\AttrValidator;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\ErrorCollector;
 use HTMLPurifier\Generator;
 use HTMLPurifier\LanguageFactory;
@@ -26,7 +26,7 @@ class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
     {
         parent::setUp();
 
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $this->language = LanguageFactory::instance()->create($config, $this->context);
         $this->context->register('Locale', $this->language);
         $this->collector = new ErrorCollector($this->context);

@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition that allows a set of elements, but disallows empty children.
@@ -65,13 +65,13 @@ class Required extends ChildDef
     public $type = 'required';
 
     /**
-     * @param array               $children
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param array   $children
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
+    public function validateChildren(array $children, Config $config, Context $context)
     {
         // Flag for subclasses
         $this->whitespace = false;

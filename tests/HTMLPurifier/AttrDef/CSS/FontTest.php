@@ -7,7 +7,7 @@ class HTMLPurifier_AttrDef_CSS_FontTest extends HTMLPurifier_AttrDefHarness
 
     public function test()
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $this->def = new Font($config);
 
         // hodgepodge of usage cases from W3C spec, but " -> '

@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Text;
 
@@ -110,13 +110,13 @@ abstract class Injector
      * the injector. This function also checks if the HTML environment
      * will work with the Injector (see checkNeeded()).
      *
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      * @throws Exception
      */
-    public function prepare(HTMLPurifier_Config $config, Context $context)
+    public function prepare(\HTMLPurifier\Config $config, Context $context)
     {
         $this->htmlDefinition = $config->getHTMLDefinition();
 
@@ -140,12 +140,12 @@ abstract class Injector
      * will work with the Injector: if p tags are not allowed, the
      * Auto-Paragraphing injector should not be enabled.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      * @throws Exception
      */
-    public function checkNeeded(HTMLPurifier_Config $config)
+    public function checkNeeded(\HTMLPurifier\Config $config)
     {
         $def = $config->getHTMLDefinition();
         foreach ($this->needed as $element => $attributes) {

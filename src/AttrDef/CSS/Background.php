@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
@@ -25,7 +25,7 @@ class Background extends AttrDef
     protected $info;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
@@ -42,7 +42,7 @@ class Background extends AttrDef
 
     /**
      * @param string                $string
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string

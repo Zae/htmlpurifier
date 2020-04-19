@@ -13,7 +13,7 @@ use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Our in-house implementation of a parser.
@@ -53,13 +53,13 @@ class DirectLex extends Lexer
 
     /**
      * @param string              $string
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array|Token[]
      * @throws Exception
      */
-    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, Context $context): array
+    public function tokenizeHTML(string $string, \HTMLPurifier\Config $config, Context $context): array
     {
         // special normalization for script tags without any armor
         // our "armor" heurstic is a < sign any number of whitespaces after
@@ -394,16 +394,16 @@ class DirectLex extends Lexer
     /**
      * Takes the inside of an HTML tag and makes an assoc array of attributes.
      *
-     * @param string              $string Inside of tag excluding name.
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param string               $string Inside of tag excluding name.
+     * @param \\HTMLPurifier\Config $config
+     * @param Context              $context
      *
      * @return array Assoc array of attributes.
      * @throws Exception
      */
     public function parseAttributeString(
         string $string,
-        HTMLPurifier_Config $config,
+        \HTMLPurifier\Config $config,
         Context $context
     ): array
     {

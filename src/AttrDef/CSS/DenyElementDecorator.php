@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -37,7 +37,7 @@ class DenyElementDecorator extends AttrDef
      * Checks if CurrentToken is set and equal to $this->element
      *
      * @param string                $string
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string

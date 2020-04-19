@@ -7,7 +7,7 @@ namespace HTMLPurifier\URIFilter;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -26,12 +26,12 @@ class DisableExternal extends URIFilter
     protected $ourHostParts = false;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return void
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(HTMLPurifier_Config $config): void
+    public function prepare(\HTMLPurifier\Config $config): void
     {
         $our_host = $config->getDefinition('URI')->host;
 
@@ -42,12 +42,12 @@ class DisableExternal extends URIFilter
 
     /**
      * @param URI                 $uri Reference
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context)
+    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
     {
         if (is_null($uri->host)) {
             return true;

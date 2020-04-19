@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -24,7 +24,7 @@ class IPv4 extends AttrDef
 
     /**
      * @param string                $aIP
-     * @param HTMLPurifier_Config   $config
+     * @param Config                $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string

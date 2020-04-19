@@ -16,7 +16,7 @@ class ConfigSchema
      * Defaults of the directives and namespaces.
      *
      * @type array
-     * @note This shares the exact same structure as HTMLPurifier_Config::$conf
+     * @note This shares the exact same structure as \HTMLPurifier\Config::$conf
      */
     public $defaults = [];
 
@@ -53,7 +53,7 @@ class ConfigSchema
      * property set to the integer. If the integer is negative, type is
      * equal to the absolute value of integer, and allow_null is true.
      *
-     * This class is friendly with HTMLPurifier_Config. If you need introspection
+     * This class is friendly with \HTMLPurifier\Config. If you need introspection
      * about the schema, you're better of using the ConfigSchema_Interchange,
      * which uses more memory but has much richer information.
      *

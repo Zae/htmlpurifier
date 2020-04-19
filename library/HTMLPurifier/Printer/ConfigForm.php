@@ -97,7 +97,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
     /**
      * Returns HTML output for a configuration form
      *
-     * @param HTMLPurifier_Config|array $config  Configuration object of current form state, or an array
+     * @param \HTMLPurifier\Config|array $config  Configuration object of current form state, or an array
      *                                           where [0] has an HTML namespace and [1] is being rendered.
      * @param array|bool                $allowed Optional namespace(s) and directives to restrict form to.
      * @param bool                      $render_controls
@@ -118,7 +118,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $this->genConfig = $gen_config;
         $this->prepareGenerator($gen_config);
 
-        $allowed = HTMLPurifier_Config::getAllowedDirectivesForForm($allowed, $config->def);
+        $allowed = \HTMLPurifier\Config::getAllowedDirectivesForForm($allowed, $config->def);
         $all = [];
         foreach ($allowed as $key) {
             [$ns, $directive] = $key;
@@ -255,7 +255,7 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
      * @param string                    $directive
      * @param string                    $value
      * @param string                    $name
-     * @param HTMLPurifier_Config|array $config
+     * @param \HTMLPurifier\Config|array $config
      *
      * @return string
      * @throws Exception
@@ -324,7 +324,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
      * @param string                    $directive
      * @param string                    $value
      * @param string                    $name
-     * @param HTMLPurifier_Config|array $config
+     * @param \HTMLPurifier\Config|array $config
      *
      * @return string
      * @throws Exception
@@ -433,7 +433,7 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
      * @param string                    $directive
      * @param string                    $value
      * @param string                    $name
-     * @param HTMLPurifier_Config|array $config
+     * @param \HTMLPurifier\Config|array $config
      *
      * @return string
      * @throws Exception

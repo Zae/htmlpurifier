@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 
 /**
@@ -61,49 +61,49 @@ class Decorator extends DefinitionCache
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */
-    public function add(Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, \HTMLPurifier\Config $config)
     {
         return $this->cache->add($def, $config);
     }
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */
-    public function set(Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, \HTMLPurifier\Config $config)
     {
         return $this->cache->set($def, $config);
     }
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */
-    public function replace(Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, \HTMLPurifier\Config $config)
     {
         return $this->cache->replace($def, $config);
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */
-    public function get(HTMLPurifier_Config $config)
+    public function get(\HTMLPurifier\Config $config)
     {
         return $this->cache->get($config);
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */
@@ -113,7 +113,7 @@ class Decorator extends DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */
@@ -123,7 +123,7 @@ class Decorator extends DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      */

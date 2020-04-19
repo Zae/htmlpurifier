@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 class DoctypeRegistry
@@ -127,11 +127,11 @@ class DoctypeRegistry
      *       Generator whether or not the current document is XML
      *       based or not).
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return Doctype
      */
-    public function make(HTMLPurifier_Config $config)
+    public function make(Config $config)
     {
         return clone $this->get(
             $this->getDoctypeFromConfig($config)
@@ -141,12 +141,12 @@ class DoctypeRegistry
     /**
      * Retrieves the doctype from the configuration object
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return string
      * @throws Exception
      */
-    public function getDoctypeFromConfig(HTMLPurifier_Config $config)
+    public function getDoctypeFromConfig(Config $config)
     {
         // recommended test
         $doctype = $config->get('HTML.Doctype');

@@ -14,7 +14,7 @@ class HTMLPurifier_Harness extends UnitTestCase
     }
 
     /**
-     * @type HTMLPurifier_Config
+     * @type \HTMLPurifier\Config
      */
     protected $config;
 
@@ -62,7 +62,7 @@ class HTMLPurifier_Harness extends UnitTestCase
      */
     protected function prepareCommon(&$config, &$context)
     {
-        $config = HTMLPurifier_Config::create($config);
+        $config = \HTMLPurifier\Config::create($config);
         if (!$context) {
             $context = new Context();
         }
@@ -74,7 +74,7 @@ class HTMLPurifier_Harness extends UnitTestCase
      */
     protected function createCommon()
     {
-        return array(HTMLPurifier_Config::createDefault(), new Context);
+        return array(\HTMLPurifier\Config::createDefault(), new Context);
     }
 
     /**

@@ -20,7 +20,7 @@ require_once __DIR__ . '/HTMLPurifier.auto.php';
  */
 function kses($string, $allowed_html, $allowed_protocols = null): ?string
 {
-    $config = HTMLPurifier_Config::createDefault();
+    $config = \HTMLPurifier\Config::createDefault();
     $allowed_elements = [];
     $allowed_attributes = [];
 

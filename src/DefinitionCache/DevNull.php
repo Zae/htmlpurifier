@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 
 /**
@@ -15,73 +15,73 @@ class DevNull extends DefinitionCache
 {
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function add(Definition $def, HTMLPurifier_Config $config): bool
+    public function add(Definition $def, \HTMLPurifier\Config $config): bool
     {
         return false;
     }
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function set(Definition $def, HTMLPurifier_Config $config): bool
+    public function set(Definition $def, \HTMLPurifier\Config $config): bool
     {
         return false;
     }
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function replace(Definition $def, HTMLPurifier_Config $config): bool
+    public function replace(Definition $def, \HTMLPurifier\Config $config): bool
     {
         return false;
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function remove(HTMLPurifier_Config $config): bool
+    public function remove(\HTMLPurifier\Config $config): bool
     {
         return false;
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function get(HTMLPurifier_Config $config): bool
+    public function get(\HTMLPurifier\Config $config): bool
     {
         return false;
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function flush(HTMLPurifier_Config $config): bool
+    public function flush(\HTMLPurifier\Config $config): bool
     {
         return false;
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      */
-    public function cleanup(HTMLPurifier_Config $config): bool
+    public function cleanup(\HTMLPurifier\Config $config): bool
     {
         return false;
     }

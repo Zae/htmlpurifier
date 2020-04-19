@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Module defines proprietary tags and attributes in HTML.
@@ -20,9 +20,9 @@ class Proprietary extends HTMLModule
     public $name = 'Proprietary';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         $this->addElement(
             'marquee',

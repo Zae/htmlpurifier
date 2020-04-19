@@ -35,7 +35,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
      *                          is included.
      * @param $expect_added_attributes Attributes of output tag when $attributes
      *                          are omitted.
-     * @param $config_array     Configuration array for HTMLPurifier_Config
+     * @param $config_array     Configuration array for \HTMLPurifier\Config
      * @param $context_array    Context array for HTMLPurifier\HTMLPurifier_Context
      */
     protected function assertTransformation($transformer,
@@ -44,7 +44,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
                                   $expect_added_attributes = array(),
                                   $config_array = array(), $context_array = array()) {
 
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $config->loadArray($config_array);
 
         $context = new Context();

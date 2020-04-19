@@ -7,7 +7,7 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\HTML\Nmtokens;
 use HTMLPurifier\ChildDef\Optional;
-use HTMLPurifier_Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier\HTMLModuleManager;
@@ -70,7 +70,7 @@ class HTMLModuleManagerTest extends TestCase
         $unsafe_module->addElement('div', 'Block', 'Flow');
         $manager->addModule($unsafe_module);
 
-        $config = HTMLPurifier_Config::createDefault();
+        $config = Config::createDefault();
         $config->set('HTML.Trusted', false);
         $config->set('HTML.CustomDoctype', 'Blank');
 
@@ -129,7 +129,7 @@ class HTMLModuleManagerTest extends TestCase
         $magic_module->name = 'Magic';
         $manager->registerModule($magic_module);
 
-        $config = HTMLPurifier_Config::create([
+        $config = Config::create([
             'HTML.CustomDoctype' => 'Fantasy Inventory 1.0',
             'HTML.AllowedModules' => 'Weapons'
         ]);

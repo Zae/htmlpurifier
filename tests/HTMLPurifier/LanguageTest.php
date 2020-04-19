@@ -18,14 +18,14 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
     protected function generateEnLanguage()
     {
         $factory = LanguageFactory::instance();
-        $config = HTMLPurifier_Config::create(array('Core.Language' => 'en'));
+        $config = \HTMLPurifier\Config::create(array('Core.Language' => 'en'));
         $context = new Context();
         return $factory->create($config, $context);
     }
 
     public function test_getMessage()
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $context = new Context();
         $lang = new Language($config, $context);
         $lang->_loaded = true;
@@ -36,7 +36,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
 
     public function test_formatMessage()
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $context = new Context();
         $lang = new Language($config, $context);
         $lang->_loaded = true;
@@ -46,7 +46,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
 
     public function test_formatMessage_tokenParameter()
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $context = new Context();
         $generator = new Generator($config, $context); // replace with mock if this gets icky
         $context->register('Generator', $generator);
