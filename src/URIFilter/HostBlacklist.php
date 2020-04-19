@@ -6,11 +6,15 @@ declare(strict_types=1);
 // do not have canonical forms anymore. As far as I can tell, it's
 // not a problem (punycoding should be identity when no Unicode
 // points are involved), but I'm not 100% sure
+namespace HTMLPurifier\URIFilter;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
-class HTMLPurifier_URIFilter_HostBlacklist extends URIFilter
+class HostBlacklist extends URIFilter
 {
     /**
      * @type string

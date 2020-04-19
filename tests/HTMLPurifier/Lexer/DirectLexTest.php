@@ -2,6 +2,8 @@
 
 use HTMLPurifier\Context;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
@@ -87,20 +89,20 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
         $expect = array(
             // line 1
             0 => new Start('b')
-           ,1 => new HTMLPurifier_Token_Text('Line 1')
+           ,1 => new Text('Line 1')
            ,2 => new End('b')
-           ,3 => new HTMLPurifier_Token_Text("\n")
+           ,3 => new Text("\n")
             // line 2
            ,4 => new Start('i')
-           ,5 => new HTMLPurifier_Token_Text('Line 2')
+           ,5 => new Text('Line 2')
            ,6 => new End('i')
-           ,7 => new HTMLPurifier_Token_Text("\nStill Line 2")
+           ,7 => new Text("\nStill Line 2")
             // line 3
-           ,8 => new HTMLPurifier_Token_Empty('br')
+           ,8 => new EmptyToken('br')
             // line 4
-           ,9 => new HTMLPurifier_Token_Text("Now Line 4\n\n")
+           ,9 => new Text("Now Line 4\n\n")
             // line SIX
-           ,10 => new HTMLPurifier_Token_Empty('br')
+           ,10 => new EmptyToken('br')
         );
 
         $context = new Context();

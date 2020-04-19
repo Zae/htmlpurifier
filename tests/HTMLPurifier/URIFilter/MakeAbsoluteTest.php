@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\URIFilter\MakeAbsolute;
+
 class HTMLPurifier_URIFilter_MakeAbsoluteTest extends HTMLPurifier_URIFilterHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->filter = new HTMLPurifier_URIFilter_MakeAbsolute();
+        $this->filter = new MakeAbsolute();
         $this->setBase();
     }
 

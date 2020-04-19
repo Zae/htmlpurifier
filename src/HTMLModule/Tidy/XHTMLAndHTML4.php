@@ -11,8 +11,8 @@ use HTMLPurifier\AttrTransform\EnumToCSS;
 use HTMLPurifier\AttrTransform\Length;
 use HTMLPurifier\AttrTransform\ImgSpace;
 use HTMLPurifier\HTMLModule\Tidy;
-use HTMLPurifier_TagTransform_Font;
-use HTMLPurifier_TagTransform_Simple;
+use HTMLPurifier\TagTransform\Font;
+use HTMLPurifier\TagTransform\Simple;
 
 /**
  * Class HTMLPurifier\HTMLModule\Tidy\HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4
@@ -28,13 +28,13 @@ class XHTMLAndHTML4 extends Tidy
 
         // == deprecated tag transforms ===================================
 
-        $r['font'] = new HTMLPurifier_TagTransform_Font();
-        $r['menu'] = new HTMLPurifier_TagTransform_Simple('ul');
-        $r['dir'] = new HTMLPurifier_TagTransform_Simple('ul');
-        $r['center'] = new HTMLPurifier_TagTransform_Simple('div', 'text-align:center;');
-        $r['u'] = new HTMLPurifier_TagTransform_Simple('span', 'text-decoration:underline;');
-        $r['s'] = new HTMLPurifier_TagTransform_Simple('span', 'text-decoration:line-through;');
-        $r['strike'] = new HTMLPurifier_TagTransform_Simple('span', 'text-decoration:line-through;');
+        $r['font'] = new Font();
+        $r['menu'] = new Simple('ul');
+        $r['dir'] = new Simple('ul');
+        $r['center'] = new Simple('div', 'text-align:center;');
+        $r['u'] = new Simple('span', 'text-decoration:underline;');
+        $r['s'] = new Simple('span', 'text-decoration:line-through;');
+        $r['strike'] = new Simple('span', 'text-decoration:line-through;');
 
         // == deprecated attribute transforms =============================
 

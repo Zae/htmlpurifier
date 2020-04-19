@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\URIFilter\DisableResources;
+
 class HTMLPurifier_URIFilter_DisableResourcesTest extends HTMLPurifier_URIFilterHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->filter = new HTMLPurifier_URIFilter_DisableResources();
+        $this->filter = new DisableResources();
         $var = true;
         $this->context->register('EmbeddedURI', $var);
     }

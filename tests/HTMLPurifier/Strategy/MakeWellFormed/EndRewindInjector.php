@@ -2,6 +2,7 @@
 
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 class HTMLPurifier_Strategy_MakeWellFormed_EndRewindInjector extends Injector
@@ -14,7 +15,7 @@ class HTMLPurifier_Strategy_MakeWellFormed_EndRewindInjector extends Injector
             $token = false;
         }
     }
-    public function handleText(HTMLPurifier_Token_Text &$token)
+    public function handleText(Text &$token)
     {
         $token = false;
     }

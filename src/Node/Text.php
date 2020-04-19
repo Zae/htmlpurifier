@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\Node;
 
 use HTMLPurifier\Node;
-use HTMLPurifier_Token_Text;
 
 /**
  * Concrete text token class.
@@ -64,6 +63,6 @@ class Text extends Node
      */
     public function toTokenPair(): array
     {
-        return [new HTMLPurifier_Token_Text($this->data, $this->line, $this->col), null];
+        return [new \HTMLPurifier\Token\Text($this->data, $this->line, $this->col), null];
     }
 }

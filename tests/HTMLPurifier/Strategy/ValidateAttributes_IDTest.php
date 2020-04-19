@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\Strategy\ValidateAttributes;
+
 class HTMLPurifier_Strategy_ValidateAttributes_IDTest extends HTMLPurifier_StrategyHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_ValidateAttributes();
+        $this->obj = new ValidateAttributes();
         $this->config->set('Attr.EnableID', true);
     }
 

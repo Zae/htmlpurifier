@@ -7,7 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
 use HTMLPurifier\IDAccumulator;
-use HTMLPurifier_Token_Empty;
+use HTMLPurifier\Token\EmptyToken;
 
 /**
  * Validates the attributes of a token. Doesn't manage required attributes
@@ -43,7 +43,7 @@ class AttrValidator
         }
 
         if (!$token instanceof Start &&
-            !$token instanceof HTMLPurifier_Token_Empty
+            !$token instanceof EmptyToken
         ) {
             return;
         }

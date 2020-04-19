@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit\Strategy\MakeWellFormed;
 
 use HTMLPurifier\Tests\Unit\Strategy\TestCase;
 use HTMLPurifier\Injector;
-use HTMLPurifier_Strategy_MakeWellFormed;
+use HTMLPurifier\Strategy\MakeWellFormed;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use Mockery;
@@ -22,7 +22,7 @@ class InjectorTest extends TestCase
     {
         parent::setUp();
 
-        $this->obj = new HTMLPurifier_Strategy_MakeWellFormed();
+        $this->obj = new MakeWellFormed();
         $this->config->set('AutoFormat.AutoParagraph', true);
         $this->config->set('AutoFormat.Linkify', true);
         $this->config->set('AutoFormat.RemoveEmpty', true);

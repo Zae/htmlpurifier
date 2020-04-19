@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Strategy;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
+use HTMLPurifier_Config;
 
 /**
  * Composite strategy that runs multiple strategies on tokens.
  */
-abstract class HTMLPurifier_Strategy_Composite extends Strategy
+abstract class Composite extends Strategy
 {
     /**
      * List of strategies to run tokens through.

@@ -2,9 +2,13 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIFilter;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
+use HTMLPurifier_Exception;
 
 /**
  * Implements safety checks for safe iframes.
@@ -12,7 +16,7 @@ use HTMLPurifier\URI;
  * @warning This filter is *critical* for ensuring that %HTML.SafeIframe
  * works safely.
  */
-class HTMLPurifier_URIFilter_SafeIframe extends URIFilter
+class SafeIframe extends URIFilter
 {
     /**
      * @type string

@@ -61,13 +61,13 @@ abstract class Token
             switch (get_class($this)) {
                 case 'HTMLPurifier\Token\Start':
                     return 'start';
-                case 'HTMLPurifier_Token_Empty':
+                case 'HTMLPurifier\Token\EmptyToken':
                     return 'empty';
                 case 'HTMLPurifier\Token\End':
                     return 'end';
-                case 'HTMLPurifier_Token_Text':
+                case 'HTMLPurifier\Token\Text':
                     return 'text';
-                case 'HTMLPurifier_Token_Comment':
+                case 'HTMLPurifier\Token\Comment':
                     return 'comment';
                 default:
                     return null;

@@ -2,6 +2,9 @@
 
 use HTMLPurifier\Lexer\DOMLex;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
@@ -270,7 +273,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->assertTokenization(
             'This is regular text.',
             array(
-                new HTMLPurifier_Token_Text('This is regular text.')
+                new Text('This is regular text.')
             )
         );
     }
@@ -280,11 +283,11 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->assertTokenization(
             'This is <b>bold</b> text',
             array(
-                new HTMLPurifier_Token_Text('This is '),
+                new Text('This is '),
                 new Start('b', array()),
-                new HTMLPurifier_Token_Text('bold'),
+                new Text('bold'),
                 new End('b'),
-                new HTMLPurifier_Token_Text(' text'),
+                new Text(' text'),
             )
         );
     }
@@ -295,9 +298,9 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
             '<DIV>Totally rad dude. <b>asdf</b></div>',
             array(
                 new Start('DIV', array()),
-                new HTMLPurifier_Token_Text('Totally rad dude. '),
+                new Text('Totally rad dude. '),
                 new Start('b', array()),
-                new HTMLPurifier_Token_Text('asdf'),
+                new Text('asdf'),
                 new End('b'),
                 new End('div'),
             )
@@ -321,16 +324,16 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
             ),
             array(
                 'DOMLex' => $alt = array(
-                    new HTMLPurifier_Token_Empty('asdf'),
-                    new HTMLPurifier_Token_Empty('d'),
+                    new EmptyToken('asdf'),
+                    new EmptyToken('d'),
                     new Start('pooloka'),
                     new Start('poolasdf'),
-                    new HTMLPurifier_Token_Empty('ds'),
+                    new EmptyToken('ds'),
                     new End('poolasdf'),
                     new End('pooloka'),
                 ),
                 // 20140831: Weird, but whatever...
-                'PH5P' => array(new HTMLPurifier_Token_Empty('asdf')),
+                'PH5P' => array(new EmptyToken('asdf')),
             )
         );
     }
@@ -341,9 +344,9 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
             '<a'."\t".'href="foobar.php"'."\n".'title="foo!">Link to <b id="asdf">foobar</b></a>',
             array(
                 new Start('a',array('href'=>'foobar.php','title'=>'foo!')),
-                new HTMLPurifier_Token_Text('Link to '),
+                new Text('Link to '),
                 new Start('b',array('id'=>'asdf')),
-                new HTMLPurifier_Token_Text('foobar'),
+                new Text('foobar'),
                 new End('b'),
                 new End('a'),
             )
@@ -355,7 +358,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->assertTokenization(
             '<br style="&amp;" />',
             array(
-                new HTMLPurifier_Token_Empty('br', array('style' => '&'))
+                new EmptyToken('br', array('style' => '&'))
             )
         );
     }
@@ -364,7 +367,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<br />',
-            array( new HTMLPurifier_Token_Empty('br') )
+            array( new EmptyToken('br') )
         );
     }
 
@@ -372,7 +375,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<!-- Comment -->',
-            array( new HTMLPurifier_Token_Comment(' Comment ') )
+            array( new Comment(' Comment ') )
         );
     }
 
@@ -380,7 +383,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<!-- not so well formed --->',
-            array( new HTMLPurifier_Token_Comment(' not so well formed -') )
+            array( new Comment(' not so well formed -') )
         );
     }
 
@@ -388,10 +391,10 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<a href=""',
-            array( new HTMLPurifier_Token_Text('<a href=""') ),
+            array( new Text('<a href=""') ),
             array(
                 // I like our behavior better, but it's non-standard
-                'DOMLex'   => array( new HTMLPurifier_Token_Empty('a', array('href'=>'')) ),
+                'DOMLex'   => array( new EmptyToken('a', array('href'=>'')) ),
                 'PH5P' => false, // total barfing, grabs scaffolding too
             )
         );
@@ -402,14 +405,14 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->assertTokenization(
             '&lt;b&gt;',
             array(
-                new HTMLPurifier_Token_Text('<b>')
+                new Text('<b>')
             ),
             array(
                 // some parsers will separate entities out
                 'PH5P' => array(
-                    new HTMLPurifier_Token_Text('<'),
-                    new HTMLPurifier_Token_Text('b'),
-                    new HTMLPurifier_Token_Text('>'),
+                    new Text('<'),
+                    new Text('b'),
+                    new Text('>'),
                 ),
             )
         );
@@ -419,7 +422,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<a "=>',
-            array( new HTMLPurifier_Token_Empty('a') ),
+            array( new EmptyToken('a') ),
             array(
                 // we barf on this input
                 'DirectLex' => array(
@@ -441,7 +444,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
             ), $result);
         } else {
             $this->assertIdentical(array(
-                new HTMLPurifier_Token_Empty('a', array('"' => ''))
+                new EmptyToken('a', array('"' => ''))
             ), $result);
         }
     }
@@ -450,7 +453,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '"',
-            array( new HTMLPurifier_Token_Text('"') )
+            array( new Text('"') )
         );
     }
 
@@ -458,7 +461,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '&quot;',
-            array( new HTMLPurifier_Token_Text('"') )
+            array( new Text('"') )
         );
     }
 
@@ -466,20 +469,20 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<![CDATA[You <b>can&#39;t</b> get me!]]>',
-            array( new HTMLPurifier_Token_Text('You <b>can&#39;t</b> get me!') ),
+            array( new Text('You <b>can&#39;t</b> get me!') ),
             array(
                 'PH5P' =>  array(
-                    new HTMLPurifier_Token_Text('You '),
-                    new HTMLPurifier_Token_Text('<'),
-                    new HTMLPurifier_Token_Text('b'),
-                    new HTMLPurifier_Token_Text('>'),
-                    new HTMLPurifier_Token_Text('can'),
-                    new HTMLPurifier_Token_Text('&'),
-                    new HTMLPurifier_Token_Text('#39;t'),
-                    new HTMLPurifier_Token_Text('<'),
-                    new HTMLPurifier_Token_Text('/b'),
-                    new HTMLPurifier_Token_Text('>'),
-                    new HTMLPurifier_Token_Text(' get me!'),
+                    new Text('You '),
+                    new Text('<'),
+                    new Text('b'),
+                    new Text('>'),
+                    new Text('can'),
+                    new Text('&'),
+                    new Text('#39;t'),
+                    new Text('<'),
+                    new Text('/b'),
+                    new Text('>'),
+                    new Text(' get me!'),
                 ),
             )
         );
@@ -489,7 +492,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '&theta;',
-            array( new HTMLPurifier_Token_Text("\xCE\xB8") )
+            array( new Text("\xCE\xB8") )
         );
     }
 
@@ -497,11 +500,11 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<![CDATA[&rarr;]]>',
-            array( new HTMLPurifier_Token_Text("&rarr;") ),
+            array( new Text("&rarr;") ),
             array(
                 'PH5P' => array(
-                    new HTMLPurifier_Token_Text('&'),
-                    new HTMLPurifier_Token_Text('rarr;'),
+                    new Text('&'),
+                    new Text('rarr;'),
                 ),
             )
         );
@@ -513,7 +516,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
             '<a href="index.php?title=foo&amp;id=bar">Link</a>',
             array(
                 new Start('a',array('href' => 'index.php?title=foo&id=bar')),
-                new HTMLPurifier_Token_Text('Link'),
+                new Text('Link'),
                 new End('a'),
             )
         );
@@ -523,7 +526,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             "\xCE\xB8",
-            array( new HTMLPurifier_Token_Text("\xCE\xB8") )
+            array( new Text("\xCE\xB8") )
         );
     }
 
@@ -531,7 +534,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<br test="x &lt; 6" />',
-            array( new HTMLPurifier_Token_Empty('br', array('test' => 'x < 6')) )
+            array( new EmptyToken('br', array('test' => 'x < 6')) )
         );
     }
 
@@ -541,23 +544,23 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
             '<b>Whoa! <3 That\'s not good >.></b>',
             array(
                 new Start('b'),
-                new HTMLPurifier_Token_Text('Whoa! '),
-                new HTMLPurifier_Token_Text('<'),
-                new HTMLPurifier_Token_Text('3 That\'s not good >.>'),
+                new Text('Whoa! '),
+                new Text('<'),
+                new Text('3 That\'s not good >.>'),
                 new End('b')
             ),
             array(
                 // text is absorbed together
                 'DOMLex' => array(
                     new Start('b'),
-                    new HTMLPurifier_Token_Text('Whoa! <3 That\'s not good >.>'),
+                    new Text('Whoa! <3 That\'s not good >.>'),
                     new End('b'),
                 ),
                 'PH5P' => array( // interesting grouping
                     new Start('b'),
-                    new HTMLPurifier_Token_Text('Whoa! '),
-                    new HTMLPurifier_Token_Text('<'),
-                    new HTMLPurifier_Token_Text('3 That\'s not good >.>'),
+                    new Text('Whoa! '),
+                    new Text('<'),
+                    new Text('3 That\'s not good >.>'),
                     new End('b'),
                 ),
             )
@@ -569,8 +572,8 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->assertTokenization(
             '<!-- This >< comment --><br />',
             array(
-                new HTMLPurifier_Token_Comment(' This >< comment '),
-                new HTMLPurifier_Token_Empty('br'),
+                new Comment(' This >< comment '),
+                new EmptyToken('br'),
             )
         );
     }
@@ -579,7 +582,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<!-- This >< comment',
-            array( new HTMLPurifier_Token_Comment(' This >< comment') ),
+            array( new Comment(' This >< comment') ),
             array(
                 'DOMLex'   => false,
                 'PH5P'     => false,
@@ -593,9 +596,9 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
         $this->assertTokenization(
             'Foo: <script>alert("<foo>");</script>',
             array(
-                new HTMLPurifier_Token_Text('Foo: '),
+                new Text('Foo: '),
                 new Start('script'),
-                new HTMLPurifier_Token_Text('alert("<foo>");'),
+                new Text('alert("<foo>");'),
                 new End('script'),
             ),
             array(
@@ -609,7 +612,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<!-- This comment < &lt; & -->',
-            array( new HTMLPurifier_Token_Comment(' This comment < &lt; & ') )
+            array( new Comment(' This comment < &lt; & ') )
         );
     }
 
@@ -617,12 +620,12 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<a href="><>">',
-            array( new HTMLPurifier_Token_Empty('a', array('href' => '><>')) ),
+            array( new EmptyToken('a', array('href' => '><>')) ),
             array(
                 'DirectLex' => array(
                     new Start('a', array('href' => '')),
-                    new HTMLPurifier_Token_Text('<'),
-                    new HTMLPurifier_Token_Text('">'),
+                    new Text('<'),
+                    new Text('">'),
                 )
             )
         );
@@ -632,7 +635,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->assertTokenization(
             '<param name="src" value="http://example.com/video.wmv" />',
-            array( new HTMLPurifier_Token_Empty('param', array('name' => 'src', 'value' => 'http://example.com/video.wmv')) )
+            array( new EmptyToken('param', array('name' => 'src', 'value' => 'http://example.com/video.wmv')) )
         );
     }
 
@@ -644,7 +647,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
                 // DirectLex defers to RemoveForeignElements for textification
                 'DirectLex' => array(
                     new Start('style', array('type' => 'text/css')),
-                    new HTMLPurifier_Token_Comment("\ndiv {}\n"),
+                    new Comment("\ndiv {}\n"),
                     new End('style'),
                 ),
             );
@@ -664,7 +667,7 @@ div {}
 --></style>',
             array(
                 new Start('style', array('type' => 'text/css')),
-                new HTMLPurifier_Token_Text("\ndiv {}\n"),
+                new Text("\ndiv {}\n"),
                 new End('style'),
             ),
             $extra
@@ -678,13 +681,13 @@ div {}
             // problem with invalid element removal; also, this
             // mimics Mozilla's parsing of the tag.
             new Start('a@'),
-            new HTMLPurifier_Token_Text('>'),
+            new Text('>'),
         );
         $this->assertTokenization(
             '<a@>>',
             array(
                 new Start('a'),
-                new HTMLPurifier_Token_Text('>'),
+                new Text('>'),
                 new End('a'),
             ),
             array(
@@ -698,16 +701,16 @@ div {}
         $this->assertTokenization(
             '<br /><3<br />',
             array(
-                new HTMLPurifier_Token_Empty('br'),
-                new HTMLPurifier_Token_Text('<'),
-                new HTMLPurifier_Token_Text('3'),
-                new HTMLPurifier_Token_Empty('br'),
+                new EmptyToken('br'),
+                new Text('<'),
+                new Text('3'),
+                new EmptyToken('br'),
             ),
             array(
                 'DOMLex' => array(
-                    new HTMLPurifier_Token_Empty('br'),
-                    new HTMLPurifier_Token_Text('<3'),
-                    new HTMLPurifier_Token_Empty('br'),
+                    new EmptyToken('br'),
+                    new Text('<3'),
+                    new EmptyToken('br'),
                 ),
             )
         );
@@ -719,14 +722,14 @@ div {}
             '<b><<</b>',
             array(
                 new Start('b'),
-                new HTMLPurifier_Token_Text('<'),
-                new HTMLPurifier_Token_Text('<'),
+                new Text('<'),
+                new Text('<'),
                 new End('b'),
             ),
             array(
                 'DOMLex' => array(
                     new Start('b'),
-                    new HTMLPurifier_Token_Text('<<'),
+                    new Text('<<'),
                     new End('b'),
                 ),
             )
@@ -738,17 +741,17 @@ div {}
         $this->assertTokenization(
             '< <b>test</b>',
             array(
-                new HTMLPurifier_Token_Text('<'),
-                new HTMLPurifier_Token_Text(' '),
+                new Text('<'),
+                new Text(' '),
                 new Start('b'),
-                new HTMLPurifier_Token_Text('test'),
+                new Text('test'),
                 new End('b'),
             ),
             array(
                 'DOMLex' => array(
-                    new HTMLPurifier_Token_Text('< '),
+                    new Text('< '),
                     new Start('b'),
-                    new HTMLPurifier_Token_Text('test'),
+                    new Text('test'),
                     new End('b'),
                 ),
             )
@@ -758,18 +761,18 @@ div {}
     public function test_tokenizeHTML_bodyInCDATA()
     {
         $alt_tokens = array(
-            new HTMLPurifier_Token_Text('<'),
-            new HTMLPurifier_Token_Text('body'),
-            new HTMLPurifier_Token_Text('>'),
-            new HTMLPurifier_Token_Text('Foo'),
-            new HTMLPurifier_Token_Text('<'),
-            new HTMLPurifier_Token_Text('/body'),
-            new HTMLPurifier_Token_Text('>'),
+            new Text('<'),
+            new Text('body'),
+            new Text('>'),
+            new Text('Foo'),
+            new Text('<'),
+            new Text('/body'),
+            new Text('>'),
         );
         $this->assertTokenization(
             '<![CDATA[<body>Foo</body>]]>',
             array(
-                new HTMLPurifier_Token_Text('<body>Foo</body>'),
+                new Text('<body>Foo</body>'),
             ),
             array(
                 'PH5P' => $alt_tokens,
@@ -783,7 +786,7 @@ div {}
             '<a><img /></a>',
             array(
                 new Start('a'),
-                new HTMLPurifier_Token_Empty('img'),
+                new EmptyToken('img'),
                 new End('a'),
             )
         );
@@ -812,7 +815,7 @@ div {}
         $this->assertTokenization(
             "plain\rtext\r\n",
             array(
-                new HTMLPurifier_Token_Text("plain\ntext\n")
+                new Text("plain\ntext\n")
             )
         );
    }
@@ -823,7 +826,7 @@ div {}
         $this->assertTokenization(
             "plain\rtext\r\n",
             array(
-                new HTMLPurifier_Token_Text("plain\rtext\r\n")
+                new Text("plain\rtext\r\n")
             )
         );
      }
@@ -833,7 +836,7 @@ div {}
         $this->assertTokenization(
             '<!--[if gte mso 9]>a<![endif]-->b<!--[if gte mso 9]>c<![endif]-->',
             array(
-                new HTMLPurifier_Token_Text("b")
+                new Text("b")
             )
         );
     }
@@ -852,7 +855,7 @@ div {}
         $this->assertTokenization(
             '<img src="img_11775.jpg" alt="[Img #11775]" id="EMBEDDED_IMG_11775" >',
             array(
-                new HTMLPurifier_Token_Empty('img',
+                new EmptyToken('img',
                     array(
                         'src' => 'img_11775.jpg',
                         'alt' => '[Img #11775]',
@@ -872,16 +875,16 @@ div {}
             '</div>dont<b>die</b>',
             array(
                 new End('div'),
-                new HTMLPurifier_Token_Text('dont'),
+                new Text('dont'),
                 new Start('b'),
-                new HTMLPurifier_Token_Text('die'),
+                new Text('die'),
                 new End('b'),
             ),
             array(
                 'DOMLex' => $alt = array(
-                    new HTMLPurifier_Token_Text('dont'),
+                    new Text('dont'),
                     new Start('b'),
-                    new HTMLPurifier_Token_Text('die'),
+                    new Text('die'),
                     new End('b')
                 ),
                 'PH5P' => $alt

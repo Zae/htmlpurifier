@@ -7,7 +7,7 @@ namespace HTMLPurifier\Injector;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Token_Text;
+use HTMLPurifier\Token\Text;
 
 /**
  * Injector that converts http, https and ftp text URLs to actual links.
@@ -25,9 +25,9 @@ class Linkify extends Injector
     public $needed = ['a' => ['href']];
 
     /**
-     * @param HTMLPurifier_Token_Text $token
+     * @param \HTMLPurifier\Token\Text $token
      */
-    public function handleText(HTMLPurifier_Token_Text &$token)
+    public function handleText(Text &$token)
     {
         if (!$this->allowsElement('a')) {
             return;
@@ -59,10 +59,10 @@ class Linkify extends Injector
                 if ($bits[$i] === '') {
                     continue;
                 }
-                $token[] = new HTMLPurifier_Token_Text($bits[$i]);
+                $token[] = new Text($bits[$i]);
             } else {
                 $token[] = new Start('a', ['href' => $bits[$i]]);
-                $token[] = new HTMLPurifier_Token_Text($bits[$i]);
+                $token[] = new Text($bits[$i]);
                 $token[] = new End('a');
             }
         }

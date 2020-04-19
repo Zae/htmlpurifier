@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Strategy\RemoveForeignElements;
+
 class HTMLPurifier_Strategy_RemoveForeignElements_TidyTest
   extends HTMLPurifier_StrategyHarness
 {
@@ -7,7 +9,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements_TidyTest
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_RemoveForeignElements();
+        $this->obj = new RemoveForeignElements();
         $this->config->set('HTML.TidyLevel', 'heavy');
     }
 

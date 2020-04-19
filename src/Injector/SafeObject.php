@@ -9,7 +9,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier_Config;
 use HTMLPurifier_Exception;
-use HTMLPurifier_Token_Empty;
+use HTMLPurifier\Token\EmptyToken;
 
 /**
  * Adds important param elements to inside of object in order to make
@@ -83,7 +83,7 @@ class SafeObject extends Injector
             $new = [$token];
 
             foreach ($this->addParam as $name => $value) {
-                $new[] = new HTMLPurifier_Token_Empty('param', ['name' => $name, 'value' => $value]);
+                $new[] = new EmptyToken('param', ['name' => $name, 'value' => $value]);
             }
 
             $token = $new;

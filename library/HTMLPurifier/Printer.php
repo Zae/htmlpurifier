@@ -8,6 +8,8 @@ use HTMLPurifier\Encoder;
 use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 /**
@@ -99,7 +101,7 @@ class HTMLPurifier_Printer
     protected function elementEmpty(string $tag, array $attr = []): string
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Empty($tag, $attr)
+            new EmptyToken($tag, $attr)
         );
     }
 
@@ -111,7 +113,7 @@ class HTMLPurifier_Printer
     protected function text(string $text): string
     {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Text($text)
+            new Text($text)
         );
     }
 

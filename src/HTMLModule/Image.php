@@ -14,7 +14,7 @@ use HTMLPurifier_Exception;
  * XHTML 1.1 Image Module provides basic image embedding.
  *
  * @note There is specialized code for removing empty images in
- *       HTMLPurifier_Strategy_RemoveForeignElements
+ *       HTMLPurifier\Strategy\HTMLPurifier_Strategy_RemoveForeignElements
  */
 class Image extends HTMLModule
 {

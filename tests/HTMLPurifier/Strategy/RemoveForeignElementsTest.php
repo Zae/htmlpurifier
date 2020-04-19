@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\Strategy\RemoveForeignElements;
+
 class HTMLPurifier_Strategy_RemoveForeignElementsTest extends HTMLPurifier_StrategyHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_RemoveForeignElements();
+        $this->obj = new RemoveForeignElements();
     }
 
     public function testBlankInput()

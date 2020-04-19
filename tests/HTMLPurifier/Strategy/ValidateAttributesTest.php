@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\Strategy\ValidateAttributes;
+
 class HTMLPurifier_Strategy_ValidateAttributesTest extends
       HTMLPurifier_StrategyHarness
 {
@@ -7,7 +9,7 @@ class HTMLPurifier_Strategy_ValidateAttributesTest extends
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_ValidateAttributes();
+        $this->obj = new ValidateAttributes();
     }
 
     public function testEmptyInput()

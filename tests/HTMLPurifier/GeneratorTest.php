@@ -3,6 +3,8 @@
 use HTMLPurifier\EntityLookup;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\EmptyToken;
+use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
@@ -43,7 +45,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_text()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Text('Foobar.<>'),
+            new Text('Foobar.<>'),
             'Foobar.&lt;&gt;'
         );
     }
@@ -69,7 +71,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_emptyWithAttr()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Empty('br',
+            new EmptyToken('br',
                 array('style' => 'font-family:"Courier New";')
             ),
             '<br style="font-family:&quot;Courier New&quot;;" />'
@@ -87,7 +89,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     public function test_generateFromToken_emptyNoAttr()
     {
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Empty('br'),
+            new EmptyToken('br'),
             '<br />'
         );
     }
@@ -102,7 +104,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
     {
         $theta_char = $this->_entity_lookup->table['theta'];
         $this->assertGenerateFromToken(
-            new HTMLPurifier_Token_Text($theta_char),
+            new Text($theta_char),
             $theta_char
         );
     }
@@ -199,7 +201,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->assertGeneration(
             array(
                 new Start('b'),
-                new HTMLPurifier_Token_Text('Foobar!'),
+                new Text('Foobar!'),
                 new End('b')
             ),
             '<b>Foobar!</b>'
@@ -219,7 +221,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->assertGeneration(
             array(
                 new Start('script'),
-                new HTMLPurifier_Token_Text('alert(3 < 5);'),
+                new Text('alert(3 < 5);'),
                 new End('script')
             ),
             "<script><!--//--><![CDATA[//><!--\nalert(3 < 5);\n//--><!]]></script>"
@@ -231,7 +233,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->assertGeneration(
             array(
                 new Start('script'),
-                new HTMLPurifier_Token_Text('alert(3 < 5);'),
+                new Text('alert(3 < 5);'),
             ),
             "<script>alert(3 &lt; 5);"
         );
@@ -242,8 +244,8 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->assertGeneration(
             array(
                 new Start('script'),
-                new HTMLPurifier_Token_Text('alert(3 < 5);'),
-                new HTMLPurifier_Token_Text('foo();'),
+                new Text('alert(3 < 5);'),
+                new Text('foo();'),
                 new End('script')
             ),
             "<script>alert(3 &lt; 5);foo();</script>"
@@ -256,7 +258,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->assertGeneration(
             array(
                 new Start('script'),
-                new HTMLPurifier_Token_Text('alert(3 < 5);'),
+                new Text('alert(3 < 5);'),
                 new End('script')
             ),
             "<script>alert(3 &lt; 5);</script>"
@@ -269,7 +271,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
 
         // omit trailing slash
         $this->assertGeneration(
-            array( new HTMLPurifier_Token_Empty('br') ),
+            array( new EmptyToken('br') ),
             '<br>'
         );
 
@@ -300,7 +302,7 @@ class HTMLPurifier_GeneratorTest extends HTMLPurifier_Harness
         $this->assertGeneration(
             array(
                 new Start('div'),
-                new HTMLPurifier_Token_Text('Text'),
+                new Text('Text'),
                 new End('div')
             ),
             "<div>\n  Text\n</div>\n"

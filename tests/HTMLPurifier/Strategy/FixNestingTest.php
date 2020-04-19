@@ -1,12 +1,14 @@
 <?php
 
+use HTMLPurifier\Strategy\FixNesting;
+
 class HTMLPurifier_Strategy_FixNestingTest extends HTMLPurifier_StrategyHarness
 {
 
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_FixNesting();
+        $this->obj = new FixNesting();
     }
 
     public function testPreserveInlineInRoot()

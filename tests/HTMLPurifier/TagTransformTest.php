@@ -3,7 +3,10 @@
 // needs to be seperated into files
 use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
+use HTMLPurifier\TagTransform\Font;
+use HTMLPurifier\TagTransform\Simple;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Start;
 
 class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
@@ -73,17 +76,17 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
 
         // empty tag transform
         $this->assertIdentical(
-                new HTMLPurifier_Token_Empty($expect_name, $expect_added_attributes),
+                new EmptyToken($expect_name, $expect_added_attributes),
                 $transformer->transform(
-                    new HTMLPurifier_Token_Empty($name), $config, $context
+                    new EmptyToken($name), $config, $context
                 )
             );
 
         // empty tag transform with attributes
         $this->assertIdentical(
-                new HTMLPurifier_Token_Empty($expect_name, $expect_attributes),
+                new EmptyToken($expect_name, $expect_attributes),
                 $transformer->transform(
-                    new HTMLPurifier_Token_Empty($name, $attributes),
+                    new EmptyToken($name, $attributes),
                     $config, $context
                 )
             );
@@ -93,7 +96,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
 
     public function testSimple()
     {
-        $transformer = new HTMLPurifier_TagTransform_Simple('ul');
+        $transformer = new Simple('ul');
 
         $this->assertTransformation(
             $transformer,
@@ -105,7 +108,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
 
     public function testSimpleWithCSS()
     {
-        $transformer = new HTMLPurifier_TagTransform_Simple('div', 'text-align:center;');
+        $transformer = new Simple('div', 'text-align:center;');
 
         $this->assertTransformation(
             $transformer,
@@ -135,7 +138,7 @@ class HTMLPurifier_TagTransformTest extends HTMLPurifier_Harness
 
     public function testFont()
     {
-        $transformer = new HTMLPurifier_TagTransform_Font();
+        $transformer = new Font();
 
         // test a font-face transformation
         $this->assertTransformation(

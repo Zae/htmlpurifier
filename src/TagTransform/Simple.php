@@ -2,17 +2,21 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\TagTransform;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\Tag;
 use HTMLPurifier\Token\Start;
+use HTMLPurifier_Config;
+use HTMLPurifier\Token\EmptyToken;
 
 /**
  * Simple transformation, just change tag name to something else,
  * and possibly add some styling. This will cover most of the deprecated
  * tag cases.
  */
-class HTMLPurifier_TagTransform_Simple extends TagTransform
+class Simple extends TagTransform
 {
     /**
      * @type string
@@ -41,7 +45,7 @@ class HTMLPurifier_TagTransform_Simple extends TagTransform
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;
         if (!is_null($this->style) &&
-            ($new_tag instanceof Start || $new_tag instanceof HTMLPurifier_Token_Empty)
+            ($new_tag instanceof Start || $new_tag instanceof EmptyToken)
         ) {
             $this->prependCSS($new_tag->attr, $this->style);
         }

@@ -6,9 +6,9 @@ namespace HTMLPurifier\Tests\Unit\Strategy\RemoveForeignElements;
 
 use HTMLPurifier\Tests\Unit\Strategy\ErrorsTestCase;
 use HTMLPurifier\Strategy;
-use HTMLPurifier_Strategy_RemoveForeignElements;
-use HTMLPurifier_Token_Comment;
-use HTMLPurifier_Token_Empty;
+use HTMLPurifier\Strategy\RemoveForeignElements;
+use HTMLPurifier\Token\Comment;
+use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Start;
 
 /**
@@ -41,7 +41,7 @@ class ErrorsTest extends ErrorsTestCase
     {
         // a little fragile, since img has two required attributes
         $this->expectErrorCollection(E_ERROR, 'Strategy_RemoveForeignElements: Missing required attribute', 'alt');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Empty('img', [], 1));
+        $this->expectContext('CurrentToken', new EmptyToken('img', [], 1));
         $this->invoke('<img />');
     }
 
@@ -73,7 +73,7 @@ class ErrorsTest extends ErrorsTestCase
     public function testCommentRemoved(): void
     {
         $this->expectErrorCollection(E_NOTICE, 'Strategy_RemoveForeignElements: Comment removed');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Comment(' test ', 1));
+        $this->expectContext('CurrentToken', new Comment(' test ', 1));
         $this->invoke('<!-- test -->');
     }
 
@@ -84,7 +84,7 @@ class ErrorsTest extends ErrorsTestCase
     {
         $this->config->set('HTML.Trusted', true);
         $this->expectErrorCollection(E_NOTICE, 'Strategy_RemoveForeignElements: Trailing hyphen in comment removed');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Comment(' test ', 1));
+        $this->expectContext('CurrentToken', new Comment(' test ', 1));
         $this->invoke('<!-- test ---->');
     }
 
@@ -95,7 +95,7 @@ class ErrorsTest extends ErrorsTestCase
     {
         $this->config->set('HTML.Trusted', true);
         $this->expectErrorCollection(E_NOTICE, 'Strategy_RemoveForeignElements: Hyphens in comment collapsed');
-        $this->expectContext('CurrentToken', new HTMLPurifier_Token_Comment(' test - test - test ', 1));
+        $this->expectContext('CurrentToken', new Comment(' test - test - test ', 1));
         $this->invoke('<!-- test --- test -- test -->');
     }
 
@@ -122,6 +122,6 @@ class ErrorsTest extends ErrorsTestCase
      */
     protected function getStrategy(): Strategy
     {
-        return new HTMLPurifier_Strategy_RemoveForeignElements();
+        return new RemoveForeignElements();
     }
 }

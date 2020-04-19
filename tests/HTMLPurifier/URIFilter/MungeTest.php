@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\Token\Start;
+use HTMLPurifier\URIFilter\Munge;
 
 class HTMLPurifier_URIFilter_MungeTest extends HTMLPurifier_URIFilterHarness
 {
@@ -8,7 +9,7 @@ class HTMLPurifier_URIFilter_MungeTest extends HTMLPurifier_URIFilterHarness
     public function setUp()
     {
         parent::setUp();
-        $this->filter = new HTMLPurifier_URIFilter_Munge();
+        $this->filter = new Munge();
     }
 
     protected function setMunge($uri = 'http://www.google.com/url?q=%s')

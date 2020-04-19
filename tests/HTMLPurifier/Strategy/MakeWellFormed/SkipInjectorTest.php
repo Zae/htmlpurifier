@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\Strategy\MakeWellFormed;
+
 class HTMLPurifier_Strategy_MakeWellFormed_SkipInjectorTest extends HTMLPurifier_StrategyHarness
 {
     public function setUp()
     {
         parent::setUp();
-        $this->obj = new HTMLPurifier_Strategy_MakeWellFormed();
+        $this->obj = new MakeWellFormed();
         $this->config->set('AutoFormat.Custom', array(
             new HTMLPurifier_Strategy_MakeWellFormed_SkipInjector()
         ));

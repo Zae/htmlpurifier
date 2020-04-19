@@ -5,7 +5,7 @@ namespace HTMLPurifier\Tests\Unit\Strategy\MakeWellFormed;
 
 use HTMLPurifier\Tests\Unit\Strategy\ErrorsTestCase;
 use HTMLPurifier\Strategy;
-use HTMLPurifier_Strategy_MakeWellFormed;
+use HTMLPurifier\Strategy\MakeWellFormed;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use Mockery;
@@ -111,6 +111,6 @@ class ErrorsTest extends ErrorsTestCase
      */
     protected function getStrategy(): Strategy
     {
-        return new HTMLPurifier_Strategy_MakeWellFormed();
+        return new MakeWellFormed();
     }
 }

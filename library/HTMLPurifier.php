@@ -46,6 +46,7 @@ use HTMLPurifier\ErrorCollector;
 use HTMLPurifier\Generator;
 use HTMLPurifier\LanguageFactory;
 use HTMLPurifier\IDAccumulator;
+use HTMLPurifier\Strategy\Core;
 
 /**
  * Facade that coordinates HTML Purifier's subsystems in order to purify HTML.
@@ -99,7 +100,7 @@ class HTMLPurifier
     private static $instance;
 
     /**
-     * @type HTMLPurifier_Strategy_Core
+     * @type Core
      */
     protected $strategy;
 
@@ -129,7 +130,7 @@ class HTMLPurifier
     public function __construct($config = null)
     {
         $this->config = HTMLPurifier_Config::create($config);
-        $this->strategy = new HTMLPurifier_Strategy_Core();
+        $this->strategy = new Core();
     }
 
     /**
