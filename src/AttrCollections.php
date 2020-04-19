@@ -75,7 +75,7 @@ class AttrCollections
      *
      * @param array &$attr Reference to attribute array
      */
-    public function performInclusions(array &$attr)
+    public function performInclusions(array &$attr): void
     {
         if (!isset($attr[0])) {
             return;
@@ -120,7 +120,7 @@ class AttrCollections
      * @param array &                $attr       Reference to attribute array
      * @param AttrTypes              $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
      */
-    public function expandIdentifiers(array &$attr, AttrTypes $attr_types)
+    public function expandIdentifiers(array &$attr, AttrTypes $attr_types): void
     {
         // because foreach will process new elements we add, make sure we
         // skip duplicates

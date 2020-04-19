@@ -76,7 +76,7 @@ class ErrorCollector
      * @param int    $severity Error severity, PHP error style (don't use E_USER_)
      * @param string $msg      Error message text
      */
-    public function send(int $severity, string $msg)
+    public function send(int $severity, string $msg): void
     {
         $args = [];
         if (\func_num_args() > 2) {
@@ -161,7 +161,7 @@ class ErrorCollector
     /**
      * Retrieves raw error data for custom formatter to use
      */
-    public function getRaw()
+    public function getRaw(): array
     {
         return $this->errors;
     }
@@ -174,7 +174,7 @@ class ErrorCollector
      *
      * @return string
      */
-    public function getHTMLFormatted(\HTMLPurifier\Config $config, ?array $errors = null)
+    public function getHTMLFormatted(\HTMLPurifier\Config $config, ?array $errors = null): string
     {
         $ret = [];
 

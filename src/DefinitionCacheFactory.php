@@ -33,7 +33,7 @@ class DefinitionCacheFactory
     /**
      * Initialize default decorators
      */
-    public function setup()
+    public function setup(): void
     {
         $this->addDecorator('Cleanup');
     }
@@ -45,7 +45,7 @@ class DefinitionCacheFactory
      *
      * @return DefinitionCacheFactory
      */
-    public static function instance(DefinitionCacheFactory $prototype = null)
+    public static function instance(DefinitionCacheFactory $prototype = null): DefinitionCacheFactory
     {
         static $instance;
         if ($prototype !== null) {
@@ -64,7 +64,7 @@ class DefinitionCacheFactory
      * @param string $short Short name of cache object, for reference
      * @param string $long  Full class name of cache object, for construction
      */
-    public function register(string $short, string $long)
+    public function register(string $short, string $long): void
     {
         $this->implementations[$short] = $long;
     }
@@ -117,7 +117,7 @@ class DefinitionCacheFactory
      *
      * @param \HTMLPurifier\ChildDef\Decorator|string $decorator An instance or the name of a decorator
      */
-    public function addDecorator($decorator)
+    public function addDecorator($decorator): void
     {
         if (\is_string($decorator)) {
             $class = "HTMLPurifier\\DefinitionCache\\Decorator\\$decorator";

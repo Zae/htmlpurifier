@@ -86,7 +86,7 @@ abstract class Injector
      * @warning HTML Purifier will prevent you from fast-forwarding with this
      *          function.
      */
-    public function rewindOffset($offset)
+    public function rewindOffset($offset): void
     {
         $this->rewindOffset = $offset;
     }
@@ -178,7 +178,7 @@ abstract class Injector
      *
      * @return bool True if element is allowed, false if it is not
      */
-    public function allowsElement(string $name)
+    public function allowsElement(string $name): bool
     {
         if (!empty($this->currentNesting)) {
             $parent_token = array_pop($this->currentNesting);
@@ -340,7 +340,7 @@ abstract class Injector
      * @note This differs from handlers in that the token is read-only
      * @deprecated
      */
-    public function notifyEnd($token)
+    public function notifyEnd($token): void
     {
     }
 }

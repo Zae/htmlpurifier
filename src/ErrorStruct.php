@@ -74,7 +74,7 @@ class ErrorStruct
      * @param int    $severity
      * @param string $message
      */
-    public function addError(int $severity, string $message)
+    public function addError(int $severity, string $message): void
     {
         $this->errors[] = [$severity, $message];
     }

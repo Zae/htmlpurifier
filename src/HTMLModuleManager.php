@@ -185,7 +185,7 @@ class HTMLModuleManager
      *       your module manually. All modules must have been included
      *       externally: registerModule will not perform inclusions for you!
      */
-    public function registerModule($module, bool $overload = false)
+    public function registerModule($module, bool $overload = false): void
     {
         if (\is_string($module)) {
             // attempt to load the module
@@ -232,7 +232,7 @@ class HTMLModuleManager
      * Adds a module to the current doctype by first registering it,
      * and then tacking it on to the active doctype
      */
-    public function addModule($module)
+    public function addModule($module): void
     {
         $this->registerModule($module);
 
@@ -247,7 +247,7 @@ class HTMLModuleManager
      * Adds a class prefix that registerModule() will use to resolve a
      * string name to a concrete class
      */
-    public function addPrefix($prefix)
+    public function addPrefix($prefix): void
     {
         $this->prefixes[] = $prefix;
     }
@@ -260,7 +260,7 @@ class HTMLModuleManager
      *
      * @throws Exception
      */
-    public function setup(\HTMLPurifier\Config $config)
+    public function setup(\HTMLPurifier\Config $config): void
     {
         $this->trusted = $config->get('HTML.Trusted');
 
@@ -375,7 +375,7 @@ class HTMLModuleManager
      * Takes a module and adds it to the active module collection,
      * registering it if necessary.
      */
-    public function processModule($module)
+    public function processModule($module): void
     {
         if (!isset($this->registeredModules[$module]) || \is_object($module)) {
             $this->registerModule($module);
@@ -389,7 +389,7 @@ class HTMLModuleManager
      *
      * @return ElementDef[]
      */
-    public function getElements()
+    public function getElements(): array
     {
         $elements = [];
         foreach ($this->modules as $module) {

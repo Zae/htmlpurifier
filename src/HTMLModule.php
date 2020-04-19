@@ -160,7 +160,7 @@ class HTMLModule
      *         can set advanced parameters
      * @see ElementDef:: for in-depth descriptions of these parameters.
      */
-    public function addElement(string $element, $type, $contents, $attr_includes = [], array $attr = [])
+    public function addElement(string $element, $type, $contents, $attr_includes = [], array $attr = []): ElementDef
     {
         $this->elements[] = $element;
 
@@ -198,7 +198,7 @@ class HTMLModule
      *
      * @return ElementDef Created element
      */
-    public function addBlankElement(string $element)
+    public function addBlankElement(string $element): ElementDef
     {
         if (!isset($this->info[$element])) {
             $this->elements[] = $element;
@@ -218,7 +218,7 @@ class HTMLModule
      * @param string $type    Name content set (warning: case sensitive, usually upper-case
      *                        first letter)
      */
-    public function addElementToContentSet(string $element, string $type)
+    public function addElementToContentSet(string $element, string $type): void
     {
         if (!isset($this->content_sets[$type])) {
             $this->content_sets[$type] = '';
@@ -241,7 +241,7 @@ class HTMLModule
      *       returned, and the callee needs to take the original $contents
      *       and use it directly.
      */
-    public function parseContents($contents)
+    public function parseContents($contents): array
     {
         if (!\is_string($contents)) {
             return [null, null];
@@ -271,7 +271,7 @@ class HTMLModule
      * @param array $attr          Reference to attr array to modify
      * @param array $attr_includes Array of includes / string include to merge in
      */
-    public function mergeInAttrIncludes(&$attr, $attr_includes)
+    public function mergeInAttrIncludes(&$attr, $attr_includes): void
     {
         if (!\is_array($attr_includes)) {
             if (empty($attr_includes)) {
@@ -294,7 +294,7 @@ class HTMLModule
      *       place of the regular argument
      * @return array array equivalent of list
      */
-    public function makeLookup($list)
+    public function makeLookup($list): array
     {
         $args = func_get_args();
         if (\is_string($list)) {

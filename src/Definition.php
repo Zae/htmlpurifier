@@ -52,7 +52,7 @@ abstract class Definition
      *
      * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config)
+    public function setup(\HTMLPurifier\Config $config): void
     {
         if ($this->setup) {
             return;

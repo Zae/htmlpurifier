@@ -22,7 +22,7 @@ class URISchemeRegistry
      * @note Pass a registry object $prototype with a compatible interface and
      *       the function will copy it and return it all further times.
      */
-    public static function instance(?URISchemeRegistry $prototype = null)
+    public static function instance(?URISchemeRegistry $prototype = null): URISchemeRegistry
     {
         static $instance = null;
 
@@ -51,7 +51,7 @@ class URISchemeRegistry
      * @return URIScheme|null
      * @throws Exception
      */
-    public function getScheme(?string $scheme, \HTMLPurifier\Config $config)
+    public function getScheme(?string $scheme, \HTMLPurifier\Config $config): ?URIScheme
     {
         if (!$config) {
             $config = \HTMLPurifier\Config::createDefault();
@@ -88,7 +88,7 @@ class URISchemeRegistry
      * @param string    $scheme Scheme name
      * @param URIScheme $scheme_obj
      */
-    public function register(string $scheme, URIScheme $scheme_obj)
+    public function register(string $scheme, URIScheme $scheme_obj): void
     {
         $this->schemes[$scheme] = $scheme_obj;
     }

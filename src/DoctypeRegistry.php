@@ -102,7 +102,7 @@ class DoctypeRegistry
      *
      * @return Doctype Editable doctype object
      */
-    public function get(string $doctype)
+    public function get(string $doctype): Doctype
     {
         if (isset($this->aliases[$doctype])) {
             $doctype = $this->aliases[$doctype];
@@ -131,7 +131,7 @@ class DoctypeRegistry
      *
      * @return Doctype
      */
-    public function make(Config $config)
+    public function make(Config $config): Doctype
     {
         return clone $this->get(
             $this->getDoctypeFromConfig($config)
@@ -146,7 +146,7 @@ class DoctypeRegistry
      * @return string
      * @throws Exception
      */
-    public function getDoctypeFromConfig(Config $config)
+    public function getDoctypeFromConfig(Config $config): string
     {
         // recommended test
         $doctype = $config->get('HTML.Doctype');

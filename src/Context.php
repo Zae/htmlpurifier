@@ -27,7 +27,7 @@ class Context
      * @param string $name String name
      * @param mixed  $ref  Reference to variable to be registered
      */
-    public function register(string $name, &$ref)
+    public function register(string $name, &$ref): void
     {
         if (\array_key_exists($name, $this->_storage)) {
             trigger_error(
@@ -72,7 +72,7 @@ class Context
      *
      * @param string $name String name
      */
-    public function destroy(string $name)
+    public function destroy(string $name): void
     {
         if (!\array_key_exists($name, $this->_storage)) {
             trigger_error(
@@ -93,7 +93,7 @@ class Context
      *
      * @return bool
      */
-    public function exists(string $name)
+    public function exists(string $name): bool
     {
         return \array_key_exists($name, $this->_storage);
     }
@@ -103,7 +103,7 @@ class Context
      *
      * @param array $context_array Assoc array of variables to load
      */
-    public function loadArray(array $context_array)
+    public function loadArray(array $context_array): void
     {
         foreach ($context_array as $key => $discard) {
             $this->register($key, $context_array[$key]);

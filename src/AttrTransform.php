@@ -40,7 +40,7 @@ abstract class AttrTransform
      * @param array &$attr Attribute array to process (passed by reference)
      * @param string $css  CSS to prepend
      */
-    public function prependCSS(array &$attr, string $css)
+    public function prependCSS(array &$attr, string $css): void
     {
         $attr['style'] = $attr['style'] ?? '';
         $attr['style'] = $css . $attr['style'];

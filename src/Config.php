@@ -141,7 +141,7 @@ class Config
      *
      * @return Config Configured object
      */
-    public static function create($config, ?ConfigSchema $schema = null)
+    public static function create($config, ?ConfigSchema $schema = null): Config
     {
         if ($config instanceof static) {
             // pass-through
@@ -169,7 +169,7 @@ class Config
      *
      * @return Config object with $config as its parent.
      */
-    public static function inherit(self $config)
+    public static function inherit(self $config): Config
     {
         return new static($config->def, $config->plist);
     }
@@ -179,7 +179,7 @@ class Config
      *
      * @return Config default object.
      */
-    public static function createDefault()
+    public static function createDefault(): Config
     {
         $definition = ConfigSchema::instance();
 
@@ -254,7 +254,7 @@ class Config
      *
      * @return array
      */
-    public function getBatch(string $namespace)
+    public function getBatch(string $namespace): array
     {
         if (!$this->finalized) {
             $this->autoFinalize();
@@ -269,7 +269,7 @@ class Config
                 E_USER_WARNING
             );
 
-            return;
+            return [];
         }
 
         return $full[$namespace];
@@ -285,7 +285,7 @@ class Config
      * @note Revision is handled specially and is removed from the batch
      *       before processing!
      */
-    public function getBatchSerial($namespace)
+    public function getBatchSerial($namespace): string
     {
         if (empty($this->serials[$namespace])) {
             $batch = $this->getBatch($namespace);
@@ -302,7 +302,7 @@ class Config
      *
      * @return string
      */
-    public function getSerial()
+    public function getSerial(): string
     {
         if (empty($this->serial)) {
             $this->serial = sha1(serialize($this->getAll()));
@@ -316,7 +316,7 @@ class Config
      *
      * @warning This is a pretty inefficient function, avoid if you can
      */
-    public function getAll()
+    public function getAll(): array
     {
         if (!$this->finalized) {
             $this->autoFinalize();
@@ -338,7 +338,7 @@ class Config
      * @param mixed $value value
      * @param mixed $a
      */
-    public function set($key, $value, $a = null)
+    public function set($key, $value, $a = null): void
     {
         if (strpos($key, '.') === false) {
             $namespace = $key;
@@ -742,7 +742,7 @@ class Config
      *
      * @param array $config_array Configuration associative array
      */
-    public function loadArray(array $config_array)
+    public function loadArray(array $config_array): void
     {
         if ($this->isFinalized('Cannot load directives after finalization')) {
             return;
@@ -772,7 +772,7 @@ class Config
      *
      * @return array
      */
-    public static function getAllowedDirectivesForForm($allowed, ?ConfigSchema $schema = null)
+    public static function getAllowedDirectivesForForm($allowed, ?ConfigSchema $schema = null): array
     {
         if (!$schema) {
             $schema = ConfigSchema::instance();
@@ -853,7 +853,7 @@ class Config
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
      */
-    public function mergeArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true)
+    public function mergeArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true): void
     {
          $ret = static::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $this->def);
 
@@ -872,7 +872,7 @@ class Config
      *
      * @return array
      */
-    public static function prepareArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null)
+    public static function prepareArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null): array
     {
         if ($index !== false) {
             $array = (isset($array[$index]) && \is_array($array[$index])) ? $array[$index] : [];
@@ -907,7 +907,7 @@ class Config
      *
      * @param string $filename Name of ini file
      */
-    public function loadIni(string $filename)
+    public function loadIni(string $filename): void
     {
         if ($this->isFinalized('Cannot load directives after finalization')) {
             return;
@@ -924,7 +924,7 @@ class Config
      *
      * @return bool
      */
-    public function isFinalized($error = false)
+    public function isFinalized($error = false): bool
     {
         if ($this->finalized && $error) {
             $this->triggerError($error, E_USER_ERROR);
@@ -937,7 +937,7 @@ class Config
      * Finalizes configuration only if auto finalize is on and not
      * already finalized
      */
-    public function autoFinalize()
+    public function autoFinalize(): void
     {
         if ($this->autoFinalize) {
             $this->finalize();
@@ -949,7 +949,7 @@ class Config
     /**
      * Finalizes a configuration object, prohibiting further change
      */
-    public function finalize()
+    public function finalize(): void
     {
         $this->finalized = true;
         $this->parser = null;
@@ -990,7 +990,7 @@ class Config
      * @return string
      * @throws Exception
      */
-    public function serialize()
+    public function serialize(): string
     {
         $this->getDefinition('HTML');
         $this->getDefinition('CSS');

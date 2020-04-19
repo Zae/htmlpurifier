@@ -76,7 +76,7 @@ abstract class URIScheme
      * @return bool success or failure
      * @throws Exception
      */
-    public function validate(URI &$uri, \HTMLPurifier\Config $config, Context $context)
+    public function validate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
         if ($this->default_port === $uri->port) {
             $uri->port = null;

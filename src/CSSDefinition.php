@@ -423,7 +423,7 @@ class CSSDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetupProprietary(\HTMLPurifier\Config $config)
+    protected function doSetupProprietary(\HTMLPurifier\Config $config): void
     {
         // Internet Explorer only scrollbar colors
         $this->info['scrollbar-arrow-color'] = new Color();
@@ -471,7 +471,7 @@ class CSSDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetupTricky($config)
+    protected function doSetupTricky($config): void
     {
         $this->info['display'] = new Enum(
             [
@@ -506,7 +506,7 @@ class CSSDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetupTrusted($config)
+    protected function doSetupTrusted($config): void
     {
         $this->info['position'] = new Enum(
             ['static', 'relative', 'absolute', 'fixed']

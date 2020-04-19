@@ -309,7 +309,7 @@ class URITest extends UriTestCase
         $registry = $this->setUpSchemeRegistryMock();
         $registry->expects()
             ->getScheme(Mockery::any(), $this->config, $this->context)
-            ->andReturn(false);
+            ->andReturn(null);
     }
 
     protected function tearDownSchemeRegistryMock(): void

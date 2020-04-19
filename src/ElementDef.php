@@ -162,7 +162,7 @@ class ElementDef
      *
      * @return ElementDef
      */
-    public static function create(?string $content_model, ?string $content_model_type, array $attr)
+    public static function create(?string $content_model, ?string $content_model_type, array $attr): ElementDef
     {
         $def = new static();
         $def->content_model = $content_model;
@@ -179,7 +179,7 @@ class ElementDef
      *
      * @param ElementDef $def
      */
-    public function mergeIn(ElementDef $def)
+    public function mergeIn(ElementDef $def): void
     {
         // later keys takes precedence
         foreach ($def->attr as $k => $v) {
