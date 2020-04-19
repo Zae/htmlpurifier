@@ -7,7 +7,7 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Implements data: URI for base64 encoded images supported by GD.
@@ -40,12 +40,12 @@ class data extends URIScheme
 
     /**
      * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
+    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
         $result = explode(',', $uri->path, 2);
         $is_base64 = false;

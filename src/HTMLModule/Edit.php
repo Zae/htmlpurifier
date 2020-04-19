@@ -7,7 +7,7 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\ChildDef\Chameleon;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Edit Module, defines editing-related elements. Text Extension
@@ -21,9 +21,9 @@ class Edit extends HTMLModule
     public $name = 'Edit';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         $contents = 'Chameleon: #PCDATA | Inline ! #PCDATA | Flow';
         $attr = [

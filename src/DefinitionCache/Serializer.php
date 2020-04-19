@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\Exception;
 
@@ -15,12 +15,12 @@ use HTMLPurifier\Exception;
 class Serializer extends DefinitionCache
 {
     /**
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      *
      * @return int|bool
      */
-    public function add(Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, Config $config)
     {
         if (!$this->checkDefType($def)) {
             return;
@@ -39,12 +39,12 @@ class Serializer extends DefinitionCache
     }
 
     /**
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      *
      * @return int|bool
      */
-    public function set(Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, Config $config)
     {
         if (!$this->checkDefType($def)) {
             return;
@@ -59,12 +59,12 @@ class Serializer extends DefinitionCache
     }
 
     /**
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      *
      * @return int|bool
      */
-    public function replace(Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, Config $config)
     {
         if (!$this->checkDefType($def)) {
             return;
@@ -83,11 +83,11 @@ class Serializer extends DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
-     * @return bool|HTMLPurifier_Config
+     * @return bool|Config
      */
-    public function get(HTMLPurifier_Config $config)
+    public function get(Config $config)
     {
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) {
@@ -98,11 +98,11 @@ class Serializer extends DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return bool
      */
-    public function remove(HTMLPurifier_Config $config): bool
+    public function remove(Config $config): bool
     {
         $file = $this->generateFilePath($config);
         if (!file_exists($file)) {
@@ -113,11 +113,11 @@ class Serializer extends DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return bool
      */
-    public function flush(HTMLPurifier_Config $config): bool
+    public function flush(Config $config): bool
     {
         if (!$this->_prepareDir($config)) {
             return false;
@@ -149,12 +149,12 @@ class Serializer extends DefinitionCache
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function cleanup(HTMLPurifier_Config $config): bool
+    public function cleanup(Config $config): bool
     {
         if (!$this->_prepareDir($config)) {
             return false;
@@ -190,13 +190,13 @@ class Serializer extends DefinitionCache
      * Generates the file path to the serial file corresponding to
      * the configuration and definition name
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return string
      * @throws Exception
      * @todo Make protected
      */
-    public function generateFilePath(HTMLPurifier_Config $config): string
+    public function generateFilePath(Config $config): string
     {
         $key = $this->generateKey($config);
 
@@ -206,14 +206,14 @@ class Serializer extends DefinitionCache
     /**
      * Generates the path to the directory contain this cache's serial files
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return string
      * @note No trailing slash
      * @throws Exception
      * @todo Make protected
      */
-    public function generateDirectoryPath(HTMLPurifier_Config $config): string
+    public function generateDirectoryPath(Config $config): string
     {
         $base = $this->generateBaseDirectoryPath($config);
 
@@ -224,13 +224,13 @@ class Serializer extends DefinitionCache
      * Generates path to base directory that contains all definition type
      * serials
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return mixed|string
      * @throws \HTMLPurifier\Exception
      * @todo Make protected
      */
-    public function generateBaseDirectoryPath(HTMLPurifier_Config $config)
+    public function generateBaseDirectoryPath(Config $config)
     {
         $base = $config->get('Cache.SerializerPath');
         $base = is_null($base) ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
@@ -241,14 +241,14 @@ class Serializer extends DefinitionCache
     /**
      * Convenience wrapper function for file_put_contents
      *
-     * @param string              $file File name to write to
-     * @param string              $data Data to write into file
-     * @param HTMLPurifier_Config $config
+     * @param string $file File name to write to
+     * @param string $data Data to write into file
+     * @param Config $config
      *
      * @return int|bool Number of bytes written if success, or false if failure.
      * @throws \HTMLPurifier\Exception
      */
-    private function _write(string $file, string $data, HTMLPurifier_Config $config)
+    private function _write(string $file, string $data, Config $config)
     {
         $result = file_put_contents($file, $data);
         if ($result !== false) {
@@ -265,12 +265,12 @@ class Serializer extends DefinitionCache
     /**
      * Prepares the directory that this type stores the serials in
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return bool True if successful
      * @throws Exception
      */
-    private function _prepareDir(HTMLPurifier_Config $config): bool
+    private function _prepareDir(Config $config): bool
     {
         $directory = $this->generateDirectoryPath($config);
         $chmod = $config->get('Cache.SerializerPermissions');

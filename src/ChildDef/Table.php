@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Comment;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition for tables.  The general idea is to extract out all of the
@@ -66,12 +66,12 @@ class Table extends ChildDef
 
     /**
      * @param array               $children
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
+    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context)
     {
         if (empty($children)) {
             return false;

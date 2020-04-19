@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -35,12 +35,12 @@ abstract class DefinitionCache
     /**
      * Generates a unique identifier for a particular configuration
      *
-     * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
+     * @param Config $config Instance of \HTMLPurifier\Config
      *
      * @return string
      * @throws Exception
      */
-    public function generateKey(HTMLPurifier_Config $config)
+    public function generateKey(\HTMLPurifier\Config $config)
     {
         return $config->version . ',' . // possibly replace with function calls
                $config->getBatchSerial($this->type) . ',' .
@@ -51,13 +51,13 @@ abstract class DefinitionCache
      * Tests whether or not a key is old with respect to the configuration's
      * version and revision number.
      *
-     * @param string              $key    Key to test
-     * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config to test against
+     * @param string $key    Key to test
+     * @param Config $config Instance of \HTMLPurifier\Config to test against
      *
      * @return bool
      * @throws Exception
      */
-    public function isOld(string $key, HTMLPurifier_Config $config)
+    public function isOld(string $key, \HTMLPurifier\Config $config)
     {
         if (substr_count($key, ',') < 2) {
             return true;
@@ -103,47 +103,47 @@ abstract class DefinitionCache
     /**
      * Adds a definition object to the cache
      *
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      */
-    abstract public function add(Definition $def, HTMLPurifier_Config $config);
+    abstract public function add(Definition $def, \HTMLPurifier\Config $config);
 
     /**
      * Unconditionally saves a definition object to the cache
      *
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      */
-    abstract public function set(Definition $def, HTMLPurifier_Config $config);
+    abstract public function set(Definition $def, \HTMLPurifier\Config $config);
 
     /**
      * Replace an object in the cache
      *
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      */
-    abstract public function replace(Definition $def, HTMLPurifier_Config $config);
+    abstract public function replace(Definition $def, \HTMLPurifier\Config $config);
 
     /**
      * Retrieves a definition object from the cache
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    abstract public function get(HTMLPurifier_Config $config);
+    abstract public function get(\HTMLPurifier\Config $config);
 
     /**
      * Removes a definition object to the cache
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    abstract public function remove(HTMLPurifier_Config $config);
+    abstract public function remove(\HTMLPurifier\Config $config);
 
     /**
      * Clears all objects from cache
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    abstract public function flush(HTMLPurifier_Config $config);
+    abstract public function flush(\HTMLPurifier\Config $config);
 
     /**
      * Clears all expired (older version or revision) objects from cache
@@ -152,7 +152,7 @@ abstract class DefinitionCache
      *       not interfere with other Definition types, and cleanup()
      *       should not be repeatedly called by userland code.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    abstract public function cleanup(HTMLPurifier_Config $config);
+    abstract public function cleanup(\HTMLPurifier\Config $config);
 }

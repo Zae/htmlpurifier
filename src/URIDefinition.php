@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\URIFilter\DisableExternal;
 use HTMLPurifier\URIFilter\DisableExternalResources;
@@ -64,7 +64,7 @@ class URIDefinition extends Definition
      * @param $filter
      * @param $config
      */
-    public function addFilter(URIFilter $filter, HTMLPurifier_Config $config)
+    public function addFilter(URIFilter $filter, \HTMLPurifier\Config $config)
     {
         $r = $filter->prepare($config);
 
@@ -83,22 +83,22 @@ class URIDefinition extends Definition
      * Sets up the definition object into the final form, something
      * not done by the constructor
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    protected function doSetup(HTMLPurifier_Config $config): void
+    protected function doSetup(\HTMLPurifier\Config $config): void
     {
         $this->setupMemberVariables($config);
         $this->setupFilters($config);
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    protected function setupFilters(HTMLPurifier_Config $config): void
+    protected function setupFilters(\HTMLPurifier\Config $config): void
     {
         foreach ($this->registeredFilters as $name => $filter) {
             if ($filter->always_load) {
@@ -115,11 +115,11 @@ class URIDefinition extends Definition
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    protected function setupMemberVariables(HTMLPurifier_Config $config): void
+    protected function setupMemberVariables(\HTMLPurifier\Config $config): void
     {
         $this->host = $config->get('URI.Host');
         $base_uri = $config->get('URI.Base');
@@ -139,24 +139,24 @@ class URIDefinition extends Definition
     }
 
     /**
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return URIScheme|null
      */
-    public function getDefaultScheme(HTMLPurifier_Config $config, Context $context)
+    public function getDefaultScheme(\HTMLPurifier\Config $config, Context $context)
     {
         return URISchemeRegistry::instance()->getScheme($this->defaultScheme, $config, $context);
     }
 
     /**
-     * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context)
+    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
     {
         foreach ($this->filters as $name => $f) {
             $result = $f->filter($uri, $config, $context);
@@ -169,13 +169,13 @@ class URIDefinition extends Definition
     }
 
     /**
-     * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function postFilter(URI &$uri, HTMLPurifier_Config $config, Context $context)
+    public function postFilter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
     {
         foreach ($this->postFilters as $name => $f) {
             $result = $f->filter($uri, $config, $context);

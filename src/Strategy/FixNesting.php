@@ -9,7 +9,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node\Element;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -43,14 +43,14 @@ use HTMLPurifier\Exception;
 class FixNesting extends Strategy
 {
     /**
-     * @param Token[]             $tokens
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Token[] $tokens
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array|Token[]
      * @throws Exception
      */
-    public function execute($tokens, HTMLPurifier_Config $config, Context $context)
+    public function execute($tokens, Config $config, Context $context)
     {
         //####################################################################//
         // Pre-processing

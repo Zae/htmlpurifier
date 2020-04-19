@@ -7,7 +7,7 @@ namespace HTMLPurifier\Lexer;
 use DOMDocument;
 use DOMNamedNodeMap;
 use DOMNode;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Lexer;
@@ -55,13 +55,13 @@ class DOMLex extends Lexer
 
     /**
      * @param null|string         $string
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return \HTMLPurifier\Token[]
      * @throws \HTMLPurifier\Exception
      */
-    public function tokenizeHTML(?string $string, HTMLPurifier_Config $config, Context $context): array
+    public function tokenizeHTML(?string $string, \HTMLPurifier\Config $config, Context $context): array
     {
         $string = $this->normalize($string, $config, $context);
 
@@ -124,12 +124,12 @@ class DOMLex extends Lexer
      *
      * @param DOMNode               $node   DOMNode to be tokenized.
      * @param \HTMLPurifier\Token[] $tokens Array-list of already tokenized tokens.
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      *
      * @return void of node appended to previously passed tokens.
      * @throws \HTMLPurifier\Exception
      */
-    protected function tokenizeDOM(DOMNode $node, array &$tokens, HTMLPurifier_Config $config): void
+    protected function tokenizeDOM(DOMNode $node, array &$tokens, \HTMLPurifier\Config $config): void
     {
         $level = 0;
         $nodes = [$level => new Queue([$node])];
@@ -194,13 +194,13 @@ class DOMLex extends Lexer
      *                                      false at first recursion because it's the implicit DIV
      *                                      tag you're dealing with.
      *
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      *
      * @return bool if the token needs an endtoken
      * @throws \HTMLPurifier\Exception
      * @todo data and tagName properties don't seem to exist in DOMNode?
      */
-    protected function createStartNode(DOMNode $node, array &$tokens, bool $collect, HTMLPurifier_Config $config): bool
+    protected function createStartNode(DOMNode $node, array &$tokens, bool $collect, \HTMLPurifier\Config $config): bool
     {
         // intercept non element nodes. WE MUST catch all of them,
         // but we're not getting the character reference nodes because
@@ -346,7 +346,7 @@ class DOMLex extends Lexer
      * Wraps an HTML fragment in the necessary HTML
      *
      * @param string                $html
-     * @param HTMLPurifier_Config   $config
+     * @param \HTMLPurifier\Config   $config
      * @param \HTMLPurifier\Context $context
      *
      * @param bool                  $use_div
@@ -354,7 +354,7 @@ class DOMLex extends Lexer
      * @return string
      * @throws \HTMLPurifier\Exception
      */
-    protected function wrapHTML(string $html, HTMLPurifier_Config $config, Context $context, bool $use_div = true): string
+    protected function wrapHTML(string $html, \HTMLPurifier\Config $config, Context $context, bool $use_div = true): string
     {
         $def = $config->getDefinition('HTML');
         $ret = '';

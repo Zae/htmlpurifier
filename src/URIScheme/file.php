@@ -7,7 +7,7 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Validates file as defined by RFC 1630 and RFC 1738.
@@ -35,12 +35,12 @@ class file extends URIScheme
 
     /**
      * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
+    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
         // Authentication method is not supported
         $uri->userinfo = null;

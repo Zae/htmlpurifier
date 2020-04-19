@@ -10,7 +10,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Injector that removes spans with no attributes
@@ -35,7 +35,7 @@ class RemoveSpansWithoutAttributes extends Injector
     /**
      * Used by AttrValidator.
      *
-     * @type HTMLPurifier_Config
+     * @type Config
      */
     private $config;
 
@@ -44,7 +44,7 @@ class RemoveSpansWithoutAttributes extends Injector
      */
     private $context;
 
-    public function prepare(HTMLPurifier_Config $config, Context $context)
+    public function prepare(Config $config, Context $context)
     {
         $this->attrValidator = new AttrValidator();
         $this->config = $config;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * A "safe" embed module. See SafeObject. This is a proprietary element.
@@ -18,9 +18,9 @@ class SafeEmbed extends HTMLModule
     public $name = 'SafeEmbed';
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
         $max = $config->get('HTML.MaxImgLength');
         $embed = $this->addElement(

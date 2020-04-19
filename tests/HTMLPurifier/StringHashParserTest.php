@@ -65,7 +65,7 @@ class HTMLPurifier_StringHashParserTest extends UnitTestCase
     {
         try {
             $this->parser->parseFile('NoExist.txt');
-        } catch (HTMLPurifier_ConfigSchema_Exception $e) {
+        } catch (\HTMLPurifier\ConfigSchema_Exception $e) {
             $this->assertIdentical($e->getMessage(), 'File NoExist.txt does not exist');
         }
     }

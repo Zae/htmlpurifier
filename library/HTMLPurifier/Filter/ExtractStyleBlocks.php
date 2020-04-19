@@ -93,14 +93,14 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
      * Removes inline <style> tags from HTML, saves them for later use
      *
      * @param string              $html
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return string
      * @throws Exception
      * @todo Extend to indicate non-text/css style blocks
      */
-    public function preFilter(string $html, HTMLPurifier_Config $config, Context $context): string
+    public function preFilter(string $html, \HTMLPurifier\Config $config, Context $context): string
     {
         $tidy = $config->get('Filter.ExtractStyleBlocks.TidyImpl');
         if ($tidy !== null) {
@@ -130,13 +130,13 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
      * @warning Requires CSSTidy <http://csstidy.sourceforge.net/>
      *
      * @param string              $css CSS styling to clean
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return string Cleaned CSS
      * @throws Exception
      */
-    public function cleanCSS(string $css, HTMLPurifier_Config $config, Context $context): string
+    public function cleanCSS(string $css, \HTMLPurifier\Config $config, Context $context): string
     {
         // prepare scope
         $scope = $config->get('Filter.ExtractStyleBlocks.Scope');

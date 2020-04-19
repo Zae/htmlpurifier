@@ -25,7 +25,7 @@ require_once $__dir . '/HTMLPurifier/Bootstrap.php';
 require_once $__dir . '/../src/Definition.php';
 require_once $__dir . '/../src/CSSDefinition.php';
 require_once $__dir . '/../src/ChildDef.php';
-require_once $__dir . '/HTMLPurifier/Config.php';
+require_once $__dir . '/../src/Config.php';
 require_once $__dir . '/../src/ConfigSchema.php';
 require_once $__dir . '/../src/ContentSets.php';
 require_once $__dir . '/../src/Context.php';

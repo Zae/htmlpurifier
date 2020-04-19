@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
@@ -40,9 +40,9 @@ class ID extends AttrDef
     }
 
     /**
-     * @param string              $id
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param string  $id
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      * @throws Exception

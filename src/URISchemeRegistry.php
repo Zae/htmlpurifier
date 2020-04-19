@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -45,16 +45,16 @@ class URISchemeRegistry
     /**
      * Retrieves a scheme validator object
      *
-     * @param string              $scheme String scheme name like http or mailto
-     * @param HTMLPurifier_Config $config
+     * @param string $scheme String scheme name like http or mailto
+     * @param Config $config
      *
      * @return URIScheme|null
      * @throws Exception
      */
-    public function getScheme(?string $scheme, HTMLPurifier_Config $config)
+    public function getScheme(?string $scheme, \HTMLPurifier\Config $config)
     {
         if (!$config) {
-            $config = HTMLPurifier_Config::createDefault();
+            $config = \HTMLPurifier\Config::createDefault();
         }
 
         // important, otherwise attacker could include arbitrary file

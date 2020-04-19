@@ -28,18 +28,18 @@ class HTMLPurifier_Printer
     /**
      * For easy access.
      *
-     * @type HTMLPurifier_Config
+     * @type \HTMLPurifier\Config
      */
     protected $config;
 
     /**
      * Give generator necessary configuration if possible
      *
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws Exception
      */
-    public function prepareGenerator(HTMLPurifier_Config $config): void
+    public function prepareGenerator(\HTMLPurifier\Config $config): void
     {
         $all = $config->getAll();
 

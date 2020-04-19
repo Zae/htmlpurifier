@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\IDAccumulator;
 use HTMLPurifier\Token\EmptyToken;
 
@@ -20,11 +20,11 @@ class AttrValidator
      * Validates the attributes of a token, mutating it as necessary.
      * that has valid tokens
      *
-     * @param Token               $token   Token to validate.
-     * @param HTMLPurifier_Config $config  Instance of HTMLPurifier_Config
-     * @param Context             $context Instance of HTMLPurifier\HTMLPurifier_Context
+     * @param Token   $token   Token to validate.
+     * @param Config  $config  Instance of \HTMLPurifier\Config
+     * @param Context $context Instance of HTMLPurifier\HTMLPurifier_Context
      */
-    public function validateToken(Token $token, HTMLPurifier_Config $config, Context $context): void
+    public function validateToken(Token $token, \HTMLPurifier\Config $config, Context $context): void
     {
         $definition = $config->getHTMLDefinition();
         $e =& $context->get('ErrorCollector', true);

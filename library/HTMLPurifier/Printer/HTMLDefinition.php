@@ -18,12 +18,12 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
     protected $def;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return string
      * @throws Exception
      */
-    public function render(HTMLPurifier_Config $config): string
+    public function render(\HTMLPurifier\Config $config): string
     {
         $ret = '';
         $this->config =& $config;

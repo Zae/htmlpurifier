@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrTransform;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Sets height/width defaults for <textarea>
@@ -15,12 +15,12 @@ class Textarea extends AttrTransform
 {
     /**
      * @param array               $attr
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
+    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
     {
         // Calculated from Firefox
         if (!isset($attr['cols'])) {

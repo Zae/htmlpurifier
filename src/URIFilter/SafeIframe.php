@@ -7,7 +7,7 @@ namespace HTMLPurifier\URIFilter;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -37,12 +37,12 @@ class SafeIframe extends URIFilter
     // can't check HTML.SafeIframe in the 'prepare' step: we have to
     // defer till the actual filtering.
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(HTMLPurifier_Config $config): bool
+    public function prepare(\HTMLPurifier\Config $config): bool
     {
         $this->regexp = $config->get('URI.SafeIframeRegexp');
 
@@ -51,13 +51,13 @@ class SafeIframe extends URIFilter
 
     /**
      * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool|int
      * @throws \HTMLPurifier\Exception
      */
-    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context)
+    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
     {
         // check if filter not applicable
         if (!$config->get('HTML.SafeIframe')) {

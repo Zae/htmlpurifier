@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\ErrorCollector;
 use Mockery;
@@ -21,7 +21,7 @@ abstract class ErrorsTestCase extends TestCase
 
     public function setUp(): void
     {
-        $this->config = HTMLPurifier_Config::create(['Core.CollectErrors' => true]);
+        $this->config = \HTMLPurifier\Config::create(['Core.CollectErrors' => true]);
         $this->context = new Context();
         $this->collector = Mockery::mock(ErrorCollector::class);
 

@@ -19,7 +19,7 @@ class _PH5P extends DOMLex
 {
     /**
      * @param string              $string
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return Token[]

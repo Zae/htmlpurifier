@@ -12,7 +12,7 @@ use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -66,9 +66,9 @@ class MakeWellFormed extends Strategy
     protected $injectors;
 
     /**
-     * Current instance of HTMLPurifier_Config.
+     * Current instance of \HTMLPurifier\Config.
      *
-     * @type HTMLPurifier_Config
+     * @type Config
      */
     protected $config;
 
@@ -80,14 +80,14 @@ class MakeWellFormed extends Strategy
     protected $context;
 
     /**
-     * @param Token[]             $tokens
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Token[] $tokens
+     * @param Config  $config
+     * @param Context $context
      *
      * @return Token[]
      * @throws \HTMLPurifier\Exception
      */
-    public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
+    public function execute($tokens, Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
 

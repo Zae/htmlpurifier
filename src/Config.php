@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Definition;
 use HTMLPurifier\CSSDefinition;
-use HTMLPurifier\ConfigSchema;
+use \HTMLPurifier\ConfigSchema;
 use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier\Exception;
 use HTMLPurifier\VarParser\Flexible;
@@ -28,7 +30,7 @@ use HTMLPurifier\VarParser;
  *
  * @todo Reconsider some of the public member variables
  */
-class HTMLPurifier_Config
+class Config
 {
     /**
      * HTML Purifier's version
@@ -66,7 +68,7 @@ class HTMLPurifier_Config
     protected $parser = null;
 
     /**
-     * Reference HTMLPurifier\HTMLPurifier_ConfigSchema for value checking.
+     * Reference HTMLPurifier\\HTMLPurifier\ConfigSchema for value checking.
      *
      * @type ConfigSchema
      * @note This is public for introspective purposes. Please don't
@@ -132,12 +134,12 @@ class HTMLPurifier_Config
      * Convenience constructor that creates a config object based on a mixed var
      *
      * @param mixed $config Variable that defines the state of the config
-     *                      object. Can be: a HTMLPurifier_Config() object,
+     *                      object. Can be: a \HTMLPurifier\Config() object,
      *                      an array of directives based on loadArray(),
      *                      or a string filename of an ini file.
      * @param ConfigSchema $schema Schema object
      *
-     * @return HTMLPurifier_Config Configured object
+     * @return Config Configured object
      */
     public static function create($config, ?ConfigSchema $schema = null)
     {
@@ -162,8 +164,10 @@ class HTMLPurifier_Config
 
     /**
      * Creates a new config object that inherits from a previous one.
-     * @param HTMLPurifier_Config $config Configuration object to inherit from.
-     * @return HTMLPurifier_Config object with $config as its parent.
+     *
+     * @param Config $config Configuration object to inherit from.
+     *
+     * @return Config object with $config as its parent.
      */
     public static function inherit(self $config)
     {
@@ -172,7 +176,8 @@ class HTMLPurifier_Config
 
     /**
      * Convenience constructor that creates a default configuration object.
-     * @return HTMLPurifier_Config default object.
+     *
+     * @return Config default object.
      */
     public static function createDefault()
     {
@@ -857,7 +862,7 @@ class HTMLPurifier_Config
 
     /**
      * Prepares an array from a form into something usable for the more
-     * strict parts of HTMLPurifier_Config
+     * strict parts of \HTMLPurifier\Config
      *
      * @param array $array $_GET or $_POST array to import
      * @param string|bool $index Index/name that the config variables are in
@@ -952,7 +957,7 @@ class HTMLPurifier_Config
 
     /**
      * Produces a nicely formatted error message by supplying the
-     * stack frame information OUTSIDE of HTMLPurifier_Config.
+     * stack frame information OUTSIDE of \HTMLPurifier\Config.
      *
      * @param string $msg An error message
      * @param int $no An error number
@@ -966,7 +971,7 @@ class HTMLPurifier_Config
             // zip(tail(trace), trace) -- but PHP is not Haskell har har
             for ($i = 0, $c = count($trace); $i < $c - 1; $i++) {
                 // XXX this is not correct on some versions of HTML Purifier
-                if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === 'HTMLPurifier_Config') {
+                if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === '\HTMLPurifier\Config') {
                     continue;
                 }
                 $frame = $trace[$i];

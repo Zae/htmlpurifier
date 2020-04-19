@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\HTML;
 use HTMLPurifier\AttrDef\HTML\Pixels;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -17,7 +17,7 @@ class Length extends Pixels
 {
     /**
      * @param string              $string
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool|string

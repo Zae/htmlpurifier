@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\Lang;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -99,14 +99,14 @@ class LanguageFactory
     /**
      * Creates a language object, handles class fallbacks
      *
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
-     * @param bool|string         $code Code to override configuration with. Private parameter.
+     * @param Config      $config
+     * @param Context     $context
+     * @param bool|string $code Code to override configuration with. Private parameter.
      *
      * @return Language
      * @throws Exception
      */
-    public function create(HTMLPurifier_Config $config, Context $context, $code = false)
+    public function create(\HTMLPurifier\Config $config, Context $context, $code = false)
     {
         // validate language code
         if ($code === false) {

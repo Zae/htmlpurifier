@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\DefinitionCache\Serializer;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\DefinitionCache\DevNull;
 use HTMLPurifier\Exception;
@@ -72,13 +72,13 @@ class DefinitionCacheFactory
     /**
      * Factory method that creates a cache object based on configuration
      *
-     * @param string              $type   Name of definitions handled by cache
-     * @param HTMLPurifier_Config $config Config instance
+     * @param string $type   Name of definitions handled by cache
+     * @param Config $config Config instance
      *
      * @return mixed
      * @throws Exception
      */
-    public function create(string $type, HTMLPurifier_Config $config)
+    public function create(string $type, \HTMLPurifier\Config $config)
     {
         $method = $config->get('Cache.DefinitionImpl');
         if ($method === null) {

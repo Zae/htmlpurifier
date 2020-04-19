@@ -10,7 +10,7 @@ if (function_exists('spl_autoload_register')) {
 assert("!function_exists('__autoload')");
 require '../library/HTMLPurifier.auto.php';
 require 'HTMLPurifier/PHPT/loading/_autoload.inc';
-$config = HTMLPurifier_Config::createDefault();
+$config = \HTMLPurifier\Config::createDefault();
 $purifier = new HTMLPurifier($config);
 echo $purifier->purify('<b>Salsa!') . "
 ";

@@ -7,7 +7,7 @@ class HTMLPurifier_AttrDef_CSS_ListStyleTest extends HTMLPurifier_AttrDefHarness
 
     public function test()
     {
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $this->def = new ListStyle($config);
 
         $this->assertDef('lower-alpha');

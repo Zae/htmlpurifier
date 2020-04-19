@@ -8,7 +8,7 @@ use HTMLPurifier\ChildDef\Required;
 use HTMLPurifier\Context;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -42,13 +42,13 @@ class StrictBlockquote extends Required
     protected $init = false;
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return array
      * @note We don't want MakeWellFormed to auto-close inline elements since
      *       they might be allowed.
      */
-    public function getAllowedElements(HTMLPurifier_Config $config): array
+    public function getAllowedElements(\HTMLPurifier\Config $config): array
     {
         $this->init($config);
 
@@ -57,13 +57,13 @@ class StrictBlockquote extends Required
 
     /**
      * @param array               $children
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      * @throws Exception
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context): array
+    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context): array
     {
         $this->init($config);
 
@@ -108,11 +108,11 @@ class StrictBlockquote extends Required
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
-    private function init(HTMLPurifier_Config $config)
+    private function init(\HTMLPurifier\Config $config)
     {
         if (!$this->init) {
             $def = $config->getHTMLDefinition();

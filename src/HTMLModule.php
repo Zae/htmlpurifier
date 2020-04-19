@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Represents an XHTML 1.1 module, with information on elements, tags
@@ -317,9 +317,9 @@ class HTMLModule
      * or not it's needed, and also when a finalized configuration object
      * is available.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    public function setup(HTMLPurifier_Config $config): void
+    public function setup(\HTMLPurifier\Config $config): void
     {
     }
 }

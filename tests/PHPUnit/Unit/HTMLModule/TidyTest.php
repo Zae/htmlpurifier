@@ -6,7 +6,7 @@ namespace HTMLPurifier\Tests\Unit\HTMLModule;
 
 use HTMLPurifier\HTMLModule\Tidy;
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use Mockery;
 
 /**
@@ -75,7 +75,7 @@ class TidyTest extends TestCase
             ->times(5)
             ->andReturn($fixes);
 
-        $config = HTMLPurifier_Config::create([
+        $config = \HTMLPurifier\Config::create([
             'HTML.TidyLevel' => 'none'
         ]);
 
@@ -87,7 +87,7 @@ class TidyTest extends TestCase
 
         // basic levels
 
-        $config = HTMLPurifier_Config::create([
+        $config = \HTMLPurifier\Config::create([
             'HTML.TidyLevel' => 'light'
         ]);
 
@@ -100,7 +100,7 @@ class TidyTest extends TestCase
 
         $module->setup($config);
 
-        $config = HTMLPurifier_Config::create([
+        $config = \HTMLPurifier\Config::create([
             'HTML.TidyLevel' => 'heavy'
         ]);
 
@@ -119,7 +119,7 @@ class TidyTest extends TestCase
 
         // fine grained tuning
 
-        $config = HTMLPurifier_Config::create([
+        $config = \HTMLPurifier\Config::create([
             'HTML.TidyLevel' => 'none',
             'HTML.TidyAdd'   => ['light-fix-1', 'medium-fix-1']
         ]);
@@ -133,7 +133,7 @@ class TidyTest extends TestCase
 
         $module->setup($config);
 
-        $config = HTMLPurifier_Config::create([
+        $config = \HTMLPurifier\Config::create([
             'HTML.TidyLevel' => 'medium',
             'HTML.TidyRemove'   => ['light-fix-1', 'medium-fix-1']
         ]);

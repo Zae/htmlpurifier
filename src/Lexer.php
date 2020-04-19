@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use _PH5P;
 use HTMLPurifier\Lexer\DOMLex;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Lexer\DirectLex;
 
 /**
@@ -74,14 +74,14 @@ class Lexer
      *       To specify your own prototype, set %Core.LexerImpl to it.
      *       This change in behavior de-singletonizes the lexer object.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return Lexer
      * @throws Exception
      */
     public static function create($config)
     {
-        if (!($config instanceof HTMLPurifier_Config)) {
+        if (!($config instanceof \HTMLPurifier\Config)) {
             $lexer = $config;
             trigger_error(
                 'Passing a prototype to
@@ -183,25 +183,25 @@ class Lexer
     ];
 
     /**
-     * @param string              $string
-     * @param HTMLPurifier_Config $config
+     * @param string $string
+     * @param Config $config
      *
      * @return string
      * @throws Exception
      */
-    public function parseText(string $string, HTMLPurifier_Config $config): string
+    public function parseText(string $string, \HTMLPurifier\Config $config): string
     {
         return $this->parseData($string, false, $config);
     }
 
     /**
-     * @param string              $string
-     * @param HTMLPurifier_Config $config
+     * @param string $string
+     * @param Config $config
      *
      * @return string
      * @throws Exception
      */
-    public function parseAttr(string $string, HTMLPurifier_Config $config): string
+    public function parseAttr(string $string, \HTMLPurifier\Config $config): string
     {
         return $this->parseData($string, true, $config);
     }
@@ -212,14 +212,14 @@ class Lexer
      * This string will translate escaped versions of the special characters
      * into the correct ones.
      *
-     * @param string              $string String character data to be parsed.
-     * @param bool                $is_attr
-     * @param HTMLPurifier_Config $config
+     * @param string $string String character data to be parsed.
+     * @param bool   $is_attr
+     * @param Config $config
      *
      * @return string Parsed character data.
      * @throws Exception
      */
-    public function parseData(string $string, bool $is_attr, HTMLPurifier_Config $config): string
+    public function parseData(string $string, bool $is_attr, \HTMLPurifier\Config $config): string
     {
         // following functions require at least one character
         if ($string === '') {
@@ -262,13 +262,13 @@ class Lexer
     /**
      * Lexes an HTML string into tokens.
      *
-     * @param String              $string HTML.
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param String  $string HTML.
+     * @param Config  $config
+     * @param Context $context
      *
      * @return Token[] array representation of HTML.
      */
-    public function tokenizeHTML(string $string, HTMLPurifier_Config $config, Context $context): array
+    public function tokenizeHTML(string $string, \HTMLPurifier\Config $config, Context $context): array
     {
         trigger_error('Call to abstract class', E_USER_ERROR);
     }
@@ -342,15 +342,15 @@ class Lexer
      * Takes a piece of HTML and normalizes it by converting entities, fixing
      * encoding, extracting bits, and other good stuff.
      *
-     * @param string              $html HTML.
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param string  $html HTML.
+     * @param Config  $config
+     * @param Context $context
      *
      * @return string
      * @throws Exception
      * @todo Consider making protected
      */
-    public function normalize(?string $html, HTMLPurifier_Config $config, Context $context): string
+    public function normalize(?string $html, \HTMLPurifier\Config $config, Context $context): string
     {
         // normalize newlines to \n
         if ($config->get('Core.NormalizeNewlines')) {

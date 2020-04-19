@@ -71,7 +71,7 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
         $input[14] = 'href=" <';
         $expect[14] = array('href' => ' <');
 
-        $config = HTMLPurifier_Config::createDefault();
+        $config = \HTMLPurifier\Config::createDefault();
         $context = new Context();
         $size = count($input);
         for($i = 0; $i < $size; $i++) {
@@ -107,13 +107,13 @@ class HTMLPurifier_Lexer_DirectLexTest extends HTMLPurifier_Harness
         );
 
         $context = new Context();
-        $config  = HTMLPurifier_Config::createDefault();
+        $config  = \HTMLPurifier\Config::createDefault();
         $output = $this->DirectLex->tokenizeHTML($html, $config, $context);
 
         $this->assertIdentical($output, $expect);
 
         $context = new Context();
-        $config  = HTMLPurifier_Config::create(array(
+        $config  = \HTMLPurifier\Config::create(array(
             'Core.MaintainLineNumbers' => true
         ));
         $expect[0]->position(1, 0);

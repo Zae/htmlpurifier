@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -57,26 +57,26 @@ abstract class URIScheme
     /**
      * Validates the components of a URI for a specific scheme.
      *
-     * @param URI                 $uri Reference to a HTMLPurifier\HTMLPurifier_URI object
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param URI     $uri Reference to a HTMLPurifier\HTMLPurifier_URI object
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool success or failure
      */
-    abstract public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context);
+    abstract public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context);
 
     /**
      * Public interface for validating components of a URI.  Performs a
      * bunch of default actions. Don't overload this method.
      *
-     * @param URI                 $uri Reference to a HTMLPurifier\HTMLPurifier_URI object
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param URI     $uri Reference to a HTMLPurifier\HTMLPurifier_URI object
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool success or failure
      * @throws Exception
      */
-    public function validate(URI &$uri, HTMLPurifier_Config $config, Context $context)
+    public function validate(URI &$uri, \HTMLPurifier\Config $config, Context $context)
     {
         if ($this->default_port === $uri->port) {
             $uri->port = null;

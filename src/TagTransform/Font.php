@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Tag;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Transforms FONT tags to the proper form (SPAN with CSS styling)
@@ -54,12 +54,12 @@ class Font extends TagTransform
 
     /**
      * @param Tag                 $tag
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return End|string
      */
-    public function transform(Tag $tag, HTMLPurifier_Config $config, Context $context)
+    public function transform(Tag $tag, \HTMLPurifier\Config $config, Context $context)
     {
         if ($tag instanceof End) {
             $new_tag = clone $tag;

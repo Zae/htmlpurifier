@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
@@ -78,17 +78,17 @@ class Generator
     /**
      * Configuration for the generator
      *
-     * @type HTMLPurifier_Config
+     * @type Config
      */
     protected $config;
 
     /**
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @throws Exception
      */
-    public function __construct(HTMLPurifier_Config $config, Context $context)
+    public function __construct(Config $config, Context $context)
     {
         $this->config = $config;
         $this->_scriptFix = $config->get('Output.CommentScriptContents');

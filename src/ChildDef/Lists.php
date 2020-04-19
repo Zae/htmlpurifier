@@ -7,7 +7,7 @@ namespace HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -35,13 +35,13 @@ class Lists extends ChildDef
 
     /**
      * @param array               $children
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      * @throws Exception
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
+    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context)
     {
         // Flag for subclasses
         $this->whitespace = false;

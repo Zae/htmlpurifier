@@ -5,7 +5,7 @@ HTMLPurifier.path.php and HTMLPurifier.includes.php loading test
 require '../library/HTMLPurifier.path.php';
 require 'HTMLPurifier.includes.php';
 require 'HTMLPurifier/PHPT/loading/_no-autoload.inc';
-$config = HTMLPurifier_Config::createDefault();
+$config = \HTMLPurifier\Config::createDefault();
 $purifier = new HTMLPurifier($config);
 echo $purifier->purify('<b>Salsa!');
 --EXPECT--

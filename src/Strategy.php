@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\Token;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Supertype for classes that define a strategy for modifying/purifying tokens.
@@ -20,11 +20,11 @@ abstract class Strategy
     /**
      * Executes the strategy on the tokens.
      *
-     * @param Token[]             $tokens Array of HTMLPurifier\HTMLPurifier_Token objects to be operated on.
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Token[] $tokens Array of HTMLPurifier\HTMLPurifier_Token objects to be operated on.
+     * @param Config  $config
+     * @param Context $context
      *
      * @return Token[] Processed array of token objects.
      */
-    abstract public function execute($tokens, HTMLPurifier_Config $config, Context $context);
+    abstract public function execute($tokens, \HTMLPurifier\Config $config, Context $context);
 }

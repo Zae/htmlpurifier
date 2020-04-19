@@ -15,7 +15,7 @@ use HTMLPurifier\Exception;
  *
  * @param string $html   String HTML to purify
  * @param mixed  $config Configuration to use, can be any value accepted by
- *                       HTMLPurifier_Config::create()
+ *                       \HTMLPurifier\Config::create()
  *
  * @return string
  * @throws Exception

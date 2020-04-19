@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrTransform;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Class HTMLPurifier\AttrTransform\HTMLPurifier_AttrTransform_SafeEmbed
@@ -20,12 +20,12 @@ class SafeEmbed extends AttrTransform
 
     /**
      * @param array               $attr
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
+    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
     {
         $attr['allowscriptaccess'] = 'never';
         $attr['allownetworking'] = 'internal';

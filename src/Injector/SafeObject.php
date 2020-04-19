@@ -7,7 +7,7 @@ namespace HTMLPurifier\Injector;
 use HTMLPurifier\Context;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 
@@ -61,13 +61,13 @@ class SafeObject extends Injector
     ];
 
     /**
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return void
      * @throws Exception
      */
-    public function prepare(HTMLPurifier_Config $config, Context $context)
+    public function prepare(Config $config, Context $context)
     {
         parent::prepare($config, $context);
     }

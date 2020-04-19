@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\Context;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Represents a pre or post processing filter on HTML Purifier's output
@@ -37,13 +37,13 @@ class Filter
     /**
      * Pre-processor function, handles HTML before HTML Purifier
      *
-     * @param string              $html
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param string  $html
+     * @param Config  $config
+     * @param Context $context
      *
      * @return string
      */
-    public function preFilter(string $html, HTMLPurifier_Config $config, Context $context)
+    public function preFilter(string $html, \HTMLPurifier\Config $config, Context $context)
     {
         return $html;
     }
@@ -51,13 +51,13 @@ class Filter
     /**
      * Post-processor function, handles HTML after HTML Purifier
      *
-     * @param string              $html
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param string  $html
+     * @param Config  $config
+     * @param Context $context
      *
      * @return string
      */
-    public function postFilter(string $html, HTMLPurifier_Config $config, Context $context)
+    public function postFilter(string $html, \HTMLPurifier\Config $config, Context $context)
     {
         return $html;
     }

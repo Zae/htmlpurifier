@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrTransform;
 use HTMLPurifier\AttrDef\HTML\Pixels;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Performs miscellaneous cross attribute validation and filtering for
@@ -27,12 +27,12 @@ class Input extends AttrTransform
 
     /**
      * @param array               $attr
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return array
      */
-    public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
+    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
     {
         if (!isset($attr['type'])) {
             $t = 'text';

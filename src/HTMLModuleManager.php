@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 class HTMLModuleManager
@@ -256,11 +256,11 @@ class HTMLModuleManager
      * Performs processing on modules, after being called you may
      * use getElement() and getElements()
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    public function setup(HTMLPurifier_Config $config)
+    public function setup(\HTMLPurifier\Config $config)
     {
         $this->trusted = $config->get('HTML.Trusted');
 

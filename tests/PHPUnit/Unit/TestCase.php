@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier;
-use HTMLPurifier_Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use Illuminate\Support\Str;
 use Mockery;
@@ -24,7 +24,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected $purifier;
 
     /**
-     * @type HTMLPurifier_Config
+     * @type Config
      */
     protected $config;
 
@@ -67,7 +67,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     protected function createCommon(): array
     {
         return [
-            HTMLPurifier_Config::createDefault(),
+            Config::createDefault(),
             new Context
         ];
     }

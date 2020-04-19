@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\ErrorStruct;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Language;
@@ -169,12 +169,12 @@ class ErrorCollector
     /**
      * Default HTML formatting implementation for error messages
      *
-     * @param HTMLPurifier_Config $config Configuration, vital for HTML output nature
-     * @param array               $errors Errors array to display; used for recursion.
+     * @param Config $config Configuration, vital for HTML output nature
+     * @param array  $errors Errors array to display; used for recursion.
      *
      * @return string
      */
-    public function getHTMLFormatted(HTMLPurifier_Config $config, ?array $errors = null)
+    public function getHTMLFormatted(\HTMLPurifier\Config $config, ?array $errors = null)
     {
         $ret = [];
 

@@ -7,7 +7,7 @@ namespace HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
 use HTMLPurifier\Exception;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition cache decorator class that saves all cache retrievals
@@ -36,12 +36,12 @@ class Memory extends Decorator
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      * @throws Exception
      */
-    public function add(Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, \HTMLPurifier\Config $config)
     {
         $status = parent::add($def, $config);
         if ($status) {
@@ -53,12 +53,12 @@ class Memory extends Decorator
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      * @throws Exception
      */
-    public function set(Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, \HTMLPurifier\Config $config)
     {
         $status = parent::set($def, $config);
         if ($status) {
@@ -70,12 +70,12 @@ class Memory extends Decorator
 
     /**
      * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      * @throws Exception
      */
-    public function replace(Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, \HTMLPurifier\Config $config)
     {
         $status = parent::replace($def, $config);
         if ($status) {
@@ -86,12 +86,12 @@ class Memory extends Decorator
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return mixed
      * @throws Exception
      */
-    public function get(HTMLPurifier_Config $config)
+    public function get(\HTMLPurifier\Config $config)
     {
         $key = $this->generateKey($config);
         if (isset($this->definitions[$key])) {

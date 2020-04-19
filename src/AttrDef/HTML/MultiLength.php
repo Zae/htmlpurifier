@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\HTML;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -16,9 +16,9 @@ use HTMLPurifier\Context;
 class MultiLength extends Length
 {
     /**
-     * @param string              $string
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */

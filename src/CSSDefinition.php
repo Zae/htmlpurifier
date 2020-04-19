@@ -27,7 +27,7 @@ use HTMLPurifier\AttrDef\CSS\AlphaValue;
 use HTMLPurifier\AttrDef\CSS\ImportantDecorator;
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Definition;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -49,7 +49,7 @@ class CSSDefinition extends Definition
     /**
      * Constructs the info array.  The meat of this class.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
     protected function doSetup($config)
     {
@@ -421,9 +421,9 @@ class CSSDefinition extends Definition
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
-    protected function doSetupProprietary(HTMLPurifier_Config $config)
+    protected function doSetupProprietary(\HTMLPurifier\Config $config)
     {
         // Internet Explorer only scrollbar colors
         $this->info['scrollbar-arrow-color'] = new Color();
@@ -469,7 +469,7 @@ class CSSDefinition extends Definition
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
     protected function doSetupTricky($config)
     {
@@ -504,7 +504,7 @@ class CSSDefinition extends Definition
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      */
     protected function doSetupTrusted($config)
     {
@@ -534,7 +534,7 @@ class CSSDefinition extends Definition
      * Performs extra config-based processing. Based off of
      * HTMLPurifier\HTMLPurifier_HTMLDefinition.
      *
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @throws Exception
      * @todo Refactor duplicate elements into common class (probably using composition, not inheritance).

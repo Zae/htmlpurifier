@@ -9,7 +9,7 @@ use HTMLPurifier\AttrValidator;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\Token\EmptyToken;
 
 /**
@@ -19,12 +19,12 @@ class ValidateAttributes extends Strategy
 {
     /**
      * @param Token[]             $tokens
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return Token[]
      */
-    public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
+    public function execute($tokens, \HTMLPurifier\Config $config, Context $context): array
     {
         // setup validator
         $validator = new AttrValidator();

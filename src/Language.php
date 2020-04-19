@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 use HTMLPurifier\LanguageFactory;
 
 /**
@@ -59,7 +59,7 @@ class Language
     public $_loaded = false;
 
     /**
-     * @type HTMLPurifier_Config
+     * @type Config
      */
     protected $config;
 
@@ -69,8 +69,8 @@ class Language
     protected $context;
 
     /**
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param Config  $config
+     * @param Context $context
      */
     public function __construct($config, $context)
     {

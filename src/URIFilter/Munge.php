@@ -9,7 +9,7 @@ use HTMLPurifier\Exception;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_Munge
@@ -52,12 +52,12 @@ class Munge extends URIFilter
     protected $replace = [];
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(HTMLPurifier_Config $config): bool
+    public function prepare(\HTMLPurifier\Config $config): bool
     {
         $this->target = $config->get('URI.' . $this->name);
         $this->parser = new URIParser();
@@ -73,13 +73,13 @@ class Munge extends URIFilter
 
     /**
      * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
+    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
         if ($context->get('EmbeddedURI', true) && !$this->doEmbed) {
             return true;
@@ -117,12 +117,12 @@ class Munge extends URIFilter
 
     /**
      * @param URI                 $uri
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      * @param Context             $context
      */
     protected function makeReplace(
         URI $uri,
-        HTMLPurifier_Config $config,
+        \HTMLPurifier\Config $config,
         Context $context
     ): void
     {

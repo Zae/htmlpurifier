@@ -6,7 +6,7 @@ namespace HTMLPurifier\DefinitionCache\Decorator;
 
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition cache decorator class that cleans up the cache
@@ -28,12 +28,12 @@ class Cleanup extends Decorator
     }
 
     /**
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      *
      * @return mixed
      */
-    public function add(Definition $def, HTMLPurifier_Config $config)
+    public function add(Definition $def, Config $config)
     {
         $status = parent::add($def, $config);
         if (!$status) {
@@ -44,12 +44,12 @@ class Cleanup extends Decorator
     }
 
     /**
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      *
      * @return mixed
      */
-    public function set(Definition $def, HTMLPurifier_Config $config)
+    public function set(Definition $def, Config $config)
     {
         $status = parent::set($def, $config);
         if (!$status) {
@@ -60,12 +60,12 @@ class Cleanup extends Decorator
     }
 
     /**
-     * @param Definition          $def
-     * @param HTMLPurifier_Config $config
+     * @param Definition $def
+     * @param Config     $config
      *
      * @return mixed
      */
-    public function replace(Definition $def, HTMLPurifier_Config $config)
+    public function replace(Definition $def, Config $config)
     {
         $status = parent::replace($def, $config);
         if (!$status) {
@@ -76,11 +76,11 @@ class Cleanup extends Decorator
     }
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param Config $config
      *
      * @return mixed
      */
-    public function get(HTMLPurifier_Config $config)
+    public function get(Config $config)
     {
         $ret = parent::get($config);
         if (!$ret) {

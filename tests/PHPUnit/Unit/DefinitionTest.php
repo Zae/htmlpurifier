@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier_Config;
+use HTMLPurifier\Config;
 
 /**
  * Class DefinitionTest
@@ -21,7 +21,7 @@ class DefinitionTest extends TestCase
         static::markTestSkipped('what\'s a HTMLPurifier_DefinitionTestable... who knows?');
         $def = new HTMLPurifier_DefinitionTestable();
 
-        $config = HTMLPurifier_Config::createDefault();
+        $config = Config::createDefault();
         $def->expectOnce('doSetup', [$config]);
         $def->setup($config);
     }
@@ -35,7 +35,7 @@ class DefinitionTest extends TestCase
 
         $def = new HTMLPurifier_DefinitionTestable();
 
-        $config = HTMLPurifier_Config::createDefault();
+        $config = Config::createDefault();
         $def->expectNever('doSetup');
         $def->setup = true;
         $def->setup($config);

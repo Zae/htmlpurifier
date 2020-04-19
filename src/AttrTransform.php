@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Processes an entire attribute array for corrections needing multiple values.
@@ -24,14 +24,14 @@ abstract class AttrTransform
     /**
      * Abstract: makes changes to the attributes dependent on multiple values.
      *
-     * @param array               $attr     Assoc array of attributes, usually from
+     * @param array   $attr                 Assoc array of attributes, usually from
      *                                      HTMLPurifier\Token\HTMLPurifier_Token_Tag::$attr
-     * @param HTMLPurifier_Config $config   Mandatory HTMLPurifier_Config object.
-     * @param Context             $context  Mandatory HTMLPurifier\HTMLPurifier_Context object
+     * @param Config  $config               Mandatory \HTMLPurifier\Config object.
+     * @param Context $context              Mandatory HTMLPurifier\HTMLPurifier_Context object
      *
      * @return array Processed attribute array.
      */
-    abstract public function transform(array $attr, HTMLPurifier_Config $config, Context $context);
+    abstract public function transform(array $attr, \HTMLPurifier\Config $config, Context $context);
 
     /**
      * Prepends CSS properties to the style attribute, creating the

@@ -6,7 +6,7 @@ namespace HTMLPurifier\ChildDef;
 
 use HTMLPurifier\ChildDef\Required;
 use HTMLPurifier\Context;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * Definition that allows a set of elements, and allows no children.
@@ -29,13 +29,13 @@ class Optional extends Required
     public $type = 'optional';
 
     /**
-     * @param array               $children
-     * @param HTMLPurifier_Config $config
-     * @param Context             $context
+     * @param array   $children
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */
-    public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context)
+    public function validateChildren(array $children, Config $config, Context $context)
     {
         $result = parent::validateChildren($children, $config, $context);
         // we assume that $children is not modified

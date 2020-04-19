@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use HTMLPurifier_Config;
+use \HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 List Module, defines list-oriented elements. Core Module.
@@ -32,7 +32,7 @@ class Lists extends HTMLModule
     public $content_sets = ['Flow' => 'List'];
 
     /**
-     * @param HTMLPurifier_Config $config
+     * @param \HTMLPurifier\Config $config
      */
     public function setup($config): void
     {
