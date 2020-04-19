@@ -7,6 +7,7 @@ use HTMLPurifier\Definition;
 use HTMLPurifier\CSSDefinition;
 use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\DefinitionCacheFactory;
+use HTMLPurifier\VarParser\Flexible;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\PropertyList;
@@ -58,7 +59,8 @@ class HTMLPurifier_Config
 
     /**
      * Parser for variables.
-     * @type HTMLPurifier_VarParser_Flexible
+     *
+     * @type Flexible
      */
     protected $parser = null;
 
@@ -122,7 +124,7 @@ class HTMLPurifier_Config
         $parent = $parent ? $parent : $definition->defaultPlist;
         $this->plist = new PropertyList($parent);
         $this->def = $definition; // keep a copy around for checking
-        $this->parser = new HTMLPurifier_VarParser_Flexible();
+        $this->parser = new Flexible();
     }
 
     /**

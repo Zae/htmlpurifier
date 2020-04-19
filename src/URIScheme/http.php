@@ -2,24 +2,32 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIScheme;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
- * Validates nntp (Network News Transfer Protocol) as defined by generic RFC 1738
+ * Validates http (HyperText Transfer Protocol) as defined by RFC 2616
  */
-class HTMLPurifier_URIScheme_nntp extends URIScheme
+class http extends URIScheme
 {
     /**
      * @type int
      */
-    public $default_port = 119;
+    public $default_port = 80;
 
     /**
      * @type bool
      */
-    public $browsable = false;
+    public $browsable = true;
+
+    /**
+     * @type bool
+     */
+    public $hierarchical = true;
 
     /**
      * @param URI                 $uri
@@ -31,7 +39,6 @@ class HTMLPurifier_URIScheme_nntp extends URIScheme
     public function doValidate(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
     {
         $uri->userinfo = null;
-        $uri->query = null;
 
         return true;
     }

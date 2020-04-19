@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIScheme;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
  * Validates ftp (File Transfer Protocol) URIs as defined by generic RFC 1738.
  */
-class HTMLPurifier_URIScheme_ftp extends URIScheme
+class ftp extends URIScheme
 {
     /**
      * @type int

@@ -1,11 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\VarParser;
+
 use HTMLPurifier\VarParser;
+use HTMLPurifier\VarParserException;
 
-class HTMLPurifier_VarParser_FlexibleTest extends HTMLPurifier_VarParserHarness
+/**
+ * Class FlexibleTest
+ *
+ * @package HTMLPurifier\Tests\Unit\VarParser
+ */
+class FlexibleTest extends TestCase
 {
+    public function setUp(): void
+    {
+        $this->parser = new VarParser\Flexible();
+        parent::setUp();
+    }
 
-    public function testValidate()
+    /**
+     * @test
+     */
+    public function testValidate(): void
     {
         $this->assertValid('foobar', 'string');
         $this->assertValid('foobar', 'text');
@@ -50,21 +68,24 @@ class HTMLPurifier_VarParser_FlexibleTest extends HTMLPurifier_VarParserHarness
         $this->assertValid('foo:bar:baz', 'hash', array('foo' => 'bar:baz'));
 
         $this->assertValid(23, 'mixed');
-
     }
 
-    public function testValidate_withMagicNumbers()
+    /**
+     * @test
+     */
+    public function testValidate_withMagicNumbers(): void
     {
         $this->assertValid('foobar', VarParser::C_STRING);
     }
 
-    public function testValidate_null()
+    /**
+     * @test
+     */
+    public function testValidate_null(): void
     {
-        $this->assertIdentical($this->parser->parse(null, 'string', true), null);
-        $this->expectException('HTMLPurifier\VarParserException');
+        static::assertNull($this->parser->parse(null, 'string', true));
+
+        $this->expectException(VarParserException::class);
         $this->parser->parse(null, 'string', false);
     }
-
 }
-
-// vim: et sw=4 sts=4

@@ -2,14 +2,17 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\URIScheme;
+
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
+use HTMLPurifier_Config;
 
 /**
  * Implements data: URI for base64 encoded images supported by GD.
  */
-class HTMLPurifier_URIScheme_data extends URIScheme
+class data extends URIScheme
 {
     /**
      * @type bool
@@ -93,7 +96,7 @@ class HTMLPurifier_URIScheme_data extends URIScheme
             $raw_data = $data;
         }
 
-        if ( strlen($raw_data) < 12 ) {
+        if (strlen($raw_data) < 12) {
             // error; exif_imagetype throws exception with small files,
             // and this likely indicates a corrupt URI/failed parse anyway
             return false;
@@ -142,12 +145,15 @@ class HTMLPurifier_URIScheme_data extends URIScheme
         $uri->fragment = null;
         $uri->query = null;
         $uri->path = "$content_type;base64," . base64_encode($raw_data);
+
         return true;
     }
 
     /**
-     * @param int $errno
+     * @param int    $errno
      * @param string $errstr
      */
-    public function muteErrorHandler(int $errno, string $errstr) {}
+    public function muteErrorHandler(int $errno, string $errstr)
+    {
+    }
 }

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\VarParser;
+
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 
@@ -10,7 +12,7 @@ use HTMLPurifier\VarParser;
  * this, it can represent all inputs; however, it is dangerous and cannot
  * be used by users.
  */
-class HTMLPurifier_VarParser_Native extends VarParser
+class Native extends VarParser
 {
     /**
      * @param mixed $var
