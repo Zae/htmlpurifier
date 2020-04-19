@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier;
 use HTMLPurifier\Filter;
+use HTMLPurifier\HTMLPurifier;
 use Mockery;
 
 /**

@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 /*! @mainpage
  *
  * HTML Purifier is an HTML filter that will take an arbitrary snippet of

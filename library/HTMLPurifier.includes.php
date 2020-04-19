@@ -20,7 +20,7 @@ declare(strict_types=1);
  *      library directory; this is not auto-set.
  */
 
-require 'HTMLPurifier.php';
+require '../src/HTMLPurifier.php';
 require '../src/Arborize.php';
 require '../src/AttrCollections.php';
 require '../src/AttrDef.php';

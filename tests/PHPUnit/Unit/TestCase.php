@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
-use HTMLPurifier;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
-use Illuminate\Support\Str;
+use HTMLPurifier\HTMLPurifier;
 use Mockery;
 use Mockery\Exception\InvalidCountException;
 

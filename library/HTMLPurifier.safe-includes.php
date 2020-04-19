@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 $__dir = __DIR__;
 
-require_once $__dir . '/HTMLPurifier.php';
+require_once $__dir . '/../src/HTMLPurifier.php';
 require_once $__dir . '/../src/Arborize.php';
 require_once $__dir . '/../src/AttrCollections.php';
 require_once $__dir . '/../src/AttrDef.php';
