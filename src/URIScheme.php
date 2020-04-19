@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Validator for the components of a URI for a specific scheme
@@ -74,7 +74,7 @@ abstract class URIScheme
      * @param Context             $context
      *
      * @return bool success or failure
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validate(URI &$uri, HTMLPurifier_Config $config, Context $context)
     {

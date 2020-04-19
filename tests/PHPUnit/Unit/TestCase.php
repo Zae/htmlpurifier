@@ -105,7 +105,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      * @param string $input
      * @param string $expect
      *
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function assertPurification(string $input, ?string $expect = null)
     {

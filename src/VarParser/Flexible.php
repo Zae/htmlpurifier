@@ -6,7 +6,7 @@ namespace HTMLPurifier\VarParser;
 
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Performs safe variable parsing based on types which can be used by
@@ -21,7 +21,7 @@ class Flexible extends VarParser
      * @param bool  $allow_null
      *
      * @return array|bool|float|int|mixed|null|string
-     * @throws VarParserException|HTMLPurifier_Exception
+     * @throws VarParserException|Exception
      */
     protected function parseImplementation($var, int $type, bool $allow_null)
     {

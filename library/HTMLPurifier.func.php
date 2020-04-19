@@ -8,6 +8,8 @@ declare(strict_types=1);
  * @note ''HTMLPurifier()'' is NOT the same as ''new HTMLPurifier()''
  */
 
+use HTMLPurifier\Exception;
+
 /**
  * Purify HTML.
  *
@@ -16,7 +18,7 @@ declare(strict_types=1);
  *                       HTMLPurifier_Config::create()
  *
  * @return string
- * @throws HTMLPurifier_Exception
+ * @throws Exception
  */
 function HTMLPurifier($html, $config = null): string
 {

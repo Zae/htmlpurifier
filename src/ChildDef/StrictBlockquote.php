@@ -9,7 +9,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Takes the contents of blockquote when in strict and reformats for validation.
@@ -61,7 +61,7 @@ class StrictBlockquote extends Required
      * @param Context             $context
      *
      * @return array
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validateChildren(array $children, HTMLPurifier_Config $config, Context $context): array
     {
@@ -110,7 +110,7 @@ class StrictBlockquote extends Required
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     private function init(HTMLPurifier_Config $config)
     {

@@ -2,7 +2,10 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Definition;
+namespace HTMLPurifier;
+
+use HTMLPurifier_Config;
+use HTMLPurifier\Exception;
 
 /**
  * Abstract class representing Definition cache managers that implements
@@ -13,7 +16,7 @@ use HTMLPurifier\Definition;
  *       via a configuration directive
  * @todo Implement memcached
  */
-abstract class HTMLPurifier_DefinitionCache
+abstract class DefinitionCache
 {
     /**
      * @type string
@@ -35,7 +38,7 @@ abstract class HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function generateKey(HTMLPurifier_Config $config)
     {
@@ -52,7 +55,7 @@ abstract class HTMLPurifier_DefinitionCache
      * @param HTMLPurifier_Config $config Instance of HTMLPurifier_Config to test against
      *
      * @return bool
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function isOld(string $key, HTMLPurifier_Config $config)
     {

@@ -11,7 +11,7 @@ use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Text;
 
 /**
@@ -56,7 +56,7 @@ class RemoveEmpty extends Injector
      * @param Context             $context
      *
      * @return void
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function prepare(HTMLPurifier_Config $config, Context $context): void
     {

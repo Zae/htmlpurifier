@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
+use HTMLPurifier\Exception;
 
 /**
  * Definition cache decorator class that saves all cache retrievals
@@ -35,7 +36,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
      * @param HTMLPurifier_Config $config
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function add(Definition $def, HTMLPurifier_Config $config)
     {
@@ -52,7 +53,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
      * @param HTMLPurifier_Config $config
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function set(Definition $def, HTMLPurifier_Config $config)
     {
@@ -69,7 +70,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
      * @param HTMLPurifier_Config $config
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function replace(Definition $def, HTMLPurifier_Config $config)
     {
@@ -85,7 +86,7 @@ class HTMLPurifier_DefinitionCache_Decorator_Memory extends Decorator
      * @param HTMLPurifier_Config $config
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function get(HTMLPurifier_Config $config)
     {

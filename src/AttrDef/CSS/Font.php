@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Validates shorthand CSS property font.
@@ -28,7 +28,7 @@ class Font extends AttrDef
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function __construct($config)
     {

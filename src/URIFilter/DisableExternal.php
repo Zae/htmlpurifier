@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_DisableExternal
@@ -29,7 +29,7 @@ class DisableExternal extends URIFilter
      * @param HTMLPurifier_Config $config
      *
      * @return void
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function prepare(HTMLPurifier_Config $config): void
     {

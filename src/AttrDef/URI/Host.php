@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\URI;
 
-use HTMLPurifier\AttrDef\URI\IPv4;
-use Exception;
 use HTMLPurifier\AttrDef;
-use HTMLPurifier\AttrDef\URI\IPv6;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use Net_IDNA2;
 
 /**
@@ -44,7 +41,7 @@ class Host extends AttrDef
      * @param Context             $context
      *
      * @return bool|string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function validate($string, $config, $context)
     {

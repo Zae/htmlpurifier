@@ -44,6 +44,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Filter;
 use HTMLPurifier\ErrorCollector;
 use HTMLPurifier\Generator;
+use HTMLPurifier\Exception;
 use HTMLPurifier\LanguageFactory;
 use HTMLPurifier\IDAccumulator;
 use HTMLPurifier\Strategy\Core;
@@ -159,7 +160,7 @@ class HTMLPurifier
      *                                    that HTMLPurifier_Config::create() supports.
      *
      * @return string Purified HTML
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function purify(string $html, ?HTMLPurifier_Config $config = null): ?string
     {
@@ -256,7 +257,7 @@ class HTMLPurifier
      *                                           See HTMLPurifier::purify() for more details.
      *
      * @return string[] Array of purified HTML
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function purifyArray(array $array_of_html, ?HTMLPurifier_Config $config = null): array
     {

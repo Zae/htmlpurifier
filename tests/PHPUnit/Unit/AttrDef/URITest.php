@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\AttrDef;
 
 use HTMLPurifier\AttrDef\URI;
-use HTMLPurifier_DefinitionCache;
+use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
@@ -192,7 +192,7 @@ class URITest extends TestCase
         // behavior, but I don't feel too good about letting users
         // overload entire definitions.
 
-        $cache_mock = Mockery::mock(HTMLPurifier_DefinitionCache::class);
+        $cache_mock = Mockery::mock(DefinitionCache::class);
         $cache_mock->expects()
             ->get($this->config)
             ->andReturn($uri_def);

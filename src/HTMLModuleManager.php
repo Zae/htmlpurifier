@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 class HTMLModuleManager
 {
@@ -258,7 +258,7 @@ class HTMLModuleManager
      *
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function setup(HTMLPurifier_Config $config)
     {

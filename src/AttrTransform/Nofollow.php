@@ -9,7 +9,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier\URIParser;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Adds rel="nofollow" to all outbound links.  This transform is
@@ -33,7 +33,7 @@ class Nofollow extends AttrTransform
      * @param Context             $context
      *
      * @return array
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {

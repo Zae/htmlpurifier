@@ -13,7 +13,7 @@ use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
 
@@ -85,7 +85,7 @@ class MakeWellFormed extends Strategy
      * @param Context             $context
      *
      * @return Token[]
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function execute($tokens, HTMLPurifier_Config $config, Context $context): array
     {
@@ -430,7 +430,7 @@ class MakeWellFormed extends Strategy
                     if ($token instanceof Start) {
                         $this->stack[] = $token;
                     } elseif ($token instanceof End) {
-                        throw new HTMLPurifier_Exception(
+                        throw new Exception(
                             'Improper handling of end tag in start code; possible error in MakeWellFormed'
                         );
                     }
@@ -441,7 +441,7 @@ class MakeWellFormed extends Strategy
 
             // sanity check: we should be dealing with a closing tag
             if (!$token instanceof End) {
-                throw new HTMLPurifier_Exception('Unaccounted for tag token in input stream, bug in HTML Purifier');
+                throw new Exception('Unaccounted for tag token in input stream, bug in HTML Purifier');
             }
 
             // make sure that we have something open
@@ -587,7 +587,7 @@ class MakeWellFormed extends Strategy
      *                                                    this is not an injector related operation.
      *
      * @return mixed
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function processToken($token, $injector = -1)
     {
@@ -610,7 +610,7 @@ class MakeWellFormed extends Strategy
         }
 
         if (!is_array($token)) {
-            throw new HTMLPurifier_Exception('Invalid token type from injector');
+            throw new Exception('Invalid token type from injector');
         }
 
         if (!is_int($token[0])) {
@@ -618,7 +618,7 @@ class MakeWellFormed extends Strategy
         }
 
         if ($token[0] === 0) {
-            throw new HTMLPurifier_Exception('Deleting zero tokens is not valid');
+            throw new Exception('Deleting zero tokens is not valid');
         }
 
         // $token is now an array with the following form:

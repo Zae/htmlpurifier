@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HTMLPurifier\CSSDefinition;
+use HTMLPurifier\Exception;
 
 /**
  * Class HTMLPurifier_Printer_CSSDefinition
@@ -18,7 +19,7 @@ class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
      * @param HTMLPurifier_Config $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function render(HTMLPurifier_Config $config): string
     {

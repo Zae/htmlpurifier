@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 class DoctypeRegistry
 {
@@ -144,7 +144,7 @@ class DoctypeRegistry
      * @param HTMLPurifier_Config $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function getDoctypeFromConfig(HTMLPurifier_Config $config)
     {

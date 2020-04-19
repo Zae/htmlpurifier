@@ -44,7 +44,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_create(): void
     {
@@ -54,7 +54,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_create_withDecorator(): void
     {
@@ -69,7 +69,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_create_withDecoratorObject(): void
     {
@@ -84,7 +84,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_create_recycling(): void
     {
@@ -96,7 +96,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_create_invalid(): void
     {
@@ -112,7 +112,7 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_null(): void
     {
@@ -124,13 +124,13 @@ class DefinitionCacheFactoryTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_register(): void
     {
         static::markTestSkipped('Don\'t know how to register our mock in the factory yet...');
 
-        $externalMock = Mockery::mock('overload:HTMLPurifier_DefinitionCache');
+        $externalMock = Mockery::mock('overload:HTMLPurifier\HTMLPurifier_DefinitionCache');
         $this->config->set('Cache.DefinitionImpl', 'TestCache');
         $this->factory->register('TestCache', $class = 'HTMLPurifier_DefinitionCacheMock');
         $cache = $this->factory->create('Test', $this->config);

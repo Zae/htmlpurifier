@@ -32,7 +32,7 @@ class URITest extends UriTestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getSchemeObj(): void
     {
@@ -47,7 +47,7 @@ class URITest extends UriTestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getSchemeObj_invalidScheme(): void
     {
@@ -62,7 +62,7 @@ class URITest extends UriTestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getSchemaObj_defaultScheme(): void
     {
@@ -80,7 +80,7 @@ class URITest extends UriTestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function test_getSchemaObj_invalidDefaultScheme(): void
     {
@@ -339,7 +339,7 @@ class URITest extends UriTestCase
      * @param      $uri
      * @param bool|string $expect_uri
      *
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function assertValidation($uri, $expect_uri = true): void
     {

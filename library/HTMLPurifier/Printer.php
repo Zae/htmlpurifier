@@ -7,6 +7,7 @@ declare(strict_types=1);
 use HTMLPurifier\Encoder;
 use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -36,7 +37,7 @@ class HTMLPurifier_Printer
      *
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function prepareGenerator(HTMLPurifier_Config $config): void
     {

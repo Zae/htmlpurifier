@@ -1,6 +1,7 @@
 <?php
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token;
 use HTMLPurifier\Lexer\DOMLex;
 
@@ -21,7 +22,7 @@ class _PH5P extends DOMLex
      * @param Context             $context
      *
      * @return Token[]
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function tokenizeHTML($string, $config, $context): array
     {

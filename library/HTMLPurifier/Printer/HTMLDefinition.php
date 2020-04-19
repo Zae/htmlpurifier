@@ -5,6 +5,7 @@ declare(strict_types=1);
 use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
+use HTMLPurifier\Exception;
 
 /**
  * Class HTMLPurifier_Printer_HTMLDefinition
@@ -20,7 +21,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
      * @param HTMLPurifier_Config $config
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function render(HTMLPurifier_Config $config): string
     {

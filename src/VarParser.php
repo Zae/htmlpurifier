@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\VarParserException;
 
 /**
@@ -63,7 +63,7 @@ class VarParser
      * @param bool       $allow_null Whether or not to permit null as a value
      *
      * @return mixed Validated and type-coerced variable
-     * @throws VarParserException|HTMLPurifier_Exception
+     * @throws VarParserException|Exception
      */
     final public function parse($var, $type, bool $allow_null = false)
     {
@@ -180,11 +180,11 @@ class VarParser
      * @param string $class
      * @param int    $type
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function errorInconsistent(string $class, int $type): void
     {
-        throw new HTMLPurifier_Exception(
+        throw new Exception(
             "Inconsistency in $class: " . static::getTypeName($type) . ' not implemented'
         );
     }

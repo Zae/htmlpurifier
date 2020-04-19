@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\Lexer\DOMLex;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Comment;
@@ -39,7 +40,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     public function test_create_unknownLexer()
     {
         $this->config->set('Core.LexerImpl', 'AsdfAsdf');
-        $this->expectException(new HTMLPurifier_Exception('Cannot instantiate unrecognized Lexer type AsdfAsdf'));
+        $this->expectException(new Exception('Cannot instantiate unrecognized Lexer type AsdfAsdf'));
         HTMLPurifier_Lexer::create($this->config);
     }
 
@@ -47,7 +48,7 @@ class HTMLPurifier_LexerTest extends HTMLPurifier_Harness
     {
         $this->config->set('Core.LexerImpl', 'DOMLex');
         $this->config->set('Core.MaintainLineNumbers', true);
-        $this->expectException(new HTMLPurifier_Exception('Cannot use lexer that does not support line numbers with Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)'));
+        $this->expectException(new Exception('Cannot use lexer that does not support line numbers with Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)'));
         HTMLPurifier_Lexer::create($this->config);
     }
 

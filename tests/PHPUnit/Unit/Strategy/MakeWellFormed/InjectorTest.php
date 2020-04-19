@@ -30,7 +30,7 @@ class InjectorTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testEndHandler(): void
     {
@@ -86,7 +86,7 @@ class InjectorTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testErrorRequiredElementNotAllowed(): void
     {
@@ -102,7 +102,7 @@ class InjectorTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testErrorRequiredAttributeNotAllowed(): void
     {
@@ -116,7 +116,7 @@ class InjectorTest extends TestCase
 
     /**
      * @test
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function testOnlyAutoParagraph(): void
     {

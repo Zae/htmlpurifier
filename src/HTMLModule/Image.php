@@ -8,7 +8,7 @@ use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrTransform\ImgRequired;
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * XHTML 1.1 Image Module provides basic image embedding.
@@ -26,7 +26,7 @@ class Image extends HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function setup($config): void
     {

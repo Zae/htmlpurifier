@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\PropertyList;
 
 class HTMLPurifier_PropertyListTest extends UnitTestCase
@@ -14,7 +15,7 @@ class HTMLPurifier_PropertyListTest extends UnitTestCase
 
     public function testNotFound()
     {
-        $this->expectException(new HTMLPurifier_Exception("Key 'key' not found"));
+        $this->expectException(new Exception("Key 'key' not found"));
         $plist = new PropertyList();
         $plist->get('key');
     }
@@ -40,7 +41,7 @@ class HTMLPurifier_PropertyListTest extends UnitTestCase
 
     public function testRecursionNotFound()
     {
-        $this->expectException(new HTMLPurifier_Exception("Key 'key' not found"));
+        $this->expectException(new Exception("Key 'key' not found"));
         $parent_plist = new PropertyList();
         $plist = new PropertyList();
         $plist->setParent($parent_plist);

@@ -11,6 +11,7 @@ use HTMLPurifier\AttrDef\CSS\Ident;
 use HTMLPurifier\AttrDef\HTML\ID;
 use HTMLPurifier\Context;
 use HTMLPurifier\Filter;
+use HTMLPurifier\Exception;
 
 function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
 {
@@ -96,7 +97,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
      * @param Context             $context
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      * @todo Extend to indicate non-text/css style blocks
      */
     public function preFilter(string $html, HTMLPurifier_Config $config, Context $context): string
@@ -133,7 +134,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
      * @param Context             $context
      *
      * @return string Cleaned CSS
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function cleanCSS(string $css, HTMLPurifier_Config $config, Context $context): string
     {
@@ -282,7 +283,7 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
                                     } elseif ($sdelim === ':') {
                                         $attrdef = $this->_enum_attrdef;
                                     } else {
-                                        throw new HTMLPurifier_Exception('broken invariant sdelim and preg_split');
+                                        throw new Exception('broken invariant sdelim and preg_split');
                                     }
 
                                     $r = $attrdef->validate($y, $config, $context);

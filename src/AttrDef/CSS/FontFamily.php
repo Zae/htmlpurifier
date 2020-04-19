@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Validates a font family list according to CSS spec
@@ -63,7 +63,7 @@ class FontFamily extends AttrDef
      * @param Context             $context
      *
      * @return bool|string
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function validate($string, $config, $context)
     {

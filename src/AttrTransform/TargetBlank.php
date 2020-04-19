@@ -9,7 +9,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier\URIParser;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Adds target="blank" to all outbound links.  This transform is
@@ -34,7 +34,7 @@ class TargetBlank extends AttrTransform
      * @param Context             $context
      *
      * @return array
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function transform(array $attr, HTMLPurifier_Config $config, Context $context): array
     {

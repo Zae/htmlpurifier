@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\VarParser\Native;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
@@ -126,7 +127,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param StringHash                            $hash
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception|HTMLPurifier_Exception
+     * @throws HTMLPurifier_ConfigSchema_Exception|Exception
      */
     public function buildDirective(
         HTMLPurifier_ConfigSchema_Interchange $interchange,

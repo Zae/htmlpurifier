@@ -6,6 +6,8 @@ declare(strict_types=1);
  * Emulation layer for code that used kses(), substituting in HTML Purifier.
  */
 
+use HTMLPurifier\Exception;
+
 require_once __DIR__ . '/HTMLPurifier.auto.php';
 
 /**
@@ -14,7 +16,7 @@ require_once __DIR__ . '/HTMLPurifier.auto.php';
  * @param null $allowed_protocols
  *
  * @return string|null
- * @throws HTMLPurifier_Exception
+ * @throws Exception
  */
 function kses($string, $allowed_html, $allowed_protocols = null): ?string
 {

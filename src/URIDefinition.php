@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIFilter\DisableExternal;
 use HTMLPurifier\URIFilter\DisableExternalResources;
 use HTMLPurifier\URIFilter\DisableResources;
@@ -85,7 +85,7 @@ class URIDefinition extends Definition
      *
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function doSetup(HTMLPurifier_Config $config): void
     {
@@ -96,7 +96,7 @@ class URIDefinition extends Definition
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function setupFilters(HTMLPurifier_Config $config): void
     {
@@ -117,7 +117,7 @@ class URIDefinition extends Definition
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function setupMemberVariables(HTMLPurifier_Config $config): void
     {

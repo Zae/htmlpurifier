@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier;
+
 /**
  * Global exception class for HTML Purifier; any exceptions we throw
  * are from here.
  */
-class HTMLPurifier_Exception extends Exception
+class Exception extends \Exception
 {
 
 }

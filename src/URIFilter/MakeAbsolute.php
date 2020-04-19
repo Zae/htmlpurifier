@@ -9,7 +9,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_MakeAbsolute
@@ -35,7 +35,7 @@ class MakeAbsolute extends URIFilter
      * @param HTMLPurifier_Config $config
      *
      * @return bool
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function prepare(HTMLPurifier_Config $config): bool
     {
@@ -67,7 +67,7 @@ class MakeAbsolute extends URIFilter
      * @param Context             $context
      *
      * @return bool
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function filter(URI &$uri, HTMLPurifier_Config $config, Context $context): bool
     {

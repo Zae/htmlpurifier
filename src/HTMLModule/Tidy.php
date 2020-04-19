@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Abstract class for a set of proprietary modules that clean up (tidy)
@@ -51,7 +51,7 @@ class Tidy extends HTMLModule
      *
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      * @todo Wildcard matching and error reporting when an added or
      *       subtracted fix has no effect.
      */

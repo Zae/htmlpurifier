@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Registry for retrieving specific URI scheme validator objects.
@@ -49,7 +49,7 @@ class URISchemeRegistry
      * @param HTMLPurifier_Config $config
      *
      * @return URIScheme|null
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function getScheme(?string $scheme, HTMLPurifier_Config $config)
     {

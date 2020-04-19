@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * XHTML 1.1 Iframe Module provides inline frames.
@@ -30,7 +30,7 @@ class Iframe extends HTMLModule
     /**
      * @param HTMLPurifier_Config $config
      *
-     * @throws HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     public function setup(HTMLPurifier_Config $config): void
     {

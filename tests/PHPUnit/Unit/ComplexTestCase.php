@@ -73,7 +73,7 @@ class ComplexTestCase extends TestCase
      * @param string      $input  Input parameter
      * @param bool|string $expect Expectation
      *
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function assertResult(string $input, $expect = true): void
     {
@@ -128,7 +128,7 @@ class ComplexTestCase extends TestCase
      * @param $html
      *
      * @return array|\HTMLPurifier\Token[]
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function tokenize($html): array
     {
@@ -141,7 +141,7 @@ class ComplexTestCase extends TestCase
      * @param $tokens
      *
      * @return string
-     * @throws \HTMLPurifier_Exception
+     * @throws \HTMLPurifier\Exception
      */
     protected function generate($tokens): string
     {

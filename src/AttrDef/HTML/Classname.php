@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrDef\HTML;
 use HTMLPurifier\AttrDef\HTML\Nmtokens;
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Implements special behavior for class attribute (normally NMTOKENS)
@@ -19,7 +19,7 @@ class Classname extends Nmtokens
      * @param Context             $context
      *
      * @return bool|string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function split($string, $config, $context)
     {
@@ -38,7 +38,7 @@ class Classname extends Nmtokens
      * @param Context             $context
      *
      * @return array
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     protected function filter($tokens, $config, $context): array
     {

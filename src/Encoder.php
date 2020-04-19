@@ -6,7 +6,7 @@ namespace HTMLPurifier;
 
 use HTMLPurifier_Config;
 use HTMLPurifier\Context;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * A UTF-8 specific character encoder that handles cleaning and transforming.
@@ -404,7 +404,7 @@ class Encoder
      * @param Context             $context
      *
      * @return string
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public static function convertToUTF8(string $str, HTMLPurifier_Config $config, Context $context): string
     {
@@ -460,7 +460,7 @@ class Encoder
      * @return string
      * @note Currently, this is a lossy conversion, with unexpressable
      *       characters being omitted.
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public static function convertFromUTF8(?string $str, HTMLPurifier_Config $config, ?Context $context): ?string
     {

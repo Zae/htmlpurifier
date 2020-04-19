@@ -10,7 +10,7 @@ use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier_Config;
-use HTMLPurifier_Exception;
+use HTMLPurifier\Exception;
 
 /**
  * Takes a well formed list of tokens and fixes their nesting.
@@ -48,7 +48,7 @@ class FixNesting extends Strategy
      * @param Context             $context
      *
      * @return array|Token[]
-     * @throws HTMLPurifier_Exception
+     * @throws Exception
      */
     public function execute($tokens, HTMLPurifier_Config $config, Context $context)
     {
