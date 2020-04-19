@@ -36,7 +36,7 @@ class IPv6 extends IPv4
         //      prefix check
         if (strpos($aIP, '/') !== false) {
             if (preg_match('#' . $pre . '$#s', $aIP, $find)) {
-                $aIP = substr($aIP, 0, 0 - strlen($find[0]));
+                $aIP = substr($aIP, 0, 0 - \strlen($find[0]));
                 unset($find);
             } else {
                 return false;
@@ -45,7 +45,7 @@ class IPv6 extends IPv4
 
         //      IPv4-compatiblity check
         if (preg_match('#(?<=:' . ')' . $this->ip4 . '$#s', $aIP, $find)) {
-            $aIP = substr($aIP, 0, 0 - strlen($find[0]));
+            $aIP = substr($aIP, 0, 0 - \strlen($find[0]));
             $ip = explode('.', $find[0]);
             $ip = array_map('dechex', $ip);
             $aIP .= $ip[0] . $ip[1] . ':' . $ip[2] . $ip[3];
@@ -54,7 +54,7 @@ class IPv6 extends IPv4
 
         //      compression check
         $aIP = explode('::', $aIP);
-        $c = count($aIP);
+        $c = \count($aIP);
         if ($c > 2) {
             return false;
         }
@@ -64,21 +64,21 @@ class IPv6 extends IPv4
             $first = explode(':', $first);
             $second = explode(':', $second);
 
-            if (count($first) + count($second) > 8) {
+            if (\count($first) + \count($second) > 8) {
                 return false;
             }
 
-            while (count($first) < 8) {
+            while (\count($first) < 8) {
                 $first[] = '0';
             }
 
-            array_splice($first, 8 - count($second), 8, $second);
+            array_splice($first, 8 - \count($second), 8, $second);
             $aIP = $first;
             unset($first, $second);
         } else {
             $aIP = explode(':', $aIP[0]);
         }
-        $c = count($aIP);
+        $c = \count($aIP);
 
         if ($c !== 8) {
             return false;

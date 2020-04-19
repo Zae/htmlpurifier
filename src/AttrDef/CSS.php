@@ -42,7 +42,7 @@ class CSS extends AttrDef
         // non-delimiting semicolon can appear are in strings
         // escape sequences.   So here is some dumb hack to
         // handle quotes.
-        $len = strlen($css);
+        $len = \strlen($css);
         $accum = '';
         $declarations = [];
         $quoted = false;

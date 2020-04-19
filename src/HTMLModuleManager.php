@@ -187,7 +187,7 @@ class HTMLModuleManager
      */
     public function registerModule($module, bool $overload = false)
     {
-        if (is_string($module)) {
+        if (\is_string($module)) {
             // attempt to load the module
             $original_module = $module;
             $ok = false;
@@ -216,7 +216,7 @@ class HTMLModuleManager
         }
 
         if (empty($module->name)) {
-            trigger_error('Module instance of ' . get_class($module) . ' must have name');
+            trigger_error('Module instance of ' . \get_class($module) . ' must have name');
 
             return;
         }
@@ -236,7 +236,7 @@ class HTMLModuleManager
     {
         $this->registerModule($module);
 
-        if (is_object($module)) {
+        if (\is_object($module)) {
             $module = $module->name;
         }
 
@@ -273,7 +273,7 @@ class HTMLModuleManager
         $lookup = $config->get('HTML.AllowedModules');
         $special_cases = $config->get('HTML.CoreModules');
 
-        if (is_array($lookup)) {
+        if (\is_array($lookup)) {
             foreach ($modules as $k => $m) {
                 if (isset($special_cases[$m])) {
                     continue;
@@ -336,7 +336,7 @@ class HTMLModuleManager
         foreach ($this->modules as $module) {
             $n = [];
             foreach ($module->info_injector as $injector) {
-                if (!is_object($injector)) {
+                if (!\is_object($injector)) {
                     $class = "HTMLPurifier\\Injector\\$injector";
                     $injector = new $class;
                 }
@@ -377,7 +377,7 @@ class HTMLModuleManager
      */
     public function processModule($module)
     {
-        if (!isset($this->registeredModules[$module]) || is_object($module)) {
+        if (!isset($this->registeredModules[$module]) || \is_object($module)) {
             $this->registerModule($module);
         }
 
@@ -480,7 +480,7 @@ class HTMLModuleManager
             $this->attrCollections->expandIdentifiers($def->attr, $this->attrTypes);
 
             // descendants_are_inline, for ChildDef_Chameleon
-            if (is_string($def->content_model) &&
+            if (\is_string($def->content_model) &&
                 $name !== 'del' &&
                 $name !== 'ins' &&
                 strpos($def->content_model, 'Inline') !== false

@@ -90,7 +90,7 @@ class DirectLex extends Lexer
         if ($maintain_line_numbers) {
             $current_line = 1;
             $current_col = 0;
-            $length = strlen($string);
+            $length = \strlen($string);
         } else {
             $current_line = false;
             $current_col = false;
@@ -126,7 +126,7 @@ class DirectLex extends Lexer
                 // we need to add strlen($nl) == 1 to $nl_pos before subtracting it
                 // from our "rcursor" position.
                 $nl_pos = strrpos($string, $nl, $rcursor - $length);
-                $current_col = $rcursor - (is_bool($nl_pos) ? 0 : $nl_pos + 1);
+                $current_col = $rcursor - (\is_bool($nl_pos) ? 0 : $nl_pos + 1);
 
                 // recalculate lines
                 if ($synchronize_interval && // synchronization is on
@@ -169,7 +169,7 @@ class DirectLex extends Lexer
             } elseif (!$inside_tag) {
                 // We are not inside tag but there are no more tags
                 // If we're already at the end, break
-                if ($cursor === strlen($string)) {
+                if ($cursor === \strlen($string)) {
                     break;
                 }
                 // Create Text of rest of string
@@ -218,7 +218,7 @@ class DirectLex extends Lexer
                         if ($e) {
                             $e->send(E_WARNING, 'Lexer: Unclosed comment');
                         }
-                        $position_comment_end = strlen($string);
+                        $position_comment_end = \strlen($string);
                         $end = true;
                     } else {
                         $end = false;
@@ -445,7 +445,7 @@ class DirectLex extends Lexer
             }
 
             $first_char = @$quoted_value[0];
-            $last_char = @$quoted_value[strlen($quoted_value) - 1];
+            $last_char = @$quoted_value[\strlen($quoted_value) - 1];
 
             $same_quote = ($first_char === $last_char);
             $open_quote = ($first_char === '"' || $first_char === "'");
@@ -475,7 +475,7 @@ class DirectLex extends Lexer
         // setup loop environment
         $array = []; // return assoc array of attributes
         $cursor = 0; // current position in string (moves forward)
-        $size = strlen($string); // size of the string (stays the same)
+        $size = \strlen($string); // size of the string (stays the same)
 
         // if we have unquoted attributes, the parser expects a terminating
         // space, so let's guarantee that there's always a terminating space.

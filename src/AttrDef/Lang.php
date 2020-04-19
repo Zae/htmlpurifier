@@ -30,14 +30,14 @@ class Lang extends AttrDef
         }
 
         $subtags = explode('-', $string);
-        $num_subtags = count($subtags);
+        $num_subtags = \count($subtags);
 
         if ($num_subtags === 0) { // sanity check
             return false;
         }
 
         // process primary subtag : $subtags[0]
-        $length = strlen($subtags[0]);
+        $length = \strlen($subtags[0]);
         switch ($length) {
             case 1:
                 if (!($subtags[0] === 'x' || $subtags[0] === 'i')) {
@@ -64,7 +64,7 @@ class Lang extends AttrDef
         }
 
         // process second subtag : $subtags[1]
-        $length = strlen($subtags[1]);
+        $length = \strlen($subtags[1]);
         if ($length === 0 || ($length === 1 && $subtags[1] !== 'x') || $length > 8 || !ctype_alnum($subtags[1])) {
             return $new_string;
         }
@@ -80,7 +80,7 @@ class Lang extends AttrDef
 
         // process all other subtags, index 2 and up
         for ($i = 2; $i < $num_subtags; $i++) {
-            $length = strlen($subtags[$i]);
+            $length = \strlen($subtags[$i]);
             if ($length === 0 || $length > 8 || !ctype_alnum($subtags[$i])) {
                 return $new_string;
             }

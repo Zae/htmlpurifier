@@ -100,7 +100,7 @@ class AutoParagraph extends Injector
             }
             // Is the current parent a <p> tag?
         } elseif (!empty($this->currentNesting) &&
-                  $this->currentNesting[count($this->currentNesting) - 1]->name === 'p') {
+                  $this->currentNesting[\count($this->currentNesting) - 1]->name === 'p') {
             // State 3.1: ...<p>PAR1
             //                  ----
 
@@ -191,7 +191,7 @@ class AutoParagraph extends Injector
                         //                        ---
                         // State 3.2.1: ...</p><div>
                         //                     -----
-                        if (!is_array($token)) {
+                        if (!\is_array($token)) {
                             $token = [$token];
                         }
                         array_unshift($token, new Text("\n\n"));
@@ -229,7 +229,7 @@ class AutoParagraph extends Injector
         $needs_start = false;
         $needs_end = false;
 
-        $c = count($raw_paragraphs);
+        $c = \count($raw_paragraphs);
         if ($c === 1) {
             // There were no double-newlines, abort quickly. In theory this
             // should never happen.

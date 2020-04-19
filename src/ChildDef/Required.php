@@ -34,7 +34,7 @@ class Required extends ChildDef
      */
     public function __construct($elements)
     {
-        if (is_string($elements)) {
+        if (\is_string($elements)) {
             $elements = str_replace(' ', '', $elements);
             $elements = explode('|', $elements);
         }
@@ -112,7 +112,7 @@ class Required extends ChildDef
                 // spill the child contents in
                 // ToDo: Make configurable
                 if ($node instanceof Element) {
-                    for ($i = count($node->children) - 1; $i >= 0; $i--) {
+                    for ($i = \count($node->children) - 1; $i >= 0; $i--) {
                         $stack[] = $node->children[$i];
                     }
 

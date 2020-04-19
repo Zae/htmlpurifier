@@ -42,7 +42,7 @@ class MakeAbsolute extends URIFilter
         $def = $config->getDefinition('URI');
         $this->base = $def->base;
 
-        if (is_null($this->base)) {
+        if (\is_null($this->base)) {
             trigger_error(
                 'URI.MakeAbsolute is being ignored due to lack of ' .
                 'value for URI.Base configuration',
@@ -71,21 +71,21 @@ class MakeAbsolute extends URIFilter
      */
     public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
-        if (is_null($this->base)) {
+        if (\is_null($this->base)) {
             return true;
         } // abort early
 
-        if ($uri->path === '' && is_null($uri->scheme) &&
-            is_null($uri->host) && is_null($uri->query) && is_null($uri->fragment)) {
+        if ($uri->path === '' && \is_null($uri->scheme) &&
+            \is_null($uri->host) && \is_null($uri->query) && \is_null($uri->fragment)) {
             // reference to current document
             $uri = clone $this->base;
 
             return true;
         }
 
-        if (!is_null($uri->scheme)) {
+        if (!\is_null($uri->scheme)) {
             // absolute URI already: don't change
-            if (!is_null($uri->host)) {
+            if (!\is_null($uri->host)) {
                 return true;
             }
 
@@ -101,7 +101,7 @@ class MakeAbsolute extends URIFilter
             }
             // special case: had a scheme but always is hierarchical and had no authority
         }
-        if (!is_null($uri->host)) {
+        if (!\is_null($uri->host)) {
             // network path, don't bother
             return true;
         }
@@ -113,7 +113,7 @@ class MakeAbsolute extends URIFilter
             $stack = explode('/', $uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
 
-            if ($new_stack[0] !== '' && !is_null($this->base->host)) {
+            if ($new_stack[0] !== '' && !\is_null($this->base->host)) {
                 array_unshift($new_stack, '');
             }
 
@@ -126,15 +126,15 @@ class MakeAbsolute extends URIFilter
 
         // re-combine
         $uri->scheme = $this->base->scheme;
-        if (is_null($uri->userinfo)) {
+        if (\is_null($uri->userinfo)) {
             $uri->userinfo = $this->base->userinfo;
         }
 
-        if (is_null($uri->host)) {
+        if (\is_null($uri->host)) {
             $uri->host = $this->base->host;
         }
 
-        if (is_null($uri->port)) {
+        if (\is_null($uri->port)) {
             $uri->port = $this->base->port;
         }
 

@@ -86,7 +86,7 @@ class DOMLex extends Lexer
         $doc->encoding = 'UTF-8'; // theoretically, the above has this covered
 
         $options = 0;
-        if (defined('LIBXML_PARSEHUGE') && $config->get('Core.AllowParseManyTags')) {
+        if (\defined('LIBXML_PARSEHUGE') && $config->get('Core.AllowParseManyTags')) {
             $options |= LIBXML_PARSEHUGE;
         }
 

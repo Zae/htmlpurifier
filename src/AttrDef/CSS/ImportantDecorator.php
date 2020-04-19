@@ -48,7 +48,7 @@ class ImportantDecorator extends AttrDef
         $is_important = false;
 
         // :TODO: optimization: test directly for !important and ! important
-        if (strlen($string) >= 9 && substr($string, -9) === 'important') {
+        if (\strlen($string) >= 9 && substr($string, -9) === 'important') {
             $temp = rtrim(substr($string, 0, -9));
             // use a temp, because we might want to restore important
             if ($temp !== '' && substr($temp, -1) === '!') {

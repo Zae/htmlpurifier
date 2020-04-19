@@ -49,7 +49,7 @@ class DisableExternal extends URIFilter
      */
     public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
     {
-        if (is_null($uri->host)) {
+        if (\is_null($uri->host)) {
             return true;
         }
 

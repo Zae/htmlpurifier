@@ -98,10 +98,10 @@ class Lexer
             $config->get('Core.CollectErrors');
 
         $inst = null;
-        if (is_object($lexer)) {
+        if (\is_object($lexer)) {
             $inst = $lexer;
         } else {
-            if (is_null($lexer)) {
+            if (\is_null($lexer)) {
                 do {
                     // auto-detection algorithm
                     if ($needs_tracking) {
@@ -111,7 +111,7 @@ class Lexer
 
                     if (class_exists('DOMDocument', false) &&
                         method_exists('DOMDocument', 'loadHTML') &&
-                        !extension_loaded('domxml')
+                        !\extension_loaded('domxml')
                     ) {
                         // check for DOM support, because while it's part of the
                         // core, it can be disabled compile time. Also, the PECL
@@ -228,7 +228,7 @@ class Lexer
 
         // subtracts amps that cannot possibly be escaped
         $num_amp = substr_count($string, '&') - substr_count($string, '& ') -
-                   ($string[strlen($string) - 1] === '&' ? 1 : 0);
+                   ($string[\strlen($string) - 1] === '&' ? 1 : 0);
 
         if (!$num_amp) {
             return $string;
@@ -239,7 +239,7 @@ class Lexer
 
         // code duplication for sake of optimization, see above
         $num_amp_2 = substr_count($string, '&') - substr_count($string, '& ') -
-                     ($string[strlen($string) - 1] === '&' ? 1 : 0);
+                     ($string[\strlen($string) - 1] === '&' ? 1 : 0);
 
         if ($num_amp_2 <= $num_esc_amp) {
             return $string;

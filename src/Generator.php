@@ -115,7 +115,7 @@ class Generator
 
         // Basic algorithm
         $html = '';
-        for ($i = 0, $size = count($tokens); $i < $size; $i++) {
+        for ($i = 0, $size = \count($tokens); $i < $size; $i++) {
             if ($this->_scriptFix && $tokens[$i]->name === 'script'
                 && $i + 2 < $size && $tokens[$i + 2] instanceof End) {
                 // script special case
@@ -128,7 +128,7 @@ class Generator
         }
 
         // Tidy cleanup
-        if (extension_loaded('tidy') && $this->config->get('Output.TidyFormat')) {
+        if (\extension_loaded('tidy') && $this->config->get('Output.TidyFormat')) {
             $tidy = new Tidy;
             $tidy->parseString(
                 $html,
@@ -198,7 +198,7 @@ class Generator
 
         if ($token instanceof EmptyToken) {
             if ($this->_flashCompat && $token->name === 'param' && !empty($this->_flashStack)) {
-                $this->_flashStack[count($this->_flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
+                $this->_flashStack[\count($this->_flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
             }
             $attr = $this->generateAttributes($token->attr, $token->name);
 
@@ -297,7 +297,7 @@ class Generator
                 if (strpos($value, '`') !== false) {
                     // check if correct quoting style would not already be
                     // triggered
-                    if (strcspn($value, '"\' <>') === strlen($value)) {
+                    if (strcspn($value, '"\' <>') === \strlen($value)) {
                         // protect!
                         $value .= ' ';
                     }

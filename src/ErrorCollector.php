@@ -79,8 +79,8 @@ class ErrorCollector
     public function send(int $severity, string $msg)
     {
         $args = [];
-        if (func_num_args() > 2) {
-            $args = func_get_args();
+        if (\func_num_args() > 2) {
+            $args = \func_get_args();
             array_shift($args);
             unset($args[0]);
         }
@@ -131,7 +131,7 @@ class ErrorCollector
         if ($token) {
             $new_struct->value = clone $token;
         }
-        if (is_int($line) && is_int($col)) {
+        if (\is_int($line) && \is_int($col)) {
             if (isset($this->lines[$line][$col])) {
                 $struct = $this->lines[$line][$col];
             } else {
@@ -248,7 +248,7 @@ class ErrorCollector
                 $context[] = $current;
                 $stack = array_merge($stack, array_reverse($array, true));
 
-                for ($i = count($array); $i > 0; $i--) {
+                for ($i = \count($array); $i > 0; $i--) {
                     $context_stack[] = $context;
                 }
             }

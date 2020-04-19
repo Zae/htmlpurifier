@@ -45,7 +45,7 @@ class Color extends AttrDef
             $hex = $string;
         }
 
-        $length = strlen($hex);
+        $length = \strlen($hex);
         if ($length !== 3 && $length !== 6) {
             return false;
         }

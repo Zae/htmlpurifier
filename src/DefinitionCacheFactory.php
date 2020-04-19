@@ -119,7 +119,7 @@ class DefinitionCacheFactory
      */
     public function addDecorator($decorator)
     {
-        if (is_string($decorator)) {
+        if (\is_string($decorator)) {
             $class = "HTMLPurifier\\DefinitionCache\\Decorator\\$decorator";
             $decorator = new $class;
         }

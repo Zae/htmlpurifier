@@ -153,9 +153,9 @@ class Config
             $ret = static::createDefault();
         }
 
-        if (is_string($config)) {
+        if (\is_string($config)) {
             $ret->loadIni($config);
-        } elseif (is_array($config)) {
+        } elseif (\is_array($config)) {
             $ret->loadArray($config);
         }
 
@@ -383,7 +383,7 @@ class Config
 
         // Raw type might be negative when using the fully optimized form
         // of stdClass, which indicates allow_null == true
-        $rtype = is_int($def) ? $def : $def->type;
+        $rtype = \is_int($def) ? $def : $def->type;
         if ($rtype < 0) {
             $type = -$rtype;
             $allow_null = true;
@@ -403,7 +403,7 @@ class Config
             return;
         }
 
-        if (is_string($value) && is_object($def)) {
+        if (\is_string($value) && \is_object($def)) {
             // resolve value alias if defined
             if (isset($def->aliases[$value])) {
                 $value = $def->aliases[$value];
@@ -582,13 +582,13 @@ class Config
         // --------------
         // check preconditions
         $def = null;
-        if ($optimized && is_null($this->get($type . '.DefinitionID'))) {
+        if ($optimized && \is_null($this->get($type . '.DefinitionID'))) {
             // fatally error out if definition ID not set
             throw new Exception(
                 "Cannot retrieve raw version without specifying %$type.DefinitionID"
             );
         }
-        
+
         if (!empty($this->definitions[$type])) {
             $def = $this->definitions[$type];
             if ($def->setup && !$optimized) {
@@ -600,14 +600,14 @@ class Config
                     $extra
                 );
             }
-            
+
             if ($def->optimized === null) {
                 $extra = $this->chatty ? ' (try flushing your cache)' : '';
                 throw new Exception(
                     'Optimization status of definition is unknown' . $extra
                 );
             }
-            
+
             if ($def->optimized !== $optimized) {
                 $msg = $optimized ? 'optimized' : 'unoptimized';
                 $extra = $this->chatty ?
@@ -649,7 +649,7 @@ class Config
         }
 
         // check invariants for creation
-        if (!$optimized && !is_null($this->get($type . '.DefinitionID'))) {
+        if (!$optimized && !\is_null($this->get($type . '.DefinitionID'))) {
             if ($this->chatty) {
                 $this->triggerError(
                     'Due to a documentation error in previous version of HTML Purifier, your ' .
@@ -779,7 +779,7 @@ class Config
         }
 
         if ($allowed !== true) {
-            if (is_string($allowed)) {
+            if (\is_string($allowed)) {
                 $allowed = [$allowed];
             }
             $allowed_ns = [];
@@ -802,7 +802,7 @@ class Config
         $ret = [];
         foreach ($schema->info as $key => $def) {
             [$ns, $directive] = explode('.', $key, 2);
-            
+
             if ($allowed !== true) {
                 if (isset($blacklisted_directives["$ns.$directive"])) {
                     continue;
@@ -811,7 +811,7 @@ class Config
                     continue;
                 }
             }
-            
+
             if (isset($def->isAlias)) {
                 continue;
             }
@@ -875,7 +875,7 @@ class Config
     public static function prepareArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null)
     {
         if ($index !== false) {
-            $array = (isset($array[$index]) && is_array($array[$index])) ? $array[$index] : [];
+            $array = (isset($array[$index]) && \is_array($array[$index])) ? $array[$index] : [];
         }
         $mq = $mq_fix && version_compare(PHP_VERSION, '7.4.0', '<') && function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc();
 
@@ -969,7 +969,7 @@ class Config
         if ($this->chatty) {
             $trace = debug_backtrace();
             // zip(tail(trace), trace) -- but PHP is not Haskell har har
-            for ($i = 0, $c = count($trace); $i < $c - 1; $i++) {
+            for ($i = 0, $c = \count($trace); $i < $c - 1; $i++) {
                 // XXX this is not correct on some versions of HTML Purifier
                 if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === '\HTMLPurifier\Config') {
                     continue;
@@ -995,7 +995,7 @@ class Config
         $this->getDefinition('HTML');
         $this->getDefinition('CSS');
         $this->getDefinition('URI');
-        
+
         return serialize($this);
     }
 }

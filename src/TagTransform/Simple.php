@@ -44,7 +44,7 @@ class Simple extends TagTransform
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;
-        if (!is_null($this->style) &&
+        if (!\is_null($this->style) &&
             ($new_tag instanceof Start || $new_tag instanceof EmptyToken)
         ) {
             $this->prependCSS($new_tag->attr, $this->style);

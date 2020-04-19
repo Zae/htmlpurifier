@@ -220,7 +220,7 @@ class HTMLPurifier
         $filters = array_merge($filters, $this->filters);
         // maybe prepare(), but later
 
-        $filter_size = count($filters);
+        $filter_size = \count($filters);
         foreach ($filters as $filter) {
             $html = $filter->preFilter($html, $config, $context);
         }
@@ -268,7 +268,7 @@ class HTMLPurifier
         $array = [];
 
         foreach ($array_of_html as $key => $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $array[$key] = $this->purifyArray($value, $config);
             } else {
                 $array[$key] = $this->purify($value, $config);

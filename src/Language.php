@@ -152,7 +152,7 @@ class Language
         $sep_last = $this->getMessage('Item separator last');
         $ret = '';
 
-        for ($i = 0, $c = count($array); $i < $c; $i++) {
+        for ($i = 0, $c = \count($array); $i < $c; $i++) {
             if ($i === 0) {
                 //do nothing
             } elseif ($i + 1 < $c) {
@@ -191,7 +191,7 @@ class Language
         $subst = [];
         $generator = false;
         foreach ($args as $i => $value) {
-            if (is_object($value)) {
+            if (\is_object($value)) {
                 if ($value instanceof Token) {
                     // factor this out some time
                     if (!$generator) {
@@ -224,7 +224,7 @@ class Language
                 continue;
             }
 
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 $keys = array_keys($value);
                 if (array_keys($keys) === $keys) {
                     // list

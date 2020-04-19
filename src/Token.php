@@ -58,7 +58,7 @@ abstract class Token
     {
         if ($n === 'type') {
             trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
-            switch (get_class($this)) {
+            switch (\get_class($this)) {
                 case 'HTMLPurifier\Token\Start':
                     return 'start';
                 case 'HTMLPurifier\Token\EmptyToken':

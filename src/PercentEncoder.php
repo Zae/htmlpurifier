@@ -45,8 +45,8 @@ class PercentEncoder
 
         // extra letters not to escape
         if ($preserve !== false) {
-            for ($i = 0, $c = strlen($preserve); $i < $c; $i++) {
-                $this->preserve[ord($preserve[$i])] = true;
+            for ($i = 0, $c = \strlen($preserve); $i < $c; $i++) {
+                $this->preserve[\ord($preserve[$i])] = true;
             }
         }
     }
@@ -67,8 +67,8 @@ class PercentEncoder
     public function encode(string $string): string
     {
         $ret = '';
-        for ($i = 0, $c = strlen($string); $i < $c; $i++) {
-            if ($string[$i] !== '%' && !isset($this->preserve[$int = ord($string[$i])])) {
+        for ($i = 0, $c = \strlen($string); $i < $c; $i++) {
+            if ($string[$i] !== '%' && !isset($this->preserve[$int = \ord($string[$i])])) {
                 $ret .= sprintf('%%%02X', $int);
             } else {
                 $ret .= $string[$i];
@@ -98,7 +98,7 @@ class PercentEncoder
         $parts = explode('%', $string);
         $ret = array_shift($parts);
         foreach ($parts as $part) {
-            $length = strlen($part);
+            $length = \strlen($part);
             if ($length < 2) {
                 $ret .= '%25' . $part;
                 continue;
@@ -113,7 +113,7 @@ class PercentEncoder
 
             $int = hexdec($encoding);
             if (isset($this->preserve[$int])) {
-                $ret .= chr($int) . $text;
+                $ret .= \chr($int) . $text;
                 continue;
             }
 

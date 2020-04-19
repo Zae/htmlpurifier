@@ -36,7 +36,7 @@ class FontFamily extends AttrDef
             // We don't bother excluding invalid bytes in this range,
             // because the our restriction of well-formed UTF-8 will
             // prevent these from ever occurring.
-            $this->mask .= chr($i);
+            $this->mask .= \chr($i);
         }
 
         /*
@@ -96,7 +96,7 @@ class FontFamily extends AttrDef
 
             // match a quoted name
             if ($font[0] === '"' || $font[0] === "'") {
-                $length = strlen($font);
+                $length = \strlen($font);
                 if ($length <= 2) {
                     continue;
                 }
@@ -206,7 +206,7 @@ class FontFamily extends AttrDef
             // Edgy: alphanumeric, spaces, dashes, underscores and Unicode.  Use of
             // str(c)spn assumes that the string was already well formed
             // Unicode (which of course it is).
-            if (strspn($font, $this->mask) !== strlen($font)) {
+            if (strspn($font, $this->mask) !== \strlen($font)) {
                 continue;
             }
 

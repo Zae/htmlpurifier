@@ -78,7 +78,7 @@ class Font extends AttrDef
         $stage_1 = ['font-style', 'font-variant', 'font-weight'];
         $final = ''; // output
 
-        for ($i = 0, $size = count($bits); $i < $size; $i++) {
+        for ($i = 0, $size = \count($bits); $i < $size; $i++) {
             if ($bits[$i] === '') {
                 continue;
             }
@@ -103,7 +103,7 @@ class Font extends AttrDef
                     }
 
                     // all three caught, continue on
-                    if (count($caught) >= 3) {
+                    if (\count($caught) >= 3) {
                         $stage = 1;
                     }
 
@@ -179,7 +179,7 @@ class Font extends AttrDef
 
                     return false;
                 case 2: // attempting to catch font-family
-                    $font_family = implode(' ', array_slice($bits, $i, $size - $i));
+                    $font_family = implode(' ', \array_slice($bits, $i, $size - $i));
 
                     $r = $this->info['font-family']->validate(
                         $font_family,

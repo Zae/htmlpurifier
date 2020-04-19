@@ -67,7 +67,7 @@ class VarParser
      */
     final public function parse($var, $type, bool $allow_null = false)
     {
-        if (is_string($type)) {
+        if (\is_string($type)) {
             if (!isset(static::$types[$type])) {
                 throw new VarParserException("Invalid type '$type'");
             }
@@ -87,7 +87,7 @@ class VarParser
             case (self::ISTRING):
             case (self::TEXT):
             case (self::ITEXT):
-                if (!is_string($var)) {
+                if (!\is_string($var)) {
                     break;
                 }
                 if ($type === self::ISTRING || $type === self::ITEXT) {
@@ -96,19 +96,19 @@ class VarParser
 
                 return $var;
             case (self::C_INT):
-                if (!is_int($var)) {
+                if (!\is_int($var)) {
                     break;
                 }
 
                 return $var;
             case (self::C_FLOAT):
-                if (!is_float($var)) {
+                if (!\is_float($var)) {
                     break;
                 }
 
                 return $var;
             case (self::C_BOOL):
-                if (!is_bool($var)) {
+                if (!\is_bool($var)) {
                     break;
                 }
 
@@ -116,7 +116,7 @@ class VarParser
             case (self::LOOKUP):
             case (self::ALIST):
             case (self::HASH):
-                if (!is_array($var)) {
+                if (!\is_array($var)) {
                     break;
                 }
 
@@ -137,7 +137,7 @@ class VarParser
             case (self::C_MIXED):
                 return $var;
             default:
-                $this->errorInconsistent(get_class($this), $type);
+                $this->errorInconsistent(\get_class($this), $type);
         }
 
         $this->errorGeneric($var, $type);
@@ -199,7 +199,7 @@ class VarParser
      */
     protected function errorGeneric($var, int $type): void
     {
-        $vtype = gettype($var);
+        $vtype = \gettype($var);
         $this->error('Expected type ' . static::getTypeName($type) . ", got $vtype");
     }
 

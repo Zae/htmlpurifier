@@ -149,7 +149,7 @@ abstract class Injector
     {
         $def = $config->getHTMLDefinition();
         foreach ($this->needed as $element => $attributes) {
-            if (is_int($element)) {
+            if (\is_int($element)) {
                 $element = $attributes;
             }
 
@@ -157,7 +157,7 @@ abstract class Injector
                 return $element;
             }
 
-            if (!is_array($attributes)) {
+            if (!\is_array($attributes)) {
                 continue;
             }
 
@@ -194,7 +194,7 @@ abstract class Injector
 
         // check for exclusion
         if (!empty($this->currentNesting)) {
-            for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
+            for ($i = \count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
                 $def = $this->htmlDefinition->info[$node->name];
 
@@ -223,7 +223,7 @@ abstract class Injector
     protected function forward(?int &$i, ?Token &$current): bool
     {
         if ($i === null) {
-            $i = count($this->inputZipper->back) - 1;
+            $i = \count($this->inputZipper->back) - 1;
         } else {
             $i--;
         }
@@ -290,7 +290,7 @@ abstract class Injector
     protected function backward(?int &$i, ?Token &$current): bool
     {
         if ($i === null) {
-            $i = count($this->inputZipper->front) - 1;
+            $i = \count($this->inputZipper->front) - 1;
         } else {
             $i--;
         }

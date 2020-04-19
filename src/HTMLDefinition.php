@@ -328,14 +328,14 @@ class HTMLDefinition extends Definition
         $allowed_elements = $config->get('HTML.AllowedElements');
         $allowed_attributes = $config->get('HTML.AllowedAttributes'); // retrieve early
 
-        if (!is_array($allowed_elements) && !is_array($allowed_attributes)) {
+        if (!\is_array($allowed_elements) && !\is_array($allowed_attributes)) {
             $allowed = $config->get('HTML.Allowed');
-            if (is_string($allowed)) {
+            if (\is_string($allowed)) {
                 [$allowed_elements, $allowed_attributes] = $this->parseTinyMCEAllowedList($allowed);
             }
         }
 
-        if (is_array($allowed_elements)) {
+        if (\is_array($allowed_elements)) {
             foreach ($this->info as $name => $d) {
                 if (!isset($allowed_elements[$name])) {
                     unset($this->info[$name]);
@@ -353,7 +353,7 @@ class HTMLDefinition extends Definition
         // setup allowed attributes ---------------------------------------
 
         $allowed_attributes_mutable = $allowed_attributes; // by copy!
-        if (is_array($allowed_attributes)) {
+        if (\is_array($allowed_attributes)) {
             // This actually doesn't do anything, since we went away from
             // global attributes. It's possible that userland code uses
             // it, but HTMLModuleManager doesn't!
@@ -404,7 +404,7 @@ class HTMLDefinition extends Definition
             // emit errors
             foreach ($allowed_attributes_mutable as $elattr => $d) {
                 $bits = preg_split('/[.@]/', $elattr, 2);
-                $c = count($bits);
+                $c = \count($bits);
                 switch ($c) {
                     case 2:
                         if ($bits[0] !== '*') {
@@ -465,7 +465,7 @@ class HTMLDefinition extends Definition
         }
 
         foreach ($forbidden_attributes as $key => $v) {
-            if (strlen($key) < 2) {
+            if (\strlen($key) < 2) {
                 continue;
             }
             if ($key[0] !== '*') {

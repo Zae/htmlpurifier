@@ -29,7 +29,7 @@ class Context
      */
     public function register(string $name, &$ref)
     {
-        if (array_key_exists($name, $this->_storage)) {
+        if (\array_key_exists($name, $this->_storage)) {
             trigger_error(
                 "Name $name produces collision, cannot re-register",
                 E_USER_ERROR
@@ -51,7 +51,7 @@ class Context
      */
     public function &get(string $name, bool $ignore_error = false)
     {
-        if (!array_key_exists($name, $this->_storage)) {
+        if (!\array_key_exists($name, $this->_storage)) {
             if (!$ignore_error) {
                 trigger_error(
                     "Attempted to retrieve non-existent variable $name",
@@ -74,7 +74,7 @@ class Context
      */
     public function destroy(string $name)
     {
-        if (!array_key_exists($name, $this->_storage)) {
+        if (!\array_key_exists($name, $this->_storage)) {
             trigger_error(
                 "Attempted to destroy non-existent variable $name",
                 E_USER_ERROR
@@ -95,7 +95,7 @@ class Context
      */
     public function exists(string $name)
     {
-        return array_key_exists($name, $this->_storage);
+        return \array_key_exists($name, $this->_storage);
     }
 
     /**

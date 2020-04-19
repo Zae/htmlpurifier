@@ -147,7 +147,7 @@ class AttrCollections
             $processed[$def_i] = true;
 
             // if we've already got a literal object, move on
-            if (is_object($def)) {
+            if (\is_object($def)) {
                 // preserve previous required
                 $attr[$def_i]->required = ($required || $attr[$def_i]->required);
                 continue;

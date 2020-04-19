@@ -51,7 +51,7 @@ class Color extends AttrDef
         }
 
         if (preg_match('#(rgb|rgba|hsl|hsla)\(#', $color, $matches) === 1) {
-            $length = strlen($color);
+            $length = \strlen($color);
             if (strpos($color, ')') !== $length - 1) {
                 return false;
             }
@@ -89,7 +89,7 @@ class Color extends AttrDef
             $values = trim(str_replace($function, '', $color), ' ()');
 
             $parts = explode(',', $values);
-            if (count($parts) !== $parameters_size) {
+            if (\count($parts) !== $parameters_size) {
                 return false;
             }
 
@@ -106,7 +106,7 @@ class Color extends AttrDef
                 }
 
                 // different check for alpha channel
-                if ($alpha_channel === true && $i === count($parts)) {
+                if ($alpha_channel === true && $i === \count($parts)) {
                     $result = $this->alpha->validate($part, $config, $context);
 
                     if ($result === false) {
@@ -123,7 +123,7 @@ class Color extends AttrDef
                     $current_type = 'integer';
                 }
 
-                if (!array_key_exists($current_type, $allowed_types[$i])) {
+                if (!\array_key_exists($current_type, $allowed_types[$i])) {
                     return false;
                 }
 
@@ -157,7 +157,7 @@ class Color extends AttrDef
                 $color = '#' . $color;
             }
 
-            $length = strlen($hex);
+            $length = \strlen($hex);
             if ($length !== 3 && $length !== 6) {
                 return false;
             }

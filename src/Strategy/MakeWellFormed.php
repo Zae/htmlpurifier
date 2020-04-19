@@ -149,7 +149,7 @@ class MakeWellFormed extends Strategy
             if (!$injector) {
                 continue;
             }
-            if (is_string($injector)) {
+            if (\is_string($injector)) {
                 $injector = "HTMLPurifier\\Injector\\$injector";
                 $injector = new $injector;
             }
@@ -183,12 +183,12 @@ class MakeWellFormed extends Strategy
             $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
 
             // check for a rewind
-            if (is_int($i)) {
+            if (\is_int($i)) {
                 // possibility: disable rewinding if the current token has a
                 // rewind set on it already. This would offer protection from
                 // infinite loop, but might hinder some advanced rewinding.
                 $rewind_offset = $this->injectors[$i]->getRewindOffset();
-                if (is_int($rewind_offset)) {
+                if (\is_int($rewind_offset)) {
                     for ($j = 0; $j < $rewind_offset; $j++) {
                         if (empty($zipper->front)) {
                             break;
@@ -497,12 +497,12 @@ class MakeWellFormed extends Strategy
 
             // scroll back the entire nest, trying to find our tag.
             // (feature could be to specify how far you'd like to go)
-            $size = count($this->stack);
+            $size = \count($this->stack);
             // -2 because -1 is the last element, but we already checked that
             $skipped_tags = false;
             for ($j = $size - 2; $j >= 0; $j--) {
                 if ($this->stack[$j]->name === $token->name) {
-                    $skipped_tags = array_slice($this->stack, $j);
+                    $skipped_tags = \array_slice($this->stack, $j);
                     break;
                 }
             }
@@ -526,7 +526,7 @@ class MakeWellFormed extends Strategy
             }
 
             // do errors, in REVERSE $j order: a,b,c with </a></b></c>
-            $c = count($skipped_tags);
+            $c = \count($skipped_tags);
             if ($e) {
                 for ($j = $c - 1; $j > 0; $j--) {
                     // notice we exclude $j == 0, i.e. the current ending tag, from
@@ -595,12 +595,12 @@ class MakeWellFormed extends Strategy
         // avoid this pattern.  See: https://github.com/ezyang/htmlpurifier/issues/108
 
         // normalize forms of token
-        if (is_object($token)) {
+        if (\is_object($token)) {
             $tmp = $token;
             $token = [1, $tmp];
         }
 
-        if (is_int($token)) {
+        if (\is_int($token)) {
             $tmp = $token;
             $token = [$tmp];
         }
@@ -609,11 +609,11 @@ class MakeWellFormed extends Strategy
             $token = [1];
         }
 
-        if (!is_array($token)) {
+        if (!\is_array($token)) {
             throw new Exception('Invalid token type from injector');
         }
 
-        if (!is_int($token[0])) {
+        if (!\is_int($token[0])) {
             array_unshift($token, 1);
         }
 
