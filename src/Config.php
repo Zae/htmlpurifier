@@ -124,7 +124,7 @@ class Config
      */
     public function __construct(ConfigSchema $definition, ?PropertyList $parent = null)
     {
-        $parent = $parent ? $parent : $definition->defaultPlist;
+        $parent = $parent ?: $definition->defaultPlist;
         $this->plist = new PropertyList($parent);
         $this->def = $definition; // keep a copy around for checking
         $this->parser = new Flexible();

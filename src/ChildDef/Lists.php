@@ -53,7 +53,7 @@ class Lists extends ChildDef
 
         // if li is not allowed, delete parent node
         if (!isset($config->getHTMLDefinition()->info['li'])) {
-            trigger_error("Cannot allow ul/ol without allowing li", E_USER_WARNING);
+            trigger_error('Cannot allow ul/ol without allowing li', E_USER_WARNING);
 
             return false;
         }

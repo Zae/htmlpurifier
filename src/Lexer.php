@@ -8,6 +8,7 @@ use _PH5P;
 use HTMLPurifier\Lexer\DOMLex;
 use \HTMLPurifier\Config;
 use HTMLPurifier\Lexer\DirectLex;
+use HTMLPurifier\Lexer;
 
 /**
  * Forgivingly lexes HTML (SGML-style) markup into tokens.
@@ -284,7 +285,7 @@ class Lexer
     {
         return preg_replace_callback(
             '/<!\[CDATA\[(.+?)\]\]>/s',
-            ['HTMLPurifier\Lexer', 'CDATACallback'],
+            [Lexer::class, 'CDATACallback'],
             $string
         );
     }
@@ -300,7 +301,7 @@ class Lexer
     {
         return preg_replace_callback(
             '#<!--//--><!\[CDATA\[//><!--(.+?)//--><!\]\]>#s',
-            ['HTMLPurifier\Lexer', 'CDATACallback'],
+            [Lexer::class, 'CDATACallback'],
             $string
         );
     }

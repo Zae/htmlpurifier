@@ -176,7 +176,7 @@ class Generator
 
         if ($token instanceof Start) {
             $attr = $this->generateAttributes($token->attr, $token->name);
-            if ($this->_flashCompat && $token->name === "object") {
+            if ($this->_flashCompat && $token->name === 'object') {
                 $flash = new stdClass();
                 $flash->attr = $token->attr;
                 $flash->param = [];
