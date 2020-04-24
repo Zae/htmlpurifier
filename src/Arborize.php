@@ -45,7 +45,10 @@ class Arborize
             }
 
             $node = $token->toNode();
-            $stack[\count($stack) - 1]->children[] = $node;
+
+            /** @var Element $element */
+            $element = $stack[\count($stack) - 1];
+            $element->children[] = $node;
 
             if ($token instanceof Start) {
                 $stack[] = $node;

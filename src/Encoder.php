@@ -33,13 +33,21 @@ class Encoder
      * @param string $out  Output encoding
      * @param string $text The text to convert
      *
-     * @return string|bool
+     * @return string|null
      */
-    public static function unsafeIconv($in, $out, $text)
+    public static function unsafeIconv($in, $out, $text): ?string
     {
+        /**
+         * @psalm-suppress InvalidArgument
+         * @todo fix? Psalm doesn't seem to understand array callbacks?
+         */
         set_error_handler([__CLASS__, 'muteErrorHandler']);
         $r = iconv($in, $out, $text);
         restore_error_handler();
+
+        if ($r === false) {
+            return null;
+        }
 
         return $r;
     }
@@ -52,9 +60,9 @@ class Encoder
      * @param string $text The text to convert
      * @param int    $max_chunk_size
      *
-     * @return string
+     * @return string|null
      */
-    public static function iconv(string $in, string $out, string $text, int $max_chunk_size = 8000)
+    public static function iconv(string $in, string $out, string $text, int $max_chunk_size = 8000): ?string
     {
         $code = self::testIconvTruncateBug();
         if ($code === self::ICONV_OK) {
@@ -67,7 +75,7 @@ class Encoder
             if ($max_chunk_size < 4) {
                 trigger_error('max_chunk_size is too small', E_USER_WARNING);
 
-                return false;
+                return null;
             }
 
             // split into 8000 byte chunks, but be careful to handle
@@ -95,7 +103,7 @@ class Encoder
                 } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 3])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 3;
                 } else {
-                    return false; // rather confusing UTF-8...
+                    return null; // rather confusing UTF-8...
                 }
 
                 $chunk = substr($text, $i, $chunk_size); // substr doesn't mind overlong lengths
@@ -106,7 +114,7 @@ class Encoder
             return $r;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -417,7 +425,7 @@ class Encoder
         if ($iconv && !$config->get('Test.ForceNoIconv')) {
             // unaffected by bugs, since UTF-8 support all characters
             $str = self::unsafeIconv($encoding, 'utf-8//IGNORE', $str);
-            if ($str === false) {
+            if ($str === null) {
                 // $encoding is not a valid encoding
                 trigger_error('Invalid encoding ' . $encoding, E_USER_ERROR);
 
@@ -581,21 +589,28 @@ class Encoder
     public static function testIconvTruncateBug(): int
     {
         static $code = null;
+
         if ($code === null) {
             // better not use iconv, otherwise infinite loop!
             $r = self::unsafeIconv('utf-8', 'ascii//IGNORE', "\xCE\xB1" . str_repeat('a', 9000));
-            if ($r === false) {
-                $code = self::ICONV_UNUSABLE;
-            } elseif (($c = \strlen($r)) < 9000) {
-                $code = self::ICONV_TRUNCATES;
-            } elseif ($c > 9000) {
+
+            if ($r === null) {
+                return $code = self::ICONV_UNUSABLE;
+            }
+
+            $c = \strlen($r);
+            if ($c < 9000) {
+                return $code = self::ICONV_TRUNCATES;
+            }
+
+            if ($c > 9000) {
                 trigger_error(
                     'Your copy of iconv is extremely buggy. Please notify HTML Purifier maintainers: ' .
                     'include your iconv version as per phpversion()',
                     E_USER_ERROR
                 );
             } else {
-                $code = self::ICONV_OK;
+                return $code = self::ICONV_OK;
             }
         }
 
@@ -640,7 +655,7 @@ class Encoder
         }
 
         $ret = [];
-        if (self::unsafeIconv('UTF-8', $encoding, 'a') === false) {
+        if (self::unsafeIconv('UTF-8', $encoding, 'a') === null) {
             return false;
         }
 

@@ -41,14 +41,14 @@ class DefinitionCacheFactory
     /**
      * Retrieves an instance of global definition cache factory.
      *
-     * @param DefinitionCacheFactory $prototype
+     * @param DefinitionCacheFactory|true $prototype
      *
      * @return DefinitionCacheFactory
      */
-    public static function instance(DefinitionCacheFactory $prototype = null): DefinitionCacheFactory
+    public static function instance($prototype = null): DefinitionCacheFactory
     {
         static $instance;
-        if ($prototype !== null) {
+        if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
             $instance = new static();
@@ -115,13 +115,13 @@ class DefinitionCacheFactory
     /**
      * Registers a decorator to add to all new cache objects
      *
-     * @param \HTMLPurifier\ChildDef\Decorator|string $decorator An instance or the name of a decorator
+     * @param Decorator|string $decorator An instance or the name of a decorator
      */
     public function addDecorator($decorator): void
     {
         if (\is_string($decorator)) {
             $class = "HTMLPurifier\\DefinitionCache\\Decorator\\$decorator";
-            $decorator = new $class;
+            $decorator = new $class();
         }
 
         $this->decorators[$decorator->name] = $decorator;

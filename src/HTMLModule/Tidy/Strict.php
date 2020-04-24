@@ -42,9 +42,9 @@ class Strict extends XHTMLAndHTML4
     /**
      * @param ElementDef $def
      *
-     * @return StrictBlockquote
+     * @return StrictBlockquote|null
      */
-    public function getChildDef(ElementDef $def): StrictBlockquote
+    public function getChildDef(ElementDef $def): ?StrictBlockquote
     {
         if ($def->content_model_type !== 'strictblockquote') {
             return parent::getChildDef($def);

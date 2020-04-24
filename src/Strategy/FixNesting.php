@@ -47,7 +47,7 @@ class FixNesting extends Strategy
      * @param Config  $config
      * @param Context $context
      *
-     * @return array|Token[]
+     * @return Token[]
      * @throws Exception
      */
     public function execute($tokens, Config $config, Context $context)

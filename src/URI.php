@@ -108,8 +108,14 @@ class URI
         } else {
             // no scheme: retrieve the default one
             $def = $config->getDefinition('URI');
+            /**
+             * @psalm-suppress UndefinedMethod
+             */
             $scheme_obj = $def->getDefaultScheme($config, $context);
             if (!$scheme_obj) {
+                /**
+                 * @psalm-suppress UndefinedPropertyFetch
+                 */
                 if ($def->defaultScheme !== null) {
                     // something funky happened to the default scheme object
                     trigger_error(
@@ -160,6 +166,9 @@ class URI
             // support for relative paths is pretty abysmal when the
             // scheme is present, so axe it when possible
             $def = $config->getDefinition('URI');
+            /**
+             * @psalm-suppress UndefinedPropertyFetch
+             */
             if ($def->defaultScheme === $this->scheme) {
                 $this->scheme = null;
             }
@@ -344,6 +353,9 @@ class URI
             return false;
         } // conservative approach
 
+        /**
+         * @psalm-suppress UndefinedMethod
+         */
         $current_scheme_obj = $config->getDefinition('URI')->getDefaultScheme($config, $context);
 
         if ($current_scheme_obj->secure && !$scheme_obj->secure) {

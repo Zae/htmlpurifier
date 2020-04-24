@@ -55,10 +55,10 @@ class RemoveEmpty extends Injector
      * @param Config  $config
      * @param Context $context
      *
-     * @return void
+     * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(Config $config, Context $context): void
+    public function prepare(Config $config, Context $context): bool
     {
         parent::prepare($config, $context);
 
@@ -76,6 +76,8 @@ class RemoveEmpty extends Injector
         }
 
         $this->attrValidator = new AttrValidator();
+
+        return false;
     }
 
     /**

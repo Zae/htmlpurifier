@@ -34,14 +34,19 @@ class Lists extends ChildDef
     // XXX: This whole business with 'wrap' is all a bit unsatisfactory
 
     /**
-     * @param array               $children
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @var bool
+     */
+    protected $whitespace;
+
+    /**
+     * @param array   $children
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return array
+     * @return array|bool
      * @throws Exception
      */
-    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context)
+    public function validateChildren(array $children, Config $config, Context $context)
     {
         // Flag for subclasses
         $this->whitespace = false;

@@ -69,7 +69,7 @@ class Required extends ChildDef
      * @param Config  $config
      * @param Context $context
      *
-     * @return array
+     * @return array|bool
      */
     public function validateChildren(array $children, Config $config, Context $context)
     {
@@ -130,7 +130,6 @@ class Required extends ChildDef
 
         if ($all_whitespace) {
             $this->whitespace = true;
-
             return false;
         }
 

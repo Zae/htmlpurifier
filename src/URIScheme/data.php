@@ -39,13 +39,13 @@ class data extends URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
         $result = explode(',', $uri->path, 2);
         $is_base64 = false;
@@ -115,6 +115,9 @@ class data extends URIScheme
             $image_code = exif_imagetype($file);
             unlink($file);
         } elseif (\function_exists('getimagesize')) {
+            /**
+             * @psalm-suppress InvalidArgument
+             */
             set_error_handler([$this, 'muteErrorHandler']);
             $info = getimagesize($file);
             restore_error_handler();

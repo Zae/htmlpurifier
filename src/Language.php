@@ -6,6 +6,7 @@ namespace HTMLPurifier;
 
 use \HTMLPurifier\Config;
 use HTMLPurifier\LanguageFactory;
+use HTMLPurifier\Token\Tag;
 
 /**
  * Represents a language and defines localizable string formatting and
@@ -212,7 +213,7 @@ class Language
                     // a more complex algorithm for compact representation
                     // could be introduced for all types of tokens. This
                     // may need to be factored out into a dedicated class
-                    if (!empty($value->attr)) {
+                    if ($value instanceof Tag && !empty($value->attr)) {
                         $stripped_token = clone $value;
                         $stripped_token->attr = [];
 

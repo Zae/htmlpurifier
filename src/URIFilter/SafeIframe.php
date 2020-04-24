@@ -54,10 +54,10 @@ class SafeIframe extends URIFilter
      * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
-     * @return bool|int
+     * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
+    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
     {
         // check if filter not applicable
         if (!$config->get('HTML.SafeIframe')) {
@@ -80,6 +80,6 @@ class SafeIframe extends URIFilter
         }
 
         // actually check the whitelists
-        return preg_match($this->regexp, $uri->toString());
+        return (bool)preg_match($this->regexp, $uri->toString());
     }
 }

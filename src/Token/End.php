@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Token;
 
-use Exception;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node;
-use HTMLPurifier\Token\Tag;
 
 /**
  * Concrete end token class.
@@ -26,6 +25,15 @@ class End extends Tag
      */
     public $start;
 
+    /**
+     * @var bool|string|null
+     */
+    public $markForDeletion;
+
+    /**
+     * @return Node
+     * @throws Exception
+     */
     public function toNode(): Node
     {
         throw new Exception('HTMLPurifier\Token\HTMLPurifier_Token_End->toNode not supported!');

@@ -32,12 +32,12 @@ class MakeAbsolute extends URIFilter
     protected $basePathStack = [];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function prepare(\HTMLPurifier\Config $config): bool
+    public function prepare(Config $config): bool
     {
         $def = $config->getDefinition('URI');
         $this->base = $def->base;
@@ -62,14 +62,14 @@ class MakeAbsolute extends URIFilter
     }
 
     /**
-     * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      * @throws \HTMLPurifier\Exception
      */
-    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function filter(URI &$uri, Config $config, Context $context): bool
     {
         if (\is_null($this->base)) {
             return true;
@@ -130,6 +130,9 @@ class MakeAbsolute extends URIFilter
             $uri->userinfo = $this->base->userinfo;
         }
 
+        /**
+         * @psalm-suppress RedundantCondition
+         */
         if (\is_null($uri->host)) {
             $uri->host = $this->base->host;
         }

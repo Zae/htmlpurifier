@@ -142,6 +142,11 @@ class Generator
                 'utf8'
             );
             $tidy->cleanRepair();
+
+            /**
+             * @psalm-suppress InvalidCast
+             * @todo Install tidy as dev dependency so we can infer types in psalm?
+             */
             $html = (string)$tidy; // explicit cast necessary
         }
 

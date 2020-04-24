@@ -26,28 +26,33 @@ class DisableExternal extends URIFilter
     protected $ourHostParts = false;
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
-     * @return void
-     * @throws \HTMLPurifier\Exception
+     * @return bool
+     * @throws Exception
      */
-    public function prepare(\HTMLPurifier\Config $config): void
+    public function prepare(Config $config): bool
     {
+        /**
+         * @psalm-suppress UndefinedPropertyFetch
+         */
         $our_host = $config->getDefinition('URI')->host;
 
         if ($our_host !== null) {
             $this->ourHostParts = array_reverse(explode('.', $our_host));
         }
+
+        return true;
     }
 
     /**
-     * @param URI                 $uri Reference
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri Reference
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context)
+    public function filter(URI &$uri, Config $config, Context $context)
     {
         if (\is_null($uri->host)) {
             return true;

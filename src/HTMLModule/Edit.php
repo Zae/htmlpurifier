@@ -21,9 +21,9 @@ class Edit extends HTMLModule
     public $name = 'Edit';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $contents = 'Chameleon: #PCDATA | Inline ! #PCDATA | Flow';
         $attr = [
@@ -49,11 +49,11 @@ class Edit extends HTMLModule
     /**
      * @param ElementDef $def
      *
-     * @return Chameleon
+     * @return Chameleon|null
      */
     public function getChildDef(ElementDef $def): ?Chameleon
     {
-        if ($def->content_model_type != 'chameleon') {
+        if ($def->content_model_type !== 'chameleon') {
             return null;
         }
 

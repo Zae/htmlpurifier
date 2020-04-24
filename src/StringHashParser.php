@@ -151,6 +151,10 @@ class StringHashParser
                 $single = false;
                 $state = false;
             } else {
+                /**
+                 * @psalm-suppress EmptyArrayAccess
+                 * @todo: fix?
+                 */
                 $ret[$state] .= "$line\n";
             }
         } while (!feof($fh));

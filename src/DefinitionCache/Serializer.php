@@ -23,7 +23,7 @@ class Serializer extends DefinitionCache
     public function add(Definition $def, Config $config)
     {
         if (!$this->checkDefType($def)) {
-            return;
+            return false;
         }
 
         $file = $this->generateFilePath($config);
@@ -47,7 +47,7 @@ class Serializer extends DefinitionCache
     public function set(Definition $def, Config $config)
     {
         if (!$this->checkDefType($def)) {
-            return;
+            return false;
         }
 
         $file = $this->generateFilePath($config);
@@ -67,7 +67,7 @@ class Serializer extends DefinitionCache
     public function replace(Definition $def, Config $config)
     {
         if (!$this->checkDefType($def)) {
-            return;
+            return false;
         }
 
         $file = $this->generateFilePath($config);
@@ -326,12 +326,12 @@ class Serializer extends DefinitionCache
      * Tests permissions on a directory and throws out friendly
      * error messages and attempts to chmod it itself if possible
      *
-     * @param string $dir   Directory path
-     * @param int    $chmod Permissions
+     * @param string    $dir   Directory path
+     * @param int|null  $chmod Permissions
      *
      * @return bool True if directory is writable
      */
-    private function _testPermissions(string $dir, int $chmod): bool
+    private function _testPermissions(string $dir, ?int $chmod): bool
     {
         // early abort, if it is writable, everything is hunky-dory
         if (is_writable($dir)) {

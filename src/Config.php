@@ -362,6 +362,7 @@ class Config
             return;
         }
 
+        /** @var int|object $def */
         $def = $this->def->info[$key];
 
         if (isset($def->isAlias)) {
@@ -523,7 +524,7 @@ class Config
      *        maybe semantics is the "right thing to do."
      *
      * @return Definition|null
-     *@throws Exception
+     * @throws Exception
      */
     public function getDefinition(string $type, bool $raw = false, bool $optimized = false)
     {
@@ -767,7 +768,7 @@ class Config
      * that are allowed in a web-form context as per an allowed
      * namespaces/directives list.
      *
-     * @param array|string $allowed List of allowed namespaces/directives
+     * @param array|string|bool $allowed List of allowed namespaces/directives
      * @param ConfigSchema $schema Schema to use, if not global copy
      *
      * @return array

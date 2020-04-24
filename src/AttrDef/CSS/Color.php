@@ -32,6 +32,8 @@ class Color extends AttrDef
      *
      * @return bool|string
      * @throws Exception
+     *
+     * @psalm-suppress RedundantCondition (line 143)
      */
     public function validate($color, $config, $context)
     {

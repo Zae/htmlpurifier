@@ -117,7 +117,7 @@ class AttrCollections
      * Expands all string identifiers in an attribute array by replacing
      * them with the appropriate values inside HTMLPurifier\HTMLPurifier_AttrTypes
      *
-     * @param array &                $attr       Reference to attribute array
+     * @param array                  $attr       Reference to attribute array
      * @param AttrTypes              $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
      */
     public function expandIdentifiers(array &$attr, AttrTypes $attr_types): void

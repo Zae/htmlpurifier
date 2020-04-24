@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Lexer;
 
+use DOMAttr;
+use DOMCharacterData;
 use DOMDocument;
 use DOMNamedNodeMap;
 use DOMNode;
+use DOMProcessingInstruction;
 use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
@@ -54,14 +57,14 @@ class DOMLex extends Lexer
     }
 
     /**
-     * @param null|string         $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param null|string $string
+     * @param Config      $config
+     * @param Context     $context
      *
      * @return \HTMLPurifier\Token[]
      * @throws \HTMLPurifier\Exception
      */
-    public function tokenizeHTML(?string $string, \HTMLPurifier\Config $config, Context $context): array
+    public function tokenizeHTML(?string $string, Config $config, Context $context): array
     {
         $string = $this->normalize($string, $config, $context);
 
@@ -90,6 +93,10 @@ class DOMLex extends Lexer
             $options |= LIBXML_PARSEHUGE;
         }
 
+        /**
+         * @psalm-suppress InvalidArgument
+         * @todo fix? Some kind of psalm bug, where it doesn't understand array callback format?
+         */
         set_error_handler([$this, 'muteErrorHandler']);
         // loadHTML() fails on PHP 5.3 when second parameter is given
         if ($options) {
@@ -124,12 +131,12 @@ class DOMLex extends Lexer
      *
      * @param DOMNode               $node   DOMNode to be tokenized.
      * @param \HTMLPurifier\Token[] $tokens Array-list of already tokenized tokens.
-     * @param \HTMLPurifier\Config   $config
+     * @param Config                $config
      *
      * @return void of node appended to previously passed tokens.
      * @throws \HTMLPurifier\Exception
      */
-    protected function tokenizeDOM(DOMNode $node, array &$tokens, \HTMLPurifier\Config $config): void
+    protected function tokenizeDOM(DOMNode $node, array &$tokens, Config $config): void
     {
         $level = 0;
         $nodes = [$level => new Queue([$node])];
@@ -140,12 +147,20 @@ class DOMLex extends Lexer
                 $node = $nodes[$level]->shift(); // FIFO
                 $collect = $level > 0;
                 $needEndingTag = $this->createStartNode($node, $tokens, $collect, $config);
+
                 if ($needEndingTag) {
                     $closingNodes[$level][] = $node;
                 }
+
+                /**
+                 * @psalm-suppress RedundantCondition
+                 * @todo fix? Checking for falsy childNodes AND length on the childNodes is kinda redundant, but
+                 *       maybe there can be a weird instance of libxml where this happens? Silence psalm for now.
+                 */
                 if ($node->childNodes && $node->childNodes->length) {
                     $level++;
                     $nodes[$level] = new Queue();
+
                     foreach ($node->childNodes as $childNode) {
                         $nodes[$level]->push($childNode);
                     }
@@ -171,6 +186,11 @@ class DOMLex extends Lexer
      */
     protected function getTagName(DOMNode $node): ?string
     {
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         * @todo fix? according to the documentation $node->nodeName can not be null, but maybe in older versions
+         *       of libxml it can? Lets silence psalm and keep the fallbacks.
+         */
         return $node->tagName ?? $node->nodeName ?? $node->localName ?? null;
     }
 
@@ -184,6 +204,11 @@ class DOMLex extends Lexer
      */
     protected function getData($node): ?string
     {
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         * @todo fix? $node->nodeValue returns the value of textContent if NULL, contrary to the W3C spec tho, so
+         *       lets keep the fallbacks, but silence psalm.
+         */
         return $node->data ?? $node->nodeValue ?? $node->textContent ?? null;
     }
 
@@ -194,13 +219,13 @@ class DOMLex extends Lexer
      *                                      false at first recursion because it's the implicit DIV
      *                                      tag you're dealing with.
      *
-     * @param \HTMLPurifier\Config   $config
+     * @param Config                $config
      *
      * @return bool if the token needs an endtoken
      * @throws \HTMLPurifier\Exception
      * @todo data and tagName properties don't seem to exist in DOMNode?
      */
-    protected function createStartNode(DOMNode $node, array &$tokens, bool $collect, \HTMLPurifier\Config $config): bool
+    protected function createStartNode(DOMNode $node, array &$tokens, bool $collect, Config $config): bool
     {
         // intercept non element nodes. WE MUST catch all of them,
         // but we're not getting the character reference nodes because
@@ -217,7 +242,7 @@ class DOMLex extends Lexer
         if ($node->nodeType === XML_CDATA_SECTION_NODE) {
             // undo libxml's special treatment of <script> and <style> tags
             $last = end($tokens);
-            $data = $node->data;
+            $data = $node->data ?? '';
             // (note $node->tagname is already normalized)
             if ($last instanceof Start && ($last->name === 'script' || $last->name === 'style')) {
                 $new_data = trim($data);
@@ -240,7 +265,7 @@ class DOMLex extends Lexer
             // this is code is only invoked for comments in script/style in versions
             // of libxml pre-2.6.28 (regular comments, of course, are still
             // handled regularly)
-            $tokens[] = $this->factory->createComment($node->data);
+            $tokens[] = $this->factory->createComment($node->data ?? '');
 
             return false;
         }
@@ -289,8 +314,12 @@ class DOMLex extends Lexer
      *
      * @return array Associative array of attributes.
      */
-    protected function transformAttrToAssoc(DOMNamedNodeMap $node_map): array
+    protected function transformAttrToAssoc(?DOMNamedNodeMap $node_map): array
     {
+        if (\is_null($node_map)) {
+            return [];
+        }
+
         // NamedNodeMap is documented very well, so we're using undocumented
         // features, namely, the fact that it implements Iterator and
         // has a ->length attribute
@@ -300,7 +329,9 @@ class DOMLex extends Lexer
 
         $array = [];
         foreach ($node_map as $attr) {
-            $array[$attr->name] = $attr->value;
+            if ($attr instanceof DOMAttr) {
+                $array[$attr->name] = $attr->value;
+            }
         }
 
         return $array;
@@ -346,7 +377,7 @@ class DOMLex extends Lexer
      * Wraps an HTML fragment in the necessary HTML
      *
      * @param string                $html
-     * @param \HTMLPurifier\Config   $config
+     * @param Config                $config
      * @param \HTMLPurifier\Context $context
      *
      * @param bool                  $use_div
@@ -354,13 +385,21 @@ class DOMLex extends Lexer
      * @return string
      * @throws \HTMLPurifier\Exception
      */
-    protected function wrapHTML(string $html, \HTMLPurifier\Config $config, Context $context, bool $use_div = true): string
+    protected function wrapHTML(string $html, Config $config, Context $context, bool $use_div = true): string
     {
         $def = $config->getDefinition('HTML');
         $ret = '';
 
+        /**
+         * @psalm-suppress NullPropertyFetch
+         * @todo fix?
+         */
         if (!empty($def->doctype->dtdPublic) || !empty($def->doctype->dtdSystem)) {
             $ret .= '<!DOCTYPE html ';
+            /**
+             * @psalm-suppress NullPropertyFetch
+             * @todo fix?
+             */
             if (!empty($def->doctype->dtdPublic)) {
                 $ret .= 'PUBLIC "' . $def->doctype->dtdPublic . '" ';
             }

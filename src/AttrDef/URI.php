@@ -8,6 +8,7 @@ use HTMLPurifier\AttrDef;
 use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
 
 /**
@@ -82,6 +83,7 @@ class URI extends AttrDef
             }
 
             // chained filtering
+            /** @var URIDefinition $uri_def */
             $uri_def = $config->getDefinition('URI');
             $result = $uri_def->filter($uri, $config, $context);
             if (!$result) {

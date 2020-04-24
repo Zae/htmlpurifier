@@ -106,6 +106,9 @@ class Background extends AttrDef
             return false;
         }
 
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         */
         if ($caught['position'] !== false) {
             $caught['position'] = $this->info['background-position']->validate($caught['position'], $config, $context);
         }

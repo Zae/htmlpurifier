@@ -6,9 +6,7 @@ namespace HTMLPurifier;
 
 use _PH5P;
 use HTMLPurifier\Lexer\DOMLex;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Lexer\DirectLex;
-use HTMLPurifier\Lexer;
 
 /**
  * Forgivingly lexes HTML (SGML-style) markup into tokens.
@@ -77,12 +75,15 @@ class Lexer
      *
      * @param Config $config
      *
-     * @return Lexer
+     * @return Lexer|_PH5P
      * @throws Exception
+     *
+     * @psalm-suppress UndefinedClass
+     * @todo Move the _PHP5 class from the PSR-0 namespace, or something else?
      */
     public static function create($config)
     {
-        if (!($config instanceof \HTMLPurifier\Config)) {
+        if (!($config instanceof Config)) {
             $lexer = $config;
             trigger_error(
                 'Passing a prototype to
@@ -144,6 +145,10 @@ class Lexer
             }
         }
 
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         * @todo Psalm weirdness, probably because it can't find the _PHP5 class.
+         */
         if (!$inst) {
             throw new Exception('No lexer was instantiated');
         }
@@ -158,7 +163,6 @@ class Lexer
         }
 
         return $inst;
-
     }
 
     // -- CONVENIENCE MEMBERS ---------------------------------------------
@@ -190,7 +194,7 @@ class Lexer
      * @return string
      * @throws Exception
      */
-    public function parseText(string $string, \HTMLPurifier\Config $config): string
+    public function parseText(string $string, Config $config): string
     {
         return $this->parseData($string, false, $config);
     }
@@ -202,7 +206,7 @@ class Lexer
      * @return string
      * @throws Exception
      */
-    public function parseAttr(string $string, \HTMLPurifier\Config $config): string
+    public function parseAttr(string $string, Config $config): string
     {
         return $this->parseData($string, true, $config);
     }
@@ -220,7 +224,7 @@ class Lexer
      * @return string Parsed character data.
      * @throws Exception
      */
-    public function parseData(string $string, bool $is_attr, \HTMLPurifier\Config $config): string
+    public function parseData(string $string, bool $is_attr, Config $config): string
     {
         // following functions require at least one character
         if ($string === '') {
@@ -268,8 +272,10 @@ class Lexer
      * @param Context $context
      *
      * @return Token[] array representation of HTML.
+     *
+     * @psalm-suppress InvalidReturnType
      */
-    public function tokenizeHTML(string $string, \HTMLPurifier\Config $config, Context $context): array
+    public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
         trigger_error('Call to abstract class', E_USER_ERROR);
     }
@@ -351,7 +357,7 @@ class Lexer
      * @throws Exception
      * @todo Consider making protected
      */
-    public function normalize(?string $html, \HTMLPurifier\Config $config, Context $context): string
+    public function normalize(?string $html, Config $config, Context $context): string
     {
         // normalize newlines to \n
         if ($config->get('Core.NormalizeNewlines')) {

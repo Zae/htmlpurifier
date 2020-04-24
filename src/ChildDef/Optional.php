@@ -33,7 +33,7 @@ class Optional extends Required
      * @param Config  $config
      * @param Context $context
      *
-     * @return array
+     * @return array|bool
      */
     public function validateChildren(array $children, Config $config, Context $context)
     {
