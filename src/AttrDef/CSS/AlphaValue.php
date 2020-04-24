@@ -18,11 +18,11 @@ class AlphaValue extends Number
     }
 
     /**
-     * @param string                $number
-     * @param \HTMLPurifier\Config   $config
-     * @param \HTMLPurifier\Context $context
+     * @param string  $number
+     * @param Config|null  $config
+     * @param Context|null $context
      *
-     * @return string
+     * @return string|bool
      */
     public function validate($number, $config, $context)
     {

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
-
 /**
  * Registry for retrieving specific URI scheme validator objects.
  */
@@ -15,18 +12,18 @@ class URISchemeRegistry
     /**
      * Retrieve sole instance of the registry.
      *
-     * @param URISchemeRegistry $prototype              Optional prototype to overload sole instance with,
+     * @param URISchemeRegistry|true|null $prototype    Optional prototype to overload sole instance with,
      *                                                  or bool true to reset to default registry.
      *
      * @return URISchemeRegistry
      * @note Pass a registry object $prototype with a compatible interface and
      *       the function will copy it and return it all further times.
      */
-    public static function instance(?URISchemeRegistry $prototype = null): URISchemeRegistry
+    public static function instance($prototype = null): URISchemeRegistry
     {
         static $instance = null;
 
-        if ($prototype !== null) {
+        if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
             $instance = new static();
@@ -45,16 +42,18 @@ class URISchemeRegistry
     /**
      * Retrieves a scheme validator object
      *
-     * @param string $scheme String scheme name like http or mailto
-     * @param Config $config
+     * @param string       $scheme String scheme name like http or mailto
+     * @param Config|null  $config
+     *
+     * @param Context|null $context
      *
      * @return URIScheme|null
      * @throws Exception
      */
-    public function getScheme(?string $scheme, \HTMLPurifier\Config $config): ?URIScheme
+    public function getScheme(?string $scheme, ?Config $config, ?Context $context): ?URIScheme
     {
-        if (!$config) {
-            $config = \HTMLPurifier\Config::createDefault();
+        if (is_null($config)) {
+            $config = Config::createDefault();
         }
 
         // important, otherwise attacker could include arbitrary file

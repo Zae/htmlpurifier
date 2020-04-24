@@ -15,8 +15,6 @@ abstract class Email extends AttrDef
      * Unpacks a mailbox into its display-name and address
      *
      * @param string $string
-     *
-     * @return mixed
      */
     public function unpack($string)
     {

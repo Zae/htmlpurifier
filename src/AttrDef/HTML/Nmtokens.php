@@ -15,7 +15,7 @@ class Nmtokens extends AttrDef
 {
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config   $config
+     * @param Config                $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
@@ -41,13 +41,13 @@ class Nmtokens extends AttrDef
     /**
      * Splits a space separated list of tokens into its constituent parts.
      *
-     * @param string              $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return array
+     * @return bool|string[]|array
      */
-    protected function split(string $string, \HTMLPurifier\Config $config, Context $context)
+    protected function split(string $string, Config $config, Context $context)
     {
         // OPTIMIZABLE!
         // do the preg_match, capture all subpatterns for reformulation
@@ -70,13 +70,13 @@ class Nmtokens extends AttrDef
      * @note If we wanted to be really functional, we'd do an array_filter
      *       with a callback. But... we're not.
      *
-     * @param array               $tokens
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $tokens
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */
-    protected function filter(array $tokens, \HTMLPurifier\Config $config, Context $context)
+    protected function filter(array $tokens, Config $config, Context $context)
     {
         return $tokens;
     }

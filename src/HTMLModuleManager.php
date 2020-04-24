@@ -387,7 +387,7 @@ class HTMLModuleManager
     /**
      * Retrieves merged element definitions.
      *
-     * @return ElementDef[]
+     * @return array<string, ElementDef|false>
      */
     public function getElements(): array
     {
@@ -422,7 +422,7 @@ class HTMLModuleManager
      * @param bool   $trusted Boolean trusted overriding parameter: set to true
      *                        if you want the full version of an element
      *
-     * @return ElementDef Merged HTMLPurifier\HTMLPurifier_ElementDef
+     * @return ElementDef|false Merged HTMLPurifier\HTMLPurifier_ElementDef
      * @note You may notice that modules are getting iterated over twice (once
      *       in getElements() and once here). This
      *       is because

@@ -65,13 +65,13 @@ class Table extends ChildDef
     ];
 
     /**
-     * @param array               $children
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $children
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return array
+     * @return array|bool
      */
-    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context)
+    public function validateChildren(array $children, Config $config, Context $context)
     {
         if (empty($children)) {
             return false;
@@ -183,7 +183,7 @@ class Table extends ChildDef
             $ret = array_merge($ret, $after_caption_ws);
         }
 
-        if ($cols !== false) {
+        if (!empty($cols)) {
             $ret = array_merge($ret, $cols);
         }
 

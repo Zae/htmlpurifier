@@ -52,10 +52,6 @@ class ContentSets
      */
     public function __construct(array $modules)
     {
-        if (!\is_array($modules)) {
-            $modules = [$modules];
-        }
-
         // populate content_sets based on module hints
         // sorry, no way of overloading
         foreach ($modules as $module) {
@@ -140,9 +136,9 @@ class ContentSets
      * @param ElementDef $def    HTMLPurifier\HTMLPurifier_ElementDef to have ChildDef extracted
      * @param HTMLModule $module Module that defined the ElementDef
      *
-     * @return ChildDef corresponding to ElementDef
+     * @return ChildDef|null corresponding to ElementDef
      */
-    public function getChildDef(ElementDef $def, HTMLModule $module): ChildDef
+    public function getChildDef(ElementDef $def, HTMLModule $module): ?ChildDef
     {
         $value = $def->content_model;
         if (\is_object($value)) {
@@ -152,7 +148,7 @@ class ContentSets
                 E_USER_NOTICE
             );
 
-            return $value;
+            return null;
         }
 
         switch ($def->content_model_type) {
@@ -182,7 +178,7 @@ class ContentSets
             E_USER_ERROR
         );
 
-        return false;
+        return null;
     }
 
     /**

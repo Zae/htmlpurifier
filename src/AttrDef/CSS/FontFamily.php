@@ -19,14 +19,24 @@ class FontFamily extends AttrDef
     public function __construct()
     {
         $this->mask = '_- ';
+
+        /**
+         * @psalm-suppress StringIncrement
+         */
         for ($c = 'a'; $c <= 'z'; $c++) {
             $this->mask .= $c;
         }
 
+        /**
+         * @psalm-suppress StringIncrement
+         */
         for ($c = 'A'; $c <= 'Z'; $c++) {
             $this->mask .= $c;
         }
 
+        /**
+         * @psalm-suppress StringIncrement
+         */
         for ($c = '0'; $c <= '9'; $c++) {
             $this->mask .= $c;
         } // cast-y, but should be fine

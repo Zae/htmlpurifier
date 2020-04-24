@@ -204,7 +204,7 @@ class Tidy extends HTMLModule
      *
      * @param string $name name of fix
      *
-     * @return array(string $fix_type, array $fix_parameters)
+     * @return array{string, array}
      * @note $fix_parameters is type dependant, see populate() for usage
      *       of these parameters
      */
@@ -254,5 +254,6 @@ class Tidy extends HTMLModule
      */
     public function makeFixes()
     {
+        return [];
     }
 }

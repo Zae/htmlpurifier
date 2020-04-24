@@ -133,7 +133,7 @@ class UnitConverter
         // our default if the initial number has no decimals, or increase
         // it by how ever many decimals, thus, the number of guard digits
         // will always be greater than or equal to internalPrecision.
-        $log = (int)floor(log(abs($n), 10));
+        $log = (int)floor(log(abs((float)$n), 10));
         $cp = ($log < 0) ? $this->internalPrecision - $log : $this->internalPrecision; // internal precision
 
         for ($i = 0; $i < 2; $i++) {
@@ -267,9 +267,9 @@ class UnitConverter
      * @param string $s2
      * @param int    $scale
      *
-     * @return string
+     * @return string|null
      */
-    private function div(string $s1, string $s2, int $scale): string
+    private function div(string $s1, string $s2, int $scale): ?string
     {
         if ($this->bcmath) {
             return bcdiv($s1, $s2, $scale);
@@ -289,7 +289,7 @@ class UnitConverter
      */
     private function round(string $n, int $sigfigs): ?string
     {
-        $new_log = (int)floor(log(abs($n), 10)); // Number of digits left of decimal - 1
+        $new_log = (int)floor(log(abs((float)$n), 10)); // Number of digits left of decimal - 1
         $rp = $sigfigs - $new_log - 1; // Number of decimal places needed
         $neg = $n < 0 ? '-' : ''; // Negative sign
         if ($this->bcmath) {
@@ -327,7 +327,7 @@ class UnitConverter
             // look something like 4652999999999.9234. We grab one more digit
             // than we need to precise from $r and then use that to round
             // appropriately.
-            $precise = (string)round(substr($r, 0, \strlen($r) + $scale), -1);
+            $precise = (string)round((float)substr($r, 0, \strlen($r) + $scale), -1);
 
             // Now we return it, truncating the zero that was rounded off.
             return substr($precise, 0, -1) . str_repeat('0', -$scale + 1);

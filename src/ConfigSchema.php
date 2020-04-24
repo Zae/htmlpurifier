@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\PropertyList;
 use stdClass;
 
 /**
@@ -57,7 +56,7 @@ class ConfigSchema
      * about the schema, you're better of using the ConfigSchema_Interchange,
      * which uses more memory but has much richer information.
      *
-     * @type array
+     * @type array|int[]|object[]
      */
     public $info = [];
 
@@ -93,13 +92,13 @@ class ConfigSchema
     /**
      * Retrieves an instance of the application-wide configuration definition.
      *
-     * @param ConfigSchema $prototype
+     * @param ConfigSchema|true $prototype
      *
      * @return ConfigSchema
      */
-    public static function instance(?self $prototype = null): self
+    public static function instance($prototype = null): self
     {
-        if ($prototype !== null) {
+        if ($prototype !== null && $prototype !== true) {
             static::$singleton = $prototype;
         } elseif (static::$singleton === null || $prototype === true) {
             static::$singleton = static::makeFromSerial();

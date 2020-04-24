@@ -34,13 +34,13 @@ class Simple extends TagTransform
     }
 
     /**
-     * @param Tag                 $tag
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Tag     $tag
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return string
+     * @return Tag
      */
-    public function transform(Tag $tag, \HTMLPurifier\Config $config, Context $context)
+    public function transform(Tag $tag, Config $config, Context $context)
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;

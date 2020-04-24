@@ -17,13 +17,16 @@
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-libxml": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-exif": "*"
     },
     "require-dev": {
         "simpletest/simpletest": "^1.2.0",
         "phpunit/phpunit": "^9.0",
         "spatie/phpunit-snapshot-assertions": "^4.0",
-        "mockery/mockery": "^1.3"
+        "mockery/mockery": "^1.3",
+        "vimeo/psalm": "^3.11",
+        "pear/net_idna2": "^0.2.0"
     },
     "suggest": {
         "ext-bcmath": "Makes math much faster",

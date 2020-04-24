@@ -160,6 +160,9 @@ class Font extends AttrDef
                         }
 
                         if ($found_slash) {
+                            /**
+                             * @psalm-suppress LoopInvalidation
+                             */
                             $i = $j;
                             $r = $this->info['line-height']->validate(
                                 $line_height,

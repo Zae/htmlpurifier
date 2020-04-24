@@ -6,6 +6,7 @@ namespace HTMLPurifier\Injector;
 
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Text;
 
 /**
@@ -35,7 +36,7 @@ class DisplayLinkURI extends Injector
      */
     public function handleEnd(Token &$token)
     {
-        if (isset($token->start->attr['href'])) {
+        if ($token instanceof End && isset($token->start->attr['href'])) {
             $url = $token->start->attr['href'];
             unset($token->start->attr['href']);
             $token = [$token, new Text(" ($url)")];

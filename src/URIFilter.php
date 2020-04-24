@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\Context;
-use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
-
 /**
  * Chainable filters for custom URI processing.
  *
@@ -66,7 +62,7 @@ abstract class URIFilter
      *
      * @return bool
      */
-    public function prepare(\HTMLPurifier\Config $config)
+    public function prepare(Config $config)
     {
         return true;
     }
@@ -82,5 +78,5 @@ abstract class URIFilter
      *         URL is no good, true indicates continue processing. Note that
      *         all changes are committed directly on the URI object
      */
-    abstract public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context);
+    abstract public function filter(URI &$uri, Config $config, Context $context);
 }

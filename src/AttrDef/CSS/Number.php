@@ -30,8 +30,8 @@ class Number extends AttrDef
 
     /**
      * @param string                $number
-     * @param \HTMLPurifier\Config   $config
-     * @param \HTMLPurifier\Context $context
+     * @param \HTMLPurifier\Config|null   $config
+     * @param \HTMLPurifier\Context|null $context
      *
      * @return string|bool
      * @warning Some contexts do not pass $config, $context. These

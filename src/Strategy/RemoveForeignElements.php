@@ -27,14 +27,14 @@ use HTMLPurifier\Token\Text;
 class RemoveForeignElements extends Strategy
 {
     /**
-     * @param Token[]             $tokens
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Token[] $tokens
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return array|Token[]
+     * @return Token[]
      * @throws Exception
      */
-    public function execute($tokens, \HTMLPurifier\Config $config, Context $context): array
+    public function execute($tokens, Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
         $generator = new Generator($config, $context);

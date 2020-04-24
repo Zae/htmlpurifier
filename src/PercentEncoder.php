@@ -24,7 +24,7 @@ class PercentEncoder
     /**
      * String of characters that should be preserved while using encode().
      *
-     * @param string|bool $preserve
+     * @param string|false $preserve
      */
     public function __construct($preserve = false)
     {

@@ -135,11 +135,11 @@ class HTMLModule
      *
      * @param ElementDef $def
      *
-     * @return ChildDef subclass
+     * @return ChildDef|null
      */
     public function getChildDef(ElementDef $def)
     {
-        return false;
+        return null;
     }
 
     // -- Convenience -----------------------------------------------------
@@ -152,7 +152,7 @@ class HTMLModule
      *                                                    Set as false to skip this step.
      * @param string|ChildDef $contents                   Allowed children in form of:
      *                                                    "$content_model_type: $content_model"
-     * @param array|string    $attr_includes              What attribute collections to register to
+     * @param array|string|null $attr_includes              What attribute collections to register to
      *                                                    element?
      * @param array           $attr                       What unique attributes does the element define?
      *

@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 namespace HTMLPurifier;
-use tuple;
 
 /**
  * A zipper is a purely-functional data structure which contains
@@ -45,9 +44,9 @@ class Zipper
      *
      * @param array to zipper-ify.
      *
-     * @return array|tuple of zipper and element of first position.
+     * @return array|array{Zipper, mixed} of zipper and element of first position.
      */
-    public static function fromArray($array): array
+    public static function fromArray(array $array): array
     {
         $z = new self([], array_reverse($array));
         $t = $z->delete(); // delete the "dummy hole"

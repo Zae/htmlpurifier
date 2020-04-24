@@ -496,12 +496,12 @@ class HTMLDefinition extends Definition
      * @warning Although it's largely drawn from TinyMCE's implementation,
      *      it is different, and you'll probably have to modify your lists
      *
-     * @param array $list String list to parse
+     * @param string $list String list to parse
      *
      * @return array
      * @todo    Give this its own class, probably static interface
      */
-    public function parseTinyMCEAllowedList($list): array
+    public function parseTinyMCEAllowedList(string $list): array
     {
         $list = str_replace([' ', "\t"], '', $list);
 

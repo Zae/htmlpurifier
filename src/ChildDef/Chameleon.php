@@ -41,8 +41,8 @@ class Chameleon extends ChildDef
     public $type = 'chameleon';
 
     /**
-     * @param array $inline List of elements to allow when inline.
-     * @param array $block  List of elements to allow when block.
+     * @param array|string $inline List of elements to allow when inline.
+     * @param array|string $block  List of elements to allow when block.
      */
     public function __construct($inline, $block)
     {
@@ -53,13 +53,13 @@ class Chameleon extends ChildDef
     }
 
     /**
-     * @param Node[]              $children
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Node[]  $children
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context)
+    public function validateChildren(array $children, Config $config, Context $context)
     {
         if ($context->get('IsInline') === false) {
             return $this->block->validateChildren(

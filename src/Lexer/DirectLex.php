@@ -52,14 +52,18 @@ class DirectLex extends Lexer
     }
 
     /**
-     * @param string              $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return array|Token[]
+     * @return Token[]
      * @throws Exception
+     *
+     * @psalm-suppress RedundantCondition
+     * @todo fix?, $inside_tag can never be false on line 193, because of if's above, but for
+     * readability sake, check anyway?
      */
-    public function tokenizeHTML(string $string, \HTMLPurifier\Config $config, Context $context): array
+    public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
         // special normalization for script tags without any armor
         // our "armor" heurstic is a < sign any number of whitespaces after
@@ -403,12 +407,10 @@ class DirectLex extends Lexer
      */
     public function parseAttributeString(
         string $string,
-        \HTMLPurifier\Config $config,
+        Config $config,
         Context $context
     ): array
     {
-        $string = (string)$string; // quick typecast
-
         if ($string === '') {
             return [];
         } // no attributes
@@ -526,7 +528,7 @@ class DirectLex extends Lexer
                 $cursor++;
                 $cursor += strspn($string, $this->_whitespace, $cursor);
 
-                if ($cursor === false) {
+                if ($cursor === 0) {
                     $array[$key] = '';
                     break;
                 }
@@ -562,6 +564,10 @@ class DirectLex extends Lexer
                 $array[$key] = $this->parseAttr($value, $config);
                 $cursor++;
             } else {
+                /**
+                 * @psalm-suppress RedundantCondition
+                 * @todo fix?
+                 */
                 if ($key !== '') {
                     $array[$key] = $key;
                 } else {

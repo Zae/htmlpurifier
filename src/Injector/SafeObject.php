@@ -61,18 +61,6 @@ class SafeObject extends Injector
     ];
 
     /**
-     * @param Config  $config
-     * @param Context $context
-     *
-     * @return void
-     * @throws Exception
-     */
-    public function prepare(Config $config, Context $context)
-    {
-        parent::prepare($config, $context);
-    }
-
-    /**
      * @param Token $token
      */
     public function handleElement(Token &$token)
@@ -91,6 +79,10 @@ class SafeObject extends Injector
             $nest = \count($this->currentNesting) - 1;
             if ($nest >= 0 && $this->currentNesting[$nest]->name === 'object') {
                 $i = \count($this->objectStack) - 1;
+
+                /**
+                 * @psalm-suppress InvalidArrayOffset
+                 */
                 if (!isset($token->attr['name'])) {
                     $token = false;
 

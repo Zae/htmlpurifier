@@ -29,7 +29,7 @@ class DoctypeRegistry
      * @note Accepts a fully-formed doctype object, or the
      *       parameters for constructing a doctype object
      *
-     * @param string $doctype      Name of doctype or literal doctype object
+     * @param string|Doctype $doctype      Name of doctype or literal doctype object
      * @param bool   $xml
      * @param array  $modules      Modules doctype will load
      * @param array  $tidy_modules Modules doctype will load for certain modes
@@ -47,8 +47,7 @@ class DoctypeRegistry
         $aliases = [],
         ?string $dtd_public = null,
         ?string $dtd_system = null
-    )
-    {
+    ) {
         if (!\is_array($modules)) {
             $modules = [$modules];
         }

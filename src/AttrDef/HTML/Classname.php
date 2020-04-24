@@ -7,6 +7,7 @@ use HTMLPurifier\AttrDef\HTML\Nmtokens;
 use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\HTMLDefinition;
 
 /**
  * Implements special behavior for class attribute (normally NMTOKENS)
@@ -14,17 +15,19 @@ use HTMLPurifier\Exception;
 class Classname extends Nmtokens
 {
     /**
-     * @param string              $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return bool|string
+     * @return bool|string[]|array
      * @throws Exception
      */
     protected function split($string, $config, $context)
     {
         // really, this twiddle should be lazy loaded
-        $name = $config->getDefinition('HTML')->doctype->name;
+        /** @var HTMLDefinition $def */
+        $def = $config->getDefinition('HTML');
+        $name = $def->doctype->name;
         if ($name === 'XHTML 1.1' || $name === 'XHTML 2.0') {
             return parent::split($string, $config, $context);
         }
@@ -33,9 +36,9 @@ class Classname extends Nmtokens
     }
 
     /**
-     * @param array               $tokens
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $tokens
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      * @throws Exception

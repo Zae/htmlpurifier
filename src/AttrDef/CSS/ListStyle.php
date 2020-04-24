@@ -25,7 +25,7 @@ class ListStyle extends AttrDef
     protected $info;
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
@@ -39,9 +39,9 @@ class ListStyle extends AttrDef
     }
 
     /**
-     * @param string              $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
@@ -66,7 +66,7 @@ class ListStyle extends AttrDef
 
         foreach ($bits as $bit) {
             if ($i >= 3) {
-                return;
+                return false;
             } // optimization bit
 
             if ($bit === '') {
@@ -107,16 +107,25 @@ class ListStyle extends AttrDef
         $ret = [];
 
         // construct type
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         */
         if ($caught['type']) {
             $ret[] = $caught['type'];
         }
 
         // construct image
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         */
         if ($caught['image']) {
             $ret[] = $caught['image'];
         }
 
         // construct position
+        /**
+         * @psalm-suppress TypeDoesNotContainType
+         */
         if ($caught['position']) {
             $ret[] = $caught['position'];
         }

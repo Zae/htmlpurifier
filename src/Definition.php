@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-
 /**
  * Super-class for definition datatype objects, implements serialization
  * functions for the class.
@@ -45,14 +43,14 @@ abstract class Definition
      *
      * @param Config $config
      */
-    abstract protected function doSetup(\HTMLPurifier\Config $config);
+    abstract protected function doSetup(Config $config);
 
     /**
      * Setup function that aborts if already setup
      *
      * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         if ($this->setup) {
             return;

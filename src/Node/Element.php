@@ -38,14 +38,6 @@ class Element extends Node
      */
     public $children = [];
 
-    /**
-     * Does this use the <a></a> form or the </a> form, i.e.
-     * is it a pair of start/end tokens or an empty token.
-     *
-     * @bool
-     */
-    public $empty = false;
-
     public $endCol = null, $endLine = null, $endArmor = [];
 
     /**

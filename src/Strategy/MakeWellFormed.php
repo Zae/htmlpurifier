@@ -86,6 +86,10 @@ class MakeWellFormed extends Strategy
      *
      * @return Token[]
      * @throws \HTMLPurifier\Exception
+     *
+     * @psalm-suppress TypeDoesNotContainType
+     * @psalm-suppress RedundantCondition
+     * @todo fix?
      */
     public function execute($tokens, Config $config, Context $context): array
     {
@@ -637,6 +641,10 @@ class MakeWellFormed extends Strategy
             $oldskip = isset($old[0]) ? $old[0]->skip : [];
             foreach ($token as $object) {
                 $object->skip = $oldskip;
+                /**
+                 * @psalm-suppress InvalidPropertyFetch
+                 * @todo fix?
+                 */
                 $object->skip[$injector] = true;
             }
         }

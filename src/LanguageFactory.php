@@ -67,15 +67,15 @@ class LanguageFactory
     /**
      * Retrieve sole instance of the factory.
      *
-     * @param LanguageFactory $prototype              Optional prototype to overload sole instance with,
+     * @param LanguageFactory|true|null $prototype    Optional prototype to overload sole instance with,
      *                                                or bool true to reset to default factory.
      *
      * @return LanguageFactory
      */
-    public static function instance(LanguageFactory $prototype = null): LanguageFactory
+    public static function instance($prototype = null): LanguageFactory
     {
         static $instance = null;
-        if ($prototype !== null) {
+        if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
             $instance = new static();
