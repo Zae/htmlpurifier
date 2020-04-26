@@ -30,6 +30,10 @@ class Border extends AttrDef
     {
         $def = $config->getCSSDefinition();
 
+        if (\is_null($def)) {
+            throw new Exception('CSSDefinition not found');
+        }
+
         $this->info['border-width'] = $def->info['border-width'];
         $this->info['border-style'] = $def->info['border-style'];
         $this->info['border-top-color'] = $def->info['border-top-color'];

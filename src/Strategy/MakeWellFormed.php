@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Strategy;
 
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Injector;
@@ -99,7 +100,7 @@ class MakeWellFormed extends Strategy
         $generator = new Generator($config, $context);
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');
         // used for autoclose early abortion
-        $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config);
+        $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config) ?? [];
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
         [$zipper, $token] = Zipper::fromArray($tokens);
@@ -129,7 +130,7 @@ class MakeWellFormed extends Strategy
         $this->injectors = [];
 
         $injectors = $config->getBatch('AutoFormat');
-        $def_injectors = $definition->info_injector;
+        $def_injectors = $definition->info_injector ?? [];
         $custom_injectors = $injectors['Custom'];
         unset($injectors['Custom']); // special case
         foreach ($injectors as $injector => $b) {
@@ -269,7 +270,7 @@ class MakeWellFormed extends Strategy
             }
 
             if (isset($definition->info[$token->name])) {
-                $type = $definition->info[$token->name]->child->type;
+                $type = $definition->info[$token->name]->child->type ?? false;
             } else {
                 $type = false; // Type is unknown, treat accordingly
             }
@@ -327,20 +328,20 @@ class MakeWellFormed extends Strategy
                     $parent_elements = null;
                     $autoclose = false;
 
-                    if (isset($definition->info[$parent->name])) {
+                    if (\is_array($definition->info) && isset($definition->info[$parent->name])) {
                         $parent_def = $definition->info[$parent->name];
-                        $parent_elements = $parent_def->child->getAllowedElements($config);
+                        $parent_elements = $parent_def->child->getAllowedElements($config) ?? [];
                         $autoclose = !isset($parent_elements[$token->name]);
                     }
 
-                    if ($autoclose && $definition->info[$token->name]->wrap) {
+                    if ($autoclose && isset($definition->info[$token->name]->wrap)) {
                         // Check if an element can be wrapped by another
                         // element to make it valid in a context (for
                         // example, <ul><ul> needs a <li> in between)
-                        $wrapname = $definition->info[$token->name]->wrap;
-                        $wrapdef = $definition->info[$wrapname];
-                        $elements = $wrapdef->child->getAllowedElements($config);
-                        if (isset($elements[$token->name], $parent_elements[$wrapname])) {
+                        $wrapname = $definition->info[$token->name]->wrap ?? null;
+                        $wrapdef = $definition->info[$wrapname] ?? null;
+                        $elements = $wrapdef->child->getAllowedElements($config) ?? [];
+                        if (isset($elements[$token->name], $parent_elements[$wrapname], $wrapname)) {
                             $newtoken = new Start($wrapname);
                             $token = $this->insertBefore($newtoken);
                             $reprocess = true;
@@ -349,7 +350,7 @@ class MakeWellFormed extends Strategy
                     }
 
                     $carryover = false;
-                    if ($autoclose && $parent_def->formatting) {
+                    if ($autoclose && isset($parent_def) && $parent_def->formatting) {
                         $carryover = true;
                     }
 
@@ -359,20 +360,26 @@ class MakeWellFormed extends Strategy
                         $autoclose_ok = isset($global_parent_allowed_elements[$token->name]);
                         if (!$autoclose_ok) {
                             foreach ($this->stack as $ancestor) {
-                                $elements = $definition->info[$ancestor->name]->child->getAllowedElements($config);
+                                $elements = $definition
+                                                ->info[$ancestor->name]
+                                                ->child
+                                                ->getAllowedElements($config) ?? [];
+
                                 if (isset($elements[$token->name])) {
                                     $autoclose_ok = true;
                                     break;
                                 }
 
-                                if ($definition->info[$token->name]->wrap) {
-                                    $wrapname = $definition->info[$token->name]->wrap;
-                                    $wrapdef = $definition->info[$wrapname];
+                                $wrapname = $definition->info[$token->name]->wrap ?? null;
+                                $wrapdef = $definition->info[$wrapname] ?? null;
+
+                                if (isset($wrapdef, $wrapdef->child) && $wrapdef->child instanceof ChildDef) {
                                     $wrap_elements = $wrapdef->child->getAllowedElements($config);
-                                    if (isset($wrap_elements[$token->name], $elements[$wrapname])) {
-                                        $autoclose_ok = true;
-                                        break;
-                                    }
+                                }
+
+                                if (isset($wrap_elements[$token->name], $elements[$wrapname])) {
+                                    $autoclose_ok = true;
+                                    break;
                                 }
                             }
                         }

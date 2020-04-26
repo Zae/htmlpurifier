@@ -57,9 +57,9 @@ class SafeObject extends HTMLModule
 
         $param = $this->addElement(
             'param',
-            false,
+            null,
             'Empty',
-            false,
+            [],
             [
                 'id' => 'ID',
                 'name*' => 'Text',

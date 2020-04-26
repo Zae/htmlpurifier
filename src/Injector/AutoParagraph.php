@@ -60,7 +60,7 @@ class AutoParagraph extends Injector
                     //               ----
                     // This is a degenerate case
                 } else {
-                    if (!$token->is_whitespace || $this->_isInline($current)) {
+                    if (!$token->is_whitespace || (!\is_null($current) && $this->_isInline($current))) {
                         // State 1.2: PAR1
                         //            ----
 
@@ -335,10 +335,12 @@ class AutoParagraph extends Injector
         $i = null;
 
         while ($this->forwardUntilEndToken($i, $current, $nesting)) {
-            $result = $this->_checkNeedsP($current);
-            if ($result !== null) {
-                $ok = $result;
-                break;
+            if (!\is_null($current)) {
+                $result = $this->_checkNeedsP($current);
+                if ($result !== null) {
+                    $ok = $result;
+                    break;
+                }
             }
         }
 

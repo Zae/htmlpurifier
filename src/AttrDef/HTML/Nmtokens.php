@@ -30,6 +30,10 @@ class Nmtokens extends AttrDef
         }
 
         $tokens = $this->split($string, $config, $context);
+        if ($tokens === false) {
+            return false;
+        }
+
         $tokens = $this->filter($tokens, $config, $context);
         if (empty($tokens)) {
             return false;
@@ -45,7 +49,7 @@ class Nmtokens extends AttrDef
      * @param Config  $config
      * @param Context $context
      *
-     * @return bool|string[]|array
+     * @return string[]|false
      */
     protected function split(string $string, Config $config, Context $context)
     {

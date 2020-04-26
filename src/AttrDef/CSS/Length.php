@@ -18,13 +18,13 @@ class Length extends AttrDef
     protected $min;
 
     /**
-     * @type Length|string
+     * @type \HTMLPurifier\Length|string
      */
     protected $max;
 
     /**
-     * @param Length|string $min Minimum length, or null for no bound. String is also acceptable.
-     * @param Length|string $max Maximum length, or null for no bound. String is also acceptable.
+     * @param \HTMLPurifier\Length|string $min Minimum length, or null for no bound. String is also acceptable.
+     * @param \HTMLPurifier\Length|string $max Maximum length, or null for no bound. String is also acceptable.
      */
     public function __construct($min = null, $max = null)
     {

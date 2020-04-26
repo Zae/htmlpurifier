@@ -19,13 +19,13 @@ class EntityLookup
     /**
      * Sets up the entity lookup table from the serialized file contents.
      *
-     * @param bool $file
+     * @param string|null $file
      *
      * @note    The serialized contents are versioned, but were generated
      *       using the maintenance script generate_entity_file.php
      * @warning This is not in constructor to help enforce the Singleton
      */
-    public function setup(bool $file = false): void
+    public function setup(?string $file = null): void
     {
         if (!$file) {
             $file = HTMLPURIFIER_PREFIX . '/HTMLPurifier/EntityLookup/entities.ser';

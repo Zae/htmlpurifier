@@ -10,6 +10,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
+use HTMLPurifier\URIScheme;
 
 /**
  * Validates a URI as defined by RFC 3986.
@@ -92,7 +93,7 @@ class URI extends AttrDef
 
             // scheme-specific validation
             $scheme_obj = $uri->getSchemeObj($config, $context);
-            if (!$scheme_obj) {
+            if (!$scheme_obj instanceof URIScheme) {
                 break;
             }
 

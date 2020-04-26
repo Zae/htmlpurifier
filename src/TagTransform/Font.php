@@ -53,13 +53,13 @@ class Font extends TagTransform
     ];
 
     /**
-     * @param Tag                 $tag
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Tag     $tag
+     * @param Config  $config
+     * @param Context $context
      *
-     * @return End|string
+     * @return Tag|string
      */
-    public function transform(Tag $tag, \HTMLPurifier\Config $config, Context $context)
+    public function transform(Tag $tag, Config $config, Context $context)
     {
         if ($tag instanceof End) {
             $new_tag = clone $tag;

@@ -23,7 +23,7 @@ class Tables extends HTMLModule
      */
     public function setup(\HTMLPurifier\Config $config): void
     {
-        $this->addElement('caption', false, 'Inline', 'Common');
+        $this->addElement('caption', null, 'Inline', 'Common');
 
         $this->addElement(
             'table',
@@ -59,10 +59,10 @@ class Tables extends HTMLModule
             ],
             $cell_align
         );
-        $this->addElement('td', false, 'Flow', 'Common', $cell_t);
-        $this->addElement('th', false, 'Flow', 'Common', $cell_t);
+        $this->addElement('td', null, 'Flow', 'Common', $cell_t);
+        $this->addElement('th', null, 'Flow', 'Common', $cell_t);
 
-        $this->addElement('tr', false, 'Required: td | th', 'Common', $cell_align);
+        $this->addElement('tr', null, 'Required: td | th', 'Common', $cell_align);
 
         $cell_col = array_merge(
             [
@@ -71,11 +71,11 @@ class Tables extends HTMLModule
             ],
             $cell_align
         );
-        $this->addElement('col', false, 'Empty', 'Common', $cell_col);
-        $this->addElement('colgroup', false, 'Optional: col', 'Common', $cell_col);
+        $this->addElement('col', null, 'Empty', 'Common', $cell_col);
+        $this->addElement('colgroup', null, 'Optional: col', 'Common', $cell_col);
 
-        $this->addElement('tbody', false, 'Required: tr', 'Common', $cell_align);
-        $this->addElement('thead', false, 'Required: tr', 'Common', $cell_align);
-        $this->addElement('tfoot', false, 'Required: tr', 'Common', $cell_align);
+        $this->addElement('tbody', null, 'Required: tr', 'Common', $cell_align);
+        $this->addElement('thead', null, 'Required: tr', 'Common', $cell_align);
+        $this->addElement('tfoot', null, 'Required: tr', 'Common', $cell_align);
     }
 }

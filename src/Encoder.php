@@ -410,7 +410,7 @@ class Encoder
      * @return string
      * @throws Exception
      */
-    public static function convertToUTF8(string $str, \HTMLPurifier\Config $config, Context $context): string
+    public static function convertToUTF8(string $str, Config $config, Context $context): string
     {
         $encoding = $config->get('Core.Encoding');
         if ($encoding === 'utf-8') {
@@ -435,7 +435,12 @@ class Encoder
             // If the string is bjorked by Shift_JIS or a similar encoding
             // that doesn't support all of ASCII, convert the naughty
             // characters to their true byte-wise ASCII/UTF-8 equivalents.
-            return strtr($str, self::testEncodingSupportsASCII($encoding));
+            $replacements = self::testEncodingSupportsASCII($encoding);
+            if (\is_array($replacements)) {
+                return strtr($str, $replacements);
+            }
+
+            return $str;
         }
 
         if ($encoding === 'iso-8859-1') {
@@ -466,7 +471,7 @@ class Encoder
      *       characters being omitted.
      * @throws Exception
      */
-    public static function convertFromUTF8(?string $str, \HTMLPurifier\Config $config, ?Context $context): ?string
+    public static function convertFromUTF8(string $str, Config $config, ?Context $context): ?string
     {
         $encoding = $config->get('Core.Encoding');
         if ($escape = $config->get('Core.EscapeNonASCIICharacters')) {
@@ -485,7 +490,7 @@ class Encoder
         if ($iconv && !$config->get('Test.ForceNoIconv')) {
             // Undo our previous fix in convertToUTF8, otherwise iconv will barf
             $ascii_fix = static::testEncodingSupportsASCII($encoding);
-            if (!$escape && !empty($ascii_fix)) {
+            if (!$escape && !empty($ascii_fix) && \is_iterable($ascii_fix)) {
                 $clear_fix = [];
                 foreach ($ascii_fix as $utf8 => $native) {
                     $clear_fix[$utf8] = '';
@@ -493,7 +498,9 @@ class Encoder
                 $str = strtr($str, $clear_fix);
             }
 
-            $str = strtr($str, array_flip($ascii_fix));
+            if ($ascii_fix) {
+                $str = strtr($str, array_flip((array)$ascii_fix));
+            }
 
             // Normal stuff
             return static::iconv('utf-8', $encoding . '//IGNORE', $str);
@@ -670,7 +677,10 @@ class Encoder
                 // Reverse engineer: what's the UTF-8 equiv of this byte
                 // sequence? This assumes that there's no variable width
                 // encoding that doesn't support ASCII.
-                $ret[self::unsafeIconv($encoding, 'UTF-8//IGNORE', $c)] = $c;
+                $key = self::unsafeIconv($encoding, 'UTF-8//IGNORE', $c);
+                if (!\is_null($key)) {
+                    $ret[$key] = $c;
+                }
             }
         }
 

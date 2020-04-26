@@ -98,7 +98,7 @@ class DirectLex extends Lexer
         } else {
             $current_line = false;
             $current_col = false;
-            $length = false;
+            $length = 0;
         }
 
         $context->register('CurrentLine', $current_line);
@@ -522,7 +522,7 @@ class DirectLex extends Lexer
             // pair, otherwise, it's a bool attribute
             $first_char = @$string[$cursor];
 
-            if ($first_char == '=') {
+            if ($first_char === '=') {
                 // key="value"
 
                 $cursor++;
@@ -542,12 +542,12 @@ class DirectLex extends Lexer
                     $cursor++;
                     $value_begin = $cursor;
                     $cursor = strpos($string, $char, $cursor);
-                    $value_end = $cursor;
+                    $value_end = (int)$cursor;
                 } else {
                     // it's not quoted, end bound is whitespace
                     $value_begin = $cursor;
                     $cursor += strcspn($string, $this->_whitespace, $cursor);
-                    $value_end = $cursor;
+                    $value_end = (int)$cursor;
                 }
 
                 // we reached a premature end

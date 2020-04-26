@@ -33,6 +33,10 @@ class Background extends AttrDef
     {
         $def = $config->getCSSDefinition();
 
+        if (\is_null($def)) {
+            throw new Exception('CSSDefinition not found');
+        }
+
         $this->info['background-color'] = $def->info['background-color'];
         $this->info['background-image'] = $def->info['background-image'];
         $this->info['background-repeat'] = $def->info['background-repeat'];

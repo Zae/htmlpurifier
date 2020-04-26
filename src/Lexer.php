@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use _PH5P;
+use DOMDocument;
 use HTMLPurifier\Lexer\DOMLex;
 use HTMLPurifier\Lexer\DirectLex;
 
@@ -75,7 +76,7 @@ class Lexer
      *
      * @param Config $config
      *
-     * @return Lexer|_PH5P
+     * @return Lexer|_PH5P|object
      * @throws Exception
      *
      * @psalm-suppress UndefinedClass
@@ -111,8 +112,8 @@ class Lexer
                         break;
                     }
 
-                    if (class_exists('DOMDocument', false) &&
-                        method_exists('DOMDocument', 'loadHTML') &&
+                    if (class_exists(DOMDocument::class, false) &&
+                        method_exists(DOMDocument::class, 'loadHTML') &&
                         !\extension_loaded('domxml')
                     ) {
                         // check for DOM support, because while it's part of the
@@ -357,7 +358,7 @@ class Lexer
      * @throws Exception
      * @todo Consider making protected
      */
-    public function normalize(?string $html, Config $config, Context $context): string
+    public function normalize(string $html, Config $config, Context $context): string
     {
         // normalize newlines to \n
         if ($config->get('Core.NormalizeNewlines')) {

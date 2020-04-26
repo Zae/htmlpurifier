@@ -112,7 +112,7 @@ class ID extends AttrDef
             return false;
         }
 
-        if (!$this->selector) {
+        if (!$this->selector && isset($id_accumulator)) {
             $id_accumulator->add($id);
         }
 

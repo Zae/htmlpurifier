@@ -26,7 +26,7 @@ class PropertyListIterator extends FilterIterator
      * @param Iterator $iterator Array of data to iterate over
      * @param string   $filter   Optional prefix to only allow values of
      */
-    public function __construct(Iterator $iterator, $filter = null)
+    public function __construct(Iterator $iterator, string $filter)
     {
         parent::__construct($iterator);
 

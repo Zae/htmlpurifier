@@ -62,6 +62,10 @@ class FixNesting extends Strategy
         // get a copy of the HTML definition
         $definition = $config->getHTMLDefinition();
 
+        if (\is_null($definition)) {
+            throw new Exception('HTML Definition not found');
+        }
+
         $excludes_enabled = !$config->get('Core.DisableExcludes');
 
         // setup the context variable 'IsInline', for chameleon processing

@@ -57,14 +57,14 @@ class DOMLex extends Lexer
     }
 
     /**
-     * @param null|string $string
+     * @param string      $string
      * @param Config      $config
      * @param Context     $context
      *
      * @return \HTMLPurifier\Token[]
      * @throws \HTMLPurifier\Exception
      */
-    public function tokenizeHTML(?string $string, Config $config, Context $context): array
+    public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
         $string = $this->normalize($string, $config, $context);
 

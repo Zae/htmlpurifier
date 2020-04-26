@@ -42,13 +42,13 @@ class StrictBlockquote extends Required
     protected $init = false;
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @return array
      * @note We don't want MakeWellFormed to auto-close inline elements since
      *       they might be allowed.
      */
-    public function getAllowedElements(\HTMLPurifier\Config $config): array
+    public function getAllowedElements(Config $config): array
     {
         $this->init($config);
 
@@ -56,14 +56,14 @@ class StrictBlockquote extends Required
     }
 
     /**
-     * @param array               $children
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $children
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      * @throws Exception
      */
-    public function validateChildren(array $children, \HTMLPurifier\Config $config, Context $context): array
+    public function validateChildren(array $children, Config $config, Context $context): array
     {
         $this->init($config);
 
@@ -86,8 +86,10 @@ class StrictBlockquote extends Required
 
         foreach ($result as $node) {
             if ($block_wrap === false) {
-                if (($node instanceof Text && !$node->is_whitespace) ||
-                    ($node instanceof Element && !isset($this->elements[$node->name]))) {
+                if ((($node instanceof Text && !$node->is_whitespace) ||
+                    ($node instanceof Element && !isset($this->elements[$node->name])))
+                    && !\is_null($def)
+                ) {
                     $block_wrap = new Element($def->info_block_wrapper);
                     $ret[] = $block_wrap;
                 }
@@ -108,18 +110,18 @@ class StrictBlockquote extends Required
     }
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
-    private function init(\HTMLPurifier\Config $config): void
+    private function init(Config $config): void
     {
         if (!$this->init) {
             $def = $config->getHTMLDefinition();
 
             // allow all inline elements
             $this->real_elements = $this->elements;
-            $this->fake_elements = $def->info_content_sets['Flow'];
+            $this->fake_elements = $def->info_content_sets['Flow'] ?? [];
             $this->fake_elements['#PCDATA'] = true;
             $this->init = true;
         }

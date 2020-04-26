@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-
 /**
  * Represents an XHTML 1.1 module, with information on elements, tags
  * and attributes.
@@ -148,7 +146,7 @@ class HTMLModule
      * Convenience function that sets up a new element
      *
      * @param string          $element                    Name of element to add
-     * @param string|bool     $type                       What content set should element be registered to?
+     * @param string|null     $type                       What content set should element be registered to?
      *                                                    Set as false to skip this step.
      * @param string|ChildDef $contents                   Allowed children in form of:
      *                                                    "$content_model_type: $content_model"
@@ -160,7 +158,7 @@ class HTMLModule
      *         can set advanced parameters
      * @see ElementDef:: for in-depth descriptions of these parameters.
      */
-    public function addElement(string $element, $type, $contents, $attr_includes = [], array $attr = []): ElementDef
+    public function addElement(string $element, ?string $type, $contents, $attr_includes = [], array $attr = []): ElementDef
     {
         $this->elements[] = $element;
 
@@ -168,7 +166,9 @@ class HTMLModule
         [$content_model_type, $content_model] = $this->parseContents($contents);
 
         // merge in attribute inclusions
-        $this->mergeInAttrIncludes($attr, $attr_includes);
+        if (!\is_null($attr_includes)) {
+            $this->mergeInAttrIncludes($attr, $attr_includes);
+        }
 
         // add element to content sets
         if ($type) {
@@ -233,7 +233,7 @@ class HTMLModule
      * Convenience function that transforms single-string contents
      * into separate content model and content model type
      *
-     * @param string $contents Allowed children in form of:
+     * @param string|mixed $contents Allowed children in form of:
      *                         "$content_model_type: $content_model"
      *
      * @return array
@@ -269,7 +269,7 @@ class HTMLModule
      * an attribute array.
      *
      * @param array $attr          Reference to attr array to modify
-     * @param array $attr_includes Array of includes / string include to merge in
+     * @param array|string $attr_includes Array of includes / string include to merge in
      */
     public function mergeInAttrIncludes(&$attr, $attr_includes): void
     {
@@ -288,7 +288,7 @@ class HTMLModule
      * Convenience function that generates a lookup table with boolean
      * true as value.
      *
-     * @param string $list List of values to turn into a lookup
+     * @param string|array $list List of values to turn into a lookup
      *
      * @note You can also pass an arbitrary number of arguments in
      *       place of the regular argument
@@ -319,7 +319,7 @@ class HTMLModule
      *
      * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
     }
 }

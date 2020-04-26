@@ -92,7 +92,7 @@ class Forms extends HTMLModule
 
         $this->addElement(
             'option',
-            false,
+            null,
             'Optional: #PCDATA',
             'Common',
             [
@@ -173,7 +173,7 @@ class Forms extends HTMLModule
 
         $this->addElement(
             'legend',
-            false,
+            null,
             'Optional: #PCDATA | Inline',
             'Common',
             [
@@ -183,7 +183,7 @@ class Forms extends HTMLModule
 
         $this->addElement(
             'optgroup',
-            false,
+            null,
             'Required: option',
             'Common',
             [

@@ -53,7 +53,7 @@ class Objects extends HTMLModule
 
         $this->addElement(
             'param',
-            false,
+            null,
             'Empty',
             null,
             [
