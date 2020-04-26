@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\URIFilter;
 
 use HTMLPurifier\Context;
+use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use \HTMLPurifier\Config;
@@ -33,10 +34,14 @@ class DisableExternal extends URIFilter
      */
     public function prepare(Config $config): bool
     {
-        /**
-         * @psalm-suppress UndefinedPropertyFetch
-         */
-        $our_host = $config->getDefinition('URI')->host;
+        /** @var URIDefinition $def */
+        $def = $config->getDefinition('URI');
+
+        if (\is_null($def)) {
+            return false;
+        }
+
+        $our_host = $def->host;
 
         if ($our_host !== null) {
             $this->ourHostParts = array_reverse(explode('.', $our_host));

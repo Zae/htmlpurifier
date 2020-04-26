@@ -267,12 +267,18 @@ class UnitConverter
      * @param string $s2
      * @param int    $scale
      *
-     * @return string|null
+     * @return string
      */
-    private function div(string $s1, string $s2, int $scale): ?string
+    private function div(string $s1, string $s2, int $scale): string
     {
         if ($this->bcmath) {
-            return bcdiv($s1, $s2, $scale);
+            $out = bcdiv($s1, $s2, $scale);
+
+            if (\is_null($out)) {
+                return '0';
+            }
+
+            return $out;
         }
 
         return $this->scale((float)$s1 / (float)$s2, $scale);
@@ -287,23 +293,28 @@ class UnitConverter
      *
      * @return string
      */
-    private function round(string $n, int $sigfigs): ?string
+    private function round(string $n, int $sigfigs): string
     {
         $new_log = (int)floor(log(abs((float)$n), 10)); // Number of digits left of decimal - 1
         $rp = $sigfigs - $new_log - 1; // Number of decimal places needed
         $neg = $n < 0 ? '-' : ''; // Negative sign
+
         if ($this->bcmath) {
             if ($rp >= 0) {
-                $n = bcadd($n, $neg . '0.' . str_repeat('0', $rp) . '5', $rp + 1);
-                $n = bcdiv($n, '1', $rp);
+                $out = bcadd($n, $neg . '0.' . str_repeat('0', $rp) . '5', $rp + 1);
+                $out = bcdiv($out, '1', $rp);
             } else {
                 // This algorithm partially depends on the standardized
                 // form of numbers that comes out of bcmath.
-                $n = bcadd($n, $neg . '5' . str_repeat('0', $new_log - $sigfigs), 0);
-                $n = substr($n, 0, $sigfigs + \strlen($neg)) . str_repeat('0', $new_log - $sigfigs + 1);
+                $out = bcadd($n, $neg . '5' . str_repeat('0', $new_log - $sigfigs), 0);
+                $out = substr($out, 0, $sigfigs + \strlen($neg)) . str_repeat('0', $new_log - $sigfigs + 1);
             }
 
-            return $n;
+            if (\is_null($out)) {
+                return '0';
+            }
+
+            return $out;
         }
 
         return $this->scale(round((float)$n, $sigfigs - $new_log - 1), $rp + 1);

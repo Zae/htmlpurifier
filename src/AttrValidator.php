@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
-use HTMLPurifier\IDAccumulator;
 use HTMLPurifier\Token\EmptyToken;
 
 /**
@@ -24,9 +22,14 @@ class AttrValidator
      * @param Config  $config  Instance of \HTMLPurifier\Config
      * @param Context $context Instance of HTMLPurifier\HTMLPurifier_Context
      */
-    public function validateToken(Token $token, \HTMLPurifier\Config $config, Context $context): void
+    public function validateToken(Token $token, Config $config, Context $context): void
     {
         $definition = $config->getHTMLDefinition();
+
+        if (\is_null($definition)) {
+            throw new Exception('No HTMLDefinition found');
+        }
+
         $e =& $context->get('ErrorCollector', true);
 
         // initialize IDAccumulator if necessary

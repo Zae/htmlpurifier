@@ -10,6 +10,7 @@ use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
+use HTMLPurifier\URIScheme;
 
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_MakeAbsolute
@@ -40,6 +41,11 @@ class MakeAbsolute extends URIFilter
     public function prepare(Config $config): bool
     {
         $def = $config->getDefinition('URI');
+
+        if (\is_null($def)) {
+            return false;
+        }
+
         $this->base = $def->base;
 
         if (\is_null($this->base)) {
@@ -90,7 +96,7 @@ class MakeAbsolute extends URIFilter
             }
 
             $scheme_obj = $uri->getSchemeObj($config, $context);
-            if (!$scheme_obj) {
+            if (!$scheme_obj instanceof URIScheme) {
                 // scheme not recognized
                 return false;
             }

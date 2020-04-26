@@ -6,6 +6,7 @@ namespace HTMLPurifier\Strategy;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrValidator;
+use HTMLPurifier\ElementDef;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
@@ -84,7 +85,7 @@ class RemoveForeignElements extends Strategy
                 // DEFINITION CALL
 
                 // before any processing, try to transform the element
-                if (isset($definition->info_tag_transform[$token->name])) {
+                if (isset($token->name) && isset($definition->info_tag_transform[$token->name])) {
                     $original_name = $token->name;
                     // there is a transformation for this tag
                     // DEFINITION CALL
@@ -94,7 +95,7 @@ class RemoveForeignElements extends Strategy
                     }
                 }
 
-                if (isset($definition->info[$token->name])) {
+                if (isset($token->name) && isset($definition->info[$token->name])) {
                     // mostly everything's good, but
                     // we need to make sure required attributes are in order
                     if (($token instanceof Start || $token instanceof EmptyToken) &&
@@ -103,6 +104,11 @@ class RemoveForeignElements extends Strategy
                     ) {
                         $attr_validator->validateToken($token, $config, $context);
                         $ok = true;
+
+                        /**
+                         * @psalm-suppress PossiblyNullArrayAccess
+                         * @psalm-suppress PossiblyNullArrayOffset
+                         */
                         foreach ($definition->info[$token->name]->required_attr as $name) {
                             if (!isset($token->attr[$name])) {
                                 $ok = false;
@@ -115,7 +121,7 @@ class RemoveForeignElements extends Strategy
                                 $e->send(
                                     E_ERROR,
                                     'Strategy_RemoveForeignElements: Missing required attribute',
-                                    $name
+                                    $name ?? ''
                                 );
                             }
 

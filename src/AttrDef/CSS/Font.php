@@ -34,6 +34,10 @@ class Font extends AttrDef
     {
         $def = $config->getCSSDefinition();
 
+        if (\is_null($def)) {
+            throw new Exception('CSSDefinition not found');
+        }
+
         $this->info['font-style'] = $def->info['font-style'];
         $this->info['font-variant'] = $def->info['font-variant'];
         $this->info['font-weight'] = $def->info['font-weight'];

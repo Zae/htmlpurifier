@@ -56,6 +56,11 @@ abstract class Token
     public $carryover;
 
     /**
+     * @type string
+     */
+    public $name = '';
+
+    /**
      * @param string $n
      *
      * @return null|string

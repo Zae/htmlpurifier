@@ -19,7 +19,7 @@ class Classname extends Nmtokens
      * @param Config  $config
      * @param Context $context
      *
-     * @return bool|string[]|array
+     * @return string[]|false
      * @throws Exception
      */
     protected function split($string, $config, $context)

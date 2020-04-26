@@ -52,21 +52,24 @@ class URISchemeRegistry
      */
     public function getScheme(?string $scheme, ?Config $config, ?Context $context): ?URIScheme
     {
-        if (is_null($config)) {
+        if (\is_null($scheme)) {
+            return null;
+        }
+
+        if (\is_null($config)) {
             $config = Config::createDefault();
         }
 
         // important, otherwise attacker could include arbitrary file
         $allowed_schemes = $config->get('URI.AllowedSchemes');
-        if (!isset($allowed_schemes[$scheme]) &&
-            !$config->get('URI.OverrideAllowedSchemes')
-        ) {
+        if (!isset($allowed_schemes[$scheme]) && !$config->get('URI.OverrideAllowedSchemes')) {
             return null;
         }
 
         if (isset($this->schemes[$scheme])) {
             return $this->schemes[$scheme];
         }
+
         if (!isset($allowed_schemes[$scheme])) {
             return null;
         }

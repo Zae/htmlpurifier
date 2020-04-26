@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\Lang;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 
 /**
  * Class responsible for generating HTMLPurifier\HTMLPurifier_Language objects, managing
@@ -106,7 +104,7 @@ class LanguageFactory
      * @return Language
      * @throws Exception
      */
-    public function create(\HTMLPurifier\Config $config, Context $context, $code = false): Language
+    public function create(Config $config, Context $context, $code = false): Language
     {
         // validate language code
         if ($code === false) {
@@ -133,7 +131,12 @@ class LanguageFactory
             $file = $this->dir . '/Language/classes/' . $code . '.php';
 
             if (file_exists($file) || class_exists($class, false)) {
+                /** @var Language $lang */
                 $lang = new $class($config, $context);
+
+                if (!$lang instanceof Language) {
+                    throw new Exception('Language could not be loaded');
+                }
             } else {
                 // Go fallback
                 $raw_fallback = $this->getFallbackFor($code);
@@ -214,7 +217,7 @@ class LanguageFactory
                 $fallback = 'en';
             }
 
-            $language_seen[$code] = true;
+            $languages_seen[$code] = true;
 
             // load the fallback recursively
             $this->loadLanguage($fallback);

@@ -29,12 +29,12 @@ class Ruby extends HTMLModule
             'Custom: ((rb, (rt | (rp, rt, rp))) | (rbc, rtc, rtc?))',
             'Common'
         );
-        $this->addElement('rbc', false, 'Required: rb', 'Common');
-        $this->addElement('rtc', false, 'Required: rt', 'Common');
-        $rb = $this->addElement('rb', false, 'Inline', 'Common');
+        $this->addElement('rbc', null, 'Required: rb', 'Common');
+        $this->addElement('rtc', null, 'Required: rt', 'Common');
+        $rb = $this->addElement('rb', null, 'Inline', 'Common');
         $rb->excludes = ['ruby' => true];
-        $rt = $this->addElement('rt', false, 'Inline', 'Common', ['rbspan' => 'Number']);
+        $rt = $this->addElement('rt', null, 'Inline', 'Common', ['rbspan' => 'Number']);
         $rt->excludes = ['ruby' => true];
-        $this->addElement('rp', false, 'Optional: #PCDATA', 'Common');
+        $this->addElement('rp', null, 'Optional: #PCDATA', 'Common');
     }
 }

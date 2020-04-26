@@ -48,9 +48,9 @@ class Lists extends HTMLModule
         $ul->wrap = 'li';
         $this->addElement('dl', 'List', 'Required: dt | dd', 'Common');
 
-        $this->addElement('li', false, 'Flow', 'Common');
+        $this->addElement('li', null, 'Flow', 'Common');
 
-        $this->addElement('dd', false, 'Flow', 'Common');
-        $this->addElement('dt', false, 'Inline', 'Common');
+        $this->addElement('dd', null, 'Flow', 'Common');
+        $this->addElement('dt', null, 'Inline', 'Common');
     }
 }

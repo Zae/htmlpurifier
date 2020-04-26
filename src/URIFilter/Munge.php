@@ -10,6 +10,7 @@ use HTMLPurifier\URIParser;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use \HTMLPurifier\Config;
+use HTMLPurifier\URIScheme;
 
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_Munge
@@ -86,7 +87,7 @@ class Munge extends URIFilter
         }
 
         $scheme_obj = $uri->getSchemeObj($config, $context);
-        if (!$scheme_obj) {
+        if (!$scheme_obj instanceof URIScheme) {
             return true;
         } // ignore unknown schemes, maybe another postfilter did it
 

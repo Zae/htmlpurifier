@@ -29,9 +29,13 @@ class ListStyle extends AttrDef
      *
      * @throws \HTMLPurifier\Exception
      */
-    public function __construct($config)
+    public function __construct(Config $config)
     {
         $def = $config->getCSSDefinition();
+
+        if (\is_null($def)) {
+            throw new Exception('CSSDefinition not found');
+        }
 
         $this->info['list-style-type'] = $def->info['list-style-type'];
         $this->info['list-style-position'] = $def->info['list-style-position'];

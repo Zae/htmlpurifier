@@ -56,10 +56,12 @@ class Length
     }
 
     /**
-     * @param string $s Unit string, like '2em' or '3.4in'
+     * @param string|self $s Unit string, like '2em' or '3.4in'
      *
      * @return Length
      * @warning Does not perform validation.
+     *
+     * @psalm-suppress PossiblyInvalidArgument psalm doesn't understand the return with instanceof static.
      */
     public static function make($s): self
     {
@@ -165,7 +167,7 @@ class Length
     /**
      * Compares two lengths, and returns 1 if greater, -1 if less and 0 if equal.
      *
-     * @param Length $l
+     * @param Length|false $l
      *
      * @return int|bool
      * @warning If both values are too large or small, this calculation will
@@ -180,7 +182,8 @@ class Length
         if ($l->unit !== $this->unit) {
             $converter = new UnitConverter();
             $l = $converter->convert($l, $this->unit);
-            if ($l === false) {
+
+            if (!$l instanceof Length) {
                 return false;
             }
         }

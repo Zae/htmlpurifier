@@ -4,17 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\HTMLDefinition;
-use HTMLPurifier\Definition;
-use HTMLPurifier\CSSDefinition;
-use \HTMLPurifier\ConfigSchema;
-use HTMLPurifier\DefinitionCacheFactory;
-use HTMLPurifier\Exception;
 use HTMLPurifier\VarParser\Flexible;
-use HTMLPurifier\VarParserException;
-use HTMLPurifier\URIDefinition;
-use HTMLPurifier\PropertyList;
-use HTMLPurifier\VarParser;
 
 /**
  * Configuration object that triggers customizable behavior.
@@ -365,7 +355,7 @@ class Config
         /** @var int|object $def */
         $def = $this->def->info[$key];
 
-        if (isset($def->isAlias)) {
+        if (\is_object($def) && isset($def->isAlias)) {
             if ($this->aliasMode) {
                 $this->triggerError(
                     'Double-aliases not allowed, please fix '.
@@ -390,7 +380,7 @@ class Config
             $allow_null = true;
         } else {
             $type = $rtype;
-            $allow_null = isset($def->allow_null);
+            $allow_null = \is_object($def) && isset($def->allow_null);
         }
 
         try {
@@ -463,9 +453,14 @@ class Config
      *
      * @return HTMLDefinition|null
      * @throws Exception
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
     public function getHTMLDefinition(bool $raw = false, bool $optimized = false)
     {
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         */
         return $this->getDefinition('HTML', $raw, $optimized);
     }
 
@@ -483,9 +478,14 @@ class Config
      *
      * @return CSSDefinition|null
      * @throws Exception
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
-    public function getCSSDefinition(bool $raw = false, bool $optimized = false)
+    public function getCSSDefinition(bool $raw = false, bool $optimized = false): ?CSSDefinition
     {
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         */
         return $this->getDefinition('CSS', $raw, $optimized);
     }
 
@@ -503,9 +503,14 @@ class Config
      *
      * @return URIDefinition|null
      * @throws Exception
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
-    public function getURIDefinition(bool $raw = false, bool $optimized = false)
+    public function getURIDefinition(bool $raw = false, bool $optimized = false): ?URIDefinition
     {
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         */
         return $this->getDefinition('URI', $raw, $optimized);
     }
 
@@ -705,7 +710,13 @@ class Config
         return $def;
     }
 
-    public function maybeGetRawDefinition(string $name)
+    /**
+     * @param string $name
+     *
+     * @return Definition|null
+     * @throws Exception
+     */
+    public function maybeGetRawDefinition(string $name): ?Definition
     {
         return $this->getDefinition($name, true, true);
     }
@@ -713,27 +724,42 @@ class Config
     /**
      * @return HTMLDefinition|null
      * @throws Exception
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
-    public function maybeGetRawHTMLDefinition()
+    public function maybeGetRawHTMLDefinition(): ?HTMLDefinition
     {
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         */
         return $this->getDefinition('HTML', true, true);
     }
 
     /**
      * @return CSSDefinition|null
      * @throws Exception
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
-    public function maybeGetRawCSSDefinition()
+    public function maybeGetRawCSSDefinition(): ?CSSDefinition
     {
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         */
         return $this->getDefinition('CSS', true, true);
     }
 
     /**
      * @return URIDefinition|null
      * @throws Exception
+     *
+     * @psalm-suppress MoreSpecificReturnType
      */
-    public function maybeGetRawURIDefinition()
+    public function maybeGetRawURIDefinition(): ?URIDefinition
     {
+        /**
+         * @psalm-suppress LessSpecificReturnStatement
+         */
         return $this->getDefinition('URI', true, true);
     }
 
@@ -780,12 +806,11 @@ class Config
         }
 
         if ($allowed !== true) {
-            if (\is_string($allowed)) {
-                $allowed = [$allowed];
-            }
+            $allowed = (array)$allowed;
             $allowed_ns = [];
             $allowed_directives = [];
             $blacklisted_directives = [];
+
             foreach ($allowed as $ns_or_directive) {
                 if (strpos($ns_or_directive, '.') !== false) {
                     // directive
@@ -921,11 +946,11 @@ class Config
     /**
      * Checks whether or not the configuration object is finalized.
      *
-     * @param string|bool $error String error message, or false for no error
+     * @param string|null $error String error message, or false for no error
      *
      * @return bool
      */
-    public function isFinalized($error = false): bool
+    public function isFinalized(?string $error = null): bool
     {
         if ($this->finalized && $error) {
             $this->triggerError($error, E_USER_ERROR);

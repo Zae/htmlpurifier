@@ -96,7 +96,7 @@ class Generator
         $this->_sortAttr = $config->get('Output.SortAttr');
         $this->_flashCompat = $config->get('Output.FlashCompat');
         $this->_def = $config->getHTMLDefinition();
-        $this->_xhtml = $this->_def->doctype->xml;
+        $this->_xhtml = $this->_def->doctype->xml ?? true;
     }
 
     /**

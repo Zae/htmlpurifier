@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\HTMLModule\Tidy;
 
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\ChildDef\StrictBlockquote;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule\Tidy\XHTMLAndHTML4;
@@ -42,9 +43,9 @@ class Strict extends XHTMLAndHTML4
     /**
      * @param ElementDef $def
      *
-     * @return StrictBlockquote|null
+     * @return StrictBlockquote|ChildDef|null
      */
-    public function getChildDef(ElementDef $def): ?StrictBlockquote
+    public function getChildDef(ElementDef $def): ?ChildDef
     {
         if ($def->content_model_type !== 'strictblockquote') {
             return parent::getChildDef($def);
