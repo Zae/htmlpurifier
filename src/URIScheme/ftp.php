@@ -30,21 +30,21 @@ class ftp extends URIScheme
     public $hierarchical = true;
 
     /**
-     * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
         $uri->query = null;
 
         // typecode check
-        $semicolon_pos = strrpos($uri->path, ';'); // reverse
+        $semicolon_pos = strrpos((string)$uri->path, ';'); // reverse
         if ($semicolon_pos !== false) {
-            $type = substr($uri->path, $semicolon_pos + 1); // no semicolon
-            $uri->path = substr($uri->path, 0, $semicolon_pos);
+            $type = substr((string)$uri->path, $semicolon_pos + 1); // no semicolon
+            $uri->path = substr((string)$uri->path, 0, $semicolon_pos);
             $type_ret = '';
             if (strpos($type, '=') !== false) {
                 // figure out whether or not the declaration is correct

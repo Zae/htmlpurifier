@@ -6,6 +6,7 @@ namespace HTMLPurifier\Strategy;
 
 use HTMLPurifier\Arborize;
 use HTMLPurifier\Context;
+use HTMLPurifier\Node;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node\Element;
@@ -57,6 +58,7 @@ class FixNesting extends Strategy
 
         // O(n) pass to convert to a tree, so that we can efficiently
         // refer to substrings
+        /** @var Element $top_node */
         $top_node = Arborize::arborize($tokens, $config);
 
         // get a copy of the HTML definition

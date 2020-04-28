@@ -30,13 +30,13 @@ class tel extends URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
         $uri->userinfo = null;
         $uri->host = null;
@@ -44,9 +44,11 @@ class tel extends URIScheme
 
         // Delete all non-numeric characters, non-x characters
         // from phone number, EXCEPT for a leading plus sign.
-        $uri->path = preg_replace('/(?!^\+)[^\dx]/', '',
+        $uri->path = preg_replace(
+            '/(?!^\+)[^\dx]/', '',
             // Normalize e(x)tension to lower-case
-            str_replace('X', 'x', $uri->path));
+            str_replace('X', 'x', (string)$uri->path)
+        );
 
         return true;
     }

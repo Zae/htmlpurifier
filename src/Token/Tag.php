@@ -19,7 +19,7 @@ abstract class Tag extends Token
      * This allows us to check objects with <tt>!empty($obj->is_tag)</tt>
      * without having to use a function call <tt>is_a()</tt>.
      *
-     * @type bool
+     * @var bool
      */
     public $is_tag = true;
 
@@ -29,14 +29,14 @@ abstract class Tag extends Token
      * @note Strictly speaking, XML tags are case sensitive, so we shouldn't
      * be lower-casing them, but these tokens cater to HTML tags, which are
      * insensitive.
-     * @type string
+     * @var string
      */
     public $name;
 
     /**
      * Associative array of the tag's attributes.
      *
-     * @type array
+     * @var array
      */
     public $attr = [];
 

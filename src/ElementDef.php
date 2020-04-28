@@ -22,14 +22,14 @@ class ElementDef
      * Does the definition work by itself, or is it created solely
      * for the purpose of merging into another definition?
      *
-     * @type bool
+     * @var bool
      */
     public $standalone = true;
 
     /**
      * Associative array of attribute name to HTMLPurifier_AttrDef.
      *
-     * @type array
+     * @var array
      * @note Before being processed by HTMLPurifier_AttrCollections
      *       when modules are finalized during
      *       HTMLPurifier\HTMLPurifier_HTMLDefinition->setup(), this array may also
@@ -56,21 +56,21 @@ class ElementDef
     /**
      * List of tags HTMLPurifier\HTMLPurifier_AttrTransform to be done before validation.
      *
-     * @type array
+     * @var array
      */
     public $attr_transform_pre = [];
 
     /**
      * List of tags HTMLPurifier\HTMLPurifier_AttrTransform to be done after validation.
      *
-     * @type array
+     * @var array
      */
     public $attr_transform_post = [];
 
     /**
      * HTMLPurifier\HTMLPurifier_ChildDef of this tag.
      *
-     * @type ChildDef
+     * @var ChildDef
      */
     public $child;
 
@@ -81,7 +81,7 @@ class ElementDef
      * into an HTMLPurifier\HTMLPurifier_ChildDef.
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
-     * @type string
+     * @var string
      */
     public $content_model;
 
@@ -92,7 +92,7 @@ class ElementDef
      * @warning This must be lowercase
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
-     * @type string
+     * @var string
      */
     public $content_model_type;
 
@@ -102,7 +102,7 @@ class ElementDef
      * HTMLPurifier\ChildDef\HTMLPurifier_ChildDef_Chameleon. Dynamically set: modules don't
      * have to worry about this one.
      *
-     * @type bool
+     * @var bool
      */
     public $descendants_are_inline = false;
 
@@ -110,14 +110,14 @@ class ElementDef
      * List of the names of required attributes this element has.
      * Dynamically populated by HTMLPurifier\HTMLPurifier_HTMLDefinition::getElement()
      *
-     * @type array
+     * @var array
      */
     public $required_attr = [];
 
     /**
      * Lookup table of tags excluded from all descendants of this tag.
      *
-     * @type array
+     * @var array
      * @note SGML permits exclusions for all descendants, but this is
      *       not possible with DTDs or XML Schemas. W3C has elected to
      *       use complicated compositions of content_models to simulate
@@ -132,7 +132,7 @@ class ElementDef
     /**
      * This tag is explicitly auto-closed by the following tags.
      *
-     * @type array
+     * @var array
      */
     public $autoclose = [];
 
@@ -141,7 +141,7 @@ class ElementDef
      * allowed by this sub-element; if it is, instead of closing the
      * current element, place it inside this element.
      *
-     * @type string
+     * @var string
      */
     public $wrap;
 
@@ -149,7 +149,7 @@ class ElementDef
      * Whether or not this is a formatting element affected by the
      * "Active Formatting Elements" algorithm.
      *
-     * @type bool
+     * @var bool
      */
     public $formatting;
 

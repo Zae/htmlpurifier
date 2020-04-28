@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\URIFilter;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -34,7 +34,7 @@ class DisableExternal extends URIFilter
      */
     public function prepare(Config $config): bool
     {
-        /** @var URIDefinition $def */
+        /** @var URIDefinition|null $def */
         $def = $config->getDefinition('URI');
 
         if (\is_null($def)) {

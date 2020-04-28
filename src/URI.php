@@ -5,12 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\URI\Host;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
-use HTMLPurifier\Exception;
-use HTMLPurifier\PercentEncoder;
-use HTMLPurifier\URIScheme;
-use HTMLPurifier\URISchemeRegistry;
 
 /**
  * HTML Purifier's internal representation of a URI.
@@ -24,48 +18,48 @@ use HTMLPurifier\URISchemeRegistry;
 class URI
 {
     /**
-     * @type string
+     * @var string|null
      */
     public $scheme;
 
     /**
-     * @type string
+     * @var string|null
      */
     public $userinfo;
 
     /**
-     * @type string
+     * @var string|null
      */
     public $host;
 
     /**
-     * @type int
+     * @var int|null
      */
     public $port;
 
     /**
-     * @type string
+     * @var string|null
      */
     public $path;
 
     /**
-     * @type string
+     * @var string|null
      */
     public $query;
 
     /**
-     * @type string
+     * @var string|null
      */
     public $fragment;
 
     /**
-     * @param string $scheme
-     * @param string $userinfo
-     * @param string $host
-     * @param int    $port
-     * @param string $path
-     * @param string $query
-     * @param string $fragment
+     * @param string|null $scheme
+     * @param string|null $userinfo
+     * @param string|null $host
+     * @param int|null    $port
+     * @param string|null $path
+     * @param string|null $query
+     * @param string|null $fragment
      *
      * @note Automatically normalizes scheme and port
      */
@@ -82,7 +76,7 @@ class URI
         $this->scheme = \is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
-        $this->port = \is_null($port) ? $port : (int)$port;
+        $this->port = $port;
         $this->path = $path;
         $this->query = $query;
         $this->fragment = $fragment;
@@ -97,7 +91,7 @@ class URI
      * @return URIScheme|bool Scheme object appropriate for validating this URI
      * @throws Exception
      */
-    public function getSchemeObj(\HTMLPurifier\Config $config, Context $context)
+    public function getSchemeObj(Config $config, Context $context)
     {
         $registry = URISchemeRegistry::instance();
         if ($this->scheme !== null) {
@@ -140,7 +134,7 @@ class URI
      * @return bool True if validation/filtering succeeds, false if failure
      * @throws Exception
      */
-    public function validate(\HTMLPurifier\Config $config, Context $context): bool
+    public function validate(Config $config, Context $context): bool
     {
         // ABNF definitions from RFC 3986
         $chars_sub_delims = '!$&\'()*+,;=';
@@ -149,10 +143,7 @@ class URI
         // validate host
         if (!\is_null($this->host)) {
             $host_def = new Host();
-            $this->host = $host_def->validate($this->host, $config, $context);
-            if ($this->host === false) {
-                $this->host = null;
-            }
+            $this->host = $host_def->validate((string)$this->host, $config, $context);
         }
 
         // validate scheme
@@ -195,38 +186,38 @@ class URI
             // basis, so we'll deal with it later)
             // file:///my/path
             // ///my/path
-            $this->path = $segments_encoder->encode($this->path);
+            $this->path = $segments_encoder->encode((string)$this->path);
         } elseif ($this->path !== '') {
-            if ($this->path[0] === '/') {
+            if (!\is_null($this->path) && $this->path[0] === '/') {
                 // path-absolute (hier and relative)
                 // http:/my/path
                 // /my/path
-                if (\strlen($this->path) >= 2 && $this->path[1] === '/') {
+                if (\strlen((string)$this->path) >= 2 && $this->path[1] === '/') {
                     // This could happen if both the host gets stripped
                     // out
                     // http://my/path
                     // //my/path
                     $this->path = '';
                 } else {
-                    $this->path = $segments_encoder->encode($this->path);
+                    $this->path = $segments_encoder->encode((string)$this->path);
                 }
             } elseif (!\is_null($this->scheme)) {
                 // path-rootless (hier)
                 // http:my/path
                 // Short circuit evaluation means we don't need to check nz
-                $this->path = $segments_encoder->encode($this->path);
+                $this->path = $segments_encoder->encode((string)$this->path);
             } else {
                 // path-noscheme (relative)
                 // my/path
                 // (once again, not checking nz)
                 $segment_nc_encoder = new PercentEncoder($chars_sub_delims . '@');
-                $c = strpos($this->path, '/');
+                $c = strpos((string)$this->path, '/');
                 if ($c !== false) {
                     $this->path =
-                        $segment_nc_encoder->encode(substr($this->path, 0, $c)) .
-                        $segments_encoder->encode(substr($this->path, $c));
+                        $segment_nc_encoder->encode(substr((string)$this->path, 0, $c)) .
+                        $segments_encoder->encode(substr((string)$this->path, $c));
                 } else {
-                    $this->path = $segment_nc_encoder->encode($this->path);
+                    $this->path = $segment_nc_encoder->encode((string)$this->path);
                 }
             }
         } else {
@@ -315,7 +306,7 @@ class URI
      * @return bool
      * @throws Exception
      */
-    public function isLocal(\HTMLPurifier\Config $config): bool
+    public function isLocal(Config $config): bool
     {
         if ($this->host === null) {
             return true;
@@ -339,7 +330,7 @@ class URI
      * @return bool
      * @throws Exception
      */
-    public function isBenign(\HTMLPurifier\Config $config, Context $context): bool
+    public function isBenign(Config $config, Context $context): bool
     {
         if (!$this->isLocal($config)) {
             return false;

@@ -17,7 +17,7 @@ class PercentEncoder
     /**
      * Reserved characters to preserve when using encode().
      *
-     * @type array
+     * @var array
      */
     protected $preserve = [];
 

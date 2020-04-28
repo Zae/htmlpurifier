@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 use HTMLPurifier\URIFilter\DisableExternal;
 use HTMLPurifier\URIFilter\DisableExternalResources;
 use HTMLPurifier\URIFilter\DisableResources;
@@ -13,31 +11,44 @@ use HTMLPurifier\URIFilter\HostBlacklist;
 use HTMLPurifier\URIFilter\MakeAbsolute;
 use HTMLPurifier\URIFilter\Munge;
 use HTMLPurifier\URIFilter\SafeIframe;
-use HTMLPurifier\URIScheme;
-use HTMLPurifier\URISchemeRegistry;
 
 /**
  * Class HTMLPurifier\HTMLPurifier_URIDefinition
  */
 class URIDefinition extends Definition
 {
+    /**
+     * @var string
+     */
     public $type = 'URI';
+
+    /**
+     * @var array
+     */
     protected $filters = [];
+
+    /**
+     * @var array
+     */
     protected $postFilters = [];
+
+    /**
+     * @var array
+     */
     protected $registeredFilters = [];
 
     /**
-     * HTMLPurifier\HTMLPurifier_URI object of the base specified at %URI.Base
+     * @var URI|null object of the base specified at %URI.Base
      */
     public $base;
 
     /**
-     * String host to consider "home" base, derived off of $base
+     * @var string|null host to consider "home" base, derived off of $base
      */
     public $host;
 
     /**
-     * Name of default scheme based on %URI.DefaultScheme and %URI.Base
+     * @var string|null Name of default scheme based on %URI.DefaultScheme and %URI.Base
      */
     public $defaultScheme;
 

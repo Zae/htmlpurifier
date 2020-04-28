@@ -9,26 +9,25 @@ use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 use HTMLPurifier\URIScheme;
 
 /**
- * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_MakeAbsolute
+ * Class HTMLPurifier\URIFilter\MakeAbsolute
  */
 class MakeAbsolute extends URIFilter
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'MakeAbsolute';
 
     /**
-     * @type
+     * @var URI|null
      */
     protected $base;
 
     /**
-     * @type array
+     * @var array
      */
     protected $basePathStack = [];
 
@@ -59,7 +58,7 @@ class MakeAbsolute extends URIFilter
         }
 
         $this->base->fragment = null; // fragment is invalid for base URI
-        $stack = explode('/', $this->base->path);
+        $stack = explode('/', (string)$this->base->path);
         array_pop($stack); // discard last segment
         $stack = $this->_collapseStack($stack); // do pre-parsing
         $this->basePathStack = $stack;
@@ -114,9 +113,9 @@ class MakeAbsolute extends URIFilter
 
         if ($uri->path === '') {
             $uri->path = $this->base->path;
-        } elseif ($uri->path[0] !== '/') {
+        } elseif (!\is_null($uri->path) && $uri->path[0] !== '/') {
             // relative path, needs more complicated processing
-            $stack = explode('/', $uri->path);
+            $stack = explode('/', (string)$uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
 
             if ($new_stack[0] !== '' && !\is_null($this->base->host)) {
@@ -127,7 +126,7 @@ class MakeAbsolute extends URIFilter
             $uri->path = implode('/', $new_stack);
         } else {
             // absolute path, but still we should collapse
-            $uri->path = implode('/', $this->_collapseStack(explode('/', $uri->path)));
+            $uri->path = implode('/', $this->_collapseStack(explode('/', (string)$uri->path)));
         }
 
         // re-combine

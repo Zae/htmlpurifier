@@ -18,14 +18,14 @@ abstract class Token
     /**
      * Line number node was on in source document. Null if unknown.
      *
-     * @type int
+     * @var int|null
      */
     public $line;
 
     /**
      * Column of line node was on in source document. Null if unknown.
      *
-     * @type int
+     * @var int|null
      */
     public $col;
 
@@ -34,29 +34,29 @@ abstract class Token
      * Currently, valid values are "ValidateAttributes" and
      * "MakeWellFormed_TagClosedError"
      *
-     * @type array
+     * @var array
      */
     public $armor = [];
 
     /**
      * Used during MakeWellFormed.  See Note [Injector skips]
      *
-     * @type
+     * @var array|null
      */
     public $skip;
 
     /**
-     * @type
+     * @var mixed|null
      */
     public $rewind;
 
     /**
-     * @type
+     * @var
      */
     public $carryover;
 
     /**
-     * @type string
+     * @var string
      */
     public $name = '';
 

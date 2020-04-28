@@ -44,21 +44,21 @@ class HTMLDefinition extends Definition
     /**
      * Associative array of element names to HTMLPurifier\HTMLPurifier_ElementDef.
      *
-     * @type ElementDef[]
+     * @var ElementDef[]
      */
     public $info = [];
 
     /**
      * Associative array of global attribute name to attribute definition.
      *
-     * @type array
+     * @var array
      */
     public $info_global_attr = [];
 
     /**
      * String name of parent element HTML will be going into.
      *
-     * @type string
+     * @var string
      */
     public $info_parent = 'div';
 
@@ -66,14 +66,14 @@ class HTMLDefinition extends Definition
      * Definition for parent element, allows parent element to be a
      * tag that's not allowed inside the HTML fragment.
      *
-     * @type ElementDef
+     * @var ElementDef
      */
     public $info_parent_def;
 
     /**
      * String name of element used to wrap inline elements in block context.
      *
-     * @type string
+     * @var string
      * @note This is rarely used except for BLOCKQUOTEs in strict mode
      */
     public $info_block_wrapper = 'p';
@@ -81,21 +81,21 @@ class HTMLDefinition extends Definition
     /**
      * Associative array of deprecated tag name to HTMLPurifier\HTMLPurifier_TagTransform.
      *
-     * @type array
+     * @var array
      */
     public $info_tag_transform = [];
 
     /**
      * Indexed list of HTMLPurifier\HTMLPurifier_AttrTransform to be performed before validation.
      *
-     * @type AttrTransform[]
+     * @var AttrTransform[]
      */
     public $info_attr_transform_pre = [];
 
     /**
      * Indexed list of HTMLPurifier\HTMLPurifier_AttrTransform to be performed after validation.
      *
-     * @type AttrTransform[]
+     * @var AttrTransform[]
      */
     public $info_attr_transform_post = [];
 
@@ -103,21 +103,21 @@ class HTMLDefinition extends Definition
      * Nested lookup array of content set name (Block, Inline) to
      * element name to whether or not it belongs in that content set.
      *
-     * @type array
+     * @var array
      */
     public $info_content_sets = [];
 
     /**
      * Indexed list of HTMLPurifier\HTMLPurifier_Injector to be used.
      *
-     * @type Injector[]
+     * @var Injector[]
      */
     public $info_injector = [];
 
     /**
      * Doctype object
      *
-     * @type Doctype
+     * @var Doctype
      */
     public $doctype;
 
@@ -200,12 +200,12 @@ class HTMLDefinition extends Definition
     // PUBLIC BUT INTERNAL VARIABLES --------------------------------------
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'HTML';
 
     /**
-     * @type HTMLModuleManager
+     * @var HTMLModuleManager
      */
     public $manager;
 

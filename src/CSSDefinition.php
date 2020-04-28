@@ -42,7 +42,7 @@ class CSSDefinition extends Definition
     /**
      * Assoc array of attribute name to definition object.
      *
-     * @type AttrDef[]
+     * @var AttrDef[]
      */
     public $info = [];
 
