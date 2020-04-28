@@ -82,19 +82,9 @@ class Lexer
      * @psalm-suppress UndefinedClass
      * @todo Move the _PHP5 class from the PSR-0 namespace, or something else?
      */
-    public static function create($config)
+    public static function create(Config $config)
     {
-        if (!($config instanceof Config)) {
-            $lexer = $config;
-            trigger_error(
-                'Passing a prototype to
-                HTMLPurifier_Lexer::create() is deprecated, please instead
-                use %Core.LexerImpl',
-                E_USER_WARNING
-            );
-        } else {
-            $lexer = $config->get('Core.LexerImpl');
-        }
+        $lexer = $config->get('Core.LexerImpl');
 
         $needs_tracking =
             $config->get('Core.MaintainLineNumbers') ||

@@ -20,6 +20,8 @@ namespace HTMLPurifier;
  *
  * Nota bene: the current class gets confused if you try to store NULLs
  * in the list.
+ *
+ * @template T
  */
 class Zipper
 {
@@ -29,10 +31,10 @@ class Zipper
     /**
      * HTMLPurifier\HTMLPurifier_Zipper constructor.
      *
-     * @param $front
-     * @param $back
+     * @param array $front
+     * @param array $back
      */
-    public function __construct($front, $back)
+    public function __construct(array $front, array $back)
     {
         $this->front = $front;
         $this->back = $back;
@@ -44,7 +46,7 @@ class Zipper
      *
      * @param array to zipper-ify.
      *
-     * @return array|array{Zipper, mixed} of zipper and element of first position.
+     * @return array|array{Zipper, T} of zipper and element of first position.
      */
     public static function fromArray(array $array): array
     {
@@ -59,9 +61,11 @@ class Zipper
      * the hole with a value. (Usually you should supply a $t, unless you
      * are at the end of the array.)
      *
-     * @param mixed|null $t
+     * @param T|null $t
+     *
+     * @return array
      */
-    public function toArray($t = null)
+    public function toArray($t = null): array
     {
         $a = $this->front;
         if ($t !== null) {
@@ -78,9 +82,9 @@ class Zipper
     /**
      * Move hole to the next element.
      *
-     * @param mixed $t Element to fill hole with
+     * @param T|null $t Element to fill hole with
      *
-     * @return mixed Original contents of new hole.
+     * @return T Original contents of new hole.
      */
     public function next($t)
     {
@@ -94,12 +98,12 @@ class Zipper
     /**
      * Iterated hole advancement.
      *
-     * @param mixed $t Element to fill hole with
-     * @param mixed $n How many forward to advance hole
+     * @param T|null $t Element to fill hole with
+     * @param int $n How many forward to advance hole
      *
-     * @return mixed Original contents of new hole, i away
+     * @return T Original contents of new hole, i away
      */
-    public function advance($t, $n)
+    public function advance($t, int $n)
     {
         for ($i = 0; $i < $n; $i++) {
             $t = $this->next($t);
@@ -111,9 +115,9 @@ class Zipper
     /**
      * Move hole to the previous element
      *
-     * @param mixed $t Element to fill hole with
+     * @param T|null $t Element to fill hole with
      *
-     * @return mixed Original contents of new hole.
+     * @return T Original contents of new hole.
      */
     public function prev($t)
     {
@@ -128,7 +132,7 @@ class Zipper
      * Delete contents of current hole, shifting hole to
      * next element.
      *
-     * @return mixed Original contents of new hole.
+     * @return T Original contents of new hole.
      */
     public function delete()
     {
@@ -148,7 +152,7 @@ class Zipper
     /**
      * Insert element before hole.
      *
-     * @param mixed Element to insert
+     * @param T|null $t Element to insert
      */
     public function insertBefore($t): void
     {
@@ -160,7 +164,7 @@ class Zipper
     /**
      * Insert element after hole.
      *
-     * @param mixed Element to insert
+     * @param T|null $t Element to insert
      */
     public function insertAfter($t): void
     {
@@ -187,13 +191,13 @@ class Zipper
      * NB: the absolute index location after this operation is
      * *unchanged!*
      *
-     * @param $t
-     * @param $delete
-     * @param $replacement
+     * @param T     $t
+     * @param int       $delete
+     * @param array     $replacement
      *
-     * @return array
+     * @return array|array{Zipper, T}
      */
-    public function splice($t, $delete, $replacement): array
+    public function splice($t, int $delete, array $replacement): array
     {
         // delete
         $old = [];

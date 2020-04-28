@@ -27,10 +27,10 @@ class URIParser
      *
      * @param string $uri URI to parse
      *
-     * @return URI|bool representation of URI. This representation has
+     * @return URI representation of URI. This representation has
      *         not been validated yet and may not conform to RFC.
      */
-    public function parse(string $uri)
+    public function parse(string $uri): ?URI
     {
         $uri = $this->percentEncoder->normalize($uri);
 
@@ -49,7 +49,7 @@ class URIParser
         $result = preg_match($r_URI, $uri, $matches);
 
         if (!$result) {
-            return false;
+            return null;
         } // *really* invalid URI
 
         // seperate out parts

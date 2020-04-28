@@ -19,19 +19,19 @@ use HTMLPurifier\Node;
 class Text extends Token
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = '#PCDATA';
     /**< PCDATA tag name compatible with DTD. */
 
     /**
-     * @type string
+     * @var string
      */
     public $data;
     /**< Parsed character data of text. */
 
     /**
-     * @type bool
+     * @var bool
      */
     public $is_whitespace;
 

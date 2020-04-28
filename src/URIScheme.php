@@ -17,15 +17,15 @@ abstract class URIScheme
      * specified that coincides with the default port, it will be
      * elided.
      *
-     * @type int
+     * @var int
      */
-    public $default_port = null;
+    public $default_port = -1;
 
     /**
      * Whether or not URIs of this scheme are locatable by a browser
      * http and ftp are accessible, while mailto and news are not.
      *
-     * @type bool
+     * @var bool
      */
     public $browsable = false;
 
@@ -33,7 +33,7 @@ abstract class URIScheme
      * Whether or not data transmitted over this scheme is encrypted.
      * https is secure, http is not.
      *
-     * @type bool
+     * @var bool
      */
     public $secure = false;
 
@@ -41,7 +41,7 @@ abstract class URIScheme
      * Whether or not the URI always uses <hier_part>, resolves edge cases
      * with making relative URIs absolute
      *
-     * @type bool
+     * @var bool
      */
     public $hierarchical = false;
 
@@ -50,7 +50,7 @@ abstract class URIScheme
      * explicitly specified, ala file:///path/to/file. As of writing,
      * 'file' is the only scheme that browsers support his properly.
      *
-     * @type bool
+     * @var bool
      */
     public $may_omit_host = false;
 
@@ -93,7 +93,7 @@ abstract class URIScheme
             ($uri->host === '' && \is_null($uri->scheme))
         ) {
             do {
-                if (\is_null($uri->scheme) && substr($uri->path, 0, 2) !== '//') {
+                if (\is_null($uri->scheme) && substr((string)$uri->path, 0, 2) !== '//') {
                     $uri->host = null;
                     break;
                 }

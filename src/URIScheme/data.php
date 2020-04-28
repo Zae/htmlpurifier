@@ -47,7 +47,7 @@ class data extends URIScheme
      */
     public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
-        $result = explode(',', $uri->path, 2);
+        $result = explode(',', (string)$uri->path, 2);
         $is_base64 = false;
         $charset = null;
         $content_type = null;

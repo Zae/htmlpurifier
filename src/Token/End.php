@@ -21,7 +21,7 @@ class End extends Tag
      * Token that started this node.
      * Added by MakeWellFormed. Please do not edit this!
      *
-     * @type Token
+     * @var Token|null
      */
     public $start;
 

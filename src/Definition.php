@@ -13,7 +13,7 @@ abstract class Definition
     /**
      * Has setup() been called yet?
      *
-     * @type bool
+     * @var bool
      */
     public $setup = false;
 
@@ -26,14 +26,14 @@ abstract class Definition
      * circuited.  See enduser-customize.html for the high-level
      * picture.
      *
-     * @type bool
+     * @var bool
      */
-    public $optimized = null;
+    public $optimized = false;
 
     /**
      * What type of definition is it?
      *
-     * @type string
+     * @var string
      */
     public $type;
 

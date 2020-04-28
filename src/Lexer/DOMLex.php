@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\Lexer;
 
 use DOMAttr;
-use DOMCharacterData;
 use DOMDocument;
 use DOMNamedNodeMap;
 use DOMNode;
-use DOMProcessingInstruction;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Lexer;
@@ -45,7 +43,7 @@ use HTMLPurifier\TokenFactory;
 class DOMLex extends Lexer
 {
     /**
-     * @type \HTMLPurifier\TokenFactory
+     * @var TokenFactory
      */
     private $factory;
 
@@ -61,8 +59,8 @@ class DOMLex extends Lexer
      * @param Config      $config
      * @param Context     $context
      *
-     * @return \HTMLPurifier\Token[]
-     * @throws \HTMLPurifier\Exception
+     * @return Token[]
+     * @throws Exception
      */
     public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
@@ -130,11 +128,11 @@ class DOMLex extends Lexer
      * To iterate is human, to recurse divine - L. Peter Deutsch
      *
      * @param DOMNode               $node   DOMNode to be tokenized.
-     * @param \HTMLPurifier\Token[] $tokens Array-list of already tokenized tokens.
+     * @param Token[] $tokens Array-list of already tokenized tokens.
      * @param Config                $config
      *
      * @return void of node appended to previously passed tokens.
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     protected function tokenizeDOM(DOMNode $node, array &$tokens, Config $config): void
     {
@@ -214,7 +212,7 @@ class DOMLex extends Lexer
 
     /**
      * @param DOMNode               $node    DOMNode to be tokenized.
-     * @param \HTMLPurifier\Token[] $tokens  Array-list of already tokenized tokens.
+     * @param Token[] $tokens  Array-list of already tokenized tokens.
      * @param bool                  $collect Says whether or start and close are collected, set to
      *                                      false at first recursion because it's the implicit DIV
      *                                      tag you're dealing with.
@@ -222,7 +220,7 @@ class DOMLex extends Lexer
      * @param Config                $config
      *
      * @return bool if the token needs an endtoken
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      * @todo data and tagName properties don't seem to exist in DOMNode?
      */
     protected function createStartNode(DOMNode $node, array &$tokens, bool $collect, Config $config): bool
@@ -298,13 +296,15 @@ class DOMLex extends Lexer
     }
 
     /**
-     * @param DOMNode               $node
-     * @param \HTMLPurifier\Token[] $tokens
+     * @param DOMNode $node
+     * @param Token[] $tokens
      */
     protected function createEndNode(DOMNode $node, array &$tokens): void
     {
         $tag_name = $this->getTagName($node); // Handle variable tagName property
-        $tokens[] = $this->factory->createEnd($tag_name);
+        if (!\is_null($tag_name)) {
+            $tokens[] = $this->factory->createEnd($tag_name);
+        }
     }
 
     /**
@@ -383,7 +383,7 @@ class DOMLex extends Lexer
      * @param bool                  $use_div
      *
      * @return string
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     protected function wrapHTML(string $html, Config $config, Context $context, bool $use_div = true): string
     {

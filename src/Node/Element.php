@@ -20,25 +20,38 @@ class Element extends Node
      * @note Strictly speaking, XML tags are case sensitive, so we shouldn't
      * be lower-casing them, but these tokens cater to HTML tags, which are
      * insensitive.
-     * @type string
+     * @var string
      */
     public $name;
 
     /**
      * Associative array of the node's attributes.
      *
-     * @type array
+     * @var array
      */
     public $attr = [];
 
     /**
      * List of child elements.
      *
-     * @type array
+     * @var array
      */
     public $children = [];
 
-    public $endCol = null, $endLine = null, $endArmor = [];
+    /**
+     * @var int|null
+     */
+    public $endCol = null;
+
+    /**
+     * @var int|null
+     */
+    public $endLine = null;
+
+    /**
+     * @var array
+     */
+    public $endArmor = [];
 
     /**
      * HTMLPurifier\Node\HTMLPurifier_Node_Element constructor.
@@ -62,7 +75,7 @@ class Element extends Node
      * Returns a pair of start and end tokens, where the end token
      * is null if it is not necessary. Does not include children.
      *
-     * @type array
+     * @var array
      * @return array
      */
     public function toTokenPair(): array

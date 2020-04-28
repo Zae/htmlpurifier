@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-
 /**
  * Defines allowed child nodes and validates nodes against it.
  */
@@ -15,7 +13,7 @@ abstract class ChildDef
      * Type of child definition, usually right-most part of class name lowercase.
      * Used occasionally in terms of context.
      *
-     * @type string
+     * @var string
      */
     public $type;
 
@@ -25,14 +23,14 @@ abstract class ChildDef
      * This is necessary for redundant checking when changes affecting
      * a child node may cause a parent node to now be disallowed.
      *
-     * @type bool
+     * @var bool
      */
     public $allow_empty;
 
     /**
      * Lookup array of all elements that this definition could possibly allow.
      *
-     * @type array
+     * @var array
      */
     public $elements = [];
 

@@ -17,14 +17,14 @@ abstract class Node
     /**
      * Line number of the start token in the source document
      *
-     * @type int
+     * @var int|null
      */
     public $line;
 
     /**
      * Column number of the start token in the source document. Null if unknown.
      *
-     * @type int
+     * @var int|null
      */
     public $col;
 
@@ -32,7 +32,7 @@ abstract class Node
      * Lookup array of processing that this token is exempt from.
      * Currently, valid values are "ValidateAttributes".
      *
-     * @type array
+     * @var array
      */
     public $armor = [];
 
@@ -54,7 +54,7 @@ abstract class Node
     public $empty = false;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $is_whitespace = false;
 
@@ -62,7 +62,7 @@ abstract class Node
      * PCDATA tag name compatible with DTD, see
      * HTMLPurifier\ChildDef\HTMLPurifier_ChildDef_Custom for details.
      *
-     * @type string
+     * @var string
      */
     public $name = '';
 
@@ -70,7 +70,7 @@ abstract class Node
      * Returns a pair of start and end tokens, where the end token
      * is null if it is not necessary. Does not include children.
      *
-     * @type array
+     * @return array
      */
     abstract public function toTokenPair();
 }

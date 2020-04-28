@@ -34,14 +34,14 @@ abstract class URIFilter
     /**
      * Unique identifier of filter.
      *
-     * @type string
+     * @var string
      */
     public $name;
 
     /**
      * True if this filter should be run after scheme validation.
      *
-     * @type bool
+     * @var bool
      */
     public $post = false;
 
@@ -50,7 +50,7 @@ abstract class URIFilter
      * This permits a filter to be named Foo without the corresponding
      * %URI.Foo directive existing.
      *
-     * @type bool
+     * @var bool
      */
     public $always_load = false;
 

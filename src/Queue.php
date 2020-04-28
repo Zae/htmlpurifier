@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace HTMLPurifier;
+
 /**
  * A simple array-backed queue, based off of the classic Okasaki
  * persistent amortized queue.  The basic idea is to maintain two
@@ -19,16 +20,28 @@ namespace HTMLPurifier;
  * O(1) time.  Some care must be taken on rebalancing to avoid quadratic
  * behaviour caused by repeatedly shuffling data from the input stack
  * to the output stack and back.
+ *
+ * @template T
  */
 class Queue
 {
-    private $input;
-    private $output;
+    /**
+     * @var array
+     * @psalm-var array<T>
+     */
+    private $input = [];
+
+    /**
+     * @var array
+     * @psalm-var array<T>
+     */
+    private $output = [];
 
     /**
      * HTMLPurifier\HTMLPurifier_Queue constructor.
      *
      * @param array $input
+     * @psarlm-param array<T> $input
      */
     public function __construct(array $input = [])
     {
@@ -38,6 +51,9 @@ class Queue
 
     /**
      * Shifts an element off the front of the queue.
+     *
+     * @return mixed
+     * @psalm-return T
      */
     public function shift()
     {
@@ -56,7 +72,8 @@ class Queue
     /**
      * Pushes an element onto the front of the queue.
      *
-     * @param $x
+     * @param mixed $x
+     * @psalm-param T $x
      */
     public function push($x): void
     {
@@ -65,6 +82,8 @@ class Queue
 
     /**
      * Checks if it's empty.
+     *
+     * @return bool
      */
     public function isEmpty(): bool
     {

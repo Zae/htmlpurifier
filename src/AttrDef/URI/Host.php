@@ -40,10 +40,10 @@ class Host extends AttrDef
      * @param \HTMLPurifier\Config $config
      * @param Context             $context
      *
-     * @return bool|string
+     * @return string|null
      * @throws Exception
      */
-    public function validate($string, $config, $context)
+    public function validate($string, $config, $context): ?string
     {
         $length = \strlen($string);
         // empty hostname is OK; it's usually semantically equivalent:
@@ -62,7 +62,7 @@ class Host extends AttrDef
             $valid = $this->ipv6->validate($ip, $config, $context);
 
             if ($valid === false) {
-                return false;
+                return null;
             }
 
             return '[' . $valid . ']';
@@ -157,6 +157,6 @@ class Host extends AttrDef
             return $string;
         }
 
-        return false;
+        return null;
     }
 }

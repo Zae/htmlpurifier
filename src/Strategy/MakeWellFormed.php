@@ -55,7 +55,7 @@ class MakeWellFormed extends Strategy
     /**
      * Current nesting of elements.
      *
-     * @type array
+     * @type array|Token\Tag[]
      */
     protected $stack;
 
@@ -99,8 +99,12 @@ class MakeWellFormed extends Strategy
         // local variables
         $generator = new Generator($config, $context);
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');
+
         // used for autoclose early abortion
-        $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config) ?? [];
+        $global_parent_allowed_elements = [];
+        if (isset($definition->info_parent_def->child)) {
+            $global_parent_allowed_elements = $definition->info_parent_def->child->getAllowedElements($config);
+        }
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
         [$zipper, $token] = Zipper::fromArray($tokens);
@@ -142,7 +146,7 @@ class MakeWellFormed extends Strategy
             if (!$b) {
                 continue;
             }
-            $this->injectors[] = new $injector;
+            $this->injectors[] = new $injector();
         }
 
         foreach ($def_injectors as $injector) {
@@ -156,7 +160,7 @@ class MakeWellFormed extends Strategy
             }
             if (\is_string($injector)) {
                 $injector = "HTMLPurifier\\Injector\\$injector";
-                $injector = new $injector;
+                $injector = new $injector();
             }
             $this->injectors[] = $injector;
         }
@@ -225,6 +229,10 @@ class MakeWellFormed extends Strategy
 
                 // peek
                 $top_nesting = array_pop($this->stack);
+                if (\is_null($top_nesting)) {
+                    continue;
+                }
+
                 $this->stack[] = $top_nesting;
 
                 // send error [TagClosedSuppress]
@@ -330,7 +338,11 @@ class MakeWellFormed extends Strategy
 
                     if (\is_array($definition->info) && isset($definition->info[$parent->name])) {
                         $parent_def = $definition->info[$parent->name];
-                        $parent_elements = $parent_def->child->getAllowedElements($config) ?? [];
+
+                        $parent_elements = [];
+                        if (isset($parent_def->child)) {
+                            $parent_elements = $parent_def->child->getAllowedElements($config);
+                        }
                         $autoclose = !isset($parent_elements[$token->name]);
                     }
 
@@ -340,7 +352,12 @@ class MakeWellFormed extends Strategy
                         // example, <ul><ul> needs a <li> in between)
                         $wrapname = $definition->info[$token->name]->wrap ?? null;
                         $wrapdef = $definition->info[$wrapname] ?? null;
-                        $elements = $wrapdef->child->getAllowedElements($config) ?? [];
+
+                        $elements = [];
+                        if (isset($wrapdef->child)) {
+                            $elements = $wrapdef->child->getAllowedElements($config);
+                        }
+
                         if (isset($elements[$token->name], $parent_elements[$wrapname], $wrapname)) {
                             $newtoken = new Start($wrapname);
                             $token = $this->insertBefore($newtoken);
@@ -360,10 +377,14 @@ class MakeWellFormed extends Strategy
                         $autoclose_ok = isset($global_parent_allowed_elements[$token->name]);
                         if (!$autoclose_ok) {
                             foreach ($this->stack as $ancestor) {
-                                $elements = $definition
-                                                ->info[$ancestor->name]
-                                                ->child
-                                                ->getAllowedElements($config) ?? [];
+                                $elements = [];
+
+                                if (isset($ancestor->name, $definition->info[$ancestor->name]->child)) {
+                                    $elements = $definition
+                                                    ->info[$ancestor->name]
+                                                    ->child
+                                                    ->getAllowedElements($config);
+                                }
 
                                 if (isset($elements[$token->name])) {
                                     $autoclose_ok = true;
@@ -373,7 +394,7 @@ class MakeWellFormed extends Strategy
                                 $wrapname = $definition->info[$token->name]->wrap ?? null;
                                 $wrapdef = $definition->info[$wrapname] ?? null;
 
-                                if (isset($wrapdef, $wrapdef->child) && $wrapdef->child instanceof ChildDef) {
+                                if (isset($wrapdef, $wrapdef->child)) {
                                     $wrap_elements = $wrapdef->child->getAllowedElements($config);
                                 }
 
@@ -384,7 +405,7 @@ class MakeWellFormed extends Strategy
                             }
                         }
 
-                        if ($autoclose_ok) {
+                        if ($autoclose_ok && !\is_null($parent)) {
                             // errors need to be updated
                             $new_token = new End($parent->name);
                             $new_token->start = $parent;
@@ -478,7 +499,7 @@ class MakeWellFormed extends Strategy
             // we modify the input stream accordingly and then punt, so that
             // the tokens get processed again.
             $current_parent = array_pop($this->stack);
-            if ($current_parent->name === $token->name) {
+            if (isset($current_parent) && $current_parent->name === $token->name) {
                 $token->start = $current_parent;
                 foreach ($this->injectors as $i => $injector) {
                     if (isset($token->skip[$i])) {
@@ -510,16 +531,18 @@ class MakeWellFormed extends Strategy
             // (feature could be to specify how far you'd like to go)
             $size = \count($this->stack);
             // -2 because -1 is the last element, but we already checked that
-            $skipped_tags = false;
+
+            /** @var Token\Tag[]|null $skipped_tags */
+            $skipped_tags = null;
             for ($j = $size - 2; $j >= 0; $j--) {
-                if ($this->stack[$j]->name === $token->name) {
+                if (isset($this->stack[$j]->name) && $this->stack[$j]->name === $token->name) {
                     $skipped_tags = \array_slice($this->stack, $j);
                     break;
                 }
             }
 
             // we didn't find the tag, so remove
-            if ($skipped_tags === false) {
+            if (\is_null($skipped_tags)) {
                 if ($escape_invalid_tags) {
                     if ($e) {
                         $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag to text');
@@ -552,15 +575,18 @@ class MakeWellFormed extends Strategy
             $replace = [$token];
             for ($j = 1; $j < $c; $j++) {
                 // ...as well as from the insertions
-                $new_token = new End($skipped_tags[$j]->name);
-                $new_token->start = $skipped_tags[$j];
-                array_unshift($replace, $new_token);
-                if (isset($definition->info[$new_token->name]) && $definition->info[$new_token->name]->formatting) {
-                    // [TagClosedAuto]
-                    $element = clone $skipped_tags[$j];
-                    $element->carryover = true;
-                    $element->armor['MakeWellFormed_TagClosedError'] = true;
-                    $replace[] = $element;
+                if (!\is_null($skipped_tags[$j])) {
+                    $new_token = new End($skipped_tags[$j]->name);
+                    $new_token->start = $skipped_tags[$j];
+                    array_unshift($replace, $new_token);
+
+                    if (isset($definition->info[$new_token->name]) && $definition->info[$new_token->name]->formatting) {
+                        // [TagClosedAuto]
+                        $element = clone $skipped_tags[$j];
+                        $element->carryover = true;
+                        $element->armor['MakeWellFormed_TagClosedError'] = true;
+                        $replace[] = $element;
+                    }
                 }
             }
 
@@ -679,6 +705,8 @@ class MakeWellFormed extends Strategy
     /**
      * Removes current token. Cursor now points to new token occupying previously
      * occupied space.  You must reprocess after this.
+     *
+     * @return mixed|null
      */
     private function remove()
     {
