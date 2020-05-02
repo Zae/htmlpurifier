@@ -15,28 +15,28 @@ class Length
     /**
      * String numeric magnitude.
      *
-     * @type string
+     * @var string
      */
     protected $n;
 
     /**
      * String unit. False is permitted if $n = 0.
      *
-     * @type string|bool
+     * @var string|bool
      */
     protected $unit;
 
     /**
      * Whether or not this length is valid. Null if not calculated yet.
      *
-     * @type bool
+     * @var bool|null
      */
     protected $isValid;
 
     /**
      * Array Lookup array of units recognized by CSS 3
      *
-     * @type array
+     * @var array
      */
     protected static $allowedUnits = [
         'em' => true, 'ex' => true, 'px' => true, 'in' => true,
@@ -96,7 +96,7 @@ class Length
             return true;
         }
 
-        if (!ctype_lower($this->unit)) {
+        if (!ctype_lower((string)$this->unit)) {
             $this->unit = strtolower((string)$this->unit);
         }
 
@@ -167,27 +167,23 @@ class Length
     /**
      * Compares two lengths, and returns 1 if greater, -1 if less and 0 if equal.
      *
-     * @param Length|false $l
+     * @param Length $l
      *
      * @return int|bool
      * @warning If both values are too large or small, this calculation will
      *          not work properly
      */
-    public function compareTo($l)
+    public function compareTo(Length $l)
     {
-        if ($l === false) {
-            return false;
-        }
-
         if ($l->unit !== $this->unit) {
             $converter = new UnitConverter();
             $l = $converter->convert($l, $this->unit);
 
-            if (!$l instanceof Length) {
+            if (!$l instanceof self) {
                 return false;
             }
         }
 
-        return $this->n - $l->n;
+        return (int)$this->n - (int)$l->n;
     }
 }

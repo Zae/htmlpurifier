@@ -33,7 +33,7 @@ class Number extends AttrDef
      * @param \HTMLPurifier\Config|null   $config
      * @param \HTMLPurifier\Context|null $context
      *
-     * @return string|bool
+     * @return string|false
      * @warning Some contexts do not pass $config, $context. These
      *          variables should not be used without checking HTMLPurifier\HTMLPurifier_Length
      */

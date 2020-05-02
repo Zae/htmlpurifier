@@ -62,8 +62,9 @@ class SafeObject extends Injector
 
     /**
      * @param Token $token
+     * @param-out Token|Token[]|boolean $token
      */
-    public function handleElement(Token &$token)
+    public function handleElement(Token &$token): void
     {
         if ($token->name == 'object') {
             $this->objectStack[] = $token;

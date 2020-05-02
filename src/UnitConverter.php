@@ -81,7 +81,7 @@ class UnitConverter
      * @param Length $length
      *      Instance of HTMLPurifier\HTMLPurifier_Length to convert. You must validate()
      *      it before passing it here!
-     * @param string $to_unit
+     * @param string|bool $to_unit
      *      Unit to convert to.
      *
      * @return Length|bool
@@ -96,7 +96,7 @@ class UnitConverter
      *            and this causes some decimals to be excluded, those
      *            decimals will be added on.
      */
-    public function convert(Length $length, string $to_unit)
+    public function convert(Length $length, $to_unit)
     {
         if (!$length->isValid()) {
             return false;

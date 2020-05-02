@@ -8,8 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
+use HTMLPurifier\Config;
 use HTMLPurifier\Token\Text;
 
 /**
@@ -49,6 +48,8 @@ class PurifierLinkify extends Injector
 
     /**
      * @param Text $token
+     * @param-out Text|list<Start|End|Text> $token
+     * @return void
      */
     public function handleText(Text &$token)
     {

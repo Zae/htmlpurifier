@@ -231,6 +231,8 @@ class HTMLModuleManager
     /**
      * Adds a module to the current doctype by first registering it,
      * and then tacking it on to the active doctype
+     *
+     * @param string|HTMLModule $module
      */
     public function addModule($module): void
     {
@@ -247,7 +249,7 @@ class HTMLModuleManager
      * Adds a class prefix that registerModule() will use to resolve a
      * string name to a concrete class
      */
-    public function addPrefix($prefix): void
+    public function addPrefix(string $prefix): void
     {
         $this->prefixes[] = $prefix;
     }
@@ -374,6 +376,9 @@ class HTMLModuleManager
     /**
      * Takes a module and adds it to the active module collection,
      * registering it if necessary.
+     *
+     * @param string|HTMLModule $module
+     * @return void
      */
     public function processModule($module): void
     {

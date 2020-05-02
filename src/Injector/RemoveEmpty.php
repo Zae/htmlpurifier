@@ -82,6 +82,10 @@ class RemoveEmpty extends Injector
 
     /**
      * @param Token $token
+     * @param-out Token|int $token
+     *
+     * @throws Exception
+     * @return void
      */
     public function handleElement(Token &$token)
     {

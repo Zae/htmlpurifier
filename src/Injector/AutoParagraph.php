@@ -41,7 +41,8 @@ class AutoParagraph extends Injector
     }
 
     /**
-     * @param \HTMLPurifier\Token\Text $token
+     * @param Text $token
+     * @param-out Text|Token[] $token
      */
     public function handleText(Text &$token): void
     {
@@ -120,6 +121,7 @@ class AutoParagraph extends Injector
 
     /**
      * @param Token $token
+     * @param-out Token|array $token
      */
     public function handleElement(Token &$token): void
     {
