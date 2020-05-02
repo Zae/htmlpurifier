@@ -20,22 +20,22 @@ class LanguageFactory
      * Cache of language code information used to load HTMLPurifier\HTMLPurifier_Language objects.
      * Structure is: $factory->cache[$language_code][$key] = $value
      *
-     * @type array
+     * @var array
      */
-    public $cache;
+    public $cache = [];
 
     /**
      * Valid keys in the HTMLPurifier\HTMLPurifier_Language object. Designates which
      * variables to slurp out of a message file.
      *
-     * @type array
+     * @var array
      */
     public $keys = ['fallback', 'messages', 'errorNames'];
 
     /**
      * Instance to validate language codes.
      *
-     * @type Lang
+     * @var Lang
      *
      */
     protected $validator;
@@ -44,14 +44,14 @@ class LanguageFactory
      * Cached copy of dirname(__FILE__), directory of current file without
      * trailing slash.
      *
-     * @type string
+     * @var string
      */
     protected $dir;
 
     /**
      * Keys whose contents are a hash map and can be merged.
      *
-     * @type array
+     * @var array
      */
     protected $mergeable_keys_map = ['messages' => true, 'errorNames' => true];
 
@@ -77,18 +77,15 @@ class LanguageFactory
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
             $instance = new static();
-            $instance->setup();
         }
 
         return $instance;
     }
 
     /**
-     * Sets up the singleton, much like a constructor
-     *
-     * @note Prevents people from getting this outside of the singleton
+     * Private constructor, use instance() to get the singleton.
      */
-    public function setup(): void
+    private function __construct()
     {
         $this->validator = new Lang();
         $this->dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier';
@@ -114,10 +111,10 @@ class LanguageFactory
                 $context
             );
         } else {
-            $code = $this->validator->validate($code, $config, $context);
+            $code = $this->validator->validate((string)$code, $config, $context);
         }
 
-        if ($code === false) {
+        if (!\is_string($code)) {
             $code = 'en'; // malformed code becomes English
         }
 
@@ -131,7 +128,6 @@ class LanguageFactory
             $file = $this->dir . '/Language/classes/' . $code . '.php';
 
             if (file_exists($file) || class_exists($class, false)) {
-                /** @var Language $lang */
                 $lang = new $class($config, $context);
 
                 if (!$lang instanceof Language) {

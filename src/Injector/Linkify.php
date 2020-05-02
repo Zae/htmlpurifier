@@ -25,7 +25,9 @@ class Linkify extends Injector
     public $needed = ['a' => ['href']];
 
     /**
-     * @param \HTMLPurifier\Token\Text $token
+     * @param Text $token
+     * @param-out Text|list<Start|End|Text> $token
+     * @return void
      */
     public function handleText(Text &$token)
     {

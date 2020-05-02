@@ -307,7 +307,8 @@ abstract class Injector
     /**
      * Handler that is called when a text token is processed
      *
-     * @param \HTMLPurifier\Token\Text $token
+     * @param Text $token
+     * @return void
      */
     public function handleText(Text &$token)
     {
@@ -317,6 +318,7 @@ abstract class Injector
      * Handler that is called when a start or empty token is processed
      *
      * @param Token $token
+     * @return void
      */
     public function handleElement(Token &$token)
     {
@@ -326,10 +328,10 @@ abstract class Injector
      * Handler that is called when an end token is processed
      *
      * @param Token $token
+     * @return void
      */
     public function handleEnd(Token &$token)
     {
-        $this->notifyEnd($token);
     }
 
     /**

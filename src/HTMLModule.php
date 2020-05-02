@@ -26,7 +26,7 @@ class HTMLModule
     /**
      * Short unique string identifier of the module.
      *
-     * @type string
+     * @var string
      */
     public $name;
 
@@ -34,7 +34,7 @@ class HTMLModule
      * Informally, a list of elements this module changes.
      * Not used in any significant way.
      *
-     * @type array
+     * @var array
      */
     public $elements = [];
 
@@ -43,7 +43,7 @@ class HTMLModule
      * Some definitions may be incomplete, to be merged in later
      * with the full definition.
      *
-     * @type array
+     * @var array
      */
     public $info = [];
 
@@ -53,7 +53,7 @@ class HTMLModule
      * content set. This corresponds to an internal variable $content_sets
      * and NOT info_content_sets member variable of HTMLDefinition.
      *
-     * @type array
+     * @var array
      */
     public $content_sets = [];
 
@@ -65,28 +65,28 @@ class HTMLModule
      * attr_collections->info, since the object's data is only info,
      * with extra behavior associated with it.
      *
-     * @type array
+     * @var array
      */
     public $attr_collections = [];
 
     /**
      * Associative array of deprecated tag name to HTMLPurifier\HTMLPurifier_TagTransform.
      *
-     * @type array
+     * @var array
      */
     public $info_tag_transform = [];
 
     /**
      * List of HTMLPurifier\HTMLPurifier_AttrTransform to be performed before validation.
      *
-     * @type array
+     * @var array
      */
     public $info_attr_transform_pre = [];
 
     /**
      * List of HTMLPurifier\HTMLPurifier_AttrTransform to be performed after validation.
      *
-     * @type array
+     * @var array
      */
     public $info_attr_transform_post = [];
 
@@ -96,7 +96,7 @@ class HTMLModule
      * if an injector fails setup, there will be no error; it will simply be
      * silently disabled.
      *
-     * @type array
+     * @var array
      */
     public $info_injector = [];
 
@@ -106,7 +106,7 @@ class HTMLModule
      * to set it if you do implement getChildDef(), otherwise it will have
      * no effect!
      *
-     * @type bool
+     * @var bool
      */
     public $defines_child_def = false;
 
@@ -117,7 +117,7 @@ class HTMLModule
      * which is based off of safe HTML, to explicitly say, "This is safe," even
      * though there are modules which are "unsafe")
      *
-     * @type bool
+     * @var bool
      * @note Previously, safety could be applied at an element level granularity.
      *       We've removed this ability, so in order to add "unsafe" elements
      *       or attributes, a dedicated module with this property set to false
