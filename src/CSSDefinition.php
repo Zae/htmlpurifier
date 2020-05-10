@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef\Switcher;
 use HTMLPurifier\AttrDef\Integer;
 use HTMLPurifier\AttrDef\Enum;
@@ -25,10 +24,6 @@ use HTMLPurifier\AttrDef\CSS\BackgroundPosition;
 use HTMLPurifier\AttrDef\CSS\Background;
 use HTMLPurifier\AttrDef\CSS\AlphaValue;
 use HTMLPurifier\AttrDef\CSS\ImportantDecorator;
-use HTMLPurifier\HTMLDefinition;
-use HTMLPurifier\Definition;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 
 /**
  * Defines allowed CSS attributes and what their values are.
