@@ -51,10 +51,6 @@ class Strict extends XHTMLAndHTML4
             return parent::getChildDef($def);
         }
 
-        if (!\is_null($def->content_model)) {
-            return new StrictBlockquote($def->content_model);
-        }
-
-        return null;
+        return new StrictBlockquote($def->content_model);
     }
 }

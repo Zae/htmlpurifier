@@ -122,11 +122,15 @@ class CSS extends AttrDef
             // inefficient call, since the validator will do this again
             if (strtolower(trim($value)) !== 'inherit') {
                 // inherit works for everything (but only on the base property)
-                $result = $definition->info[$property]->validate(
-                    $value,
-                    $config,
-                    $context
-                ) ?? false;
+                $result = false;
+                if (isset($definition->info, $definition->info[$property])) {
+                    $result = $definition->info[$property]->validate(
+                            $value,
+                            $config,
+                            $context
+                        ) ?? false;
+                }
+
             } else {
                 $result = 'inherit';
             }
