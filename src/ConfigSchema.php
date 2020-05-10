@@ -14,7 +14,7 @@ class ConfigSchema
     /**
      * Defaults of the directives and namespaces.
      *
-     * @type array
+     * @var array
      * @note This shares the exact same structure as \HTMLPurifier\Config::$conf
      */
     public $defaults = [];
@@ -22,7 +22,7 @@ class ConfigSchema
     /**
      * The default property list. Do not edit this property list.
      *
-     * @type array
+     * @var PropertyList
      */
     public $defaultPlist;
 
@@ -56,14 +56,14 @@ class ConfigSchema
      * about the schema, you're better of using the ConfigSchema_Interchange,
      * which uses more memory but has much richer information.
      *
-     * @type array|int[]|object[]
+     * @var array|int[]|object[]
      */
     public $info = [];
 
     /**
      * Application-wide singleton
      *
-     * @type ConfigSchema
+     * @var ConfigSchema|null
      */
     protected static $singleton;
 
@@ -145,10 +145,14 @@ class ConfigSchema
      */
     public function addValueAliases(string $key, array $aliases): void
     {
-        if (!isset($this->info[$key]->aliases)) {
+        if (!\is_object($this->info[$key]) || !isset($this->info[$key]->aliases)) {
             $this->info[$key]->aliases = [];
         }
 
+        /**
+         * @psalm-suppress PossiblyInvalidPropertyFetch
+         * @todo: fix?
+         */
         foreach ($aliases as $alias => $real) {
             $this->info[$key]->aliases[$alias] = $real;
         }
@@ -188,9 +192,9 @@ class ConfigSchema
     public function postProcess(): void
     {
         foreach ($this->info as $key => $v) {
-            if (\count((array)$v) === 1) {
+            if (\is_object($v) && \count((array)$v) === 1) {
                 $this->info[$key] = $v->type;
-            } elseif (isset($v->allow_null) && \count((array)$v) === 2) {
+            } elseif (\is_object($v) && isset($v->allow_null) && \count((array)$v) === 2) {
                 $this->info[$key] = -$v->type;
             }
         }

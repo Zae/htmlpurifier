@@ -27,7 +27,7 @@ class Classname extends Nmtokens
         // really, this twiddle should be lazy loaded
         /** @var HTMLDefinition $def */
         $def = $config->getDefinition('HTML');
-        $name = $def->doctype->name;
+        $name = $def->doctype->name ?? '';
         if ($name === 'XHTML 1.1' || $name === 'XHTML 2.0') {
             return parent::split($string, $config, $context);
         }

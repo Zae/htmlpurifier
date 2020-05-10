@@ -19,7 +19,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
 
     public function setUp(): void
     {
-        $this->config = \HTMLPurifier\Config::createDefault();
+        $this->config = Config::createDefault();
         $this->context = new Context();
     }
 

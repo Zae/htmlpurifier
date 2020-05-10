@@ -1,17 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef;
+
 use HTMLPurifier\AttrDef\CSS;
 
-class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class CssTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef
+ */
+class CssTest extends TestCase
 {
-
-    public function setup()
+    public function setUp(): void
     {
-        parent::setup();
+        parent::setUp();
         $this->def = new CSS();
     }
 
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
         // regular cases, singular
         $this->assertDef('text-align:right;');
@@ -101,7 +112,7 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
 
         // duplicates
         $this->assertDef('text-align:right;text-align:left;',
-                                          'text-align:left;');
+            'text-align:left;');
 
         // a few composites
         $this->assertDef('font-variant:small-caps;font-weight:900;');
@@ -109,7 +120,7 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
 
         // selective removal
         $this->assertDef('text-transform:capitalize;destroy:it;',
-                         'text-transform:capitalize;');
+            'text-transform:capitalize;');
 
         // inherit works for everything
         $this->assertDef('text-align:inherit;');
@@ -121,7 +132,7 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
 
         // airy input
         $this->assertDef(' font-weight : bold; color : #ff0000',
-                         'font-weight:bold;color:#ff0000;');
+            'font-weight:bold;color:#ff0000;');
 
         // case-insensitivity
         $this->assertDef('FLOAT:LEFT;', 'float:left;');
@@ -131,7 +142,10 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
 
     }
 
-    public function testProprietary()
+    /**
+     * @test
+     */
+    public function testProprietary(): void
     {
         $this->config->set('CSS.Proprietary', true);
 
@@ -147,16 +161,21 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('filter:alpha(opacity=20);');
 
         $this->assertDef('border-top-left-radius:55pt 25pt;');
-
     }
 
-    public function testImportant()
+    /**
+     * @test
+     */
+    public function testImportant(): void
     {
         $this->config->set('CSS.AllowImportant', true);
         $this->assertDef('float:left !important;');
     }
 
-    public function testTricky()
+    /**
+     * @test
+     */
+    public function testTricky(): void
     {
         $this->config->set('CSS.AllowTricky', true);
         $this->assertDef('display:none;');
@@ -165,14 +184,20 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('opacity:0.2;');
     }
 
-    public function testForbidden()
+    /**
+     * @test
+     */
+    public function testForbidden(): void
     {
         $this->config->set('CSS.ForbiddenProperties', 'float');
         $this->assertDef('float:left;', false);
         $this->assertDef('text-align:right;');
     }
 
-    public function testTrusted()
+    /**
+     * @test
+     */
+    public function testTrusted(): void
     {
         $this->config->set('CSS.Trusted', true);
         $this->assertDef('position:relative;');
@@ -182,13 +207,13 @@ class HTMLPurifier_AttrDef_CSSTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('z-index:-2;');
     }
 
-    public function testAllowDuplicates()
+    /**
+     * @test
+     */
+    public function testAllowDuplicates(): void
     {
         $this->config->set('CSS.AllowDuplicates', true);
         $this->assertDef('text-align:right;text-align:left;');
         $this->assertDef('text-align:right;text-align:left;text-align:right;');
     }
-
 }
-
-// vim: et sw=4 sts=4

@@ -94,12 +94,12 @@ class Legacy extends HTMLModule
         $address = $this->addBlankElement('address');
         $address->content_model = 'Inline | #PCDATA | p';
         $address->content_model_type = 'optional';
-        $address->child = false;
+        $address->child = null;
 
         $blockquote = $this->addBlankElement('blockquote');
         $blockquote->content_model = 'Flow | #PCDATA';
         $blockquote->content_model_type = 'optional';
-        $blockquote->child = false;
+        $blockquote->child = null;
 
         $br = $this->addBlankElement('br');
         $br->attr['clear'] = 'Enum#left,all,right,none';

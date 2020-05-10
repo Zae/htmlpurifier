@@ -1,22 +1,54 @@
 <?php
+declare(strict_types=1);
 
-use HTMLPurifier\URIParser;
+namespace HTMLPurifier\Tests\Unit;
+
 use HTMLPurifier\URI;
+use HTMLPurifier\URIParser;
 
-class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
+/**
+ * Class URIParserTest
+ *
+ * @package HTMLPurifier\Tests\Unit
+ */
+class URIParserTest extends TestCase
 {
-
-    protected function assertParsing(
-        $uri, $scheme, $userinfo, $host, $port, $path, $query, $fragment, $config = null, $context = null
-    ) {
+    /**
+     * @param      $uri
+     * @param      $scheme
+     * @param      $userinfo
+     * @param      $host
+     * @param      $port
+     * @param      $path
+     * @param      $query
+     * @param      $fragment
+     * @param null $config
+     * @param null $context
+     */
+    private function assertParsing(
+        $uri,
+        $scheme,
+        $userinfo,
+        $host,
+        $port,
+        $path,
+        $query,
+        $fragment,
+        $config = null,
+        $context = null
+    ): void {
         $this->prepareCommon($config, $context);
         $parser = new URIParser();
         $result = $parser->parse($uri, $config, $context);
         $expect = new URI($scheme, $userinfo, $host, $port, $path, $query, $fragment);
-        $this->assertEqual($result, $expect);
+
+        static::assertEquals($expect, $result);
     }
 
-    public function testPercentNormalization()
+    /**
+     * @test
+     */
+    public function testPercentNormalization(): void
     {
         $this->assertParsing(
             '%G',
@@ -24,7 +56,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testRegular()
+    /**
+     * @test
+     */
+    public function testRegular(): void
     {
         $this->assertParsing(
             'http://www.example.com/webhp?q=foo#result2',
@@ -32,7 +67,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testPortAndUsername()
+    /**
+     * @test
+     */
+    public function testPortAndUsername(): void
     {
         $this->assertParsing(
             'http://user@authority.part:80/now/the/path?query#fragment',
@@ -40,7 +78,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testPercentEncoding()
+    /**
+     * @test
+     */
+    public function testPercentEncoding(): void
     {
         $this->assertParsing(
             'http://en.wikipedia.org/wiki/Clich%C3%A9',
@@ -48,7 +89,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testEmptyQuery()
+    /**
+     * @test
+     */
+    public function testEmptyQuery(): void
     {
         $this->assertParsing(
             'http://www.example.com/?#',
@@ -56,7 +100,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testEmptyPath()
+    /**
+     * @test
+     */
+    public function testEmptyPath(): void
     {
         $this->assertParsing(
             'http://www.example.com',
@@ -64,7 +111,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testOpaqueURI()
+    /**
+     * @test
+     */
+    public function testOpaqueURI(): void
     {
         $this->assertParsing(
             'mailto:bob@example.com',
@@ -72,7 +122,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testTelURI()
+    /**
+     * @test
+     */
+    public function testTelURI(): void
     {
         $this->assertParsing(
             'tel:+1 (555) 555-5555',
@@ -80,7 +133,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testIPv4Address()
+    /**
+     * @test
+     */
+    public function testIPv4Address(): void
     {
         $this->assertParsing(
             'http://192.0.34.166/',
@@ -88,7 +144,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testFakeIPv4Address()
+    /**
+     * @test
+     */
+    public function testFakeIPv4Address(): void
     {
         $this->assertParsing(
             'http://333.123.32.123/',
@@ -96,7 +155,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testIPv6Address()
+    /**
+     * @test
+     */
+    public function testIPv6Address(): void
     {
         $this->assertParsing(
             'http://[2001:db8::7]/c=GB?objectClass?one',
@@ -104,7 +166,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testInternationalizedDomainName()
+    /**
+     * @test
+     */
+    public function testInternationalizedDomainName(): void
     {
         $this->assertParsing(
             "http://t\xC5\xABdali\xC5\x86.lv",
@@ -112,7 +177,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testInvalidPort()
+    /**
+     * @test
+     */
+    public function testInvalidPort(): void
     {
         $this->assertParsing(
             'http://example.com:foobar',
@@ -120,7 +188,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testPathAbsolute()
+    /**
+     * @test
+     */
+    public function testPathAbsolute(): void
     {
         $this->assertParsing(
             'http:/this/is/path',
@@ -128,7 +199,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testPathRootless()
+    /**
+     * @test
+     */
+    public function testPathRootless(): void
     {
         // this should not be used but is allowed
         $this->assertParsing(
@@ -137,7 +211,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testPathEmpty()
+    /**
+     * @test
+     */
+    public function testPathEmpty(): void
     {
         $this->assertParsing(
             'http:',
@@ -145,7 +222,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testRelativeURI()
+    /**
+     * @test
+     */
+    public function testRelativeURI(): void
     {
         $this->assertParsing(
             '/a/b',
@@ -153,7 +233,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testMalformedTag()
+    /**
+     * @test
+     */
+    public function testMalformedTag(): void
     {
         $this->assertParsing(
             'http://www.example.com/>',
@@ -161,7 +244,10 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testEmpty()
+    /**
+     * @test
+     */
+    public function testEmpty(): void
     {
         $this->assertParsing(
             '',
@@ -169,14 +255,14 @@ class HTMLPurifier_URIParserTest extends HTMLPurifier_Harness
         );
     }
 
-    public function testEmbeddedColon()
+    /**
+     * @test
+     */
+    public function testEmbeddedColon(): void
     {
         $this->assertParsing(
             '{:test:}',
             null, null, null, null, '{:test:}', null, null
         );
     }
-
 }
-
-// vim: et sw=4 sts=4

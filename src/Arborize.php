@@ -19,14 +19,18 @@ use HTMLPurifier\Token\Start;
 class Arborize
 {
     /**
-     * @param $tokens
-     * @param $config
+     * @param array  $tokens
+     * @param Config $config
      *
      * @return mixed
+     * @throws Exception
      */
-    public static function arborize($tokens, $config)
+    public static function arborize(array $tokens, Config $config)
     {
         $definition = $config->getHTMLDefinition();
+        if (\is_null($definition)) {
+            throw new Exception('No Definition found');
+        }
         $parent = new Start($definition->info_parent);
         $stack = [$parent->toNode()];
 
@@ -60,11 +64,10 @@ class Arborize
     }
 
     /**
-     * @param $node
-     *
+     * @param Node $node
      * @return array
      */
-    public static function flatten($node): array
+    public static function flatten(Node $node): array
     {
         $level = 0;
         $nodes = [$level => new Queue([$node])];

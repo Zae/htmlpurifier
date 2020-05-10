@@ -108,7 +108,7 @@ class PropertyList
      *
      * @return array
      */
-    public function squash(bool $force = false): ?array
+    public function squash(bool $force = false): array
     {
         if ($this->cache !== null && !$force) {
             return $this->cache;

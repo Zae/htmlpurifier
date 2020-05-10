@@ -1,11 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef\CSS;
+
 use HTMLPurifier\AttrDef\CSS\Color;
+use HTMLPurifier\Tests\Unit\AttrDef\TestCase;
 
-class HTMLPurifier_AttrDef_CSS_ColorTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class ColorTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef\CSS
+ */
+class ColorTest extends TestCase
 {
-
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
         $this->def = new Color();
 
@@ -55,9 +67,5 @@ class HTMLPurifier_AttrDef_CSS_ColorTest extends HTMLPurifier_AttrDefHarness
 
         // maybe hex transformations would be another nice feature
         // at the very least transform rgb percent to rgb integer
-
     }
-
 }
-
-// vim: et sw=4 sts=4

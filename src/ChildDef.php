@@ -25,7 +25,7 @@ abstract class ChildDef
      *
      * @var bool
      */
-    public $allow_empty;
+    public $allow_empty = true;
 
     /**
      * Lookup array of all elements that this definition could possibly allow.

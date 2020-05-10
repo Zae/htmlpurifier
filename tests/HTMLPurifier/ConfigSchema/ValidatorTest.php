@@ -1,5 +1,7 @@
 <?php
 
+use HTMLPurifier\ConfigSchema\Exception;
+
 /**
  * Special test-case for cases that can't be tested using
  * HTMLPurifier_ConfigSchema_ValidatorTestCase.
@@ -103,7 +105,7 @@ class HTMLPurifier_ConfigSchema_ValidatorTest extends UnitTestCase
 
     protected function expectValidationException($msg)
     {
-        $this->expectException(new HTMLPurifier_ConfigSchema_Exception($msg));
+        $this->expectException(new Exception($msg));
     }
 
 }

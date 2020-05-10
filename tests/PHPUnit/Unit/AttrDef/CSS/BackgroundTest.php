@@ -1,13 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef\CSS;
+
 use HTMLPurifier\AttrDef\CSS\Background;
+use HTMLPurifier\Config;
+use HTMLPurifier\Tests\Unit\AttrDef\TestCase;
 
-class HTMLPurifier_AttrDef_CSS_BackgroundTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class BackgroundTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef\CSS
+ */
+class BackgroundTest extends TestCase
 {
-
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $this->def = new Background($config);
 
         $valid = '#333 url("chess.png") repeat fixed 50% top';
@@ -27,5 +40,3 @@ class HTMLPurifier_AttrDef_CSS_BackgroundTest extends HTMLPurifier_AttrDefHarnes
         );
     }
 }
-
-// vim: et sw=4 sts=4

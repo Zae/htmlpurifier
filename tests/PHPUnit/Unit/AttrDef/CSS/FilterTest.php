@@ -1,11 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef\CSS;
+
 use HTMLPurifier\AttrDef\CSS\Filter;
+use HTMLPurifier\Tests\Unit\AttrDef\TestCase;
 
-class HTMLPurifier_AttrDef_CSS_FilterTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class FilterTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef\CSS
+ */
+class FilterTest extends TestCase
 {
-
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
         $this->def = new Filter();
 
@@ -23,9 +35,5 @@ class HTMLPurifier_AttrDef_CSS_FilterTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('progid:DXImageTransform.Microsoft.Alpha(opacity=20)');
 
         $this->assertDef('progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)', false);
-
     }
-
 }
-
-// vim: et sw=4 sts=4

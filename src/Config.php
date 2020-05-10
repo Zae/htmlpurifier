@@ -24,14 +24,14 @@ class Config
 {
     /**
      * HTML Purifier's version
-     * @type string
+     * @var string
      */
     public $version = '4.13.0';
 
     /**
      * Whether or not to automatically finalize
      * the object if a read operation is done.
-     * @type bool
+     * @var bool
      */
     public $autoFinalize = true;
 
@@ -40,27 +40,27 @@ class Config
     /**
      * Namespace indexed array of serials for specific namespaces.
      * @see getSerial() for more info.
-     * @type string[]
+     * @var array<string|false>
      */
     protected $serials = [];
 
     /**
      * Serial for entire configuration object.
-     * @type string
+     * @var string
      */
-    protected $serial;
+    protected $serial = '';
 
     /**
      * Parser for variables.
      *
-     * @type Flexible
+     * @var Flexible|null
      */
-    protected $parser = null;
+    protected $parser;
 
     /**
      * Reference HTMLPurifier\\HTMLPurifier\ConfigSchema for value checking.
      *
-     * @type ConfigSchema
+     * @var ConfigSchema
      * @note This is public for introspective purposes. Please don't
      *       abuse!
      */
@@ -69,39 +69,39 @@ class Config
     /**
      * Indexed array of definitions.
      *
-     * @type Definition[]
+     * @var array
      */
-    protected $definitions;
+    protected $definitions = [];
 
     /**
      * Whether or not config is finalized.
-     * @type bool
+     * @var bool
      */
     protected $finalized = false;
 
     /**
      * Property list containing configuration directives.
-     * @type array
+     * @var PropertyList
      */
     protected $plist;
 
     /**
      * Whether or not a set is taking place due to an alias lookup.
-     * @type bool
+     * @var bool
      */
-    private $aliasMode;
+    private $aliasMode = false;
 
     /**
      * Set to false if you do not want line and file numbers in errors.
      * (useful when unit testing).  This will also compress some errors
      * and exceptions.
-     * @type bool
+     * @var bool
      */
     public $chatty = true;
 
     /**
      * Current lock; only gets to this namespace are allowed.
-     * @type string
+     * @var string|null
      */
     private $lock;
 
@@ -209,9 +209,18 @@ class Config
             return;
         }
 
+        /**
+         * @psalm-suppress PossiblyInvalidPropertyFetch
+         * @todo fix?
+         */
         if (isset($this->def->info[$key]->isAlias)) {
             $d = $this->def->info[$key];
+
             $this->triggerError(
+                /**
+                 * @psalm-suppress PossiblyInvalidPropertyFetch
+                 * @todo fix?
+                 */
                 'Cannot get value from aliased directive, use real name ' . $d->key,
                 E_USER_ERROR
             );
@@ -275,7 +284,7 @@ class Config
      * @note Revision is handled specially and is removed from the batch
      *       before processing!
      */
-    public function getBatchSerial($namespace): string
+    public function getBatchSerial(string $namespace): string
     {
         if (empty($this->serials[$namespace])) {
             $batch = $this->getBatch($namespace);
@@ -381,6 +390,10 @@ class Config
         } else {
             $type = $rtype;
             $allow_null = \is_object($def) && isset($def->allow_null);
+        }
+
+        if (\is_null($this->parser)) {
+            throw new Exception('No parser found');
         }
 
         try {
@@ -607,6 +620,10 @@ class Config
                 );
             }
 
+            /**
+             * @psalm-suppress DocblockTypeContradiction
+             * @todo fix?
+             */
             if ($def->optimized === null) {
                 $extra = $this->chatty ? ' (try flushing your cache)' : '';
                 throw new Exception(
@@ -838,7 +855,7 @@ class Config
                 }
             }
 
-            if (isset($def->isAlias)) {
+            if (\is_object($def) && isset($def->isAlias)) {
                 continue;
             }
 

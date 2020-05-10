@@ -1,11 +1,13 @@
 <?php
 
+use HTMLPurifier\ConfigSchema\Exception;
+
 class HTMLPurifier_ConfigSchema_ValidatorAtomTest extends UnitTestCase
 {
 
     protected function expectValidationException($msg)
     {
-        $this->expectException(new HTMLPurifier_ConfigSchema_Exception($msg));
+        $this->expectException(new Exception($msg));
     }
 
     protected function makeAtom($value)

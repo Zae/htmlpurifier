@@ -6,16 +6,18 @@ namespace HTMLPurifier\DefinitionCache\Decorator;
 
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\Definition;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Definition cache decorator class that cleans up the cache
  * whenever there is a cache miss.
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class Cleanup extends Decorator
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Cleanup';
 

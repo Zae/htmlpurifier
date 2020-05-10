@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
-
 /**
  * Abstract class representing Definition cache managers that implements
  * useful common methods and is a factory.
@@ -19,7 +16,7 @@ use HTMLPurifier\Exception;
 abstract class DefinitionCache
 {
     /**
-     * @type string
+     * @type string|null
      */
     public $type;
 
@@ -40,7 +37,7 @@ abstract class DefinitionCache
      * @return string
      * @throws Exception
      */
-    public function generateKey(\HTMLPurifier\Config $config): string
+    public function generateKey(Config $config): string
     {
         return $config->version . ',' . // possibly replace with function calls
                $config->getBatchSerial($this->type) . ',' .
@@ -57,7 +54,7 @@ abstract class DefinitionCache
      * @return bool
      * @throws Exception
      */
-    public function isOld(string $key, \HTMLPurifier\Config $config): bool
+    public function isOld(string $key, Config $config): bool
     {
         if (substr_count($key, ',') < 2) {
             return true;
@@ -105,45 +102,51 @@ abstract class DefinitionCache
      *
      * @param Definition $def
      * @param Config     $config
+     * @return mixed
      */
-    abstract public function add(Definition $def, \HTMLPurifier\Config $config);
+    abstract public function add(Definition $def, Config $config);
 
     /**
      * Unconditionally saves a definition object to the cache
      *
      * @param Definition $def
      * @param Config     $config
+     * @return mixed
      */
-    abstract public function set(Definition $def, \HTMLPurifier\Config $config);
+    abstract public function set(Definition $def, Config $config);
 
     /**
      * Replace an object in the cache
      *
      * @param Definition $def
      * @param Config     $config
+     * @return mixed
      */
-    abstract public function replace(Definition $def, \HTMLPurifier\Config $config);
+    abstract public function replace(Definition $def, Config $config);
 
     /**
      * Retrieves a definition object from the cache
      *
      * @param Config $config
+     * @return mixed
      */
-    abstract public function get(\HTMLPurifier\Config $config);
+    abstract public function get(Config $config);
 
     /**
      * Removes a definition object to the cache
      *
      * @param Config $config
+     * @return bool
      */
-    abstract public function remove(\HTMLPurifier\Config $config);
+    abstract public function remove(Config $config): bool;
 
     /**
      * Clears all objects from cache
      *
      * @param Config $config
+     * @return bool
      */
-    abstract public function flush(\HTMLPurifier\Config $config);
+    abstract public function flush(Config $config): bool;
 
     /**
      * Clears all expired (older version or revision) objects from cache
@@ -153,6 +156,7 @@ abstract class DefinitionCache
      *       should not be repeatedly called by userland code.
      *
      * @param Config $config
+     * @return bool
      */
-    abstract public function cleanup(\HTMLPurifier\Config $config);
+    abstract public function cleanup(Config $config): bool;
 }

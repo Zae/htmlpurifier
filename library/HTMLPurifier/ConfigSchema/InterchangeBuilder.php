@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Exception;
+use HTMLPurifier\ConfigSchema\Exception;
 use HTMLPurifier\VarParser\Native;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
@@ -81,7 +81,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param string                                $file
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function buildFile(HTMLPurifier_ConfigSchema_Interchange $interchange, string $file): void
     {
@@ -98,7 +98,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange HTMLPurifier_ConfigSchema_Interchange object to build
      * @param StringHash                            $hash        source data
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function build(HTMLPurifier_ConfigSchema_Interchange $interchange, StringHash $hash): void
     {
@@ -107,14 +107,14 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
         }
 
         if (!isset($hash['ID'])) {
-            throw new HTMLPurifier_ConfigSchema_Exception('Hash does not have any ID');
+            throw new Exception('Hash does not have any ID');
         }
 
         if (strpos($hash['ID'], '.') === false) {
             if (count($hash) === 2 && isset($hash['DESCRIPTION'])) {
                 $hash->offsetGet('DESCRIPTION'); // prevent complaining
             } else {
-                throw new HTMLPurifier_ConfigSchema_Exception('All directives must have a namespace');
+                throw new Exception('All directives must have a namespace');
             }
         } else {
             $this->buildDirective($interchange, $hash);
@@ -127,7 +127,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      * @param StringHash                            $hash
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception|Exception
+     * @throws Exception|Exception
      */
     public function buildDirective(
         HTMLPurifier_ConfigSchema_Interchange $interchange,
@@ -146,7 +146,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
             }
             $directive->type = $type[0];
         } else {
-            throw new HTMLPurifier_ConfigSchema_Exception("TYPE in directive hash '$id' not defined");
+            throw new Exception("TYPE in directive hash '$id' not defined");
         }
 
         if (isset($hash['DEFAULT'])) {
@@ -157,7 +157,7 @@ class HTMLPurifier_ConfigSchema_InterchangeBuilder
                     $directive->typeAllowsNull
                 );
             } catch (VarParserException $e) {
-                throw new HTMLPurifier_ConfigSchema_Exception($e->getMessage() . " in DEFAULT in directive hash '$id'");
+                throw new Exception($e->getMessage() . " in DEFAULT in directive hash '$id'");
             }
         }
 

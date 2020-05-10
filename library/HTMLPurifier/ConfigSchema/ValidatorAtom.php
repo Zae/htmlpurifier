@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ConfigSchema\Exception;
+
 /**
  * Fluent interface for validating the contents of member variables.
  * This should be immutable. See HTMLPurifier_ConfigSchema_Validator for
@@ -47,7 +49,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertIsString(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -60,7 +62,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertIsBool(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -73,7 +75,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertIsArray(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -86,7 +88,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertNotNull(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -99,7 +101,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertAlnum(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -113,7 +115,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertNotEmpty(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -126,7 +128,7 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
 
     /**
      * @return HTMLPurifier_ConfigSchema_ValidatorAtom
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function assertIsLookup(): HTMLPurifier_ConfigSchema_ValidatorAtom
     {
@@ -143,10 +145,10 @@ class HTMLPurifier_ConfigSchema_ValidatorAtom
     /**
      * @param string $msg
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     protected function error(string $msg): void
     {
-        throw new HTMLPurifier_ConfigSchema_Exception(ucfirst($this->member) . ' in ' . $this->context . ' ' . $msg);
+        throw new Exception(ucfirst($this->member) . ' in ' . $this->context . ' ' . $msg);
     }
 }

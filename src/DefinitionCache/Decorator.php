@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\DefinitionCache;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Definition;
-use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 
 /**
  * Class HTMLPurifier\ChildDef\HTMLPurifier_DefinitionCache_Decorator
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
  */
 class Decorator extends DefinitionCache
 {
     /**
      * Cache object we are decorating
      *
-     * @type \HTMLPurifier\DefinitionCache
+     * @var DefinitionCache
      */
     public $cache;
 
@@ -34,7 +36,7 @@ class Decorator extends DefinitionCache
     /**
      * Lazy decorator function
      *
-     * @param \HTMLPurifier\DefinitionCache $cache Reference to cache object to decorate
+     * @param DefinitionCache $cache Reference to cache object to decorate
      *
      * @return Decorator
      */
@@ -61,73 +63,73 @@ class Decorator extends DefinitionCache
 
     /**
      * @param Definition          $def
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @return mixed
      */
-    public function add(Definition $def, \HTMLPurifier\Config $config)
+    public function add(Definition $def, Config $config)
     {
         return $this->cache->add($def, $config);
     }
 
     /**
      * @param Definition          $def
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @return mixed
      */
-    public function set(Definition $def, \HTMLPurifier\Config $config)
+    public function set(Definition $def, Config $config)
     {
         return $this->cache->set($def, $config);
     }
 
     /**
      * @param Definition          $def
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @return mixed
      */
-    public function replace(Definition $def, \HTMLPurifier\Config $config)
+    public function replace(Definition $def, Config $config)
     {
         return $this->cache->replace($def, $config);
     }
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @return mixed
      */
-    public function get(\HTMLPurifier\Config $config)
+    public function get(Config $config)
     {
         return $this->cache->get($config);
     }
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
-     * @return mixed
+     * @return bool
      */
-    public function remove($config)
+    public function remove($config): bool
     {
         return $this->cache->remove($config);
     }
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
-     * @return mixed
+     * @return bool
      */
-    public function flush($config)
+    public function flush($config): bool
     {
         return $this->cache->flush($config);
     }
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
-     * @return mixed
+     * @return bool
      */
-    public function cleanup($config)
+    public function cleanup($config): bool
     {
         return $this->cache->cleanup($config);
     }
