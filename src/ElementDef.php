@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\ChildDef;
-use HTMLPurifier\ContentSets;
-
 /**
  * Structure that stores an HTML element definition. Used by
  * HTMLPurifier\HTMLPurifier_HTMLDefinition and HTMLPurifier\HTMLPurifier_HTMLModule.
@@ -83,7 +80,7 @@ class ElementDef
      *      being processed by HTMLDefinition
      * @var string
      */
-    public $content_model;
+    public $content_model = '';
 
     /**
      * Value of $child->type, used to determine which ChildDef to use,
@@ -94,7 +91,7 @@ class ElementDef
      *      being processed by HTMLDefinition
      * @var string
      */
-    public $content_model_type;
+    public $content_model_type = '';
 
     /**
      * Does the element have a content model (#PCDATA | Inline)*? This
@@ -143,13 +140,13 @@ class ElementDef
      *
      * @var string
      */
-    public $wrap;
+    public $wrap = '';
 
     /**
      * Whether or not this is a formatting element affected by the
      * "Active Formatting Elements" algorithm.
      *
-     * @var bool
+     * @var bool|null
      */
     public $formatting;
 
@@ -165,8 +162,8 @@ class ElementDef
     public static function create(?string $content_model, ?string $content_model_type, array $attr): ElementDef
     {
         $def = new static();
-        $def->content_model = $content_model;
-        $def->content_model_type = $content_model_type;
+        $def->content_model = $content_model ?? '';
+        $def->content_model_type = $content_model_type ?? '';
         $def->attr = $attr;
 
         return $def;
@@ -210,12 +207,12 @@ class ElementDef
 
         if (!empty($def->content_model)) {
             $this->content_model = str_replace('#SUPER', $this->content_model, $def->content_model);
-            $this->child = false;
+            $this->child = null;
         }
 
         if (!empty($def->content_model_type)) {
             $this->content_model_type = $def->content_model_type;
-            $this->child = false;
+            $this->child = null;
         }
 
         if ($def->child !== null) {
