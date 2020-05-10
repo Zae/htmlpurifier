@@ -70,7 +70,7 @@ class ElementDef
     /**
      * HTMLPurifier\HTMLPurifier_ChildDef of this tag.
      *
-     * @var ChildDef
+     * @var ChildDef|null
      */
     public $child;
 
@@ -81,7 +81,7 @@ class ElementDef
      * into an HTMLPurifier\HTMLPurifier_ChildDef.
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
-     * @var string
+     * @var string|null
      */
     public $content_model;
 
@@ -92,7 +92,7 @@ class ElementDef
      * @warning This must be lowercase
      * @warning This is a temporary variable that is not available after
      *      being processed by HTMLDefinition
-     * @var string
+     * @var string|null
      */
     public $content_model_type;
 
@@ -141,7 +141,7 @@ class ElementDef
      * allowed by this sub-element; if it is, instead of closing the
      * current element, place it inside this element.
      *
-     * @var string
+     * @var string|null
      */
     public $wrap;
 
@@ -151,7 +151,7 @@ class ElementDef
      *
      * @var bool
      */
-    public $formatting;
+    public $formatting = false;
 
     /**
      * Low-level factory constructor for creating new standalone element defs
@@ -208,23 +208,21 @@ class ElementDef
         $this->attr_transform_pre = array_merge($this->attr_transform_pre, $def->attr_transform_pre);
         $this->attr_transform_post = array_merge($this->attr_transform_post, $def->attr_transform_post);
 
-        if (!empty($def->content_model)) {
+        if (!empty($this->content_model) && !empty($def->content_model)) {
             $this->content_model = str_replace('#SUPER', $this->content_model, $def->content_model);
-            $this->child = false;
+            $this->child = null;
         }
 
         if (!empty($def->content_model_type)) {
             $this->content_model_type = $def->content_model_type;
-            $this->child = false;
+            $this->child = null;
         }
 
         if ($def->child !== null) {
             $this->child = $def->child;
         }
 
-        if ($def->formatting !== null) {
-            $this->formatting = $def->formatting;
-        }
+        $this->formatting = $def->formatting;
 
         if ($def->descendants_are_inline) {
             $this->descendants_are_inline = $def->descendants_are_inline;

@@ -1,11 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef;
+
 use HTMLPurifier\AttrDef\Integer;
 
-class HTMLPurifier_AttrDef_IntegerTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class IntegerTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef
+ */
+class IntegerTest extends TestCase
 {
-
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
         $this->def = new Integer();
 
@@ -22,10 +33,14 @@ class HTMLPurifier_AttrDef_IntegerTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('3.4', false);
         $this->assertDef('asdf', false); // must not return zero
         $this->assertDef('2in', false); // must not return zero
-
     }
 
-    public function assertRange($negative, $zero, $positive)
+    /**
+     * @param $negative
+     * @param $zero
+     * @param $positive
+     */
+    private function assertRange($negative, $zero, $positive): void
     {
         $this->assertDef('-100', $negative);
         $this->assertDef('-1', $negative);
@@ -34,7 +49,10 @@ class HTMLPurifier_AttrDef_IntegerTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('42', $positive);
     }
 
-    public function testRange()
+    /**
+     * @test
+     */
+    public function testRange(): void
     {
         $this->def = new Integer(false);
         $this->assertRange(false, true, true); // non-negative
@@ -56,9 +74,5 @@ class HTMLPurifier_AttrDef_IntegerTest extends HTMLPurifier_AttrDefHarness
 
         $this->def = new Integer(true, true, false);
         $this->assertRange(true, true, false); // non-positive
-
     }
-
 }
-
-// vim: et sw=4 sts=4

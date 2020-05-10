@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\ConfigSchema\Exception;
+
 /**
  * Generic schema interchange format that can be converted to a runtime
  * representation (HTMLPurifier\HTMLPurifier_ConfigSchema) or HTML documentation. Members
@@ -28,12 +30,12 @@ class HTMLPurifier_ConfigSchema_Interchange
      *
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $directive
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function addDirective(HTMLPurifier_ConfigSchema_Interchange_Directive $directive): void
     {
         if (isset($this->directives[$i = $directive->id->toString()])) {
-            throw new HTMLPurifier_ConfigSchema_Exception("Cannot redefine directive '$i'");
+            throw new Exception("Cannot redefine directive '$i'");
         }
 
         $this->directives[$i] = $directive;

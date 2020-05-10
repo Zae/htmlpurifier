@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\Exception;
+use HTMLPurifier\ConfigSchema\Exception;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 
@@ -51,7 +51,7 @@ class HTMLPurifier_ConfigSchema_Validator
      * @param HTMLPurifier_ConfigSchema_Interchange $interchange
      *
      * @return bool
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function validate(HTMLPurifier_ConfigSchema_Interchange $interchange): bool
     {
@@ -77,7 +77,7 @@ class HTMLPurifier_ConfigSchema_Validator
      *
      * @param HTMLPurifier_ConfigSchema_Interchange_Id $id
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function validateId(HTMLPurifier_ConfigSchema_Interchange_Id $id): void
     {
@@ -103,7 +103,7 @@ class HTMLPurifier_ConfigSchema_Validator
      *
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      * @throws Exception
      */
     public function validateDirective(HTMLPurifier_ConfigSchema_Interchange_Directive $d): void
@@ -150,7 +150,7 @@ class HTMLPurifier_ConfigSchema_Validator
      *
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function validateDirectiveAllowed(HTMLPurifier_ConfigSchema_Interchange_Directive $d): void
     {
@@ -181,7 +181,7 @@ class HTMLPurifier_ConfigSchema_Validator
      *
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function validateDirectiveValueAliases(HTMLPurifier_ConfigSchema_Interchange_Directive $d): void
     {
@@ -224,7 +224,7 @@ class HTMLPurifier_ConfigSchema_Validator
      *
      * @param HTMLPurifier_ConfigSchema_Interchange_Directive $d
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     public function validateDirectiveAliases(HTMLPurifier_ConfigSchema_Interchange_Directive $d): void
     {
@@ -272,7 +272,7 @@ class HTMLPurifier_ConfigSchema_Validator
      * @param string $target
      * @param string $msg
      *
-     * @throws HTMLPurifier_ConfigSchema_Exception
+     * @throws Exception
      */
     protected function error($target, $msg): void
     {
@@ -282,7 +282,7 @@ class HTMLPurifier_ConfigSchema_Validator
             $prefix = ucfirst($this->getFormattedContext());
         }
 
-        throw new HTMLPurifier_ConfigSchema_Exception(trim($prefix . ' ' . $msg));
+        throw new Exception(trim($prefix . ' ' . $msg));
     }
 
     /**

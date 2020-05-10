@@ -24,19 +24,19 @@ class Chameleon extends ChildDef
     /**
      * Instance of the definition object to use when inline. Usually stricter.
      *
-     * @type Optional
+     * @var Optional
      */
     public $inline;
 
     /**
      * Instance of the definition object to use when block.
      *
-     * @type Optional
+     * @var Optional
      */
     public $block;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'chameleon';
 
@@ -57,7 +57,7 @@ class Chameleon extends ChildDef
      * @param Config  $config
      * @param Context $context
      *
-     * @return bool
+     * @return bool|array
      */
     public function validateChildren(array $children, Config $config, Context $context)
     {

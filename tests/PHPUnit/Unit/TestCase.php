@@ -67,7 +67,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
     {
         return [
             Config::createDefault(),
-            new Context
+            new Context()
         ];
     }
 
@@ -114,5 +114,19 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
 
         $result = $this->purifier->purify($input, $this->config);
         static::assertEquals($expect, $result);
+    }
+
+    /**
+     * Accepts config and context and prepares them into a valid state
+
+     * @param Config &$config   Reference to config variable
+     * @param Context &$context Reference to context variable
+     */
+    protected function prepareCommon(&$config, &$context): void
+    {
+        $config = Config::create($config);
+        if (!$context) {
+            $context = new Context();
+        }
     }
 }

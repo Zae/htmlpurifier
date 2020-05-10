@@ -14,7 +14,10 @@ use HTMLPurifier\Exception;
  */
 class FontFamily extends AttrDef
 {
-    protected $mask = null;
+    /**
+     * @var string
+     */
+    protected $mask = '';
 
     public function __construct()
     {

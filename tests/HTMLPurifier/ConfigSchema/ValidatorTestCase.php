@@ -1,5 +1,6 @@
 <?php
 
+use HTMLPurifier\ConfigSchema\Exception;
 use HTMLPurifier\StringHashParser;
 use HTMLPurifier\StringHash;
 
@@ -34,7 +35,7 @@ class HTMLPurifier_ConfigSchema_ValidatorTestCase extends UnitTestCase
             if (!isset($hash['ID'])) {
                 if (isset($hash['ERROR'])) {
                     $this->expectException(
-                        new HTMLPurifier_ConfigSchema_Exception($hash['ERROR'])
+                        new Exception($hash['ERROR'])
                     );
                 }
                 continue;

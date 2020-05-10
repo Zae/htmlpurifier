@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\ErrorStruct;
-use HTMLPurifier\Generator;
-use HTMLPurifier\Language;
-
 /**
  * Error collection class that enables HTML Purifier to report HTML
  * problems back to the user
@@ -174,7 +169,7 @@ class ErrorCollector
      *
      * @return string
      */
-    public function getHTMLFormatted(\HTMLPurifier\Config $config, ?array $errors = null): string
+    public function getHTMLFormatted(Config $config, ?array $errors = null): string
     {
         $ret = [];
 
@@ -207,12 +202,12 @@ class ErrorCollector
     }
 
     /**
-     * @param      $ret
-     * @param      $struct
-     * @param null $line
-     * @param null $col
+     * @param array $ret
+     * @param mixed $struct
+     * @param mixed|null $line
+     * @param mixed|null $col
      */
-    private function _renderStruct(&$ret, $struct, $line = null, $col = null): void
+    private function _renderStruct(array &$ret, $struct, $line = null, $col = null): void
     {
         $stack = [$struct];
         $context_stack = [[]];

@@ -77,7 +77,11 @@ class AttrTypes
         $this->info['Number'] = new Integer(false, false, true);
     }
 
-    private static function makeEnum($in): Cloner
+    /**
+     * @param string $in
+     * @return Cloner
+     */
+    private static function makeEnum(string $in): Cloner
     {
         return new Cloner(new Enum(explode(',', $in)));
     }

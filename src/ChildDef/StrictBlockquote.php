@@ -17,27 +17,27 @@ use HTMLPurifier\Exception;
 class StrictBlockquote extends Required
 {
     /**
-     * @type array
+     * @var array
      */
-    protected $real_elements;
+    protected $real_elements = [];
 
     /**
-     * @type array
+     * @var array
      */
-    protected $fake_elements;
+    protected $fake_elements = [];
 
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = true;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'strictblockquote';
 
     /**
-     * @type bool
+     * @var bool
      */
     protected $init = false;
 

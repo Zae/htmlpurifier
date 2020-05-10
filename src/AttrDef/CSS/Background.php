@@ -19,10 +19,10 @@ class Background extends AttrDef
     /**
      * Local copy of component validators.
      *
-     * @type AttrDef[]
+     * @var array<AttrDef|AttrDef\Switcher>
      * @note See HTMLPurifier_AttrDef_Font::$info for a similar impl.
      */
-    protected $info;
+    protected $info = [];
 
     /**
      * @param \HTMLPurifier\Config $config

@@ -16,50 +16,50 @@ class Doctype
     /**
      * Full name of doctype
      *
-     * @type string
+     * @var string
      */
-    public $name;
+    public $name = '';
 
     /**
      * List of standard modules (string identifiers or literal objects)
      * that this doctype uses
      *
-     * @type array
+     * @var array
      */
     public $modules = [];
 
     /**
      * List of modules to use for tidying up code
      *
-     * @type array
+     * @var array
      */
     public $tidyModules = [];
 
     /**
      * Is the language derived from XML (i.e. XHTML)?
      *
-     * @type bool
+     * @var bool
      */
     public $xml = true;
 
     /**
      * List of aliases for this doctype
      *
-     * @type array
+     * @var array
      */
     public $aliases = [];
 
     /**
      * Public DTD identifier
      *
-     * @type string
+     * @var string|null
      */
     public $dtdPublic;
 
     /**
      * System DTD identifier
      *
-     * @type string
+     * @var string|null
      */
     public $dtdSystem;
 

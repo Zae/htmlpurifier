@@ -16,10 +16,10 @@ abstract class UriTestCase extends TestCase
     /**
      * Prepares two URIs into object form
      * @param string &$uri Reference to string input URI
-     * @param string &$expect_uri Reference to string expectation URI
+     * @param string|bool &$expect_uri Reference to string expectation URI
      * @note If $expect_uri is false, it will stay false
      */
-    protected function prepareURI(string &$uri, string &$expect_uri): void
+    protected function prepareURI(string &$uri, &$expect_uri): void
     {
         $parser = new URIParser();
 

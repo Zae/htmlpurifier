@@ -23,7 +23,7 @@ abstract class AttrDef
      * Tells us whether or not an HTML attribute is minimized.
      * Has no meaning in other contexts.
      *
-     * @type bool
+     * @var bool
      */
     public $minimized = false;
 
@@ -31,7 +31,7 @@ abstract class AttrDef
      * Tells us whether or not an HTML attribute is required.
      * Has no meaning in other contexts
      *
-     * @type bool
+     * @var bool
      */
     public $required = false;
 
@@ -41,6 +41,7 @@ abstract class AttrDef
      * @param string  $string  String to be validated and cleaned.
      * @param Config  $config  Mandatory \HTMLPurifier\Config object.
      * @param Context $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
+     * @return bool|string|null
      */
     abstract public function validate($string, $config, $context);
 
@@ -64,13 +65,17 @@ abstract class AttrDef
      *          4.7.  However, note that we are NOT necessarily
      *          parsing XML, thus, this behavior may still be correct. We
      *          assume that newlines have been normalized.
+     *
+     * @param string $string
+     *
+     * @return string
      */
-    public function parseCDATA(string $string)
+    public function parseCDATA(string $string): string
     {
         $string = trim($string);
         $string = str_replace(["\n", "\t", "\r"], ' ', $string);
 
-        return $string;
+        return (string)$string;
     }
 
     /**

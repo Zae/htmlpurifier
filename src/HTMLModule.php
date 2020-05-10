@@ -28,7 +28,7 @@ class HTMLModule
      *
      * @var string
      */
-    public $name;
+    public $name = '';
 
     /**
      * Informally, a list of elements this module changes.

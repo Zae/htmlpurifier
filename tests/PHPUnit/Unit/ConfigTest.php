@@ -19,7 +19,7 @@ use stdClass;
  *
  * @package HTMLPurifier\Tests\Unit
  */
-class ConfigTest extends TestCase
+class ConfigTestt extends TestCase
 {
     /**
      * @var ConfigSchema

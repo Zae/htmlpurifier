@@ -18,14 +18,14 @@ class ContentSets
     /**
      * List of content set strings (pipe separators) indexed by name.
      *
-     * @type array
+     * @var array
      */
     public $info = [];
 
     /**
      * List of content set lookups (element => true) indexed by name.
      *
-     * @type array
+     * @var array
      * @note This is in HTMLPurifier\HTMLPurifier_HTMLDefinition->info_content_sets
      */
     public $lookup = [];
@@ -33,14 +33,14 @@ class ContentSets
     /**
      * Synchronized list of defined content sets (keys of info).
      *
-     * @type array
+     * @var array
      */
     protected $keys = [];
 
     /**
      * Synchronized list of defined content values (values of info).
      *
-     * @type array
+     * @var array
      */
     protected $values = [];
 
@@ -117,11 +117,10 @@ class ContentSets
     }
 
     /**
-     * @param $matches
-     *
+     * @param array $matches
      * @return mixed
      */
-    public function generateChildDefCallback($matches)
+    public function generateChildDefCallback(array $matches)
     {
         return $this->info[$matches[0]];
     }
@@ -141,6 +140,10 @@ class ContentSets
     public function getChildDef(ElementDef $def, HTMLModule $module): ?ChildDef
     {
         $value = $def->content_model;
+
+        /**
+         * @psalm-suppress DocblockTypeContradiction
+         */
         if (\is_object($value)) {
             trigger_error(
                 'Literal object child definitions should be stored in ' .
@@ -148,6 +151,10 @@ class ContentSets
                 E_USER_NOTICE
             );
 
+            return null;
+        }
+
+        if (\is_null($value)) {
             return null;
         }
 

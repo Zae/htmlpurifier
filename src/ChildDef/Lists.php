@@ -36,7 +36,7 @@ class Lists extends ChildDef
     /**
      * @var bool
      */
-    protected $whitespace;
+    protected $whitespace = false;
 
     /**
      * @param array   $children

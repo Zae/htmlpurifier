@@ -43,7 +43,7 @@ abstract class Definition
      *
      * @param Config $config
      */
-    abstract protected function doSetup(Config $config);
+    abstract protected function doSetup(Config $config): void;
 
     /**
      * Setup function that aborts if already setup

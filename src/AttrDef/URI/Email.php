@@ -15,8 +15,9 @@ abstract class Email extends AttrDef
      * Unpacks a mailbox into its display-name and address
      *
      * @param string $string
+     * @return void
      */
-    public function unpack($string)
+    public function unpack($string): void
     {
         // needs to be implemented
     }

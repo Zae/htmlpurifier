@@ -1,11 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef\CSS;
+
 use HTMLPurifier\AttrDef\CSS\BackgroundPosition;
+use HTMLPurifier\Tests\Unit\AttrDef\TestCase;
 
-class HTMLPurifier_AttrDef_CSS_BackgroundPositionTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class BackgroundPositionTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef\CSS
+ */
+class BackgroundPositionTest extends TestCase
 {
-
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
         $this->def = new BackgroundPosition();
 
@@ -62,9 +74,5 @@ class HTMLPurifier_AttrDef_CSS_BackgroundPositionTest extends HTMLPurifier_AttrD
         $this->assertDef('left left', 'left');
         $this->assertDef('left right top bottom center left', 'left bottom');
         $this->assertDef('0fr 9%', '9%');
-
     }
-
 }
-
-// vim: et sw=4 sts=4

@@ -4,16 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\AttrTransform;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Definition;
-use HTMLPurifier\Doctype;
-use HTMLPurifier\ElementDef;
-use HTMLPurifier\Exception;
-use HTMLPurifier\HTMLModule;
-use HTMLPurifier\HTMLModuleManager;
-use HTMLPurifier\Injector;
-
 /**
  * Definition of the purified HTML that describes allowed children,
  * attributes, and many other things.
@@ -66,7 +56,7 @@ class HTMLDefinition extends Definition
      * Definition for parent element, allows parent element to be a
      * tag that's not allowed inside the HTML fragment.
      *
-     * @var ElementDef
+     * @var ElementDef|null
      */
     public $info_parent_def;
 
@@ -117,7 +107,7 @@ class HTMLDefinition extends Definition
     /**
      * Doctype object
      *
-     * @var Doctype
+     * @var Doctype|null
      */
     public $doctype;
 
@@ -148,6 +138,14 @@ class HTMLDefinition extends Definition
 
     /**
      * Adds a custom element to your HTML definition
+     *
+     * @param string            $element_name
+     * @param string|null       $type
+     * @param string|ChildDef   $contents
+     * @param array|string|null $attr_collections
+     * @param array             $attributes
+     *
+     * @return ElementDef
      *
      * @see HTMLModule::addElement() for detailed
      *       parameter and return value descriptions.
@@ -195,6 +193,9 @@ class HTMLDefinition extends Definition
         return $this->_anonModule;
     }
 
+    /**
+     * @var HTMLModule|null
+     */
     private $_anonModule = null;
 
     // PUBLIC BUT INTERNAL VARIABLES --------------------------------------
@@ -220,7 +221,7 @@ class HTMLDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetup(\HTMLPurifier\Config $config)
+    protected function doSetup(Config $config): void
     {
         $this->processModules($config);
         $this->setupConfigStuff($config);
@@ -240,7 +241,7 @@ class HTMLDefinition extends Definition
      *
      * @param Config $config
      */
-    protected function processModules(\HTMLPurifier\Config $config): void
+    protected function processModules(Config $config): void
     {
         if ($this->_anonModule) {
             // for user specific changes
@@ -295,7 +296,7 @@ class HTMLDefinition extends Definition
      *
      * @throws Exception
      */
-    protected function setupConfigStuff(\HTMLPurifier\Config $config): void
+    protected function setupConfigStuff(Config $config): void
     {
         $block_wrapper = $config->get('HTML.BlockWrapper');
         if (isset($this->info_content_sets['Block'][$block_wrapper])) {
@@ -317,7 +318,11 @@ class HTMLDefinition extends Definition
                 'Cannot use unrecognized element as parent',
                 E_USER_ERROR
             );
-            $this->info_parent_def = $this->manager->getElement($this->info_parent, true);
+
+            $elem = $this->manager->getElement($this->info_parent, true);
+            if ($elem) {
+                $this->info_parent_def = $elem;
+            }
         }
 
         // support template text

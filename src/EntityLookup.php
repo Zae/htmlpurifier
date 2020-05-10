@@ -12,9 +12,9 @@ class EntityLookup
     /**
      * Assoc array of entity name to character represented.
      *
-     * @type array
+     * @var array
      */
-    public $table;
+    public $table = [];
 
     /**
      * Sets up the entity lookup table from the serialized file contents.

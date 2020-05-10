@@ -42,7 +42,7 @@ class CSSDefinition extends Definition
     /**
      * Assoc array of attribute name to definition object.
      *
-     * @var AttrDef[]
+     * @var array<AttrDef|Switcher>
      */
     public $info = [];
 
@@ -51,7 +51,7 @@ class CSSDefinition extends Definition
      *
      * @param Config $config
      */
-    protected function doSetup($config)
+    protected function doSetup($config): void
     {
         $this->info['text-align'] = new Enum(
             ['left', 'right', 'center', 'justify'],
@@ -414,7 +414,9 @@ class CSSDefinition extends Definition
         $allow_important = $config->get('CSS.AllowImportant');
         // wrap all attr-defs with decorator that handles !important
         foreach ($this->info as $k => $v) {
-            $this->info[$k] = new ImportantDecorator($v, $allow_important);
+            if ($v instanceof AttrDef) {
+                $this->info[$k] = new ImportantDecorator($v, $allow_important);
+            }
         }
 
         $this->setupConfigStuff($config);

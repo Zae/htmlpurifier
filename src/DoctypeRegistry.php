@@ -31,9 +31,9 @@ class DoctypeRegistry
      *
      * @param string|Doctype $doctype      Name of doctype or literal doctype object
      * @param bool   $xml
-     * @param array  $modules      Modules doctype will load
-     * @param array  $tidy_modules Modules doctype will load for certain modes
-     * @param array  $aliases      Alias names for doctype
+     * @param array|string  $modules      Modules doctype will load
+     * @param array|string  $tidy_modules Modules doctype will load for certain modes
+     * @param array|string  $aliases      Alias names for doctype
      * @param string $dtd_public
      * @param string $dtd_system
      *

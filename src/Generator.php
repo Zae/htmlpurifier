@@ -171,14 +171,8 @@ class Generator
      *
      * @return string Generated HTML
      */
-    public function generateFromToken($token): string
+    public function generateFromToken(Token $token): string
     {
-        if (!$token instanceof Token) {
-            trigger_error('Cannot generate HTML from non-HTMLPurifier\HTMLPurifier_Token object', E_USER_WARNING);
-
-            return '';
-        }
-
         if ($token instanceof Start) {
             $attr = $this->generateAttributes($token->attr, $token->name);
             if ($this->_flashCompat && $token->name === 'object') {

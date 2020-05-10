@@ -4,25 +4,27 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
-
+/**
+ * Class HTMLModuleManager
+ *
+ * @package HTMLPurifier
+ */
 class HTMLModuleManager
 {
     /**
-     * @type DoctypeRegistry
+     * @var DoctypeRegistry
      */
     public $doctypes;
 
     /**
      * Instance of current doctype.
      *
-     * @type string
+     * @var Doctype|null
      */
     public $doctype;
 
     /**
-     * @type AttrTypes
+     * @var AttrTypes
      */
     public $attrTypes;
 
@@ -30,7 +32,7 @@ class HTMLModuleManager
      * Active instances of modules for the specified doctype are
      * indexed, by name, in this array.
      *
-     * @type HTMLModule[]
+     * @var HTMLModule[]
      */
     public $modules = [];
 
@@ -39,7 +41,7 @@ class HTMLModuleManager
      * indexed by module's class name. This array is usually lazy loaded, but a
      * user can overload a module by pre-emptively registering it.
      *
-     * @type HTMLModule[]
+     * @var HTMLModule[]
      */
     public $registeredModules = [];
 
@@ -48,7 +50,7 @@ class HTMLModuleManager
      * using addModule(). These get unconditionally merged into the current doctype, whatever
      * it may be.
      *
-     * @type HTMLModule[]
+     * @var string[]
      */
     public $userModules = [];
 
@@ -56,33 +58,33 @@ class HTMLModuleManager
      * Associative array of element name to list of modules that have
      * definitions for the element; this array is dynamically filled.
      *
-     * @type array
+     * @var array
      */
     public $elementLookup = [];
 
     /**
      * List of prefixes we should use for registering small names.
      *
-     * @type array
+     * @var array
      */
     public $prefixes = [
         'HTMLPurifier\\HTMLModule\\',
     ];
 
     /**
-     * @type ContentSets
+     * @var ContentSets
      */
     public $contentSets;
 
     /**
-     * @type AttrCollections
+     * @var AttrCollections
      */
     public $attrCollections;
 
     /**
      * If set to true, unsafe elements and attributes will be allowed.
      *
-     * @type bool
+     * @var bool
      */
     public $trusted = false;
 
@@ -91,6 +93,11 @@ class HTMLModuleManager
         // editable internal objects
         $this->attrTypes = new AttrTypes();
         $this->doctypes = new DoctypeRegistry();
+        $this->contentSets = new ContentSets([]);
+        $this->attrCollections = new AttrCollections(
+            $this->attrTypes,
+            []
+        );
 
         // setup basic modules
         $common = [
@@ -165,10 +172,10 @@ class HTMLModuleManager
      * Registers a module to the recognized module list, useful for
      * overloading pre-existing modules.
      *
-     * @param $module   Mixed: string module name, with or without
+     * @param string|HTMLModule $module   Mixed: string module name, with or without
      *                  HTMLPurifier\HTMLPurifier_HTMLModule prefix, or instance of
      *                  subclass of HTMLPurifier\HTMLPurifier_HTMLModule.
-     * @param $overload Boolean whether or not to overload previous modules.
+     * @param bool $overload Boolean whether or not to overload previous modules.
      *                  If this is not set, and you do overload a module,
      *                  HTML Purifier will complain with a warning.
      *
@@ -225,6 +232,10 @@ class HTMLModuleManager
             trigger_error('Overloading ' . $module->name . ' without explicit overload parameter', E_USER_WARNING);
         }
 
+        if (!$module instanceof HTMLModule) {
+            throw new Exception('$module is not a HTMLModule');
+        }
+
         $this->registeredModules[$module->name] = $module;
     }
 
@@ -262,7 +273,7 @@ class HTMLModuleManager
      *
      * @throws Exception
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $this->trusted = $config->get('HTML.Trusted');
 
@@ -382,17 +393,21 @@ class HTMLModuleManager
      */
     public function processModule($module): void
     {
-        if (!isset($this->registeredModules[$module]) || \is_object($module)) {
+        if (\is_object($module) || !isset($this->registeredModules[$module])) {
             $this->registerModule($module);
         }
 
-        $this->modules[$module] = $this->registeredModules[$module];
+        if ($module instanceof HTMLModule) {
+            $this->modules[$module->name] = $this->registeredModules[$module->name];
+        } else {
+            $this->modules[$module] = $this->registeredModules[$module];
+        }
     }
 
     /**
      * Retrieves merged element definitions.
      *
-     * @return array<string, ElementDef|false>
+     * @return array<string, ElementDef>
      */
     public function getElements(): array
     {
@@ -417,7 +432,7 @@ class HTMLModuleManager
             }
         }
 
-        return $elements;
+        return array_filter($elements);
     }
 
     /**

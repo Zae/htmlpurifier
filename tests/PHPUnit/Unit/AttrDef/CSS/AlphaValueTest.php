@@ -1,10 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef\CSS;
+
 use HTMLPurifier\AttrDef\CSS\AlphaValue;
+use HTMLPurifier\Tests\Unit\AttrDef\TestCase;
 
-class HTMLPurifier_AttrDef_CSS_AlphaValueTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class AlphaValueTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef\CSS
+ */
+class AlphaValueTest extends TestCase
 {
-
     public function test()
     {
         $this->def = new AlphaValue();
@@ -22,9 +31,5 @@ class HTMLPurifier_AttrDef_CSS_AlphaValueTest extends HTMLPurifier_AttrDefHarnes
         $this->assertDef('000', '0');
 
         $this->assertDef('asdf', false);
-
     }
-
 }
-
-// vim: et sw=4 sts=4

@@ -74,7 +74,7 @@ class FixNesting extends Strategy
         // is 'false' when we are not inline, 'true' when it must always
         // be inline, and an integer when it is inline for a certain
         // branch of the document tree
-        $is_inline = $definition->info_parent_def->descendants_are_inline;
+        $is_inline = $definition->info_parent_def->descendants_are_inline ?? false;
         $context->register('IsInline', $is_inline);
 
         // setup error collector
@@ -82,12 +82,6 @@ class FixNesting extends Strategy
 
         //####################################################################//
         // Loop initialization
-
-        // stack that contains all elements that are excluded
-        // it is organized by parent elements, similar to $stack,
-        // but it is only populated when an element with exclusions is
-        // processed, i.e. there won't be empty exclusions.
-        $exclude_stack = [$definition->info_parent_def->excludes];
 
         // variable that contains the start token while we are processing
         // nodes. This enables error reporting to do its job
@@ -119,10 +113,12 @@ class FixNesting extends Strategy
 
         $parent_def = $definition->info_parent_def;
         $stack = [
-            [$top_node,
-                $parent_def->descendants_are_inline,
-                $parent_def->excludes, // exclusions
-                0]
+            [
+                $top_node,
+                $parent_def->descendants_are_inline ?? false,
+                $parent_def->excludes ?? [], // exclusions
+                0
+            ]
         ];
 
         while (!empty($stack)) {
@@ -135,13 +131,13 @@ class FixNesting extends Strategy
                 if ($child instanceof Element) {
                     $go = true;
                     $stack[] = [$node, $is_inline, $excludes, $ix];
-                    $stack[] = [$child,
-                        // ToDo: I don't think it matters if it's def or
-                        // child_def, but double check this...
-                        $is_inline || $def->descendants_are_inline,
-                        empty($def->excludes) ? $excludes
-                            : array_merge($excludes, $def->excludes),
-                        0];
+                    $stack[] = [
+                        $child,
+                        // ToDo: I don't think it matters if it's def or child_def, but double check this...
+                        $is_inline || (isset($def) && $def->descendants_are_inline),
+                        empty($def->excludes) ? $excludes : array_merge((array)$excludes, $def->excludes),
+                        0
+                    ];
                     break;
                 }
             }
@@ -168,7 +164,11 @@ class FixNesting extends Strategy
                     }
                 }
 
-                $result = $def->child->validateChildren($children, $config, $context);
+                if (isset($def->child)) {
+                    $result = $def->child->validateChildren($children, $config, $context);
+                } else {
+                    $result = false;
+                }
 
                 if ($result === true) {
                     // nop
@@ -184,10 +184,8 @@ class FixNesting extends Strategy
                         // XXX This will miss mutations of internal nodes. Perhaps defer to the child validators
                         if (empty($result) && !empty($children)) {
                             $e->send(E_ERROR, 'Strategy_FixNesting: Node contents removed');
-                        } else {
-                            if ($result !== $children) {
-                                $e->send(E_WARNING, 'Strategy_FixNesting: Node reorganized');
-                            }
+                        } elseif ($result !== $children) {
+                            $e->send(E_WARNING, 'Strategy_FixNesting: Node reorganized');
                         }
                     }
                 }

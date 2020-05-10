@@ -57,6 +57,10 @@ class Edit extends HTMLModule
             return null;
         }
 
+        if (\is_null($def->content_model)) {
+            return null;
+        }
+
         $value = explode('!', $def->content_model);
 
         return new Chameleon($value[0], $value[1]);

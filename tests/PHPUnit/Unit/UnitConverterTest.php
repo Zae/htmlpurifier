@@ -1,27 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit;
+
 use HTMLPurifier\Length;
 use HTMLPurifier\UnitConverter;
 
-class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
+/**
+ * Class UnitConverterTest
+ *
+ * @package HTMLPurifier\Tests\Unit
+ */
+class UnitConverterTest extends TestCase
 {
-
-    protected function assertConversion($input, $expect, $unit = null, $test_negative = true)
+    /**
+     * @param      $input
+     * @param      $expect
+     * @param null $unit
+     * @param bool $test_negative
+     */
+    private function assertConversion($input, $expect, $unit = null, $test_negative = true): void
     {
         $length = Length::make($input);
-        if ($expect !== false) $expectl = Length::make($expect);
-        else $expectl = false;
-        $to_unit = $unit !== null ? $unit : $expectl->getUnit();
+
+        if ($expect !== false) {
+            $expectl = Length::make($expect);
+        } else {
+            $expectl = false;
+        }
+
+        $to_unit = $unit ?? $expectl->getUnit();
 
         $converter = new UnitConverter(4, 10);
         $result = $converter->convert($length, $to_unit);
-        if (!$result || !$expectl) $this->assertIdentical($result, $expectl);
-        else $this->assertIdentical($result->toString(), $expectl->toString());
+        if (!$result || !$expectl) {
+            static::assertEquals($expectl, $result);
+        } else {
+            static::assertEquals($expectl->toString(), $result->toString());
+        }
 
         $converter = new UnitConverter(4, 10, true);
         $result = $converter->convert($length, $to_unit);
-        if (!$result || !$expectl) $this->assertIdentical($result, $expectl);
-        else $this->assertIdentical($result->toString(), $expectl->toString(), 'BCMath substitute: %s');
+        if (!$result || !$expectl) {
+            static::assertEquals($expectl, $result);
+        } else {
+            static::assertEquals($expectl->toString(), $result->toString(), 'BCMath substitute: %s');
+        }
 
         if ($test_negative) {
             $this->assertConversion(
@@ -33,13 +58,19 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         }
     }
 
-    public function testFail()
+    /**
+     * @test
+     */
+    public function testFail(): void
     {
         $this->assertConversion('1in', false, 'foo');
         $this->assertConversion('1foo', false, 'in');
     }
 
-    public function testZero()
+    /**
+     * @test
+     */
+    public function testZero(): void
     {
         $this->assertConversion('0', '0', 'in', false);
         $this->assertConversion('-0', '0', 'in', false);
@@ -49,7 +80,10 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         $this->assertConversion('-0in', '0', 'pt', false);
     }
 
-    public function testEnglish()
+    /**
+     * @test
+     */
+    public function testEnglish(): void
     {
         $this->assertConversion('1in', '6pc');
         $this->assertConversion('6pc', '1in');
@@ -68,7 +102,10 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         $this->assertConversion('96px', '1in');
     }
 
-    public function testMetric()
+    /**
+     * @test
+     */
+    public function testMetric(): void
     {
         $this->assertConversion('1cm', '10mm');
         $this->assertConversion('10mm', '1cm');
@@ -76,14 +113,20 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         $this->assertConversion('100mm', '10cm');
     }
 
-    public function testEnglishMetric()
+    /**
+     * @test
+     */
+    public function testEnglishMetric(): void
     {
         $this->assertConversion('2.835pt', '1mm');
         $this->assertConversion('1mm', '2.835pt');
         $this->assertConversion('0.3937in', '1cm');
     }
 
-    public function testRoundingMinPrecision()
+    /**
+     * @test
+     */
+    public function testRoundingMinPrecision(): void
     {
         // One sig-fig, modified to be four, conversion rounds up
         $this->assertConversion('100pt', '1.389in');
@@ -93,7 +136,10 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         $this->assertConversion('1000000pt', '13890in');
     }
 
-    public function testRoundingUserPrecision()
+    /**
+     * @test
+     */
+    public function testRoundingUserPrecision(): void
     {
         // Five sig-figs, conversion rounds down
         $this->assertConversion('11112000pt', '154330in');
@@ -105,19 +151,30 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         $this->assertConversion('11.112pt', '0.15433in');
     }
 
-    public function testRoundingBigNumber()
+    /**
+     * @test
+     */
+    public function testRoundingBigNumber(): void
     {
         $this->assertConversion('444400000000000000000000in', '42660000000000000000000000px');
     }
 
-    protected function assertSigFig($n, $sigfigs)
+    /**
+     * @param $n
+     * @param $sigfigs
+     */
+    private function assertSigFig($n, $sigfigs): void
     {
         $converter = new UnitConverter();
         $result = $converter->getSigFigs($n);
-        $this->assertIdentical($result, $sigfigs);
+
+        static::assertEquals($sigfigs, $result);
     }
 
-    public function test_getSigFigs()
+    /**
+     * @test
+     */
+    public function test_getSigFigs(): void
     {
         $this->assertSigFig('0', 0);
         $this->assertSigFig('1', 1);
@@ -139,7 +196,4 @@ class HTMLPurifier_UnitConverterTest extends HTMLPurifier_Harness
         $this->assertSigFig('0.010', 2);
         $this->assertSigFig('0.012', 2);
     }
-
 }
-
-// vim: et sw=4 sts=4

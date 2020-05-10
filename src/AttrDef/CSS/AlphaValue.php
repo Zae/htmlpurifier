@@ -22,7 +22,7 @@ class AlphaValue extends Number
      * @param Config|null  $config
      * @param Context|null $context
      *
-     * @return string|bool
+     * @return string|false
      */
     public function validate($number, $config, $context)
     {

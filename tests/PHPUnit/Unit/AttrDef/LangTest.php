@@ -1,11 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
+namespace HTMLPurifier\Tests\Unit\AttrDef;
+
 use HTMLPurifier\AttrDef\Lang;
 
-class HTMLPurifier_AttrDef_LangTest extends HTMLPurifier_AttrDefHarness
+/**
+ * Class LangTest
+ *
+ * @package HTMLPurifier\Tests\Unit\AttrDef
+ */
+class LangTest extends TestCase
 {
-
-    public function test()
+    /**
+     * @test
+     */
+    public function test(): void
     {
         $this->def = new Lang();
 
@@ -26,38 +37,38 @@ class HTMLPurifier_AttrDef_LangTest extends HTMLPurifier_AttrDefHarness
         $this->assertDef('thisistoolongsoitgetscut', false);
 
         // primary subtag rules
-            // I'm somewhat hesitant to allow x and i as primary language codes,
-            // because they usually are never used in real life. However,
-            // theoretically speaking, having them alone is permissable, so
-            // I'll be lenient. No XML parser is going to complain anyway.
+        // I'm somewhat hesitant to allow x and i as primary language codes,
+        // because they usually are never used in real life. However,
+        // theoretically speaking, having them alone is permissable, so
+        // I'll be lenient. No XML parser is going to complain anyway.
         $this->assertDef('x');
         $this->assertDef('i');
-            // real world use-cases
+        // real world use-cases
         $this->assertDef('x-klingon');
         $this->assertDef('i-mingo');
-            // because the RFC only defines two and three letter primary codes,
-            // anything with a length of four or greater is invalid, despite
-            // the syntax stipulation of 1 to 8 characters. Because the RFC
-            // specifically states that this reservation is in order to allow
-            // for future versions to expand, the adoption of a new RFC will
-            // require these test cases to be rewritten, even if backwards-
-            // compatibility is largely retained (i.e. this is not forwards
-            // compatible)
+        // because the RFC only defines two and three letter primary codes,
+        // anything with a length of four or greater is invalid, despite
+        // the syntax stipulation of 1 to 8 characters. Because the RFC
+        // specifically states that this reservation is in order to allow
+        // for future versions to expand, the adoption of a new RFC will
+        // require these test cases to be rewritten, even if backwards-
+        // compatibility is largely retained (i.e. this is not forwards
+        // compatible)
         $this->assertDef('four', false);
-            // for similar reasons, disallow any other one character language
+        // for similar reasons, disallow any other one character language
         $this->assertDef('f', false);
 
         // second subtag rules
-            // one letter subtags prohibited until revision. This is, however,
-            // less volatile than the restrictions on the primary subtags.
-            // Also note that this test-case tests fix-behavior: chop
-            // off subtags until you get a valid language code.
+        // one letter subtags prohibited until revision. This is, however,
+        // less volatile than the restrictions on the primary subtags.
+        // Also note that this test-case tests fix-behavior: chop
+        // off subtags until you get a valid language code.
         $this->assertDef('en-a', 'en');
-            // however, x is a reserved single-letter subtag that is allowed
+        // however, x is a reserved single-letter subtag that is allowed
         $this->assertDef('en-x', 'en-x');
-            // 2-8 chars are permitted, but have special meaning that cannot
-            // be checked without maintaining country code lookup tables (for
-            // two characters) or special registration tables (for all above).
+        // 2-8 chars are permitted, but have special meaning that cannot
+        // be checked without maintaining country code lookup tables (for
+        // two characters) or special registration tables (for all above).
         $this->assertDef('en-uk', true);
 
         // further subtag rules: only syntactic constraints
@@ -79,9 +90,5 @@ class HTMLPurifier_AttrDef_LangTest extends HTMLPurifier_AttrDefHarness
         // because attributes only allow one language, mul is allowed, complying
         // with the RFC's SHOULD NOT designation.
         $this->assertDef('mul');
-
     }
-
 }
-
-// vim: et sw=4 sts=4

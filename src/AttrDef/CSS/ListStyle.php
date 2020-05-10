@@ -19,10 +19,10 @@ class ListStyle extends AttrDef
     /**
      * Local copy of validators.
      *
-     * @type AttrDef[]
+     * @var array<AttrDef|AttrDef\Switcher>
      * @note See HTMLPurifier_AttrDef_CSS_Font::$info for a similar impl.
      */
-    protected $info;
+    protected $info = [];
 
     /**
      * @param Config $config
