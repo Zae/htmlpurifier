@@ -102,16 +102,12 @@ class ContentSets
         }
 
         $content_model = $def->content_model;
-        if (\is_string($content_model)) {
-            // Assume that $this->keys is alphanumeric
-            $def->content_model = preg_replace_callback(
-                '/\b(' . implode('|', $this->keys) . ')\b/',
-                [$this, 'generateChildDefCallback'],
-                $content_model
-            );
-            //$def->content_model = str_replace(
-            //    $this->keys, $this->values, $content_model);
-        }
+        // Assume that $this->keys is alphanumeric
+        $def->content_model = preg_replace_callback(
+            '/\b(' . implode('|', $this->keys) . ')\b/',
+            [$this, 'generateChildDefCallback'],
+            $content_model
+        );
 
         $def->child = $this->getChildDef($def, $module);
     }
@@ -151,10 +147,6 @@ class ContentSets
                 E_USER_NOTICE
             );
 
-            return null;
-        }
-
-        if (\is_null($value)) {
             return null;
         }
 

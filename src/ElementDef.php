@@ -70,7 +70,7 @@ class ElementDef
     /**
      * HTMLPurifier\HTMLPurifier_ChildDef of this tag.
      *
-     * @var ChildDef
+     * @var ChildDef|null
      */
     public $child;
 
