@@ -9,4 +9,6 @@ use HTMLPurifier\Token\Tag;
 /**
  * Concrete start token class.
  */
-class Start extends Tag {}
+class Start extends Tag
+{
+}

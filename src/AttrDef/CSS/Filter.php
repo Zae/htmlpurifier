@@ -45,9 +45,9 @@ class Filter extends AttrDef
         // if we looped this we could support multiple filters
         $function_length = strcspn($value, '(');
         $function = trim(substr($value, 0, $function_length));
-        if ($function !== 'alpha' &&
-            $function !== 'Alpha' &&
-            $function !== 'progid:DXImageTransform.Microsoft.Alpha'
+        if ($function !== 'alpha' 
+            && $function !== 'Alpha' 
+            && $function !== 'progid:DXImageTransform.Microsoft.Alpha'
         ) {
             return false;
         }

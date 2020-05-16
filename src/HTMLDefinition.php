@@ -411,32 +411,32 @@ class HTMLDefinition extends Definition
                 $bits = preg_split('/[.@]/', $elattr, 2);
                 $c = \count($bits);
                 switch ($c) {
-                    case 2:
-                        if ($bits[0] !== '*') {
-                            $element = htmlspecialchars($bits[0]);
-                            $attribute = htmlspecialchars($bits[1]);
-                            if (!isset($this->info[$element])) {
-                                trigger_error(
-                                    "Cannot allow attribute '$attribute' if element " .
-                                    "'$element' is not allowed/supported $support"
-                                );
-                            } else {
-                                trigger_error(
-                                    "Attribute '$attribute' in element '$element' not supported $support",
-                                    E_USER_WARNING
-                                );
-                            }
-                            break;
+                case 2:
+                    if ($bits[0] !== '*') {
+                        $element = htmlspecialchars($bits[0]);
+                        $attribute = htmlspecialchars($bits[1]);
+                        if (!isset($this->info[$element])) {
+                            trigger_error(
+                                "Cannot allow attribute '$attribute' if element " .
+                                "'$element' is not allowed/supported $support"
+                            );
+                        } else {
+                            trigger_error(
+                                "Attribute '$attribute' in element '$element' not supported $support",
+                                E_USER_WARNING
+                            );
                         }
-                    // otherwise fall through
-                    case 1:
-                        $attribute = htmlspecialchars($bits[0]);
-                        trigger_error(
-                            "Global attribute '$attribute' is not " .
-                            "supported in any elements $support",
-                            E_USER_WARNING
-                        );
                         break;
+                    }
+                    // otherwise fall through
+                case 1:
+                    $attribute = htmlspecialchars($bits[0]);
+                    trigger_error(
+                        "Global attribute '$attribute' is not " .
+                        "supported in any elements $support",
+                        E_USER_WARNING
+                    );
+                    break;
                 }
             }
         }
@@ -451,9 +451,10 @@ class HTMLDefinition extends Definition
                 continue;
             }
             foreach ($info->attr as $attr => $x) {
-                if (isset($forbidden_attributes["$tag@$attr"]) ||
-                    isset($forbidden_attributes["*@$attr"]) ||
-                    isset($forbidden_attributes[$attr])) {
+                if (isset($forbidden_attributes["$tag@$attr"]) 
+                    || isset($forbidden_attributes["*@$attr"]) 
+                    || isset($forbidden_attributes[$attr])
+                ) {
                     unset($this->info[$tag]->attr[$attr]);
                     continue;
                 }

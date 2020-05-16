@@ -125,8 +125,7 @@ class Munge extends URIFilter
         URI $uri,
         \HTMLPurifier\Config $config,
         Context $context
-    ): void
-    {
+    ): void {
         $string = $uri->toString();
 
         // always available

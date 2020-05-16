@@ -500,10 +500,10 @@ class HTMLModuleManager
             $this->attrCollections->expandIdentifiers($def->attr, $this->attrTypes);
 
             // descendants_are_inline, for ChildDef_Chameleon
-            if (\is_string($def->content_model) &&
-                $name !== 'del' &&
-                $name !== 'ins' &&
-                strpos($def->content_model, 'Inline') !== false
+            if (\is_string($def->content_model) 
+                && $name !== 'del' 
+                && $name !== 'ins' 
+                && strpos($def->content_model, 'Inline') !== false
             ) {
                 // this is for you, ins/del
                 $def->descendants_are_inline = true;

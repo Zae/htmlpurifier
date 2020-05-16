@@ -80,8 +80,9 @@ class MakeAbsolute extends URIFilter
             return true;
         } // abort early
 
-        if ($uri->path === '' && \is_null($uri->scheme) &&
-            \is_null($uri->host) && \is_null($uri->query) && \is_null($uri->fragment)) {
+        if ($uri->path === '' && \is_null($uri->scheme) 
+            && \is_null($uri->host) && \is_null($uri->query) && \is_null($uri->fragment)
+        ) {
             // reference to current document
             $uri = clone $this->base;
 

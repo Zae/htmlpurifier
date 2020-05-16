@@ -162,7 +162,8 @@ class Encoder
         if (preg_match(
             '/^[\x{9}\x{A}\x{D}\x{20}-\x{7E}\x{A0}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]*$/Du',
             $str
-        )) {
+        )
+        ) {
             return $str;
         }
 
@@ -189,8 +190,8 @@ class Encoder
                 // or a multi-octet sequence.
                 if ((0x80 & ($in)) === 0) {
                     // US-ASCII, pass straight through.
-                    if (($in <= 31 || $in === 127) &&
-                        !($in === 9 || $in === 13 || $in === 10) // save \r\t\n
+                    if (($in <= 31 || $in === 127) 
+                        && !($in === 9 || $in === 13 || $in === 10) // save \r\t\n
                     ) {
                         // control characters, remove
                     } else {
@@ -261,29 +262,27 @@ class Encoder
                         // Check for illegal sequences and codepoints.
 
                         // From Unicode 3.1, non-shortest form is illegal
-                        if ((($mBytes === 2) && ($mUcs4 < 0x0080)) ||
-                            (($mBytes === 3) && ($mUcs4 < 0x0800)) ||
-                            (($mBytes === 4) && ($mUcs4 < 0x10000)) ||
-                            (4 < $mBytes) ||
+                        if ((($mBytes === 2) && ($mUcs4 < 0x0080)) 
+                            || (($mBytes === 3) && ($mUcs4 < 0x0800)) 
+                            || (($mBytes === 4) && ($mUcs4 < 0x10000)) 
+                            || (4 < $mBytes) 
                             // From Unicode 3.2, surrogate characters = illegal
-                            (($mUcs4 & 0xFFFFF800) === 0xD800) ||
+                            || (($mUcs4 & 0xFFFFF800) === 0xD800) 
                             // Codepoints outside the Unicode range are illegal
-                            ($mUcs4 > 0x10FFFF)
+                            || ($mUcs4 > 0x10FFFF)
                         ) {
 
-                        } elseif ($mUcs4 !== 0xFEFF && // omit BOM
-                                  // check for valid Char unicode codepoints
-                                  (
-                                      $mUcs4 === 0x9 ||
-                                      $mUcs4 === 0xA ||
-                                      $mUcs4 === 0xD ||
-                                      (0x20 <= $mUcs4 && 0x7E >= $mUcs4) ||
-                                      // 7F-9F is not strictly prohibited by XML,
-                                      // but it is non-SGML, and thus we don't allow it
-                                      (0xA0 <= $mUcs4 && 0xD7FF >= $mUcs4) ||
-                                      (0xE000 <= $mUcs4 && 0xFFFD >= $mUcs4) ||
-                                      (0x10000 <= $mUcs4 && 0x10FFFF >= $mUcs4)
-                                  )
+                        } elseif ($mUcs4 !== 0xFEFF  // omit BOM
+                            // check for valid Char unicode codepoints
+                            && (                            $mUcs4 === 0x9 
+                            || $mUcs4 === 0xA 
+                            || $mUcs4 === 0xD 
+                            || (0x20 <= $mUcs4 && 0x7E >= $mUcs4) 
+                            // 7F-9F is not strictly prohibited by XML,
+                            // but it is non-SGML, and thus we don't allow it
+                            || (0xA0 <= $mUcs4 && 0xD7FF >= $mUcs4) 
+                            || (0xE000 <= $mUcs4 && 0xFFFD >= $mUcs4) 
+                            || (0x10000 <= $mUcs4 && 0x10FFFF >= $mUcs4)                            )
                         ) {
                             $out .= $char;
                         }
@@ -341,8 +340,9 @@ class Encoder
 
     public static function unichr(int $code): string
     {
-        if ($code > 1114111 || $code < 0 ||
-            ($code >= 55296 && $code <= 57343)) {
+        if ($code > 1114111 || $code < 0 
+            || ($code >= 55296 && $code <= 57343)
+        ) {
             // bits are set outside the "valid" range as defined
             // by UNICODE 4.1.0
             return '';
@@ -651,10 +651,10 @@ class Encoder
 
             $lenc = strtolower($encoding);
             switch ($lenc) {
-                case 'shift_jis':
-                    return ["\xC2\xA5" => '\\', "\xE2\x80\xBE" => '~'];
-                case 'johab':
-                    return ["\xE2\x82\xA9" => '\\'];
+            case 'shift_jis':
+                return ["\xC2\xA5" => '\\', "\xE2\x80\xBE" => '~'];
+            case 'johab':
+                return ["\xE2\x82\xA9" => '\\'];
             }
             if (strncmp($lenc, 'iso-8859-', 9) === 0) {
                 return [];
@@ -669,10 +669,10 @@ class Encoder
         for ($i = 0x20; $i <= 0x7E; $i++) { // all printable ASCII chars
             $c = \chr($i); // UTF-8 char
             $r = self::unsafeIconv('UTF-8', "$encoding//IGNORE", $c); // initial conversion
-            if ($r === '' ||
+            if ($r === '' 
                 // This line is needed for iconv implementations that do not
                 // omit characters that do not exist in the target character set
-                ($r === $c && self::unsafeIconv($encoding, 'UTF-8//IGNORE', $r) !== $c)
+                || ($r === $c && self::unsafeIconv($encoding, 'UTF-8//IGNORE', $r) !== $c)
             ) {
                 // Reverse engineer: what's the UTF-8 equiv of this byte
                 // sequence? This assumes that there's no variable width

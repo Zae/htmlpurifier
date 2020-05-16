@@ -102,9 +102,9 @@ class Lexer
                         break;
                     }
 
-                    if (class_exists(DOMDocument::class, false) &&
-                        method_exists(DOMDocument::class, 'loadHTML') &&
-                        !\extension_loaded('domxml')
+                    if (class_exists(DOMDocument::class, false) 
+                        && method_exists(DOMDocument::class, 'loadHTML') 
+                        && !\extension_loaded('domxml')
                     ) {
                         // check for DOM support, because while it's part of the
                         // core, it can be disabled compile time. Also, the PECL
@@ -119,20 +119,20 @@ class Lexer
 
             // instantiate recognized string names
             switch ($lexer) {
-                case 'DOMLex':
-                    $inst = new DOMLex();
-                    break;
-                case 'DirectLex':
-                    $inst = new DirectLex();
-                    break;
-                case 'PH5P':
-                    $inst = new _PH5P();
-                    break;
-                default:
-                    throw new Exception(
-                        'Cannot instantiate unrecognized Lexer type ' .
+            case 'DOMLex':
+                $inst = new DOMLex();
+                break;
+            case 'DirectLex':
+                $inst = new DirectLex();
+                break;
+            case 'PH5P':
+                $inst = new _PH5P();
+                break;
+            default:
+                throw new Exception(
+                    'Cannot instantiate unrecognized Lexer type ' .
                         htmlspecialchars($lexer)
-                    );
+                );
             }
         }
 
@@ -400,9 +400,10 @@ class Lexer
         }
 
         $hidden_elements = $config->get('Core.HiddenElements');
-        if ($config->get('Core.AggressivelyRemoveScript') &&
-            !($config->get('HTML.Trusted') || !$config->get('Core.RemoveScriptContents')
-              || empty($hidden_elements['script']))) {
+        if ($config->get('Core.AggressivelyRemoveScript') 
+            && !($config->get('HTML.Trusted') || !$config->get('Core.RemoveScriptContents')
+            || empty($hidden_elements['script']))
+        ) {
             $html = preg_replace('#<script[^>]*>.*?</script>#i', '', $html);
         }
 
@@ -426,8 +427,9 @@ class Lexer
             // Make sure it's not in a comment
             $comment_start = strrpos($matches[1], '<!--');
             $comment_end = strrpos($matches[1], '-->');
-            if ($comment_start === false ||
-                ($comment_end !== false && $comment_end > $comment_start)) {
+            if ($comment_start === false 
+                || ($comment_end !== false && $comment_end > $comment_start)
+            ) {
                 return $matches[2];
             }
         }

@@ -66,13 +66,13 @@ class Doctype
     /**
      * HTMLPurifier\HTMLPurifier_Doctype constructor.
      *
-     * @param string        $name
-     * @param bool          $xml
-     * @param array         $modules
-     * @param array         $tidyModules
-     * @param array         $aliases
-     * @param string|null   $dtd_public
-     * @param string|null   $dtd_system
+     * @param string      $name
+     * @param bool        $xml
+     * @param array       $modules
+     * @param array       $tidyModules
+     * @param array       $aliases
+     * @param string|null $dtd_public
+     * @param string|null $dtd_system
      */
     public function __construct(
         string $name,
@@ -82,8 +82,7 @@ class Doctype
         array $aliases = [],
         ?string $dtd_public = null,
         ?string $dtd_system = null
-    )
-    {
+    ) {
         $this->name = $name;
         $this->xml = $xml;
         $this->modules = $modules;
