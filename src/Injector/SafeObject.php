@@ -94,17 +94,18 @@ class SafeObject extends Injector
                 // We need this fix because YouTube doesn't supply a data
                 // attribute, which we need if a type is specified. This is
                 // *very* Flash specific.
-                if (!isset($this->objectStack[$i]->attr['data']) &&
-                    ($token->attr['name'] === 'movie' || $token->attr['name'] === 'src')
+                if (!isset($this->objectStack[$i]->attr['data']) 
+                    && ($token->attr['name'] === 'movie' || $token->attr['name'] === 'src')
                 ) {
                     $this->objectStack[$i]->attr['data'] = $token->attr['value'];
                 }
 
                 // Check if the parameter is the correct value but has not
                 // already been added
-                if (!isset($this->paramStack[$i][$n]) &&
-                    isset($this->addParam[$n]) &&
-                    $token->attr['name'] === $this->addParam[$n]) {
+                if (!isset($this->paramStack[$i][$n]) 
+                    && isset($this->addParam[$n]) 
+                    && $token->attr['name'] === $this->addParam[$n]
+                ) {
                     // keep token, and add to param stack
                     $this->paramStack[$i][$n] = true;
                 } elseif (isset($this->allowedParam[strtolower($n)])) {

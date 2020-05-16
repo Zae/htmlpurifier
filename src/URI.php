@@ -71,8 +71,7 @@ class URI
         ?string $path,
         ?string $query,
         ?string $fragment
-    )
-    {
+    ) {
         $this->scheme = \is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
@@ -345,10 +344,10 @@ class URI
         $def = $config->getDefinition('URI');
         $current_scheme_obj = $def->getDefaultScheme($config, $context);
 
-        if ($current_scheme_obj instanceof URIScheme &&
-            $scheme_obj instanceof URIScheme &&
-            $current_scheme_obj->secure &&
-            !$scheme_obj->secure
+        if ($current_scheme_obj instanceof URIScheme 
+            && $scheme_obj instanceof URIScheme 
+            && $current_scheme_obj->secure 
+            && !$scheme_obj->secure
         ) {
             return false;
         }

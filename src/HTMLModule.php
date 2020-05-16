@@ -249,12 +249,12 @@ class HTMLModule
 
         switch ($contents) {
             // check for shorthand content model forms
-            case 'Empty':
-                return ['empty', ''];
-            case 'Inline':
-                return ['optional', 'Inline | #PCDATA'];
-            case 'Flow':
-                return ['optional', 'Flow | #PCDATA'];
+        case 'Empty':
+            return ['empty', ''];
+        case 'Inline':
+            return ['optional', 'Inline | #PCDATA'];
+        case 'Flow':
+            return ['optional', 'Flow | #PCDATA'];
         }
 
         [$content_model_type, $content_model] = explode(':', $contents);

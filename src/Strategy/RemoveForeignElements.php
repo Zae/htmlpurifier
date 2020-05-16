@@ -98,9 +98,9 @@ class RemoveForeignElements extends Strategy
                 if (isset($token->name) && isset($definition->info[$token->name])) {
                     // mostly everything's good, but
                     // we need to make sure required attributes are in order
-                    if (($token instanceof Start || $token instanceof EmptyToken) &&
-                        $definition->info[$token->name]->required_attr &&
-                        ($token->name !== 'img' || $remove_invalid_img) // ensure config option still works
+                    if (($token instanceof Start || $token instanceof EmptyToken) 
+                        && $definition->info[$token->name]->required_attr 
+                        && ($token->name !== 'img' || $remove_invalid_img) // ensure config option still works
                     ) {
                         $attr_validator->validateToken($token, $config, $context);
                         $ok = true;
@@ -191,8 +191,9 @@ class RemoveForeignElements extends Strategy
                         $token->data = str_replace('--', '-', $token->data);
                     }
 
-                    if ($trusted || !empty($comment_lookup[trim($token->data)]) ||
-                        ($comment_regexp !== null && preg_match($comment_regexp, trim($token->data)))) {
+                    if ($trusted || !empty($comment_lookup[trim($token->data)]) 
+                        || ($comment_regexp !== null && preg_match($comment_regexp, trim($token->data)))
+                    ) {
                         // OK good
                         if ($e) {
                             if ($trailing_hyphen) {

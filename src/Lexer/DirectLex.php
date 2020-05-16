@@ -133,9 +133,10 @@ class DirectLex extends Lexer
                 $current_col = $rcursor - (\is_bool($nl_pos) ? 0 : $nl_pos + 1);
 
                 // recalculate lines
-                if ($synchronize_interval && // synchronization is on
-                    $cursor > 0 && // cursor is further than zero
-                    $loops % $synchronize_interval === 0) { // time to synchronize!
+                if ($synchronize_interval  // synchronization is on
+                    && $cursor > 0  // cursor is further than zero
+                    && $loops % $synchronize_interval === 0
+                ) { // time to synchronize!
                     $current_line = 1 + $this->substrCount($string, $nl, 0, $cursor);
                 }
             }
@@ -409,8 +410,7 @@ class DirectLex extends Lexer
         string $string,
         Config $config,
         Context $context
-    ): array
-    {
+    ): array {
         if ($string === '') {
             return [];
         } // no attributes

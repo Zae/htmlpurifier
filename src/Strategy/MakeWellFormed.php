@@ -381,9 +381,9 @@ class MakeWellFormed extends Strategy
 
                                 if (isset($ancestor->name, $definition->info[$ancestor->name]->child)) {
                                     $elements = $definition
-                                                    ->info[$ancestor->name]
-                                                    ->child
-                                                    ->getAllowedElements($config);
+                                        ->info[$ancestor->name]
+                                        ->child
+                                        ->getAllowedElements($config);
                                 }
 
                                 if (isset($elements[$token->name])) {

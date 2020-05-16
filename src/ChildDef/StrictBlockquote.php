@@ -86,8 +86,8 @@ class StrictBlockquote extends Required
 
         foreach ($result as $node) {
             if ($block_wrap === false) {
-                if ((($node instanceof Text && !$node->is_whitespace) ||
-                    ($node instanceof Element && !isset($this->elements[$node->name])))
+                if ((($node instanceof Text && !$node->is_whitespace) 
+                    || ($node instanceof Element && !isset($this->elements[$node->name])))
                     && !\is_null($def)
                 ) {
                     $block_wrap = new Element($def->info_block_wrapper);

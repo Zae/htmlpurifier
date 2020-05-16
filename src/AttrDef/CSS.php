@@ -125,10 +125,10 @@ class CSS extends AttrDef
                 $result = false;
                 if (isset($definition->info, $definition->info[$property])) {
                     $result = $definition->info[$property]->validate(
-                            $value,
-                            $config,
-                            $context
-                        ) ?? false;
+                        $value,
+                        $config,
+                        $context
+                    ) ?? false;
                 }
 
             } else {

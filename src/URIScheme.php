@@ -84,13 +84,13 @@ abstract class URIScheme
 
         // kludge: browsers do funny things when the scheme but not the
         // authority is set
-        if ((!$this->may_omit_host &&
-             // if the scheme is present, a missing host is always in error
-             (!\is_null($uri->scheme) && ($uri->host === '' || \is_null($uri->host)))) ||
+        if ((!$this->may_omit_host 
+            // if the scheme is present, a missing host is always in error
+            && (!\is_null($uri->scheme) && ($uri->host === '' || \is_null($uri->host)))) 
             // if the scheme is not present, a *blank* host is in error,
             // since this translates into '///path' which most browsers
             // interpret as being 'http://path'.
-            ($uri->host === '' && \is_null($uri->scheme))
+            || ($uri->host === '' && \is_null($uri->scheme))
         ) {
             do {
                 if (\is_null($uri->scheme) && substr((string)$uri->path, 0, 2) !== '//') {

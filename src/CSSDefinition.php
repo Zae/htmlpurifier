@@ -454,7 +454,8 @@ class CSSDefinition extends Definition
             [
                 new Percentage(true), // disallow negative
                 new Length('0') // disallow negative
-            ]);
+            ]
+        );
 
         $this->info['border-top-left-radius'] =
         $this->info['border-top-right-radius'] =

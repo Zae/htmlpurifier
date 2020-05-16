@@ -51,13 +51,13 @@ class Number extends AttrDef
 
         $sign = '';
         switch ($number[0]) {
-            case '-':
-                if ($this->non_negative) {
-                    return false;
-                }
-                $sign = '-';
-            case '+':
-                $number = substr($number, 1);
+        case '-':
+            if ($this->non_negative) {
+                return false;
+            }
+            $sign = '-';
+        case '+':
+            $number = substr($number, 1);
         }
 
         if (ctype_digit($number)) {

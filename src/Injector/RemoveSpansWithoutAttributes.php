@@ -78,7 +78,8 @@ class RemoveSpansWithoutAttributes extends Injector
 
         $nesting = 0;
         $current = null;
-        while ($this->forwardUntilEndToken($i, $current, $nesting)) {}
+        while ($this->forwardUntilEndToken($i, $current, $nesting)) {
+        }
 
         if ($current instanceof End && $current->name === 'span') {
             // Mark closing span tag for deletion

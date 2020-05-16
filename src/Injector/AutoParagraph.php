@@ -100,8 +100,9 @@ class AutoParagraph extends Injector
                 }
             }
             // Is the current parent a <p> tag?
-        } elseif (!empty($this->currentNesting) &&
-                  $this->currentNesting[\count($this->currentNesting) - 1]->name === 'p') {
+        } elseif (!empty($this->currentNesting) 
+            && $this->currentNesting[\count($this->currentNesting) - 1]->name === 'p'
+        ) {
             // State 3.1: ...<p>PAR1
             //                  ----
 
@@ -139,8 +140,8 @@ class AutoParagraph extends Injector
 
                     if (!$prev instanceof Start) {
                         // Token wasn't adjacent
-                        if ($prev instanceof Text &&
-                            substr($prev->data, -2) === "\n\n"
+                        if ($prev instanceof Text 
+                            && substr($prev->data, -2) === "\n\n"
                         ) {
                             // State 1.1.4: <div><p>PAR1</p>\n\n<b>
                             //                                  ---

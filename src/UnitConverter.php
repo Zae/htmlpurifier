@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\Length;
-
 /**
  * Class for converting between different unit-lengths as specified by
  * CSS.
+ *
  */
 class UnitConverter
 {
@@ -232,6 +231,9 @@ class UnitConverter
      * @param int    $scale
      *
      * @return string
+     *
+     * @psalm-suppress ArgumentTypeCoercion
+     * @todo: fix the suppression, something about numeric-strings?
      */
     private function add(string $s1, string $s2, int $scale): string
     {
@@ -250,6 +252,9 @@ class UnitConverter
      * @param int    $scale
      *
      * @return string
+     *
+     * @psalm-suppress ArgumentTypeCoercion
+     * @todo: fix the suppression, something about numeric-strings?
      */
     private function mul(string $s1, string $s2, int $scale): string
     {
@@ -268,6 +273,9 @@ class UnitConverter
      * @param int    $scale
      *
      * @return string
+     *
+     * @psalm-suppress ArgumentTypeCoercion
+     * @todo: fix the suppression, something about numeric-strings?
      */
     private function div(string $s1, string $s2, int $scale): string
     {
@@ -292,6 +300,9 @@ class UnitConverter
      * @param int    $sigfigs
      *
      * @return string
+     *
+     * @psalm-suppress ArgumentTypeCoercion
+     * @todo: fix the suppression, something about numeric-strings?
      */
     private function round(string $n, int $sigfigs): string
     {
