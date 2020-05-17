@@ -60,7 +60,7 @@ class Lexer
     /**
      * @var EntityParser
      */
-    private $_entity_parser;
+    private $entity_parser;
 
     /**
      * Retrieves or sets the default Lexer as a Prototype Factory.
@@ -102,8 +102,9 @@ class Lexer
                         break;
                     }
 
-                    if (class_exists(DOMDocument::class, false) 
-                        && method_exists(DOMDocument::class, 'loadHTML') 
+                    if (
+                        class_exists(DOMDocument::class, false)
+                        && method_exists(DOMDocument::class, 'loadHTML')
                         && !\extension_loaded('domxml')
                     ) {
                         // check for DOM support, because while it's part of the
@@ -119,20 +120,20 @@ class Lexer
 
             // instantiate recognized string names
             switch ($lexer) {
-            case 'DOMLex':
-                $inst = new DOMLex();
-                break;
-            case 'DirectLex':
-                $inst = new DirectLex();
-                break;
-            case 'PH5P':
-                $inst = new _PH5P();
-                break;
-            default:
-                throw new Exception(
-                    'Cannot instantiate unrecognized Lexer type ' .
-                        htmlspecialchars($lexer)
-                );
+                case 'DOMLex':
+                    $inst = new DOMLex();
+                    break;
+                case 'DirectLex':
+                    $inst = new DirectLex();
+                    break;
+                case 'PH5P':
+                    $inst = new _PH5P();
+                    break;
+                default:
+                    throw new Exception(
+                        'Cannot instantiate unrecognized Lexer type ' .
+                            htmlspecialchars($lexer)
+                    );
             }
         }
 
@@ -160,7 +161,7 @@ class Lexer
 
     public function __construct()
     {
-        $this->_entity_parser = new EntityParser();
+        $this->entity_parser = new EntityParser();
     }
 
     /**
@@ -168,7 +169,7 @@ class Lexer
      *
      * @type array
      */
-    protected $_special_entity2str = [
+    protected $special_entity2str = [
         '&quot;' => '"',
         '&amp;' => '&',
         '&lt;' => '<',
@@ -231,7 +232,7 @@ class Lexer
         } // abort if no entities
 
         $num_esc_amp = substr_count($string, '&amp;');
-        $string = strtr($string, $this->_special_entity2str);
+        $string = strtr($string, $this->special_entity2str);
 
         // code duplication for sake of optimization, see above
         $num_amp_2 = substr_count($string, '&') - substr_count($string, '& ') -
@@ -243,12 +244,12 @@ class Lexer
 
         // hmm... now we have some uncommon entities. Use the callback.
         if ($config->get('Core.LegacyEntityDecoder')) {
-            $string = $this->_entity_parser->substituteSpecialEntities($string);
+            $string = $this->entity_parser->substituteSpecialEntities($string);
         } else {
             if ($is_attr) {
-                $string = $this->_entity_parser->substituteAttrEntities($string);
+                $string = $this->entity_parser->substituteAttrEntities($string);
             } else {
-                $string = $this->_entity_parser->substituteTextEntities($string);
+                $string = $this->entity_parser->substituteTextEntities($string);
             }
         }
 
@@ -386,7 +387,7 @@ class Lexer
 
         // expand entities that aren't the big five
         if ($config->get('Core.LegacyEntityDecoder')) {
-            $html = $this->_entity_parser->substituteNonSpecialEntities($html);
+            $html = $this->entity_parser->substituteNonSpecialEntities($html);
         }
 
         // clean into wellformed UTF-8 string for an SGML context: this has
@@ -400,7 +401,8 @@ class Lexer
         }
 
         $hidden_elements = $config->get('Core.HiddenElements');
-        if ($config->get('Core.AggressivelyRemoveScript') 
+        if (
+            $config->get('Core.AggressivelyRemoveScript')
             && !($config->get('HTML.Trusted') || !$config->get('Core.RemoveScriptContents')
             || empty($hidden_elements['script']))
         ) {
@@ -427,7 +429,8 @@ class Lexer
             // Make sure it's not in a comment
             $comment_start = strrpos($matches[1], '<!--');
             $comment_end = strrpos($matches[1], '-->');
-            if ($comment_start === false 
+            if (
+                $comment_start === false
                 || ($comment_end !== false && $comment_end > $comment_start)
             ) {
                 return $matches[2];

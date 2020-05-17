@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Injector;
 
-use HTMLPurifier\Context;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 
 /**
@@ -94,7 +91,8 @@ class SafeObject extends Injector
                 // We need this fix because YouTube doesn't supply a data
                 // attribute, which we need if a type is specified. This is
                 // *very* Flash specific.
-                if (!isset($this->objectStack[$i]->attr['data']) 
+                if (
+                    !isset($this->objectStack[$i]->attr['data'])
                     && ($token->attr['name'] === 'movie' || $token->attr['name'] === 'src')
                 ) {
                     $this->objectStack[$i]->attr['data'] = $token->attr['value'];
@@ -102,8 +100,9 @@ class SafeObject extends Injector
 
                 // Check if the parameter is the correct value but has not
                 // already been added
-                if (!isset($this->paramStack[$i][$n]) 
-                    && isset($this->addParam[$n]) 
+                if (
+                    !isset($this->paramStack[$i][$n])
+                    && isset($this->addParam[$n])
                     && $token->attr['name'] === $this->addParam[$n]
                 ) {
                     // keep token, and add to param stack

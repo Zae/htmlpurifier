@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\URI\Email;
 
 use HTMLPurifier\AttrDef\URI\Email;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -15,9 +15,9 @@ use HTMLPurifier\Context;
 class SimpleCheck extends Email
 {
     /**
-     * @param string              $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */

@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Definition that allows a set of elements, but disallows empty children.

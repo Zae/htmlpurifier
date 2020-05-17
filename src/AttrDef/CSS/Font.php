@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
 /**
@@ -88,120 +86,122 @@ class Font extends AttrDef
             }
 
             switch ($stage) {
-            case 0: // attempting to catch font-style, font-variant or font-weight
-                foreach ($stage_1 as $validator_name) {
-                    if (isset($caught[$validator_name])) {
-                        continue;
+                case 0: // attempting to catch font-style, font-variant or font-weight
+                    foreach ($stage_1 as $validator_name) {
+                        if (isset($caught[$validator_name])) {
+                            continue;
+                        }
+                        $r = $this->info[$validator_name]->validate(
+                            $bits[$i],
+                            $config,
+                            $context
+                        );
+
+                        if ($r !== false) {
+                            $final .= $r . ' ';
+                            $caught[$validator_name] = true;
+                            break;
+                        }
                     }
-                    $r = $this->info[$validator_name]->validate(
-                        $bits[$i],
+
+                    // all three caught, continue on
+                    if (\count($caught) >= 3) {
+                        $stage = 1;
+                    }
+
+                    if ($r !== false) {
+                        break;
+                    }
+
+                    //todo: is the lack of break intentional here?
+                case 1: // attempting to catch font-size and perhaps line-height
+                    $found_slash = false;
+                    if (strpos($bits[$i], '/') !== false) {
+                        [$font_size, $line_height] = explode('/', $bits[$i]);
+
+                        if ($line_height === '') {
+                            // ooh, there's a space after the slash!
+                            $line_height = false;
+                            $found_slash = true;
+                        }
+                    } else {
+                        $font_size = $bits[$i];
+                        $line_height = false;
+                    }
+
+                    $r = $this->info['font-size']->validate(
+                        $font_size,
+                        $config,
+                        $context
+                    );
+
+                    if ($r !== false) {
+                        $final .= $r;
+                        // attempt to catch line-height
+                        if ($line_height === false) {
+                            // we need to scroll forward
+                            for ($j = $i + 1; $j < $size; $j++) {
+                                if ($bits[$j] === '') {
+                                    continue;
+                                }
+
+                                if ($bits[$j] === '/') {
+                                    if ($found_slash) {
+                                        return false;
+                                    }
+
+                                    $found_slash = true;
+                                    continue;
+                                }
+
+                                $line_height = $bits[$j];
+                                break;
+                            }
+                        } else {
+                            // slash already found
+                            $found_slash = true;
+                            $j = $i;
+                        }
+
+                        if ($found_slash) {
+                            /**
+                             * @psalm-suppress LoopInvalidation
+                             */
+                            $i = $j;
+                            $r = $this->info['line-height']->validate(
+                                $line_height,
+                                $config,
+                                $context
+                            );
+
+                            if ($r !== false) {
+                                $final .= '/' . $r;
+                            }
+                        }
+
+                        $final .= ' ';
+                        $stage = 2;
+                        break;
+                    }
+
+                    return false;
+                case 2: // attempting to catch font-family
+                    $font_family = implode(' ', \array_slice($bits, $i, $size - $i));
+
+                    $r = $this->info['font-family']->validate(
+                        $font_family,
                         $config,
                         $context
                     );
 
                     if ($r !== false) {
                         $final .= $r . ' ';
-                        $caught[$validator_name] = true;
-                        break;
-                    }
-                }
 
-                // all three caught, continue on
-                if (\count($caught) >= 3) {
-                    $stage = 1;
-                }
-
-                if ($r !== false) {
-                    break;
-                }
-            case 1: // attempting to catch font-size and perhaps line-height
-                $found_slash = false;
-                if (strpos($bits[$i], '/') !== false) {
-                    [$font_size, $line_height] = explode('/', $bits[$i]);
-
-                    if ($line_height === '') {
-                        // ooh, there's a space after the slash!
-                        $line_height = false;
-                        $found_slash = true;
-                    }
-                } else {
-                    $font_size = $bits[$i];
-                    $line_height = false;
-                }
-
-                $r = $this->info['font-size']->validate(
-                    $font_size,
-                    $config,
-                    $context
-                );
-
-                if ($r !== false) {
-                    $final .= $r;
-                    // attempt to catch line-height
-                    if ($line_height === false) {
-                        // we need to scroll forward
-                        for ($j = $i + 1; $j < $size; $j++) {
-                            if ($bits[$j] === '') {
-                                continue;
-                            }
-
-                            if ($bits[$j] === '/') {
-                                if ($found_slash) {
-                                    return false;
-                                }
-
-                                $found_slash = true;
-                                continue;
-                            }
-
-                            $line_height = $bits[$j];
-                            break;
-                        }
-                    } else {
-                        // slash already found
-                        $found_slash = true;
-                        $j = $i;
+                        // processing completed successfully
+                        return rtrim($final);
                     }
 
-                    if ($found_slash) {
-                        /**
-                         * @psalm-suppress LoopInvalidation
-                         */
-                        $i = $j;
-                        $r = $this->info['line-height']->validate(
-                            $line_height,
-                            $config,
-                            $context
-                        );
-
-                        if ($r !== false) {
-                            $final .= '/' . $r;
-                        }
-                    }
-
-                    $final .= ' ';
-                    $stage = 2;
-                    break;
-                }
-
-                return false;
-            case 2: // attempting to catch font-family
-                $font_family = implode(' ', \array_slice($bits, $i, $size - $i));
-
-                $r = $this->info['font-family']->validate(
-                    $font_family,
-                    $config,
-                    $context
-                );
-
-                if ($r !== false) {
-                    $final .= $r . ' ';
-
-                    // processing completed successfully
-                    return rtrim($final);
-                }
-
-                return false;
+                    return false;
             }
         }
 

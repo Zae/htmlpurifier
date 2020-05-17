@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\ChildDef;
 
-use HTMLPurifier\ChildDef\Required;
 use HTMLPurifier\Context;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Definition that allows a set of elements, and allows no children.

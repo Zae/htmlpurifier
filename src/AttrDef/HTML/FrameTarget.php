@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef\Enum;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**

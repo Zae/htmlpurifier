@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace HTMLPurifier;
@@ -151,14 +152,14 @@ class ContentSets
         }
 
         switch ($def->content_model_type) {
-        case 'required':
-            return new Required($value);
-        case 'optional':
-            return new Optional($value);
-        case 'empty':
-            return new Nothing();
-        case 'custom':
-            return new Custom($value);
+            case 'required':
+                return new Required($value);
+            case 'optional':
+                return new Optional($value);
+            case 'empty':
+                return new Nothing();
+            case 'custom':
+                return new Custom($value);
         }
 
         // defer to its module

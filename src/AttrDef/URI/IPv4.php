@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
+use HTMLPurifier\Config;
 
 /**
  * Validates an IPv4 address
@@ -32,7 +31,7 @@ class IPv4 extends AttrDef
     public function validate($aIP, $config, $context)
     {
         if (!$this->ip4) {
-            $this->_loadRegex();
+            $this->loadRegex();
         }
 
         if (preg_match('#^' . $this->ip4 . '$#s', $aIP)) {
@@ -46,7 +45,7 @@ class IPv4 extends AttrDef
      * Lazy load function to prevent regex from being stuffed in
      * cache.
      */
-    protected function _loadRegex(): void
+    protected function loadRegex(): void
     {
         $oct = '(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9][0-9]|[0-9])'; // 0-255
         $this->ip4 = "(?:{$oct}\\.{$oct}\\.{$oct}\\.{$oct})";

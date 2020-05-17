@@ -6,8 +6,6 @@ namespace HTMLPurifier;
 
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -29,14 +27,14 @@ class Generator
      *
      * @type bool
      */
-    private $_xhtml = true;
+    private $xhtml = true;
 
     /**
      * :HACK: Whether or not generator should comment the insides of <script> tags.
      *
      * @type bool
      */
-    private $_scriptFix = false;
+    private $scriptFix = false;
 
     /**
      * Cache of HTMLDefinition during HTML output to determine whether or
@@ -44,28 +42,28 @@ class Generator
      *
      * @type HTMLDefinition
      */
-    private $_def;
+    private $def;
 
     /**
      * Cache of %Output.SortAttr.
      *
      * @type bool
      */
-    private $_sortAttr;
+    private $sortAttr;
 
     /**
      * Cache of %Output.FlashCompat.
      *
      * @type bool
      */
-    private $_flashCompat;
+    private $flashCompat;
 
     /**
      * Cache of %Output.FixInnerHTML.
      *
      * @type bool
      */
-    private $_innerHTMLFix;
+    private $innerHTMLFix;
 
     /**
      * Stack for keeping track of object information when outputting IE
@@ -73,7 +71,7 @@ class Generator
      *
      * @type array
      */
-    private $_flashStack = [];
+    private $flashStack = [];
 
     /**
      * Configuration for the generator
@@ -91,12 +89,12 @@ class Generator
     public function __construct(Config $config, Context $context)
     {
         $this->config = $config;
-        $this->_scriptFix = $config->get('Output.CommentScriptContents');
-        $this->_innerHTMLFix = $config->get('Output.FixInnerHTML');
-        $this->_sortAttr = $config->get('Output.SortAttr');
-        $this->_flashCompat = $config->get('Output.FlashCompat');
-        $this->_def = $config->getHTMLDefinition();
-        $this->_xhtml = $this->_def->doctype->xml ?? true;
+        $this->scriptFix = $config->get('Output.CommentScriptContents');
+        $this->innerHTMLFix = $config->get('Output.FixInnerHTML');
+        $this->sortAttr = $config->get('Output.SortAttr');
+        $this->flashCompat = $config->get('Output.FlashCompat');
+        $this->def = $config->getHTMLDefinition();
+        $this->xhtml = $this->def->doctype->xml ?? true;
     }
 
     /**
@@ -116,8 +114,10 @@ class Generator
         // Basic algorithm
         $html = '';
         for ($i = 0, $size = \count($tokens); $i < $size; $i++) {
-            if ($this->_scriptFix && $tokens[$i]->name === 'script'
-                && $i + 2 < $size && $tokens[$i + 2] instanceof End) {
+            if (
+                $this->scriptFix && $tokens[$i]->name === 'script'
+                && $i + 2 < $size && $tokens[$i + 2] instanceof End
+            ) {
                 // script special case
                 // the contents of the script block must be ONE token
                 // for this to work.
@@ -129,12 +129,12 @@ class Generator
 
         // Tidy cleanup
         if (\extension_loaded('tidy') && $this->config->get('Output.TidyFormat')) {
-            $tidy = new Tidy;
+            $tidy = new Tidy();
             $tidy->parseString(
                 $html,
                 [
                     'indent' => true,
-                    'output-xhtml' => $this->_xhtml,
+                    'output-xhtml' => $this->xhtml,
                     'show-body-only' => true,
                     'indent-spaces' => 2,
                     'wrap' => 68,
@@ -175,20 +175,19 @@ class Generator
     {
         if ($token instanceof Start) {
             $attr = $this->generateAttributes($token->attr, $token->name);
-            if ($this->_flashCompat && $token->name === 'object') {
+            if ($this->flashCompat && $token->name === 'object') {
                 $flash = new stdClass();
                 $flash->attr = $token->attr;
                 $flash->param = [];
-                $this->_flashStack[] = $flash;
+                $this->flashStack[] = $flash;
             }
 
             return '<' . $token->name . ($attr ? ' ' : '') . $attr . '>';
-
         }
 
         if ($token instanceof End) {
             $_extra = '';
-            if ($this->_flashCompat && $token->name === 'object' && !empty($this->_flashStack)) {
+            if ($this->flashCompat && $token->name === 'object' && !empty($this->flashStack)) {
                 // doesn't do anything for now
             }
 
@@ -196,15 +195,14 @@ class Generator
         }
 
         if ($token instanceof EmptyToken) {
-            if ($this->_flashCompat && $token->name === 'param' && !empty($this->_flashStack)) {
-                $this->_flashStack[\count($this->_flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
+            if ($this->flashCompat && $token->name === 'param' && !empty($this->flashStack)) {
+                $this->flashStack[\count($this->flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
             }
             $attr = $this->generateAttributes($token->attr, $token->name);
 
             return '<' . $token->name . ($attr ? ' ' : '') . $attr .
-                   ($this->_xhtml ? ' /' : '') // <br /> v. <br>
+                   ($this->xhtml ? ' /' : '') // <br /> v. <br>
                    . '>';
-
         }
 
         if ($token instanceof Text) {
@@ -253,19 +251,19 @@ class Generator
     public function generateAttributes(array $assoc_array_of_attributes, string $element = ''): string
     {
         $html = '';
-        if ($this->_sortAttr) {
+        if ($this->sortAttr) {
             ksort($assoc_array_of_attributes);
         }
 
         foreach ($assoc_array_of_attributes as $key => $value) {
-            if (!$this->_xhtml) {
+            if (!$this->xhtml) {
                 // Remove namespaced attributes
                 if (strpos($key, ':') !== false) {
                     continue;
                 }
 
                 // Check if we should minimize the attribute: val="val" -> val
-                if ($element && !empty($this->_def->info[$element]->attr[$key]->minimized)) {
+                if ($element && !empty($this->def->info[$element]->attr[$key]->minimized)) {
                     $html .= $key . ' ';
                     continue;
                 }
@@ -292,7 +290,7 @@ class Generator
             // this, since this transformation is not necesary if you
             // don't process user input with innerHTML or you don't plan
             // on supporting Internet Explorer.
-            if ($this->_innerHTMLFix) {
+            if ($this->innerHTMLFix) {
                 if (strpos($value, '`') !== false) {
                     // check if correct quoting style would not already be
                     // triggered

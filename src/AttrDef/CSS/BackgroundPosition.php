@@ -41,10 +41,7 @@ declare(strict_types=1);
 // percentages or something, but it's not necessary
 namespace HTMLPurifier\AttrDef\CSS;
 
-use HTMLPurifier\AttrDef\CSS\Length;
-use HTMLPurifier\AttrDef\CSS\Percentage;
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**

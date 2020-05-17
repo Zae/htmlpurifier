@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
-
 /**
  * Component of HTMLPurifier_AttrContext that accumulates IDs to prevent dupes
  *

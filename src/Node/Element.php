@@ -92,4 +92,3 @@ class Element extends Node
         return [$start, $end];
     }
 }
-

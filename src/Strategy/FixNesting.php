@@ -6,11 +6,10 @@ namespace HTMLPurifier\Strategy;
 
 use HTMLPurifier\Arborize;
 use HTMLPurifier\Context;
-use HTMLPurifier\Node;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Node\Element;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**

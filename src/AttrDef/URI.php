@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
-use HTMLPurifier\Exception;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\URIScheme;
@@ -114,7 +111,6 @@ class URI extends AttrDef
 
             // survived gauntlet
             $ok = true;
-
         } while (false);
 
         $context->destroy('EmbeddedURI');

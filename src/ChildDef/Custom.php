@@ -7,7 +7,7 @@ namespace HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Custom validation class, accepts DTD child definitions
@@ -39,7 +39,7 @@ class Custom extends ChildDef
      *
      * @type string
      */
-    private $_pcre_regex;
+    public $_pcre_regex; //phpcs:ignore somehow it breaks when we rename this, no idea why...
 
     /**
      * @param string $dtd_regex Allowed child pattern from the DTD
@@ -48,13 +48,13 @@ class Custom extends ChildDef
     {
         $this->dtd_regex = $dtd_regex;
 
-        $this->_compileRegex();
+        $this->compileRegex();
     }
 
     /**
      * Compiles the PCRE regex from a DTD regex ($dtd_regex to $_pcre_regex)
      */
-    protected function _compileRegex(): void
+    protected function compileRegex(): void
     {
         $raw = str_replace(' ', '', $this->dtd_regex);
         if ($raw[0] !== '(') {

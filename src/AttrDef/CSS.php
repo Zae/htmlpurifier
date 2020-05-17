@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
-use HTMLPurifier\Exception;
 
 /**
  * Validates the HTML attribute style, otherwise known as CSS.
@@ -130,7 +128,6 @@ class CSS extends AttrDef
                         $context
                     ) ?? false;
                 }
-
             } else {
                 $result = 'inherit';
             }

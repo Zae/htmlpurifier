@@ -69,8 +69,10 @@ abstract class DefinitionCache
         }
 
         // versions match, ids match, check revision number
-        if ($hash === $config->getBatchSerial($this->type) &&
-            $revision < $config->get($this->type . '.DefinitionRev')) {
+        if (
+            $hash === $config->getBatchSerial($this->type) &&
+            $revision < $config->get($this->type . '.DefinitionRev')
+        ) {
             return true;
         }
 

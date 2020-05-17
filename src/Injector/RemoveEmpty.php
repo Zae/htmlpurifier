@@ -10,7 +10,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Text;
 

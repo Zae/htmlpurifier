@@ -3,8 +3,7 @@
 declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\HTML;
-use HTMLPurifier\AttrDef\HTML\Pixels;
-use \HTMLPurifier\Config;
+
 use HTMLPurifier\Context;
 
 /**

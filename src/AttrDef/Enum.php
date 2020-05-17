@@ -6,8 +6,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
 
 /**
  * Validates a keyword against a list of valid values.

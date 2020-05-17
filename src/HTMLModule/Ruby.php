@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Ruby Annotation Module, defines elements that indicate
@@ -19,9 +19,9 @@ class Ruby extends HTMLModule
     public $name = 'Ruby';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $this->addElement(
             'ruby',

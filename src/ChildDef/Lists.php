@@ -7,7 +7,7 @@ namespace HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node\Element;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**

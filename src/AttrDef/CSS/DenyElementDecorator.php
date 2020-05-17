@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
 
 /**
  * Decorator which enables CSS properties to be disabled for specific elements.

@@ -158,8 +158,13 @@ class HTMLModule
      *         can set advanced parameters
      * @see ElementDef:: for in-depth descriptions of these parameters.
      */
-    public function addElement(string $element, ?string $type, $contents, $attr_includes = [], array $attr = []): ElementDef
-    {
+    public function addElement(
+        string $element,
+        ?string $type,
+        $contents,
+        $attr_includes = [],
+        array $attr = []
+    ): ElementDef {
         $this->elements[] = $element;
 
         // parse content_model
@@ -249,12 +254,12 @@ class HTMLModule
 
         switch ($contents) {
             // check for shorthand content model forms
-        case 'Empty':
-            return ['empty', ''];
-        case 'Inline':
-            return ['optional', 'Inline | #PCDATA'];
-        case 'Flow':
-            return ['optional', 'Flow | #PCDATA'];
+            case 'Empty':
+                return ['empty', ''];
+            case 'Inline':
+                return ['optional', 'Inline | #PCDATA'];
+            case 'Flow':
+                return ['optional', 'Flow | #PCDATA'];
         }
 
         [$content_model_type, $content_model] = explode(':', $contents);

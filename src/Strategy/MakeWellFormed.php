@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Strategy;
 
-use HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Injector;
@@ -13,7 +12,7 @@ use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
@@ -187,10 +186,10 @@ class MakeWellFormed extends Strategy
         //      punt ($reprocess = true; continue;) and it does that for us.
 
         // isset is in loop because $tokens size changes during loop exec
-        for (; ;
+        for (; ; //phpcs:ignore
             // only increment if we don't need to reprocess
-            $reprocess ? $reprocess = false : $token = $zipper->next($token)) {
-
+            $reprocess ? $reprocess = false : $token = $zipper->next($token)
+        ) {
             // check for a rewind
             if (\is_int($i)) {
                 // possibility: disable rewinding if the current token has a
@@ -315,7 +314,6 @@ class MakeWellFormed extends Strategy
 
                 // ...unless they also have to close their parent
                 if (!empty($this->stack)) {
-
                     // Performance note: you might think that it's rather
                     // inefficient, recalculating the autoclose information
                     // for every tag that a token closes (since when we
@@ -428,7 +426,6 @@ class MakeWellFormed extends Strategy
                             } else {
                                 $token = $this->insertBefore($new_token);
                             }
-
                         } else {
                             $token = $this->remove();
                         }

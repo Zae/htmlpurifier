@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
-use HTMLPurifier\Encoder;
-
 /**
  * Base class for all validating attribute definitions.
  *
@@ -107,7 +103,11 @@ abstract class AttrDef
         $p = '\s*(\d+(\.\d+)?([%]?))\s*';
 
         if (preg_match('/(rgba|hsla)\(/', $string)) {
-            return preg_replace('/(rgba|hsla)\(' . $p . ',' . $p . ',' . $p . ',' . $p . '\)/', '\1(\2,\5,\8,\11)', $string);
+            return preg_replace(
+                '/(rgba|hsla)\(' . $p . ',' . $p . ',' . $p . ',' . $p . '\)/',
+                '\1(\2,\5,\8,\11)',
+                $string
+            );
         }
 
         return preg_replace('/(rgb|hsl)\(' . $p . ',' . $p . ',' . $p . '\)/', '\1(\2,\5,\8)', $string);

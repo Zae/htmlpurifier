@@ -7,7 +7,7 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Validates ftp (File Transfer Protocol) URIs as defined by generic RFC 1738.
