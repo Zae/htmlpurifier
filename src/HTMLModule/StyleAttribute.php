@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Edit Module, defines editing-related elements. Text Extension
@@ -30,9 +30,9 @@ class StyleAttribute extends HTMLModule
     ];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $this->attr_collections['Style']['style'] = new CSS();
     }

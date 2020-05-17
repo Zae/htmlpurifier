@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Tag;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Transforms FONT tags to the proper form (SPAN with CSS styling)
@@ -35,7 +35,7 @@ class Font extends TagTransform
     /**
      * @type array
      */
-    protected $_size_lookup = [
+    protected $sizeLookup = [
         '-2' => '60%',
         '-1' => 'smaller',
         '0' => 'xx-small',
@@ -105,9 +105,9 @@ class Font extends TagTransform
                 }
             }
 
-            if (isset($this->_size_lookup[$attr['size']])) {
+            if (isset($this->sizeLookup[$attr['size']])) {
                 $prepend_style .= 'font-size:' .
-                                  $this->_size_lookup[$attr['size']] . ';';
+                                  $this->sizeLookup[$attr['size']] . ';';
             }
 
             unset($attr['size']);

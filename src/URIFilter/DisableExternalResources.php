@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\URIFilter;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\URI;
-use HTMLPurifier\URIFilter\DisableExternal;
-use \HTMLPurifier\Config;
 
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_DisableExternalResources
@@ -21,12 +20,12 @@ class DisableExternalResources extends DisableExternal
 
     /**
      * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function filter(URI &$uri, Config $config, Context $context): bool
     {
         if (!$context->get('EmbeddedURI', true)) {
             return true;

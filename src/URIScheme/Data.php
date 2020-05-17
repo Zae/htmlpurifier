@@ -7,12 +7,12 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Implements data: URI for base64 encoded images supported by GD.
  */
-class data extends URIScheme
+class Data extends URIScheme
 {
     /**
      * @type bool

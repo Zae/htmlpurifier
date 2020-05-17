@@ -7,7 +7,7 @@ namespace HTMLPurifier\AttrTransform;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Adds rel="noopener" to any links which target a different window
@@ -19,13 +19,13 @@ use \HTMLPurifier\Config;
 class TargetNoopener extends AttrTransform
 {
     /**
-     * @param array               $attr
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $attr
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */
-    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
+    public function transform(array $attr, Config $config, Context $context): array
     {
         if (isset($attr['rel'])) {
             $rels = explode(' ', $attr['rel']);
@@ -44,4 +44,3 @@ class TargetNoopener extends AttrTransform
         return $attr;
     }
 }
-

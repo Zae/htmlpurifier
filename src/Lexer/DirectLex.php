@@ -13,7 +13,7 @@ use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Our in-house implementation of a parser.
@@ -37,7 +37,7 @@ class DirectLex extends Lexer
      *
      * @type string
      */
-    protected $_whitespace = "\x20\x09\x0D\x0A";
+    protected $whitespace = "\x20\x09\x0D\x0A";
 
     /**
      * Callback function for script CDATA fudge
@@ -133,7 +133,8 @@ class DirectLex extends Lexer
                 $current_col = $rcursor - (\is_bool($nl_pos) ? 0 : $nl_pos + 1);
 
                 // recalculate lines
-                if ($synchronize_interval  // synchronization is on
+                if (
+                    $synchronize_interval  // synchronization is on
                     && $cursor > 0  // cursor is further than zero
                     && $loops % $synchronize_interval === 0
                 ) { // time to synchronize!
@@ -160,7 +161,8 @@ class DirectLex extends Lexer
                             $string,
                             $cursor,
                             $position_next_lt - $cursor
-                        ), $config
+                        ),
+                        $config
                     )
                 );
                 if ($maintain_line_numbers) {
@@ -184,7 +186,8 @@ class DirectLex extends Lexer
                         substr(
                             $string,
                             $cursor
-                        ), $config
+                        ),
+                        $config
                     )
                 );
                 if ($maintain_line_numbers) {
@@ -292,7 +295,7 @@ class DirectLex extends Lexer
                 }
 
                 // Check if there are any attributes
-                $position_first_space = strcspn($segment, $this->_whitespace);
+                $position_first_space = strcspn($segment, $this->whitespace);
 
                 if ($position_first_space >= $strlen_segment) {
                     if ($is_self_closing) {
@@ -351,7 +354,8 @@ class DirectLex extends Lexer
                 Text(
                     '<' .
                     $this->parseText(
-                        substr($string, $cursor), $config
+                        substr($string, $cursor),
+                        $config
                     )
                 );
                 if ($maintain_line_numbers) {
@@ -490,13 +494,13 @@ class DirectLex extends Lexer
             }
             $old_cursor = $cursor;
 
-            $cursor += ($value = strspn($string, $this->_whitespace, $cursor));
+            $cursor += ($value = strspn($string, $this->whitespace, $cursor));
             // grab the key
 
             $key_begin = $cursor; //we're currently at the start of the key
 
             // scroll past all characters that are the key (not whitespace or =)
-            $cursor += strcspn($string, $this->_whitespace . '=', $cursor);
+            $cursor += strcspn($string, $this->whitespace . '=', $cursor);
 
             $key_end = $cursor; // now at the end of the key
 
@@ -506,12 +510,12 @@ class DirectLex extends Lexer
                 if ($e) {
                     $e->send(E_ERROR, 'Lexer: Missing attribute key');
                 }
-                $cursor += 1 + strcspn($string, $this->_whitespace, $cursor + 1); // prevent infinite loop
+                $cursor += 1 + strcspn($string, $this->whitespace, $cursor + 1); // prevent infinite loop
                 continue; // empty key
             }
 
             // scroll past all whitespace
-            $cursor += strspn($string, $this->_whitespace, $cursor);
+            $cursor += strspn($string, $this->whitespace, $cursor);
 
             if ($cursor >= $size) {
                 $array[$key] = $key;
@@ -526,7 +530,7 @@ class DirectLex extends Lexer
                 // key="value"
 
                 $cursor++;
-                $cursor += strspn($string, $this->_whitespace, $cursor);
+                $cursor += strspn($string, $this->whitespace, $cursor);
 
                 if ($cursor === 0) {
                     $array[$key] = '';
@@ -546,7 +550,7 @@ class DirectLex extends Lexer
                 } else {
                     // it's not quoted, end bound is whitespace
                     $value_begin = $cursor;
-                    $cursor += strcspn($string, $this->_whitespace, $cursor);
+                    $cursor += strcspn($string, $this->whitespace, $cursor);
                     $value_end = (int)$cursor;
                 }
 

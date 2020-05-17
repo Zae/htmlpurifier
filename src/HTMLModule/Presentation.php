@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Presentation Module, defines simple presentation-related
@@ -26,9 +26,9 @@ class Presentation extends HTMLModule
     public $name = 'Presentation';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $this->addElement('hr', 'Block', 'Empty', 'Common');
         $this->addElement('sub', 'Inline', 'Inline', 'Common');

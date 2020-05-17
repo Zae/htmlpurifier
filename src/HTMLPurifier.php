@@ -79,7 +79,7 @@ class HTMLPurifier
     /**
      * Constant with version of HTML Purifier.
      */
-    const VERSION = '4.12.0';
+    public const VERSION = '4.12.0';
 
     /**
      * Global configuration object.
@@ -214,7 +214,7 @@ class HTMLPurifier
                 continue;
             }
             $class = "HTMLPurifier_Filter_$filter";
-            $filters[] = new $class;
+            $filters[] = new $class();
         }
         foreach ($custom_filters as $filter) {
             // maybe "HTMLPurifier_Filter_$filter", but be consistent with AutoFormat

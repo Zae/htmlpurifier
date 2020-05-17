@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\URIScheme;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
 
 /**
  * Validates http (HyperText Transfer Protocol) as defined by RFC 2616
  */
-class http extends URIScheme
+class Http extends URIScheme
 {
     /**
      * @type int
@@ -31,12 +31,12 @@ class http extends URIScheme
 
     /**
      * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
         $uri->userinfo = null;
 

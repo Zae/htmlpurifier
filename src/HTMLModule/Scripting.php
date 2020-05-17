@@ -16,7 +16,7 @@ use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrTransform\ScriptRequired;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Scripting module, defines elements that are used to contain
@@ -48,9 +48,9 @@ class Scripting extends HTMLModule
     public $safe = false;
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         // TODO: create custom child-definition for noscript that
         // auto-wraps stray #PCDATA in a similar manner to

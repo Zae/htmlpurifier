@@ -7,7 +7,7 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Validates tel (for phone numbers).
@@ -17,7 +17,7 @@ use \HTMLPurifier\Config;
  * numbers so that they only include (possibly) a leading plus,
  * and then any number of digits and x'es.
  */
-class tel extends URIScheme
+class Tel extends URIScheme
 {
     /**
      * @type bool
@@ -45,7 +45,8 @@ class tel extends URIScheme
         // Delete all non-numeric characters, non-x characters
         // from phone number, EXCEPT for a leading plus sign.
         $uri->path = preg_replace(
-            '/(?!^\+)[^\dx]/', '',
+            '/(?!^\+)[^\dx]/',
+            '',
             // Normalize e(x)tension to lower-case
             str_replace('X', 'x', (string)$uri->path)
         );

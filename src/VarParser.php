@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\Exception;
-use HTMLPurifier\VarParserException;
-
 /**
  * Parses string representations into their corresponding native PHP
  * variable type. The base implementation does a simple type-check.
@@ -83,61 +80,61 @@ class VarParser
         // These are basic checks, to make sure nothing horribly wrong
         // happened in our implementations.
         switch ($type) {
-        case (self::C_STRING):
-        case (self::ISTRING):
-        case (self::TEXT):
-        case (self::ITEXT):
-            if (!\is_string($var)) {
-                break;
-            }
-            if ($type === self::ISTRING || $type === self::ITEXT) {
-                $var = strtolower($var);
-            }
+            case (self::C_STRING):
+            case (self::ISTRING):
+            case (self::TEXT):
+            case (self::ITEXT):
+                if (!\is_string($var)) {
+                    break;
+                }
+                if ($type === self::ISTRING || $type === self::ITEXT) {
+                    $var = strtolower($var);
+                }
 
-            return $var;
-        case (self::C_INT):
-            if (!\is_int($var)) {
-                break;
-            }
+                return $var;
+            case (self::C_INT):
+                if (!\is_int($var)) {
+                    break;
+                }
 
-            return $var;
-        case (self::C_FLOAT):
-            if (!\is_float($var)) {
-                break;
-            }
+                return $var;
+            case (self::C_FLOAT):
+                if (!\is_float($var)) {
+                    break;
+                }
 
-            return $var;
-        case (self::C_BOOL):
-            if (!\is_bool($var)) {
-                break;
-            }
+                return $var;
+            case (self::C_BOOL):
+                if (!\is_bool($var)) {
+                    break;
+                }
 
-            return $var;
-        case (self::LOOKUP):
-        case (self::ALIST):
-        case (self::HASH):
-            if (!\is_array($var)) {
-                break;
-            }
+                return $var;
+            case (self::LOOKUP):
+            case (self::ALIST):
+            case (self::HASH):
+                if (!\is_array($var)) {
+                    break;
+                }
 
-            if ($type === self::LOOKUP) {
-                foreach ($var as $k) {
-                    if ($k !== true) {
-                        $this->error('Lookup table contains value other than true');
+                if ($type === self::LOOKUP) {
+                    foreach ($var as $k) {
+                        if ($k !== true) {
+                            $this->error('Lookup table contains value other than true');
+                        }
+                    }
+                } elseif ($type === self::ALIST) {
+                    $keys = array_keys($var);
+                    if (array_keys($keys) !== $keys) {
+                        $this->error('Indices for list are not uniform');
                     }
                 }
-            } elseif ($type === self::ALIST) {
-                $keys = array_keys($var);
-                if (array_keys($keys) !== $keys) {
-                    $this->error('Indices for list are not uniform');
-                }
-            }
 
-            return $var;
-        case (self::C_MIXED):
-            return $var;
-        default:
-            $this->errorInconsistent(\get_class($this), $type);
+                return $var;
+            case (self::C_MIXED):
+                return $var;
+            default:
+                $this->errorInconsistent(\get_class($this), $type);
         }
 
         $this->errorGeneric($var, $type);

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\Exception;
 
@@ -31,11 +31,11 @@ class Serializer extends DefinitionCache
             return false;
         }
 
-        if (!$this->_prepareDir($config)) {
+        if (!$this->prepareDir($config)) {
             return false;
         }
 
-        return $this->_write($file, serialize($def), $config);
+        return $this->write($file, serialize($def), $config);
     }
 
     /**
@@ -51,11 +51,11 @@ class Serializer extends DefinitionCache
         }
 
         $file = $this->generateFilePath($config);
-        if (!$this->_prepareDir($config)) {
+        if (!$this->prepareDir($config)) {
             return false;
         }
 
-        return $this->_write($file, serialize($def), $config);
+        return $this->write($file, serialize($def), $config);
     }
 
     /**
@@ -75,11 +75,11 @@ class Serializer extends DefinitionCache
             return false;
         }
 
-        if (!$this->_prepareDir($config)) {
+        if (!$this->prepareDir($config)) {
             return false;
         }
 
-        return $this->_write($file, serialize($def), $config);
+        return $this->write($file, serialize($def), $config);
     }
 
     /**
@@ -119,7 +119,7 @@ class Serializer extends DefinitionCache
      */
     public function flush(Config $config): bool
     {
-        if (!$this->_prepareDir($config)) {
+        if (!$this->prepareDir($config)) {
             return false;
         }
 
@@ -156,7 +156,7 @@ class Serializer extends DefinitionCache
      */
     public function cleanup(Config $config): bool
     {
-        if (!$this->_prepareDir($config)) {
+        if (!$this->prepareDir($config)) {
             return false;
         }
 
@@ -248,7 +248,7 @@ class Serializer extends DefinitionCache
      * @return int|bool Number of bytes written if success, or false if failure.
      * @throws \HTMLPurifier\Exception
      */
-    private function _write(string $file, string $data, Config $config)
+    private function write(string $file, string $data, Config $config)
     {
         $result = file_put_contents($file, $data);
         if ($result !== false) {
@@ -270,7 +270,7 @@ class Serializer extends DefinitionCache
      * @return bool True if successful
      * @throws Exception
      */
-    private function _prepareDir(Config $config): bool
+    private function prepareDir(Config $config): bool
     {
         $directory = $this->generateDirectoryPath($config);
         $chmod = $config->get('Cache.SerializerPermissions');
@@ -299,7 +299,7 @@ class Serializer extends DefinitionCache
                 return false;
             }
 
-            if (!$this->_testPermissions($base, $chmod)) {
+            if (!$this->testPermissions($base, $chmod)) {
                 return false;
             }
 
@@ -312,10 +312,10 @@ class Serializer extends DefinitionCache
                 return false;
             }
 
-            if (!$this->_testPermissions($directory, $chmod)) {
+            if (!$this->testPermissions($directory, $chmod)) {
                 return false;
             }
-        } elseif (!$this->_testPermissions($directory, $chmod)) {
+        } elseif (!$this->testPermissions($directory, $chmod)) {
             return false;
         }
 
@@ -331,7 +331,7 @@ class Serializer extends DefinitionCache
      *
      * @return bool True if directory is writable
      */
-    private function _testPermissions(string $dir, ?int $chmod): bool
+    private function testPermissions(string $dir, ?int $chmod): bool
     {
         // early abort, if it is writable, everything is hunky-dory
         if (is_writable($dir)) {

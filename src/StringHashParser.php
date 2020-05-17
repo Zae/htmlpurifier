@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace HTMLPurifier;
+
 /**
  * Parses string hash files. File format is as such:
  *

@@ -5,11 +5,10 @@ declare(strict_types=1);
 // must be called POST validation
 namespace HTMLPurifier\AttrTransform;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier\URIParser;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 
 /**
  * Adds rel="nofollow" to all outbound links.  This transform is
@@ -29,13 +28,13 @@ class Nofollow extends AttrTransform
 
     /**
      * @param array               $attr
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return array
      * @throws \HTMLPurifier\Exception
      */
-    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
+    public function transform(array $attr, Config $config, Context $context): array
     {
         if (!isset($attr['href'])) {
             return $attr;

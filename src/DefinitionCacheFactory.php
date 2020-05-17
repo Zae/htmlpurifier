@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\DefinitionCache\Serializer;
-use \HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\DefinitionCache\DevNull;
-use HTMLPurifier\Exception;
 
 /**
  * Responsible for creating definition caches.
@@ -89,8 +87,10 @@ class DefinitionCacheFactory
             return $this->caches[$method][$type];
         }
 
-        if (isset($this->implementations[$method]) &&
-            class_exists($class = $this->implementations[$method], false)) {
+        if (
+            isset($this->implementations[$method]) &&
+            class_exists($class = $this->implementations[$method], false)
+        ) {
             $cache = new $class($type);
         } else {
             if ($method !== 'Serializer') {

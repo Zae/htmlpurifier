@@ -9,7 +9,7 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Validates mailto (for E-mail) according to RFC 2368
@@ -17,7 +17,7 @@ use \HTMLPurifier\Config;
  * @todo Validate the email address
  * @todo Filter allowed query parameters
  */
-class mailto extends URIScheme
+class Mailto extends URIScheme
 {
     /**
      * @type bool
@@ -30,13 +30,13 @@ class mailto extends URIScheme
     public $may_omit_host = true;
 
     /**
-     * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
         $uri->userinfo = null;
         $uri->host = null;

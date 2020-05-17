@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrTransform;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use \HTMLPurifier\Config;
 
 /**
  * Post-transform that copies lang's value to xml:lang (and vice-versa)
@@ -23,7 +23,7 @@ class Lang extends AttrTransform
      *
      * @return array
      */
-    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
+    public function transform(array $attr, Config $config, Context $context): array
     {
         $lang = $attr['lang'] ?? false;
         $xml_lang = $attr['xml:lang'] ?? false;

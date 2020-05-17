@@ -70,18 +70,18 @@ abstract class Token
         if ($n === 'type') {
             trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
             switch (\get_class($this)) {
-            case Start::class:
-                return 'start';
-            case EmptyToken::class:
-                return 'empty';
-            case End::class:
-                return 'end';
-            case Text::class:
-                return 'text';
-            case Comment::class:
-                return 'comment';
-            default:
-                return null;
+                case Start::class:
+                    return 'start';
+                case EmptyToken::class:
+                    return 'empty';
+                case End::class:
+                    return 'end';
+                case Text::class:
+                    return 'text';
+                case Comment::class:
+                    return 'comment';
+                default:
+                    return null;
             }
         }
 

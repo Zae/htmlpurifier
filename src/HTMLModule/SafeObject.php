@@ -6,9 +6,8 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrTransform\SafeParam;
+use HTMLPurifier\Config;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 
 /**
  * A "safe" object module. In theory, objects permitted by this module will
@@ -24,11 +23,11 @@ class SafeObject extends HTMLModule
     public $name = 'SafeObject';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         // These definitions are not intrinsically safe: the attribute transforms
         // are a vital part of ensuring safety.

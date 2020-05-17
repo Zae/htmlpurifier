@@ -367,8 +367,7 @@ class Config
         if (\is_object($def) && isset($def->isAlias)) {
             if ($this->aliasMode) {
                 $this->triggerError(
-                    'Double-aliases not allowed, please fix '.
-                    'ConfigSchema bug with' . $key,
+                    'Double-aliases not allowed, please fix ConfigSchema bug with' . $key,
                     E_USER_ERROR
                 );
                 return;
@@ -416,7 +415,7 @@ class Config
             if (isset($def->allowed) && !isset($def->allowed[$value])) {
                 $this->triggerError(
                     'Value not supported, valid values are: ' .
-                    $this->_listify($def->allowed),
+                    $this->listify($def->allowed),
                     E_USER_WARNING
                 );
                 return;
@@ -442,7 +441,7 @@ class Config
      *
      * @return string
      */
-    private function _listify(array $lookup): string
+    private function listify(array $lookup): string
     {
         $list = [];
         foreach ($lookup as $name => $b) {
@@ -800,7 +799,7 @@ class Config
                 $namespace = $key;
                 $namespace_values = $value;
                 foreach ($namespace_values as $directive => $value2) {
-                    $this->set($namespace .'.'. $directive, $value2);
+                    $this->set("{$namespace}.{$directive}", $value2);
                 }
             }
         }
@@ -881,8 +880,13 @@ class Config
      *
      * @return mixed
      */
-    public static function loadArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null)
-    {
+    public static function loadArrayFromForm(
+        array $array,
+        $index = false,
+        $allowed = true,
+        bool $mq_fix = true,
+        ?ConfigSchema $schema = null
+    ) {
         $ret = static::prepareArrayFromForm($array, $index, $allowed, $mq_fix, $schema);
 
         return static::create($ret, $schema);
@@ -915,8 +919,13 @@ class Config
      *
      * @return array
      */
-    public static function prepareArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true, ?ConfigSchema $schema = null): array
-    {
+    public static function prepareArrayFromForm(
+        array $array,
+        $index = false,
+        $allowed = true,
+        bool $mq_fix = true,
+        ?ConfigSchema $schema = null
+    ): array {
         if ($index !== false) {
             $array = (isset($array[$index]) && \is_array($array[$index])) ? $array[$index] : [];
         }

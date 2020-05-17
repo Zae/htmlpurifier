@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrTransform;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Implements required attribute stipulation for <script>
@@ -14,13 +14,13 @@ use \HTMLPurifier\Config;
 class ScriptRequired extends AttrTransform
 {
     /**
-     * @param array               $attr
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $attr
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */
-    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
+    public function transform(array $attr, Config $config, Context $context): array
     {
         if (!isset($attr['type'])) {
             $attr['type'] = 'text/javascript';

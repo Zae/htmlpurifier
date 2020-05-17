@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
-
+/**
+ * Class DoctypeRegistry
+ *
+ * @package HTMLPurifier
+ */
 class DoctypeRegistry
 {
     /**

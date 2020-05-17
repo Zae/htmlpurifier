@@ -180,7 +180,7 @@ class ConfigSchema
      */
     public function addAlias(string $key, string $new_key): void
     {
-        $obj = new stdClass;
+        $obj = new stdClass();
         $obj->key = $new_key;
         $obj->isAlias = true;
         $this->info[$key] = $obj;
