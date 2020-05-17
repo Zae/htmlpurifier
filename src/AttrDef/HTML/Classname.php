@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\HTML;
-use HTMLPurifier\AttrDef\HTML\Nmtokens;
-use \HTMLPurifier\Config;
+
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLDefinition;
@@ -50,8 +50,9 @@ class Classname extends Nmtokens
         $ret = [];
 
         foreach ($tokens as $token) {
-            if (($allowed === null || isset($allowed[$token])) 
-                && !isset($forbidden[$token]) 
+            if (
+                ($allowed === null || isset($allowed[$token]))
+                && !isset($forbidden[$token])
                 // We need this O(n) check because of PHP's array
                 // implementation that casts -0 to 0.
                 && !\in_array($token, $ret, true)

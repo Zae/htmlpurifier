@@ -32,7 +32,7 @@ class AutoParagraph extends Injector
     /**
      * @return Start
      */
-    private function _pStart(): Start
+    private function pStart(): Start
     {
         $par = new Start('p');
         $par->armor['MakeWellFormed_TagClosedError'] = true;
@@ -61,7 +61,7 @@ class AutoParagraph extends Injector
                     //               ----
                     // This is a degenerate case
                 } else {
-                    if (!$token->is_whitespace || (!\is_null($current) && $this->_isInline($current))) {
+                    if (!$token->is_whitespace || (!\is_null($current) && $this->isInline($current))) {
                         // State 1.2: PAR1
                         //            ----
 
@@ -70,8 +70,8 @@ class AutoParagraph extends Injector
 
                         // State 1.4: <div>PAR1\n\nPAR2 (see State 2)
                         //                 ------------
-                        $token = [$this->_pStart()];
-                        $this->_splitText($text, $token);
+                        $token = [$this->pStart()];
+                        $this->splitText($text, $token);
                     } else {
                         // State 1.5: \n<hr />
                         //            --
@@ -83,14 +83,14 @@ class AutoParagraph extends Injector
 
                 // We're in an element that allows paragraph tags, but we're not
                 // sure if we're going to need them.
-                if ($this->_pLookAhead()) {
+                if ($this->pLookAhead()) {
                     // State 2.1: <div>PAR1<b>PAR1\n\nPAR2
                     //                 ----
                     // Note: This will always be the first child, since any
                     // previous inline element would have triggered this very
                     // same routine, and found the double newline. One possible
                     // exception would be a comment.
-                    $token = [$this->_pStart(), $token];
+                    $token = [$this->pStart(), $token];
                 } else {
                     // State 2.2.1: <div>PAR1<div>
                     //                   ----
@@ -100,7 +100,8 @@ class AutoParagraph extends Injector
                 }
             }
             // Is the current parent a <p> tag?
-        } elseif (!empty($this->currentNesting) 
+        } elseif (
+            !empty($this->currentNesting)
             && $this->currentNesting[\count($this->currentNesting) - 1]->name === 'p'
         ) {
             // State 3.1: ...<p>PAR1
@@ -109,7 +110,7 @@ class AutoParagraph extends Injector
             // State 3.2: ...<p>PAR1\n\nPAR2
             //                  ------------
             $token = [];
-            $this->_splitText($text, $token);
+            $this->splitText($text, $token);
             // Abort!
         } else {
             // State 4.1: ...<b>PAR1
@@ -130,7 +131,7 @@ class AutoParagraph extends Injector
         // tokens, because the tag would have been autoclosed by MakeWellFormed.
         if ($this->allowsElement('p')) {
             if (!empty($this->currentNesting)) {
-                if ($this->_isInline($token)) {
+                if ($this->isInline($token)) {
                     // State 1: <div>...<b>
                     //                  ---
                     // Check if this token is adjacent to the parent token
@@ -140,13 +141,14 @@ class AutoParagraph extends Injector
 
                     if (!$prev instanceof Start) {
                         // Token wasn't adjacent
-                        if ($prev instanceof Text 
+                        if (
+                            $prev instanceof Text
                             && substr($prev->data, -2) === "\n\n"
                         ) {
                             // State 1.1.4: <div><p>PAR1</p>\n\n<b>
                             //                                  ---
                             // Quite frankly, this should be handled by splitText
-                            $token = [$this->_pStart(), $token];
+                            $token = [$this->pStart(), $token];
                         } else {
                             // State 1.1.1: <div><p>PAR1</p><b>
                             //                              ---
@@ -159,10 +161,10 @@ class AutoParagraph extends Injector
                         // State 1.2.1: <div><b>
                         //                   ---
                         // Lookahead to see if <p> is needed.
-                        if ($this->_pLookAhead()) {
+                        if ($this->pLookAhead()) {
                             // State 1.3.1: <div><b>PAR1\n\nPAR2
                             //                   ---
-                            $token = array($this->_pStart(), $token);
+                            $token = array($this->pStart(), $token);
                         } else {
                             // State 1.3.2: <div><b>PAR1</b></div>
                             //                   ---
@@ -176,12 +178,12 @@ class AutoParagraph extends Injector
                     //               -----
                 }
             } else {
-                if ($this->_isInline($token)) {
+                if ($this->isInline($token)) {
                     // State 3.1: <b>
                     //            ---
                     // This is where the {p} tag is inserted, not reflected in
                     // inputTokens yet, however.
-                    $token = [$this->_pStart(), $token];
+                    $token = [$this->pStart(), $token];
                 } else {
                     // State 3.2: <div>
                     //            -----
@@ -225,7 +227,7 @@ class AutoParagraph extends Injector
      * @param Token[] $result              Reference to array of tokens that the
      *                                     tags will be appended onto
      */
-    private function _splitText(string $data, array &$result): void
+    private function splitText(string $data, array &$result): void
     {
         $raw_paragraphs = explode("\n\n", $data);
         $paragraphs = []; // without empty paragraphs
@@ -283,7 +285,7 @@ class AutoParagraph extends Injector
 
         // Add the start tag indicated by \n\n at the beginning of $data
         if ($needs_start) {
-            $result[] = $this->_pStart();
+            $result[] = $this->pStart();
         }
 
         // Append the paragraphs onto the result
@@ -291,7 +293,7 @@ class AutoParagraph extends Injector
             $result[] = new Text($par);
             $result[] = new End('p');
             $result[] = new Text("\n\n");
-            $result[] = $this->_pStart();
+            $result[] = $this->pStart();
         }
 
         // Remove trailing start token; Injector will handle this later if
@@ -315,7 +317,7 @@ class AutoParagraph extends Injector
      *
      * @return bool
      */
-    private function _isInline(Token $token): bool
+    private function isInline(Token $token): bool
     {
         return isset($this->htmlDefinition->info['p']->child->elements[$token->name]);
     }
@@ -326,7 +328,7 @@ class AutoParagraph extends Injector
      *
      * @return bool
      */
-    private function _pLookAhead(): bool
+    private function pLookAhead(): bool
     {
         if ($this->currentToken instanceof Start) {
             $nesting = 1;
@@ -339,7 +341,7 @@ class AutoParagraph extends Injector
 
         while ($this->forwardUntilEndToken($i, $current, $nesting)) {
             if (!\is_null($current)) {
-                $result = $this->_checkNeedsP($current);
+                $result = $this->checkNeedsP($current);
                 if ($result !== null) {
                     $ok = $result;
                     break;
@@ -358,10 +360,10 @@ class AutoParagraph extends Injector
      *
      * @return bool|null
      */
-    private function _checkNeedsP(Token $current): ?bool
+    private function checkNeedsP(Token $current): ?bool
     {
         if ($current instanceof Start) {
-            if (!$this->_isInline($current)) {
+            if (!$this->isInline($current)) {
                 // <div>PAR1<div>
                 //      ----
                 // Terminate early, since we hit a block element

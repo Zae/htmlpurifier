@@ -7,8 +7,7 @@ namespace HTMLPurifier\ChildDef;
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
 use HTMLPurifier\Node;
-use HTMLPurifier\ChildDef\Optional;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Definition that uses different definitions depending on context.

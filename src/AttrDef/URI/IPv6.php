@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\URI;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
-
 /**
  * Validates an IPv6 address.
  *
@@ -26,7 +23,7 @@ class IPv6 extends IPv4
     public function validate($aIP, $config, $context)
     {
         if (!$this->ip4) {
-            $this->_loadRegex();
+            $this->loadRegex();
         }
 
         $original = $aIP;

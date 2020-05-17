@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
-use HTMLPurifier\Exception;
 
 /**
  * Validates a font family list according to CSS spec
@@ -245,5 +243,4 @@ class FontFamily extends AttrDef
 
         return $final;
     }
-
 }

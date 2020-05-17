@@ -5,9 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
-use HTMLPurifier\Exception;
 
 /**
  * Validates a rel/rev link attribute against a directive of allowed values

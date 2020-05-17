@@ -7,7 +7,7 @@ namespace HTMLPurifier\Strategy;
 use HTMLPurifier\Context;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Composite strategy that runs multiple strategies on tokens.

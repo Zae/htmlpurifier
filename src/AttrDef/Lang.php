@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -39,23 +38,23 @@ class Lang extends AttrDef
         // process primary subtag : $subtags[0]
         $length = \strlen($subtags[0]);
         switch ($length) {
-        case 1:
-            if (!($subtags[0] === 'x' || $subtags[0] === 'i')) {
-                return false;
-            }
-            break;
-        case 2:
-        case 3:
-            if (!ctype_alpha($subtags[0])) {
-                return false;
-            }
+            case 1:
+                if (!($subtags[0] === 'x' || $subtags[0] === 'i')) {
+                    return false;
+                }
+                break;
+            case 2:
+            case 3:
+                if (!ctype_alpha($subtags[0])) {
+                    return false;
+                }
 
-            if (!ctype_lower($subtags[0])) {
-                $subtags[0] = strtolower($subtags[0]);
-            }
-            break;
-        default:
-            return false;
+                if (!ctype_lower($subtags[0])) {
+                    $subtags[0] = strtolower($subtags[0]);
+                }
+                break;
+            default:
+                return false;
         }
 
         $new_string = $subtags[0];

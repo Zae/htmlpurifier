@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
 
 /**
  * Validates a number as defined by the CSS spec.
@@ -51,13 +49,14 @@ class Number extends AttrDef
 
         $sign = '';
         switch ($number[0]) {
-        case '-':
-            if ($this->non_negative) {
-                return false;
-            }
-            $sign = '-';
-        case '+':
-            $number = substr($number, 1);
+            case '-':
+                if ($this->non_negative) {
+                    return false;
+                }
+                $sign = '-';
+                // falls through to +
+            case '+':
+                $number = substr($number, 1);
         }
 
         if (ctype_digit($number)) {

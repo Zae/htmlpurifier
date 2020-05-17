@@ -17,38 +17,38 @@ class EntityParser
      *
      * @type EntityLookup
      */
-    protected $_entity_lookup;
+    protected $entityLookup;
 
     /**
      * Callback regex string for entities in text.
      *
      * @type string
      */
-    protected $_textEntitiesRegex;
+    protected $textEntitiesRegex;
 
     /**
      * Callback regex string for entities in attributes.
      *
      * @type string
      */
-    protected $_attrEntitiesRegex;
+    protected $attrEntitiesRegex;
 
     /**
      * Tests if the beginning of a string is a semi-optional regex
      */
-    protected $_semiOptionalPrefixRegex;
+    protected $semiOptionalPrefixRegex;
 
     public function __construct()
     {
         // From
         // http://stackoverflow.com/questions/15532252/why-is-reg-being-rendered-as-without-the-bounding-semicolon
-        $semi_optional = 'quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml';
+        $semi_optional = 'quot|QUOT|lt|LT|gt|GT|amp|AMP|AElig|Aacute|Acirc|Agrave|Aring|Atilde|Auml|COPY|Ccedil|ETH|Eacute|Ecirc|Egrave|Euml|Iacute|Icirc|Igrave|Iuml|Ntilde|Oacute|Ocirc|Ograve|Oslash|Otilde|Ouml|REG|THORN|Uacute|Ucirc|Ugrave|Uuml|Yacute|aacute|acirc|acute|aelig|agrave|aring|atilde|auml|brvbar|ccedil|cedil|cent|copy|curren|deg|divide|eacute|ecirc|egrave|eth|euml|frac12|frac14|frac34|iacute|icirc|iexcl|igrave|iquest|iuml|laquo|macr|micro|middot|nbsp|not|ntilde|oacute|ocirc|ograve|ordf|ordm|oslash|otilde|ouml|para|plusmn|pound|raquo|reg|sect|shy|sup1|sup2|sup3|szlig|thorn|times|uacute|ucirc|ugrave|uml|uuml|yacute|yen|yuml'; //phpcs:ignore
 
         // NB: three empty captures to put the fourth match in the right
         // place
-        $this->_semiOptionalPrefixRegex = "/&()()()($semi_optional)/";
+        $this->semiOptionalPrefixRegex = "/&()()()($semi_optional)/";
 
-        $this->_textEntitiesRegex =
+        $this->textEntitiesRegex =
             '/&(?:' .
             // hex
             '[#]x([a-fA-F0-9]+);?|' .
@@ -61,7 +61,7 @@ class EntityParser
             "($semi_optional)" .
             ')/';
 
-        $this->_attrEntitiesRegex =
+        $this->attrEntitiesRegex =
             '/&(?:' .
             // hex
             '[#]x([a-fA-F0-9]+);?|' .
@@ -75,7 +75,6 @@ class EntityParser
             // like)
             "($semi_optional)(?![=;A-Za-z0-9])" .
             ')/';
-
     }
 
     /**
@@ -89,7 +88,7 @@ class EntityParser
     public function substituteTextEntities(string $string): string
     {
         return preg_replace_callback(
-            $this->_textEntitiesRegex,
+            $this->textEntitiesRegex,
             [$this, 'entityCallback'],
             $string
         );
@@ -106,7 +105,7 @@ class EntityParser
     public function substituteAttrEntities(string $string): string
     {
         return preg_replace_callback(
-            $this->_attrEntitiesRegex,
+            $this->attrEntitiesRegex,
             [$this, 'entityCallback'],
             $string
         );
@@ -136,11 +135,12 @@ class EntityParser
             return Encoder::unichr((int)$dec_part);
         }
 
-        if (!$this->_entity_lookup) {
-            $this->_entity_lookup = EntityLookup::instance();
+        if (!$this->entityLookup) {
+            $this->entityLookup = EntityLookup::instance();
         }
-        if (isset($this->_entity_lookup->table[$named_part])) {
-            return $this->_entity_lookup->table[$named_part];
+
+        if (isset($this->entityLookup->table[$named_part])) {
+            return $this->entityLookup->table[$named_part];
         }
 
         // exact match didn't match anything, so test if
@@ -149,7 +149,7 @@ class EntityParser
         // prevent infinite loop
         if (!empty($matches[3])) {
             return preg_replace_callback(
-                $this->_semiOptionalPrefixRegex,
+                $this->semiOptionalPrefixRegex,
                 [$this, 'entityCallback'],
                 $entity
             );
@@ -165,16 +165,15 @@ class EntityParser
      *
      * @type string
      */
-    protected $_substituteEntitiesRegex =
-        '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
-    //     1. hex             2. dec      3. string (XML style)
+    protected $substituteEntitiesRegex = '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
+    //                                       1. hex                2. dec     3. string (XML style)
 
     /**
      * Decimal to parsed string conversion table for special entities.
      *
      * @type array
      */
-    protected $_special_dec2str = [
+    protected $specialDec2str = [
         34 => '"',
         38 => '&',
         39 => "'",
@@ -187,7 +186,7 @@ class EntityParser
      *
      * @type array
      */
-    protected $_special_ent2dec = [
+    protected $specialEnt2dec = [
         'quot' => 34,
         'amp' => 38,
         'lt' => 60,
@@ -207,7 +206,7 @@ class EntityParser
     {
         // it will try to detect missing semicolons, but don't rely on it
         return preg_replace_callback(
-            $this->_substituteEntitiesRegex,
+            $this->substituteEntitiesRegex,
             [$this, 'nonSpecialEntityCallback'],
             $string
         );
@@ -232,22 +231,22 @@ class EntityParser
             $is_hex = (@$entity[2] === 'x');
             $code = $is_hex ? hexdec($matches[1]) : (int)$matches[2];
             // abort for special characters
-            if (isset($this->_special_dec2str[$code])) {
+            if (isset($this->specialDec2str[$code])) {
                 return $entity;
             }
 
             return Encoder::unichr($code);
         }
 
-        if (isset($this->_special_ent2dec[$matches[3]])) {
+        if (isset($this->specialEnt2dec[$matches[3]])) {
             return $entity;
         }
 
-        if (!$this->_entity_lookup) {
-            $this->_entity_lookup = EntityLookup::instance();
+        if (!$this->entityLookup) {
+            $this->entityLookup = EntityLookup::instance();
         }
 
-        return $this->_entity_lookup->table[$matches[3]] ?? $entity;
+        return $this->entityLookup->table[$matches[3]] ?? $entity;
     }
 
     /**
@@ -263,7 +262,7 @@ class EntityParser
     public function substituteSpecialEntities(string $string): string
     {
         return preg_replace_callback(
-            $this->_substituteEntitiesRegex,
+            $this->substituteEntitiesRegex,
             [$this, 'specialEntityCallback'],
             $string
         );
@@ -288,11 +287,11 @@ class EntityParser
             $is_hex = (@$entity[2] === 'x');
             $int = $is_hex ? hexdec($matches[1]) : (int)$matches[2];
 
-            return $this->_special_dec2str[$int] ?? $entity;
+            return $this->specialDec2str[$int] ?? $entity;
         }
 
-        return isset($this->_special_ent2dec[$matches[3]]) ?
-            $this->_special_dec2str[$this->_special_ent2dec[$matches[3]]] :
+        return isset($this->specialEnt2dec[$matches[3]]) ?
+            $this->specialDec2str[$this->specialEnt2dec[$matches[3]]] :
             $entity;
     }
 }

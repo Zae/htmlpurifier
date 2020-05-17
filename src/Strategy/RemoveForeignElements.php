@@ -6,13 +6,12 @@ namespace HTMLPurifier\Strategy;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrValidator;
-use HTMLPurifier\ElementDef;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\Comment;
 use HTMLPurifier\Token\EmptyToken;
@@ -98,8 +97,9 @@ class RemoveForeignElements extends Strategy
                 if (isset($token->name) && isset($definition->info[$token->name])) {
                     // mostly everything's good, but
                     // we need to make sure required attributes are in order
-                    if (($token instanceof Start || $token instanceof EmptyToken) 
-                        && $definition->info[$token->name]->required_attr 
+                    if (
+                        ($token instanceof Start || $token instanceof EmptyToken)
+                        && $definition->info[$token->name]->required_attr
                         && ($token->name !== 'img' || $remove_invalid_img) // ensure config option still works
                     ) {
                         $attr_validator->validateToken($token, $config, $context);
@@ -136,7 +136,6 @@ class RemoveForeignElements extends Strategy
                     } elseif ($token->name === $textify_comments && $token instanceof End) {
                         $textify_comments = false;
                     }
-
                 } elseif ($escape_invalid_tags) {
                     // invalid tag, generate HTML representation and insert in
                     if ($e) {
@@ -191,7 +190,8 @@ class RemoveForeignElements extends Strategy
                         $token->data = str_replace('--', '-', $token->data);
                     }
 
-                    if ($trusted || !empty($comment_lookup[trim($token->data)]) 
+                    if (
+                        $trusted || !empty($comment_lookup[trim($token->data)])
                         || ($comment_regexp !== null && preg_match($comment_regexp, trim($token->data)))
                     ) {
                         // OK good

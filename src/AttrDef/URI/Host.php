@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\AttrDef;
-use \HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use Net_IDNA2;

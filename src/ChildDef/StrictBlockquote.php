@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\ChildDef;
 
-use HTMLPurifier\ChildDef\Required;
 use HTMLPurifier\Context;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -86,17 +85,18 @@ class StrictBlockquote extends Required
 
         foreach ($result as $node) {
             if ($block_wrap === false) {
-                if ((($node instanceof Text && !$node->is_whitespace) 
-                    || ($node instanceof Element && !isset($this->elements[$node->name])))
+                if (
+                    (
+                        ($node instanceof Text && !$node->is_whitespace)
+                        || ($node instanceof Element && !isset($this->elements[$node->name]))
+                    )
                     && !\is_null($def)
                 ) {
                     $block_wrap = new Element($def->info_block_wrapper);
                     $ret[] = $block_wrap;
                 }
-            } else {
-                if ($node instanceof Element && isset($this->elements[$node->name])) {
-                    $block_wrap = false;
-                }
+            } elseif ($node instanceof Element && isset($this->elements[$node->name])) {
+                $block_wrap = false;
             }
 
             if ($block_wrap) {

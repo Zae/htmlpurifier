@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\LanguageFactory;
 use HTMLPurifier\Token\Tag;
 
 /**
@@ -57,7 +55,7 @@ class Language
      * @type bool
      * @todo Make it private, fix usage in HTMLPurifier_LanguageTest
      */
-    public $_loaded = false;
+    public $loaded = false;
 
     /**
      * @type Config
@@ -86,7 +84,7 @@ class Language
      */
     public function load(): void
     {
-        if ($this->_loaded) {
+        if ($this->loaded) {
             return;
         }
 
@@ -97,7 +95,7 @@ class Language
             $this->$key = $factory->cache[$this->code][$key];
         }
 
-        $this->_loaded = true;
+        $this->loaded = true;
     }
 
     /**
@@ -109,7 +107,7 @@ class Language
      */
     public function getMessage(string $key): string
     {
-        if (!$this->_loaded) {
+        if (!$this->loaded) {
             $this->load();
         }
 
@@ -129,7 +127,7 @@ class Language
      */
     public function getErrorName(int $int): string
     {
-        if (!$this->_loaded) {
+        if (!$this->loaded) {
             $this->load();
         }
 
@@ -180,7 +178,7 @@ class Language
      */
     public function formatMessage(string $key, array $args = []): string
     {
-        if (!$this->_loaded) {
+        if (!$this->loaded) {
             $this->load();
         }
 

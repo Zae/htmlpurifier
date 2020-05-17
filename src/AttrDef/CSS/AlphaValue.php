@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\CSS;
 
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**

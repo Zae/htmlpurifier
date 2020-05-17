@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef\URI as BaseURI;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Context;
 
 /**
  * Validates a URI in CSS syntax, which uses url('http://example.com')

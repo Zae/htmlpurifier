@@ -136,7 +136,6 @@ class UnitConverter
         $cp = ($log < 0) ? $this->internalPrecision - $log : $this->internalPrecision; // internal precision
 
         for ($i = 0; $i < 2; $i++) {
-
             // Determine what unit IN THIS SYSTEM we need to convert to
             if ($dest_state === $state) {
                 // Simple conversion
@@ -148,7 +147,11 @@ class UnitConverter
 
             // Do the conversion if necessary
             if ($dest_unit !== $unit) {
-                $factor = $this->div((string)self::$units[$state][$unit], (string)self::$units[$state][$dest_unit], $cp);
+                $factor = $this->div(
+                    (string)self::$units[$state][$unit],
+                    (string)self::$units[$state][$dest_unit],
+                    $cp
+                );
                 $n = $this->mul($n, $factor, $cp);
                 $unit = $dest_unit;
             }
@@ -179,7 +182,6 @@ class UnitConverter
             $state = $dest_state;
 
             // One more loop around to convert the unit in the new system.
-
         }
 
         // Post-condition: $unit == $to_unit
