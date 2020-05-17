@@ -11,7 +11,7 @@ use HTMLPurifier\VarParserException;
  *
  * @package HTMLPurifier\Tests\Unit\VarParser
  */
-class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
+abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
 {
     protected $parser;
 

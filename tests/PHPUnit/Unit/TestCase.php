@@ -6,6 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\Generator;
 use HTMLPurifier\HTMLPurifier;
 use Mockery;
 use Mockery\Exception\InvalidCountException;
@@ -128,5 +129,45 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         if (!$context) {
             $context = new Context();
         }
+    }
+
+    /**
+     * Debugging function that prints tokens in a user-friendly manner.
+     */
+    protected static function printTokens($tokens, $index = null): void
+    {
+        $string = '<pre>';
+        $generator = new Generator(Config::createDefault(), new Context());
+        foreach ($tokens as $i => $token) {
+            $string .= static::printToken($generator, $token, $i, $index === $i);
+        }
+        $string .= '</pre>';
+
+        echo $string;
+    }
+
+    /**
+     * @param $generator
+     * @param $token
+     * @param $i
+     * @param $isCursor
+     *
+     * @return string
+     */
+    protected static function printToken($generator, $token, $i, $isCursor): string
+    {
+        $string = "";
+        if ($isCursor) {
+            $string .= '[<strong>';
+        }
+
+        $string .= "<sup>$i</sup>";
+        $string .= $generator->escape($generator->generateFromToken($token));
+
+        if ($isCursor) {
+            $string .= '</strong>]';
+        }
+
+        return $string;
     }
 }

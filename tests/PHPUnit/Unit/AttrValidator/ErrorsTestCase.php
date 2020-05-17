@@ -18,7 +18,7 @@ use Mockery;
  *
  * @package HTMLPurifier\Tests\Unit\AttrValidator
  */
-class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
+abstract class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
 {
     private $language;
 

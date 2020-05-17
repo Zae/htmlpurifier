@@ -21,12 +21,18 @@
         "ext-exif": "*"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-master",
         "simpletest/simpletest": "^1.2.0",
         "phpunit/phpunit": "^9.0",
         "spatie/phpunit-snapshot-assertions": "^4.0",
         "mockery/mockery": "^1.3",
         "vimeo/psalm": "^3.11",
-        "pear/net_idna2": "^0.2.0"
+        "pear/net_idna2": "^0.2.0",
+        "infection/infection": "^0.16.3",
+        "cerdic/css-tidy": "^1.7",
+        "squizlabs/php_codesniffer": "^3.5",
+        "sensiolabs/security-checker": "^6.0",
+        "php-parallel-lint/php-parallel-lint": "^1.0"
     },
     "suggest": {
         "ext-bcmath": "Makes math much faster",
@@ -50,6 +56,10 @@
     "scripts": {
         "simpletest": "@php tests/index.php",
         "snapshots": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Snapshots",
-        "unit": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Unit"
+        "unit": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Unit",
+        "infect": "@php -d memory_limit=-1 vendor/bin/infection -j4 --only-covered",
+        "psalm": "@php vendor/bin/psalm --threads=8 --diff --diff-methods",
+        "codestyle": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src",
+        "lint": "@php vendor/bin/parallel-lint -j 8 --no-progress src"
     }
 }
