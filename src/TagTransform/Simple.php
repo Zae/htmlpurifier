@@ -8,7 +8,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\TagTransform;
 use HTMLPurifier\Token\Tag;
 use HTMLPurifier\Token\Start;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Token\EmptyToken;
 
 /**
@@ -44,8 +44,9 @@ class Simple extends TagTransform
     {
         $new_tag = clone $tag;
         $new_tag->name = $this->transform_to;
-        if (!\is_null($this->style) 
-            && ($new_tag instanceof Start || $new_tag instanceof EmptyToken)
+        if (
+            ($new_tag instanceof Start || $new_tag instanceof EmptyToken)
+            && !\is_null($this->style)
         ) {
             $this->prependCSS($new_tag->attr, $this->style);
         }

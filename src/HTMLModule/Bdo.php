@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrTransform\BdoDir;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Bi-directional Text Module, defines elements that
@@ -27,9 +27,9 @@ class Bdo extends HTMLModule
     ];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $bdo = $this->addElement(
             'bdo',

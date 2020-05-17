@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\DefinitionCache;
 
 use HTMLPurifier\Definition;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 
 /**

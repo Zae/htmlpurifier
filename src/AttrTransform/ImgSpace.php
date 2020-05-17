@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrTransform;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use \HTMLPurifier\Config;
 
 /**
  * Pre-transform that changes deprecated hspace and vspace attributes to CSS
@@ -39,12 +39,12 @@ class ImgSpace extends AttrTransform
 
     /**
      * @param array               $attr
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return array
      */
-    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
+    public function transform(array $attr, Config $config, Context $context): array
     {
         if (!isset($attr[$this->attr])) {
             return $attr;

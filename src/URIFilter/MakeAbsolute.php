@@ -8,7 +8,7 @@ namespace HTMLPurifier\URIFilter;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\URIScheme;
 
 /**
@@ -60,7 +60,7 @@ class MakeAbsolute extends URIFilter
         $this->base->fragment = null; // fragment is invalid for base URI
         $stack = explode('/', (string)$this->base->path);
         array_pop($stack); // discard last segment
-        $stack = $this->_collapseStack($stack); // do pre-parsing
+        $stack = $this->collapseStack($stack); // do pre-parsing
         $this->basePathStack = $stack;
 
         return true;
@@ -80,8 +80,12 @@ class MakeAbsolute extends URIFilter
             return true;
         } // abort early
 
-        if ($uri->path === '' && \is_null($uri->scheme) 
-            && \is_null($uri->host) && \is_null($uri->query) && \is_null($uri->fragment)
+        if (
+            $uri->path === ''
+            && \is_null($uri->scheme)
+            && \is_null($uri->host)
+            && \is_null($uri->query)
+            && \is_null($uri->fragment)
         ) {
             // reference to current document
             $uri = clone $this->base;
@@ -123,11 +127,11 @@ class MakeAbsolute extends URIFilter
                 array_unshift($new_stack, '');
             }
 
-            $new_stack = $this->_collapseStack($new_stack);
+            $new_stack = $this->collapseStack($new_stack);
             $uri->path = implode('/', $new_stack);
         } else {
             // absolute path, but still we should collapse
-            $uri->path = implode('/', $this->_collapseStack(explode('/', (string)$uri->path)));
+            $uri->path = implode('/', $this->collapseStack(explode('/', (string)$uri->path)));
         }
 
         // re-combine
@@ -157,7 +161,7 @@ class MakeAbsolute extends URIFilter
      *
      * @return array
      */
-    private function _collapseStack(array $stack): array
+    private function collapseStack(array $stack): array
     {
         $result = [];
         $is_folder = false;

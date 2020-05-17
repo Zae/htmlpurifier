@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\HTMLModule;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 
 /**
  * Abstract class for a set of proprietary modules that clean up (tidy)
@@ -49,13 +48,13 @@ class Tidy extends HTMLModule
      * Lazy load constructs the module by determining the necessary
      * fixes to create and then delegating to the populate() function.
      *
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws \HTMLPurifier\Exception
      * @todo Wildcard matching and error reporting when an added or
      *       subtracted fix has no effect.
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         // create fixes, initialize fixesForLevel
         $fixes = $this->makeFixes();
@@ -71,7 +70,8 @@ class Tidy extends HTMLModule
 
         foreach ($fixes as $name => $fix) {
             // needs to be refactored a little to implement globbing
-            if (isset($remove_fixes[$name]) 
+            if (
+                isset($remove_fixes[$name])
                 || (!isset($add_fixes[$name]) && !isset($fixes_lookup[$name]))
             ) {
                 unset($fixes[$name]);
@@ -160,41 +160,41 @@ class Tidy extends HTMLModule
             // determine what the fix is for
             [$type, $params] = $this->getFixType($name);
             switch ($type) {
-            case 'attr_transform_pre':
-            case 'attr_transform_post':
-                $attr = $params['attr'];
-                if (isset($params['element'])) {
+                case 'attr_transform_pre':
+                case 'attr_transform_post':
+                    $attr = $params['attr'];
+                    if (isset($params['element'])) {
+                        $element = $params['element'];
+                        if (empty($this->info[$element])) {
+                            $e = $this->addBlankElement($element);
+                        } else {
+                            $e = $this->info[$element];
+                        }
+                    } else {
+                        $type = "info_$type";
+                        $e = $this;
+                    }
+                    // PHP does some weird parsing when I do
+                    // $e->$type[$attr], so I have to assign a ref.
+                    $f =& $e->$type;
+                    $f[$attr] = $fix;
+                    break;
+                case 'tag_transform':
+                    $this->info_tag_transform[$params['element']] = $fix;
+                    break;
+                case 'child':
+                case 'content_model_type':
                     $element = $params['element'];
                     if (empty($this->info[$element])) {
                         $e = $this->addBlankElement($element);
                     } else {
                         $e = $this->info[$element];
                     }
-                } else {
-                    $type = "info_$type";
-                    $e = $this;
-                }
-                // PHP does some weird parsing when I do
-                // $e->$type[$attr], so I have to assign a ref.
-                $f =& $e->$type;
-                $f[$attr] = $fix;
-                break;
-            case 'tag_transform':
-                $this->info_tag_transform[$params['element']] = $fix;
-                break;
-            case 'child':
-            case 'content_model_type':
-                $element = $params['element'];
-                if (empty($this->info[$element])) {
-                    $e = $this->addBlankElement($element);
-                } else {
-                    $e = $this->info[$element];
-                }
-                $e->$type = $fix;
-                break;
-            default:
-                trigger_error("Fix type $type not supported", E_USER_ERROR);
-                break;
+                    $e->$type = $fix;
+                    break;
+                default:
+                    trigger_error("Fix type $type not supported", E_USER_ERROR);
+                    break;
             }
         }
     }

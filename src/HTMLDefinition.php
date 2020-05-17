@@ -150,8 +150,13 @@ class HTMLDefinition extends Definition
      * @see HTMLModule::addElement() for detailed
      *       parameter and return value descriptions.
      */
-    public function addElement(string $element_name, $type, $contents, $attr_collections, array $attributes = []): ElementDef
-    {
+    public function addElement(
+        string $element_name,
+        $type,
+        $contents,
+        $attr_collections,
+        array $attributes = []
+    ): ElementDef {
         $module = $this->getAnonymousModule();
 
         // assume that if the user is calling this, the element
@@ -185,18 +190,18 @@ class HTMLDefinition extends Definition
      */
     public function getAnonymousModule(): HTMLModule
     {
-        if (!$this->_anonModule) {
-            $this->_anonModule = new HTMLModule();
-            $this->_anonModule->name = 'Anonymous';
+        if (!$this->anonModule) {
+            $this->anonModule = new HTMLModule();
+            $this->anonModule->name = 'Anonymous';
         }
 
-        return $this->_anonModule;
+        return $this->anonModule;
     }
 
     /**
      * @var HTMLModule|null
      */
-    private $_anonModule = null;
+    private $anonModule = null;
 
     // PUBLIC BUT INTERNAL VARIABLES --------------------------------------
 
@@ -243,12 +248,12 @@ class HTMLDefinition extends Definition
      */
     protected function processModules(Config $config): void
     {
-        if ($this->_anonModule) {
+        if ($this->anonModule) {
             // for user specific changes
             // this is late-loaded so we don't have to deal with PHP4
             // reference wonky-ness
-            $this->manager->addModule($this->_anonModule);
-            unset($this->_anonModule);
+            $this->manager->addModule($this->anonModule);
+            unset($this->anonModule);
         }
 
         $this->manager->setup($config);
@@ -411,32 +416,32 @@ class HTMLDefinition extends Definition
                 $bits = preg_split('/[.@]/', $elattr, 2);
                 $c = \count($bits);
                 switch ($c) {
-                case 2:
-                    if ($bits[0] !== '*') {
-                        $element = htmlspecialchars($bits[0]);
-                        $attribute = htmlspecialchars($bits[1]);
-                        if (!isset($this->info[$element])) {
-                            trigger_error(
-                                "Cannot allow attribute '$attribute' if element " .
-                                "'$element' is not allowed/supported $support"
-                            );
-                        } else {
-                            trigger_error(
-                                "Attribute '$attribute' in element '$element' not supported $support",
-                                E_USER_WARNING
-                            );
+                    case 2:
+                        if ($bits[0] !== '*') {
+                            $element = htmlspecialchars($bits[0]);
+                            $attribute = htmlspecialchars($bits[1]);
+                            if (!isset($this->info[$element])) {
+                                trigger_error(
+                                    "Cannot allow attribute '$attribute' if element " .
+                                    "'$element' is not allowed/supported $support"
+                                );
+                            } else {
+                                trigger_error(
+                                    "Attribute '$attribute' in element '$element' not supported $support",
+                                    E_USER_WARNING
+                                );
+                            }
+                            break;
                         }
+                        // otherwise fall through
+                    case 1:
+                        $attribute = htmlspecialchars($bits[0]);
+                        trigger_error(
+                            "Global attribute '$attribute' is not " .
+                            "supported in any elements $support",
+                            E_USER_WARNING
+                        );
                         break;
-                    }
-                    // otherwise fall through
-                case 1:
-                    $attribute = htmlspecialchars($bits[0]);
-                    trigger_error(
-                        "Global attribute '$attribute' is not " .
-                        "supported in any elements $support",
-                        E_USER_WARNING
-                    );
-                    break;
                 }
             }
         }
@@ -451,8 +456,9 @@ class HTMLDefinition extends Definition
                 continue;
             }
             foreach ($info->attr as $attr => $x) {
-                if (isset($forbidden_attributes["$tag@$attr"]) 
-                    || isset($forbidden_attributes["*@$attr"]) 
+                if (
+                    isset($forbidden_attributes["$tag@$attr"])
+                    || isset($forbidden_attributes["*@$attr"])
                     || isset($forbidden_attributes[$attr])
                 ) {
                     unset($this->info[$tag]->attr[$attr]);

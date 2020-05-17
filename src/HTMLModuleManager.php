@@ -351,7 +351,7 @@ class HTMLModuleManager
             foreach ($module->info_injector as $injector) {
                 if (!\is_object($injector)) {
                     $class = "HTMLPurifier\\Injector\\$injector";
-                    $injector = new $class;
+                    $injector = new $class();
                 }
                 $n[$injector->name] = $injector;
             }
@@ -500,9 +500,10 @@ class HTMLModuleManager
             $this->attrCollections->expandIdentifiers($def->attr, $this->attrTypes);
 
             // descendants_are_inline, for ChildDef_Chameleon
-            if (\is_string($def->content_model) 
-                && $name !== 'del' 
-                && $name !== 'ins' 
+            if (
+                \is_string($def->content_model)
+                && $name !== 'del'
+                && $name !== 'ins'
                 && strpos($def->content_model, 'Inline') !== false
             ) {
                 // this is for you, ins/del

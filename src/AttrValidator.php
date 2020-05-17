@@ -45,7 +45,8 @@ class AttrValidator
             $context->register('CurrentToken', $token);
         }
 
-        if (!$token instanceof Start &&
+        if (
+            !$token instanceof Start &&
             !$token instanceof EmptyToken
         ) {
             return;
@@ -87,7 +88,6 @@ class AttrValidator
         // iterate through all the attribute keypairs
         // Watch out for name collisions: $key has previously been used
         foreach ($attr as $attr_key => $value) {
-
             // call the definition
             if (isset($defs[$attr_key])) {
                 // there is a local definition defined

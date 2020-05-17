@@ -19,7 +19,7 @@ class Context
      *
      * @type array
      */
-    private $_storage = [];
+    private $storage = [];
 
     /**
      * Registers a variable into the context.
@@ -29,7 +29,7 @@ class Context
      */
     public function register(string $name, &$ref): void
     {
-        if (\array_key_exists($name, $this->_storage)) {
+        if (\array_key_exists($name, $this->storage)) {
             trigger_error(
                 "Name $name produces collision, cannot re-register",
                 E_USER_ERROR
@@ -38,7 +38,7 @@ class Context
             return;
         }
 
-        $this->_storage[$name] =& $ref;
+        $this->storage[$name] =& $ref;
     }
 
     /**
@@ -51,7 +51,7 @@ class Context
      */
     public function &get(string $name, bool $ignore_error = false)
     {
-        if (!\array_key_exists($name, $this->_storage)) {
+        if (!\array_key_exists($name, $this->storage)) {
             if (!$ignore_error) {
                 trigger_error(
                     "Attempted to retrieve non-existent variable $name",
@@ -64,7 +64,7 @@ class Context
             return $var;
         }
 
-        return $this->_storage[$name];
+        return $this->storage[$name];
     }
 
     /**
@@ -74,7 +74,7 @@ class Context
      */
     public function destroy(string $name): void
     {
-        if (!\array_key_exists($name, $this->_storage)) {
+        if (!\array_key_exists($name, $this->storage)) {
             trigger_error(
                 "Attempted to destroy non-existent variable $name",
                 E_USER_ERROR
@@ -83,7 +83,7 @@ class Context
             return;
         }
 
-        unset($this->_storage[$name]);
+        unset($this->storage[$name]);
     }
 
     /**
@@ -95,7 +95,7 @@ class Context
      */
     public function exists(string $name): bool
     {
-        return \array_key_exists($name, $this->_storage);
+        return \array_key_exists($name, $this->storage);
     }
 
     /**

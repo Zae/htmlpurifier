@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
-
 /**
  * Validator for the components of a URI for a specific scheme
  */
@@ -63,7 +60,7 @@ abstract class URIScheme
      *
      * @return bool success or failure
      */
-    abstract public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context);
+    abstract public function doValidate(URI &$uri, Config $config, Context $context);
 
     /**
      * Public interface for validating components of a URI.  Performs a
@@ -76,7 +73,7 @@ abstract class URIScheme
      * @return bool success or failure
      * @throws Exception
      */
-    public function validate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function validate(URI &$uri, Config $config, Context $context): bool
     {
         if ($this->default_port === $uri->port) {
             $uri->port = null;
@@ -84,9 +81,12 @@ abstract class URIScheme
 
         // kludge: browsers do funny things when the scheme but not the
         // authority is set
-        if ((!$this->may_omit_host 
-            // if the scheme is present, a missing host is always in error
-            && (!\is_null($uri->scheme) && ($uri->host === '' || \is_null($uri->host)))) 
+        if (
+            (
+                !$this->may_omit_host
+                // if the scheme is present, a missing host is always in error
+                && (!\is_null($uri->scheme) && ($uri->host === '' || \is_null($uri->host)))
+            )
             // if the scheme is not present, a *blank* host is in error,
             // since this translates into '///path' which most browsers
             // interpret as being 'http://path'.

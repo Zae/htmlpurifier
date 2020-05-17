@@ -201,7 +201,7 @@ class ElementDef
             $this->attr[$k] = $v;
         }
 
-        $this->_mergeAssocArray($this->excludes, $def->excludes);
+        $this->mergeAssocArray($this->excludes, $def->excludes);
         $this->attr_transform_pre = array_merge($this->attr_transform_pre, $def->attr_transform_pre);
         $this->attr_transform_post = array_merge($this->attr_transform_post, $def->attr_transform_post);
 
@@ -234,7 +234,7 @@ class ElementDef
      * @param array $a1 by reference that is merged into
      * @param array $a2 that merges into $a1
      */
-    private function _mergeAssocArray(array &$a1, array $a2): void
+    private function mergeAssocArray(array &$a1, array $a2): void
     {
         foreach ($a2 as $k => $v) {
             if ($v === false) {

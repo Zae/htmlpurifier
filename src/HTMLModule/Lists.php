@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 List Module, defines list-oriented elements. Core Module.

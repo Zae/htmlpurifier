@@ -7,12 +7,12 @@ namespace HTMLPurifier\URIScheme;
 use HTMLPurifier\Context;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * Validates nntp (Network News Transfer Protocol) as defined by generic RFC 1738
  */
-class nntp extends URIScheme
+class Nntp extends URIScheme
 {
     /**
      * @type int
@@ -25,13 +25,13 @@ class nntp extends URIScheme
     public $browsable = false;
 
     /**
-     * @param URI                 $uri
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */
-    public function doValidate(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function doValidate(URI &$uri, Config $config, Context $context): bool
     {
         $uri->userinfo = null;
         $uri->query = null;

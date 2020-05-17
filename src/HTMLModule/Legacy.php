@@ -6,7 +6,7 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrDef\Integer;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Legacy module defines elements that were previously
@@ -31,9 +31,9 @@ class Legacy extends HTMLModule
     public $name = 'Legacy';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         $this->addElement(
             'basefont',

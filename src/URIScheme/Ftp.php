@@ -12,7 +12,7 @@ use HTMLPurifier\Config;
 /**
  * Validates ftp (File Transfer Protocol) URIs as defined by generic RFC 1738.
  */
-class ftp extends URIScheme
+class Ftp extends URIScheme
 {
     /**
      * @type int

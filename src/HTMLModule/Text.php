@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 
 /**
  * XHTML 1.1 Text Module, defines basic text containers. Core Module.
@@ -35,9 +35,9 @@ class Text extends HTMLModule
     ];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         // Inline Phrasal -------------------------------------------------
         $this->addElement('abbr', 'Inline', 'Inline', 'Common');

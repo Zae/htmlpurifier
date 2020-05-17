@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use \HTMLPurifier\Config;
-
 /**
  * Processes an entire attribute array for corrections needing multiple values.
  *
@@ -31,7 +29,7 @@ abstract class AttrTransform
      *
      * @return array Processed attribute array.
      */
-    abstract public function transform(array $attr, \HTMLPurifier\Config $config, Context $context);
+    abstract public function transform(array $attr, Config $config, Context $context);
 
     /**
      * Prepends CSS properties to the style attribute, creating the

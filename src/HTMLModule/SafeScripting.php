@@ -7,7 +7,7 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrTransform\ScriptRequired;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -22,11 +22,11 @@ class SafeScripting extends HTMLModule
     public $name = 'SafeScripting';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         // These definitions are not intrinsically safe: the attribute transforms
         // are a vital part of ensuring safety.
@@ -35,7 +35,8 @@ class SafeScripting extends HTMLModule
         $script = $this->addElement(
             'script',
             'Inline',
-            'Optional:', // Not `Empty` to not allow to autoclose the <script /> tag @see https://www.w3.org/TR/html4/interact/scripts.html
+            'Optional:', // Not `Empty` to not allow to autoclose the <script /> tag
+            // @see https://www.w3.org/TR/html4/interact/scripts.html
             null,
             [
                 // While technically not required by the spec, we're forcing

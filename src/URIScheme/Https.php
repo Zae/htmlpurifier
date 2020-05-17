@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\URIScheme;
 
-use HTMLPurifier\URIScheme\http;
-
 /**
  * Validates https (Secure HTTP) according to http scheme.
  */
-class https extends http
+class Https extends Http
 {
     /**
      * @type int

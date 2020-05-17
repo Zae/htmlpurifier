@@ -39,7 +39,8 @@ class Custom extends ChildDef
      *
      * @type string
      */
-    public $_pcre_regex; //phpcs:ignore somehow it breaks when we rename this, no idea why...
+    public $_pcre_regex; //phpcs:ignore
+    //todo: fix casing of pcre_regex, it's breaks if I change it, no idea why...
 
     /**
      * @param string $dtd_regex Allowed child pattern from the DTD

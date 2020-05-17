@@ -463,7 +463,6 @@ class CSSDefinition extends Definition
         $this->info['border-bottom-left-radius'] = new Multiple($border_radius, 2);
         // TODO: support SLASH syntax
         $this->info['border-radius'] = new Multiple($border_radius, 4);
-
     }
 
     /**

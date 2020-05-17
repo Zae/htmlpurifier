@@ -27,12 +27,12 @@ class ErrorCollector
     /**
      * @type array
      */
-    protected $_current;
+    protected $current;
 
     /**
      * @type array
      */
-    protected $_stacks = [[]];
+    protected $stacks = [[]];
 
     /**
      * @type Language
@@ -61,8 +61,8 @@ class ErrorCollector
     {
         $this->locale =& $context->get('Locale');
         $this->context = $context;
-        $this->_current =& $this->_stacks[0];
-        $this->errors =& $this->_stacks[0];
+        $this->current =& $this->stacks[0];
+        $this->errors =& $this->stacks[0];
     }
 
     /**
@@ -115,7 +115,7 @@ class ErrorCollector
             self::MESSAGE => $msg,
             self::CHILDREN => []
         ];
-        $this->_current[] = $error;
+        $this->current[] = $error;
 
         // NEW CODE BELOW ...
         // Top-level errors are either:
@@ -186,12 +186,12 @@ class ErrorCollector
                 continue;
             }
             foreach ($col_array as $col => $struct) {
-                $this->_renderStruct($ret, $struct, $line, $col);
+                $this->renderStruct($ret, $struct, $line, $col);
             }
         }
 
         if (isset($this->lines[-1])) {
-            $this->_renderStruct($ret, $this->lines[-1]);
+            $this->renderStruct($ret, $this->lines[-1]);
         }
 
         if (empty($errors)) {
@@ -207,7 +207,7 @@ class ErrorCollector
      * @param mixed|null $line
      * @param mixed|null $col
      */
-    private function _renderStruct(array &$ret, $struct, $line = null, $col = null): void
+    private function renderStruct(array &$ret, $struct, $line = null, $col = null): void
     {
         $stack = [$struct];
         $context_stack = [[]];

@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\HTMLModule;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\HTMLModule;
-use \HTMLPurifier\Config;
-use HTMLPurifier\Exception;
 
 /**
  * XHTML 1.1 Iframe Module provides inline frames.
@@ -28,11 +27,11 @@ class Iframe extends HTMLModule
     public $safe = false;
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
-    public function setup(\HTMLPurifier\Config $config): void
+    public function setup(Config $config): void
     {
         if ($config->get('HTML.SafeIframe')) {
             $this->safe = true;

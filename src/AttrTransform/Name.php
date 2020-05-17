@@ -6,7 +6,7 @@ namespace HTMLPurifier\AttrTransform;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 
 /**
@@ -15,14 +15,14 @@ use HTMLPurifier\Exception;
 class Name extends AttrTransform
 {
     /**
-     * @param array               $attr
-     * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param array   $attr
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      * @throws Exception
      */
-    public function transform(array $attr, \HTMLPurifier\Config $config, Context $context): array
+    public function transform(array $attr, Config $config, Context $context): array
     {
         // Abort early if we're using relaxed definition of name
         if ($config->get('HTML.Attr.Name.UseCDATA')) {
