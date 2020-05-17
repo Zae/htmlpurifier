@@ -18,7 +18,7 @@ use function is_string;
  *
  * @package HTMLPurifier\Tests\Unit
  */
-class ComplexTestCase extends TestCase
+abstract class ComplexTestCase extends TestCase
 {
     /**
      * Instance of the object that will execute the method.
@@ -70,12 +70,12 @@ class ComplexTestCase extends TestCase
     /**
      * Asserts a specific result from a one parameter + config/context function
      *
-     * @param string      $input  Input parameter
-     * @param bool|string $expect Expectation
+     * @param string|array  $input  Input parameter
+     * @param bool|string   $expect Expectation
      *
      * @throws \HTMLPurifier\Exception
      */
-    protected function assertResult(string $input, $expect = true): void
+    protected function assertResult($input, $expect = true): void
     {
         // $func may cause $input to change, so "clone" another copy
         // to sacrifice

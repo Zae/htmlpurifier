@@ -39,7 +39,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
             if (!($or_false && $result === false)) {
                 static::assertEquals($string, $result);
             }
-        } else if (!($or_false && $result === false)) {
+        } elseif (!($or_false && $result === false)) {
             static::assertEquals($expect, $result);
         }
     }
