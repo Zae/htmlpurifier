@@ -8,7 +8,7 @@ use HTMLPurifier\Token\Text;
 use HTMLPurifier\Token\Start;
 
 /**
- * @todo Fix usage of HTMLPurifier\HTMLPurifier_Language->_loaded using something else
+ * @todo Fix usage of HTMLPurifier\HTMLPurifier_Language->loaded using something else
  */
 class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
 {
@@ -28,7 +28,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
         $config = \HTMLPurifier\Config::createDefault();
         $context = new Context();
         $lang = new Language($config, $context);
-        $lang->_loaded = true;
+        $lang->loaded = true;
         $lang->messages['HTMLPurifier'] = 'HTML Purifier';
         $this->assertIdentical($lang->getMessage('HTMLPurifier'), 'HTML Purifier');
         $this->assertIdentical($lang->getMessage('LanguageTest: Totally non-existent key'), '[LanguageTest: Totally non-existent key]');
@@ -39,7 +39,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
         $config = \HTMLPurifier\Config::createDefault();
         $context = new Context();
         $lang = new Language($config, $context);
-        $lang->_loaded = true;
+        $lang->loaded = true;
         $lang->messages['LanguageTest: Error'] = 'Error is $1 on line $2';
         $this->assertIdentical($lang->formatMessage('LanguageTest: Error', array(1=>'fatal', 32)), 'Error is fatal on line 32');
     }
@@ -51,7 +51,7 @@ class HTMLPurifier_LanguageTest extends HTMLPurifier_Harness
         $generator = new Generator($config, $context); // replace with mock if this gets icky
         $context->register('Generator', $generator);
         $lang = new Language($config, $context);
-        $lang->_loaded = true;
+        $lang->loaded = true;
         $lang->messages['LanguageTest: Element info'] = 'Element Token: $1.Name, $1.Serialized, $1.Compact, $1.Line';
         $lang->messages['LanguageTest: Data info']    = 'Data Token: $1.Data, $1.Serialized, $1.Compact, $1.Line';
         $this->assertIdentical($lang->formatMessage('LanguageTest: Element info',
