@@ -19,7 +19,7 @@ abstract class ErrorsTestCase extends TestCase
     protected $config, $context;
     protected $collector, $generator, $callCount;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->config = \HTMLPurifier\Config::create(['Core.CollectErrors' => true]);
         $this->context = new Context();

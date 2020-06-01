@@ -20,7 +20,7 @@ class ErrorCollectorTest extends TestCase
     protected $language, $generator, $line;
     protected $collector;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

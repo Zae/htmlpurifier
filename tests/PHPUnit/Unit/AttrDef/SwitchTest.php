@@ -18,7 +18,7 @@ class SwitchTest extends TestCase
 {
     protected $with, $without;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

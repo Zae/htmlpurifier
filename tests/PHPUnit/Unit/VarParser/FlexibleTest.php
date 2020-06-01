@@ -14,7 +14,7 @@ use HTMLPurifier\VarParserException;
  */
 class FlexibleTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->parser = new VarParser\Flexible();
         parent::setUp();

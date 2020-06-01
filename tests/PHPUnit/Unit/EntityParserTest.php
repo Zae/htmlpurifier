@@ -17,7 +17,7 @@ class EntityParserTest extends TestCase
     private $EntityParser;
     private $_entity_lookup;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->EntityParser = new EntityParser();
         $this->_entity_lookup = EntityLookup::instance();

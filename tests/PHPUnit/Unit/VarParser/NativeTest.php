@@ -13,7 +13,7 @@ use HTMLPurifier\VarParser;
  */
 class NativeTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->parser = new VarParser\Native();
         parent::setUp();

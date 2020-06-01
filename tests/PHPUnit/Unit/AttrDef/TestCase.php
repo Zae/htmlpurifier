@@ -17,7 +17,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
     protected $def;
     protected $context, $config;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->config = Config::createDefault();
         $this->context = new Context();

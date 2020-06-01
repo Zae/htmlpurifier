@@ -11,7 +11,7 @@ namespace HTMLPurifier\Tests\Unit\HTMLModule;
  */
 class RubyTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->config->set('HTML.Doctype', 'XHTML 1.1');

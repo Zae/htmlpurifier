@@ -6,9 +6,11 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Arborize;
 use HTMLPurifier\Generator;
+use HTMLPurifier\Lexer;
 use HTMLPurifier\Lexer\DirectLex;
 use HTMLPurifier\Node;
 use HTMLPurifier\Node\Element;
+
 use function is_array;
 use function is_bool;
 use function is_string;
@@ -57,7 +59,7 @@ abstract class ComplexTestCase extends TestCase
 
     /**
      * Instance of an HTMLPurifier_Lexer implementation.
-     * @type HTMLPurifier_Lexer
+     * @type Lexer
      */
     protected $lexer;
 

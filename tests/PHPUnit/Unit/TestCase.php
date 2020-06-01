@@ -33,7 +33,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected $context;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -169,5 +169,15 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         }
 
         return $string;
+    }
+
+    /**
+     * Used when we want to assert that we reached the end of the test, reaching the
+     * end of the test is good. This makes it so the tests don't automatically
+     * become risky.
+     */
+    protected static function assertReached(): void
+    {
+        static::assertTrue(true);
     }
 }
