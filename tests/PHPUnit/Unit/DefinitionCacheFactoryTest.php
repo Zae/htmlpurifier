@@ -27,7 +27,7 @@ class DefinitionCacheFactoryTest extends TestCase
      */
     private $oldFactory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -27,7 +27,7 @@ class ConfigTestt extends TestCase
     private $schema;
     private $oldFactory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         // set up a dummy schema object for testing
         $this->schema = new ConfigSchema();

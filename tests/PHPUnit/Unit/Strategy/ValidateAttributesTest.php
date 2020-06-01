@@ -13,7 +13,7 @@ use HTMLPurifier\Strategy\ValidateAttributes;
  */
 class ValidateAttributesTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->obj = new ValidateAttributes();

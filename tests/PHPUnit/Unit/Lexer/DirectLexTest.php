@@ -22,7 +22,7 @@ class DirectLexTest extends TestCase
 {
     private $DirectLex;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->DirectLex = new DirectLex();
     }

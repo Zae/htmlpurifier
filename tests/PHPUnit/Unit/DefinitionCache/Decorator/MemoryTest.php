@@ -14,7 +14,7 @@ use Mockery;
  */
 class MemoryTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->cache = new Memory();
         

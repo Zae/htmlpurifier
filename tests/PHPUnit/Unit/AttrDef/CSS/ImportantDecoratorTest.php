@@ -21,7 +21,7 @@ class ImportantDecoratorTest extends TestCase
      */
     private $mock;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mock = Mockery::mock(AttrDef::class);
         $this->def  = new ImportantDecorator($this->mock, true);

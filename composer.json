@@ -45,6 +45,9 @@
         },
         "files": [
             "library/HTMLPurifier.composer.php"
+        ],
+        "classmap": [
+            "library/HTMLPurifier/ConfigSchema"
         ]
     },
     "autoload-dev": {
@@ -55,8 +58,19 @@
     },
     "scripts": {
         "simpletest": "@php tests/index.php",
-        "snapshots": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Snapshots",
+        "snapshots": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Snapshots"
+        ],
         "unit": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Unit",
+        "vtest": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite VTest",
+        "htmlt": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite HTMLT",
+        "test": [
+            "@simpletest",
+            "@unit",
+            "@vtest",
+            "@htmlt"
+        ],
         "infect": "@php -d memory_limit=-1 vendor/bin/infection -j4 --only-covered",
         "psalm": "@php vendor/bin/psalm --threads=8 --diff --diff-methods",
         "codestyle": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src",

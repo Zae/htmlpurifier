@@ -21,7 +21,7 @@ class StringHashParserTest extends TestCase
      */
     protected $parser;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->parser = new StringHashParser();
     }

@@ -19,7 +19,7 @@ class LanguageFactoryTest extends TestCase
      */
     private $factory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->factory = LanguageFactory::instance();
         parent::setUp();

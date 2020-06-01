@@ -13,7 +13,7 @@ use HTMLPurifier\Strategy\Core;
  */
 abstract class TestCase extends \HTMLPurifier\Tests\Unit\Strategy\TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->obj = new Core();

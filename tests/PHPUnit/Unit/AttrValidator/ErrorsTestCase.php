@@ -22,7 +22,7 @@ abstract class ErrorsTestCase extends \HTMLPurifier\Tests\Unit\ErrorsTestCase
 {
     private $language;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -18,7 +18,7 @@ use Mockery;
  */
 class URITest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->def = new URI();
 

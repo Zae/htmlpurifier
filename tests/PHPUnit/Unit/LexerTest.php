@@ -24,9 +24,9 @@ class LexerTest extends TestCase
 {
     // HTMLPurifier_Lexer::create() --------------------------------------------
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        if (!class_exists('_PHP5')) {
+        if (!class_exists(_PH5P::class)) {
             static::markTestSkipped('_PHP5 class not loaded.');
         }
 

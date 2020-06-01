@@ -13,7 +13,7 @@ use HTMLPurifier\AttrDef\CSS;
  */
 class CssTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->def = new CSS();

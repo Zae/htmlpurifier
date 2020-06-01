@@ -16,7 +16,7 @@ class ConfigSchemaTest extends TestCase
 {
     private $schema;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->schema = new ConfigSchema();
     }

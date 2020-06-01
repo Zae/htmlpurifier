@@ -12,7 +12,7 @@ use HTMLPurifier\DefinitionCache\Decorator\Cleanup;
  */
 class CleanupTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->cache = new Cleanup();
 

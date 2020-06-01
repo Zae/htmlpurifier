@@ -6,20 +6,20 @@ namespace HTMLPurifier\Tests\Unit\Filter;
 
 use HTMLPurifier\HTMLPurifier;
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier\Filter\ExtractStyleBlocks;
 
 /**
  * Class ExtractStyleBlocksTest
  *
  * @package HTMLPurifier\Tests\Unit\Filter
+ * @group extractstyleblocks
  */
 class ExtractStyleBlocksTest extends TestCase
 {
     // usual use case:
 
-    public function setUp(): void
+    protected function setUp(): void
     {
-        if (!class_exists(HTMLPurifier\Filter\ExtractStyleBlocks::class)) {
+        if (!class_exists(\HTMLPurifier_Filter_ExtractStyleBlocks::class)) {
             static::markTestSkipped('ExtractStyleBlocks not loaded.');
         }
 
@@ -59,7 +59,7 @@ class ExtractStyleBlocksTest extends TestCase
      */
     private function assertExtractStyleBlocks($html, $expect = true, $styles = []): void
     {
-        $filter = new ExtractStyleBlocks(); // disable cleaning
+        $filter = new \HTMLPurifier_Filter_ExtractStyleBlocks(); // disable cleaning
 
         if ($expect === true) {
             $expect = $html;
@@ -132,7 +132,7 @@ class ExtractStyleBlocksTest extends TestCase
      */
     private function assertCleanCSS($input, $expect = true): void
     {
-        $filter = new ExtractStyleBlocks();
+        $filter = new \HTMLPurifier_Filter_ExtractStyleBlocks();
 
         if ($expect === true) {
             $expect = $input;

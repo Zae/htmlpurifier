@@ -16,7 +16,7 @@ class PercentEncoderTest extends TestCase
     private $percentEncoder;
     private $func;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->percentEncoder = new PercentEncoder();
         $this->func = '';

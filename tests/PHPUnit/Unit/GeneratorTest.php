@@ -24,7 +24,7 @@ class GeneratorTest extends TestCase
      */
     private $_entity_lookup;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->_entity_lookup = EntityLookup::instance();
         parent::setUp();

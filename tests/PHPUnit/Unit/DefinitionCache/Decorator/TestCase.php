@@ -23,7 +23,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\DefinitionCache\TestCas
     protected $config;
     protected $cache;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->mock = Mockery::mock(DefinitionCache::class);
 

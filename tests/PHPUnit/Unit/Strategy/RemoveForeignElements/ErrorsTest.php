@@ -18,7 +18,7 @@ use HTMLPurifier\Token\Start;
  */
 class ErrorsTest extends ErrorsTestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->config->set('HTML.TidyLevel', 'heavy');

@@ -15,7 +15,7 @@ class ChameleonTest extends TestCase
 {
     private $isInline;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
