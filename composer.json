@@ -44,7 +44,10 @@
             "HTMLPurifier\\": "src"
         },
         "files": [
-            "library/HTMLPurifier.composer.php"
+            "library/HTMLPurifier.composer.php",
+            "library/HTMLPurifier/Lexer/PH5P.php",
+            "extras/FSTools.php",
+            "extras/FSTools/File.php"
         ],
         "classmap": [
             "library/HTMLPurifier/ConfigSchema"
@@ -66,7 +69,6 @@
         "vtest": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite VTest",
         "htmlt": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite HTMLT",
         "test": [
-            "@simpletest",
             "@unit",
             "@vtest",
             "@htmlt"
