@@ -233,7 +233,7 @@ class Serializer extends DefinitionCache
     public function generateBaseDirectoryPath(Config $config)
     {
         $base = $config->get('Cache.SerializerPath');
-        $base = \is_null($base) ? HTMLPURIFIER_PREFIX . '/HTMLPurifier/DefinitionCache/Serializer' : $base;
+        $base = \is_null($base) ? HTMLPURIFIER_PREFIX . '/DefinitionCache/Serializer' : $base;
 
         return $base;
     }

@@ -7,9 +7,9 @@ namespace HTMLPurifier\Tests\VTest;
 use HTMLPurifier\StringHash;
 use HTMLPurifier\StringHashParser;
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier_ConfigSchema_Interchange;
-use HTMLPurifier_ConfigSchema_InterchangeBuilder;
-use HTMLPurifier_ConfigSchema_Validator;
+use HTMLPurifier\ConfigSchema\Interchange;
+use HTMLPurifier\ConfigSchema\InterchangeBuilder;
+use HTMLPurifier\ConfigSchema\Validator;
 
 /**
  * Class VTestTestRunner
@@ -26,8 +26,8 @@ class VTestTestRunner extends TestCase
         parent::setUp();
 
         $this->_parser  = new StringHashParser();
-        $this->_builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
-        $this->validator = new HTMLPurifier_ConfigSchema_Validator();
+        $this->_builder = new InterchangeBuilder();
+        $this->validator = new Validator();
     }
 
     /**
@@ -47,7 +47,7 @@ class VTestTestRunner extends TestCase
     public function testValidator(string $file): void
     {
         $hashes = $this->_parser->parseMultiFile($file);
-        $interchange = new HTMLPurifier_ConfigSchema_Interchange();
+        $interchange = new Interchange();
         $error = null;
 
         foreach ($hashes as $hash) {

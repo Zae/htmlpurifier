@@ -1,6 +1,9 @@
 #!/usr/bin/php
 <?php
 
+use HTMLPurifier\ConfigSchema\InterchangeBuilder;
+use HTMLPurifier\ConfigSchema\Interchange;
+
 chdir(dirname(__FILE__));
 require_once 'common.php';
 require_once '../library/HTMLPurifier.auto.php';
@@ -41,8 +44,8 @@ if (file_exists("$new.txt")) {
 }
 
 $file = "$old.txt";
-$builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
-$interchange = new HTMLPurifier_ConfigSchema_Interchange();
+$builder = new InterchangeBuilder();
+$interchange = new Interchange();
 $builder->buildFile($interchange, $file);
 $contents = file_get_contents($file);
 

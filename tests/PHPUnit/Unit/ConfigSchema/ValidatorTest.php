@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\ConfigSchema;
 
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier_ConfigSchema_Interchange;
-use HTMLPurifier_ConfigSchema_Interchange_Directive;
-use HTMLPurifier_ConfigSchema_Interchange_Id;
-use HTMLPurifier_ConfigSchema_Validator;
+use HTMLPurifier\ConfigSchema\Interchange;
+use HTMLPurifier\ConfigSchema\Interchange\Directive;
+use HTMLPurifier\ConfigSchema\Interchange\Id;
+use HTMLPurifier\ConfigSchema\Validator;
 
 /**
  * Class ValidatorTest
@@ -22,8 +22,8 @@ class ValidatorTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->validator = new HTMLPurifier_ConfigSchema_Validator();
-        $this->interchange = new HTMLPurifier_ConfigSchema_Interchange();
+        $this->validator = new Validator();
+        $this->interchange = new Interchange();
     }
 
     /**
@@ -32,7 +32,7 @@ class ValidatorTest extends TestCase
     public function testDirectiveIntegrityViolation(): void
     {
         $d = $this->makeDirective('Ns.Dir');
-        $d->id = new HTMLPurifier_ConfigSchema_Interchange_Id('Ns.Dir2');
+        $d->id = new Id('Ns.Dir2');
         $this->expectValidationException("Integrity violation: key 'Ns.Dir' does not match internal id 'Ns.Dir2'");
         $this->validator->validate($this->interchange);
     }
@@ -128,14 +128,14 @@ class ValidatorTest extends TestCase
     /**
      * @param string|int $key
      *
-     * @return HTMLPurifier_ConfigSchema_Interchange_Directive
+     * @return Directive
      * @throws \HTMLPurifier\ConfigSchema\Exception
      * @throws \HTMLPurifier_ConfigSchema_Exception
      */
-    private function makeDirective($key): HTMLPurifier_ConfigSchema_Interchange_Directive
+    private function makeDirective($key): Directive
     {
-        $directive = new HTMLPurifier_ConfigSchema_Interchange_Directive();
-        $directive->id = new HTMLPurifier_ConfigSchema_Interchange_Id($key);
+        $directive = new Directive();
+        $directive->id = new Id($key);
         $this->interchange->addDirective($directive);
         return $directive;
     }

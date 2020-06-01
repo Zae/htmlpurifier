@@ -79,7 +79,7 @@ class ConfigSchema
      */
     public static function makeFromSerial(): self
     {
-        $contents = file_get_contents(HTMLPURIFIER_PREFIX . '/HTMLPurifier/ConfigSchema/schema.ser');
+        $contents = file_get_contents(HTMLPURIFIER_PREFIX . '/ConfigSchema/schema.ser');
         $r = unserialize($contents);
         if (!$r) {
             $hash = sha1($contents);
