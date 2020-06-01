@@ -88,7 +88,7 @@ class LanguageFactory
     private function __construct()
     {
         $this->validator = new Lang();
-        $this->dir = HTMLPURIFIER_PREFIX . '/HTMLPurifier';
+        $this->dir = HTMLPURIFIER_PREFIX . '/';
     }
 
     /**

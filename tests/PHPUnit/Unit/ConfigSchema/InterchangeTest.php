@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\ConfigSchema;
 
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier_ConfigSchema_Interchange;
-use HTMLPurifier_ConfigSchema_Interchange_Directive;
-use HTMLPurifier_ConfigSchema_Interchange_Id;
+use HTMLPurifier\ConfigSchema\Interchange;
+use HTMLPurifier\ConfigSchema\Interchange\Directive;
+use HTMLPurifier\ConfigSchema\Interchange\Id;
 
 /**
  * Class InterchangeTest
@@ -20,13 +20,13 @@ class InterchangeTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->interchange = new HTMLPurifier_ConfigSchema_Interchange();
+        $this->interchange = new Interchange();
     }
 
     public function testAddDirective()
     {
-        $v = new HTMLPurifier_ConfigSchema_Interchange_Directive();
-        $v->id = new HTMLPurifier_ConfigSchema_Interchange_Id('Namespace.Directive');
+        $v = new Directive();
+        $v->id = new Id('Namespace.Directive');
 
         $this->interchange->addDirective($v);
 

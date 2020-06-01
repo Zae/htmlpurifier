@@ -37,17 +37,19 @@
     "suggest": {
         "ext-bcmath": "Makes math much faster",
         "ext-posix": "Can use Posix if provided",
-        "ext-exif": "For reading image info"
+        "ext-exif": "For reading image info",
+        "ext-xmlwriter": "For writing Interchange files"
     },
     "autoload": {
         "psr-4": {
             "HTMLPurifier\\": "src"
         },
         "files": [
-            "library/HTMLPurifier.composer.php",
+            "src/constants.php",
             "library/HTMLPurifier/Lexer/PH5P.php",
             "extras/FSTools.php",
-            "extras/FSTools/File.php"
+            "extras/FSTools/File.php",
+            "extras/ConfigDoc/HTMLXSLTProcessor.php"
         ],
         "classmap": [
             "library/HTMLPurifier/ConfigSchema"

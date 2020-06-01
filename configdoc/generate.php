@@ -15,35 +15,42 @@ TODO:
 - add blurbs to ToC
 */
 
-if (version_compare(PHP_VERSION, '5.2', '<')) exit('PHP 5.2+ required.');
+use HTMLPurifier\ConfigSchema\Builder\Xml;
+use HTMLPurifier\ConfigSchema\InterchangeBuilder;
+use HTMLPurifier\ConfigSchema\Interchange;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
 error_reporting(E_ALL | E_STRICT);
 
 // load dual-libraries
-require_once dirname(__FILE__) . '/../extras/HTMLPurifierExtras.auto.php';
-require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
+//require_once __DIR__ . '/../extras/HTMLPurifierExtras.auto.php';
+//require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
 
 // setup HTML Purifier singleton
-HTMLPurifier::getInstance(array(
+\HTMLPurifier\HTMLPurifier::getInstance([
     'AutoFormat.PurifierLinkify' => true
-));
+]);
 
-$builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
-$interchange = new HTMLPurifier_ConfigSchema_Interchange();
+$builder = new InterchangeBuilder();
+$interchange = new Interchange();
 $builder->buildDir($interchange);
-$loader = dirname(__FILE__) . '/../config-schema.php';
-if (file_exists($loader)) include $loader;
+$loader = __DIR__ . '/../config-schema.php';
+if (file_exists($loader)) {
+    include $loader;
+}
 $interchange->validate();
 
 $style = 'plain'; // use $_GET in the future, careful to validate!
-$configdoc_xml = dirname(__FILE__) . '/configdoc.xml';
+$configdoc_xml = __DIR__ . '/configdoc.xml';
 
-$xml_builder = new HTMLPurifier_ConfigSchema_Builder_Xml();
+$xml_builder = new Xml();
 $xml_builder->openURI($configdoc_xml);
 $xml_builder->build($interchange);
 unset($xml_builder); // free handle
 
 $xslt = new ConfigDoc_HTMLXSLTProcessor();
-$xslt->importStylesheet(dirname(__FILE__) . "/styles/$style.xsl");
+$xslt->importStylesheet(__DIR__ . "/styles/$style.xsl");
 $output = $xslt->transformToHTML($configdoc_xml);
 
 if (!$output) {
@@ -52,9 +59,9 @@ if (!$output) {
 }
 
 // write out
-file_put_contents(dirname(__FILE__) . "/$style.html", $output);
+file_put_contents(__DIR__ . "/$style.html", $output);
 
-if (php_sapi_name() != 'cli') {
+if (PHP_SAPI !== 'cli') {
     // output (instant feedback if it's a browser)
     echo $output;
 } else {

@@ -1,10 +1,10 @@
 <?php
 
-require_once 'common.php';
+use HTMLPurifier\ConfigSchema\Builder\ConfigSchema;use HTMLPurifier\ConfigSchema\Builder\Xml;use HTMLPurifier\ConfigSchema\InterchangeBuilder;require_once 'common.php';
 
 // Setup environment
 require_once '../extras/HTMLPurifierExtras.auto.php';
-$interchange = HTMLPurifier_ConfigSchema_InterchangeBuilder::buildFromDirectory('test-schema/');
+$interchange = InterchangeBuilder::buildFromDirectory('test-schema/');
 $interchange->validate();
 
 if (isset($_GET['doc'])) {
@@ -19,7 +19,7 @@ if (isset($_GET['doc'])) {
     $style = 'plain';
     $configdoc_xml = 'test-schema.xml';
 
-    $xml_builder = new HTMLPurifier_ConfigSchema_Builder_Xml();
+    $xml_builder = new Xml();
     $xml_builder->openURI($configdoc_xml);
     $xml_builder->build($interchange);
     unset($xml_builder); // free handle
@@ -56,7 +56,7 @@ of directive possible.</p>
 style="float:right;">
 <?php
 
-$schema_builder = new HTMLPurifier_ConfigSchema_Builder_ConfigSchema();
+$schema_builder = new ConfigSchema();
 $schema = $schema_builder->build($interchange);
 
 $config  = HTMLPurifier_Config::loadArrayFromForm($_GET, 'config', true, true, $schema);

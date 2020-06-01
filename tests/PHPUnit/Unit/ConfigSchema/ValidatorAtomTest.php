@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\ConfigSchema;
 
 use HTMLPurifier\Tests\Unit\TestCase;
-use HTMLPurifier_ConfigSchema_ValidatorAtom;
+use HTMLPurifier\ConfigSchema\ValidatorAtom;
 use stdClass;
 
 /**
@@ -27,15 +27,15 @@ class ValidatorAtomTest extends TestCase
     /**
      * @param $value
      *
-     * @return HTMLPurifier_ConfigSchema_ValidatorAtom
+     * @return ValidatorAtom
      */
-    private function makeAtom($value): HTMLPurifier_ConfigSchema_ValidatorAtom
+    private function makeAtom($value): ValidatorAtom
     {
         $obj = new stdClass();
         $obj->property = $value;
 
         // Note that 'property' and 'context' are magic wildcard values
-        return new HTMLPurifier_ConfigSchema_ValidatorAtom('context', $obj, 'property');
+        return new ValidatorAtom('context', $obj, 'property');
     }
 
     /**

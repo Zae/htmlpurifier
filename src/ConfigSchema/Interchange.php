@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-use HTMLPurifier\ConfigSchema\Exception;
+namespace HTMLPurifier\ConfigSchema;
+
+use HTMLPurifier\ConfigSchema\Interchange\Directive;
 
 /**
  * Generic schema interchange format that can be converted to a runtime
  * representation (HTMLPurifier\HTMLPurifier_ConfigSchema) or HTML documentation. Members
  * are completely validated.
  */
-class HTMLPurifier_ConfigSchema_Interchange
+class Interchange
 {
     /**
      * Name of the application this schema is describing.
@@ -21,21 +23,21 @@ class HTMLPurifier_ConfigSchema_Interchange
     /**
      * Array of Directive ID => array(directive info)
      *
-     * @type HTMLPurifier_ConfigSchema_Interchange_Directive[]
+     * @type Directive[]
      */
     public $directives = [];
 
     /**
      * Adds a directive array to $directives
      *
-     * @param HTMLPurifier_ConfigSchema_Interchange_Directive $directive
+     * @param Directive $directive
      *
      * @throws Exception
      */
-    public function addDirective(HTMLPurifier_ConfigSchema_Interchange_Directive $directive): void
+    public function addDirective(Directive $directive): void
     {
         if (isset($this->directives[$i = $directive->id->toString()])) {
-            throw new Exception("Cannot redefine directive '$i'");
+            throw new Exception("Cannot redefine directive '{$i}'");
         }
 
         $this->directives[$i] = $directive;
@@ -44,10 +46,12 @@ class HTMLPurifier_ConfigSchema_Interchange
     /**
      * Convenience function to perform standard validation. Throws exception
      * on failed validation.
+     *
+     * @throws Exception
      */
     public function validate(): bool
     {
-        $validator = new HTMLPurifier_ConfigSchema_Validator();
+        $validator = new Validator();
 
         return $validator->validate($this);
     }

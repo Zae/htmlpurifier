@@ -28,7 +28,7 @@ class EntityLookup
     public function setup(?string $file = null): void
     {
         if (!$file) {
-            $file = HTMLPURIFIER_PREFIX . '/HTMLPurifier/EntityLookup/entities.ser';
+            $file = HTMLPURIFIER_PREFIX . '/EntityLookup/entities.ser';
         }
 
         $this->table = unserialize(file_get_contents($file));

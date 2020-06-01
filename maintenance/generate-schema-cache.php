@@ -1,9 +1,13 @@
 #!/usr/bin/php
 <?php
 
-require_once 'vendor/autoload.php';
-require_once dirname(__FILE__) . '/common.php';
-require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
+use HTMLPurifier\ConfigSchema\Builder\ConfigSchema;
+use HTMLPurifier\ConfigSchema\InterchangeBuilder;
+use HTMLPurifier\ConfigSchema\Interchange;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/common.php';
+//require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
 assertCli();
 
 /**
@@ -20,23 +24,27 @@ assertCli();
  * this, and they will get included.
  */
 
-$target = dirname(__FILE__) . '/../library/HTMLPurifier/ConfigSchema/schema.ser';
+$target = __DIR__ . '/../src/ConfigSchema/schema.ser';
 
-$builder = new HTMLPurifier_ConfigSchema_InterchangeBuilder();
-$interchange = new HTMLPurifier_ConfigSchema_Interchange();
+$builder = new InterchangeBuilder();
+$interchange = new Interchange();
 
 $builder->buildDir($interchange);
 
-$loader = dirname(__FILE__) . '/../config-schema.php';
-if (file_exists($loader)) include $loader;
+$loader = __DIR__ . '/../config-schema.php';
+if (file_exists($loader)) {
+    include $loader;
+}
 foreach ($_SERVER['argv'] as $i => $dir) {
-    if ($i === 0) continue;
+    if ($i === 0) {
+        continue;
+    }
     $builder->buildDir($interchange, realpath($dir));
 }
 
 $interchange->validate();
 
-$schema_builder = new HTMLPurifier_ConfigSchema_Builder_ConfigSchema();
+$schema_builder = new ConfigSchema();
 $schema = $schema_builder->build($interchange);
 
 echo "Saving schema... ";
