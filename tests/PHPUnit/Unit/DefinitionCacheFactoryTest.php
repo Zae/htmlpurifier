@@ -36,7 +36,7 @@ class DefinitionCacheFactoryTest extends TestCase
         DefinitionCacheFactory::instance($this->factory);
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         DefinitionCacheFactory::instance($this->oldFactory);
         parent::tearDown();

@@ -33,7 +33,7 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\DefinitionCache\TestCas
         $this->config   = $this->generateConfigMock();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($this->mock, $this->cache);
 

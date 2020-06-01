@@ -43,7 +43,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
         $this->purifier = new HTMLPurifier();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         parent::tearDown();
 
