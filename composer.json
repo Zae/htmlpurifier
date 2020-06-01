@@ -50,9 +50,6 @@
             "extras/FSTools.php",
             "extras/FSTools/File.php",
             "extras/ConfigDoc/HTMLXSLTProcessor.php"
-        ],
-        "classmap": [
-            "library/HTMLPurifier/ConfigSchema"
         ]
     },
     "autoload-dev": {
