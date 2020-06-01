@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="true"
+         executionOrder="default"
+         resolveDependencies="true">
+    <testsuites>
+        <testsuite name="Snapshots">
+            <directory suffix="Test.php">./tests/PHPUnit/Snapshots</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">./tests/PHPUnit/Unit</directory>
+        </testsuite>
+        <testsuite name="HTMLT">
+            <directory suffix="HtmltTestRunner.php">./tests/PHPUnit/HTMLT</directory>
+        </testsuite>
+        <testsuite name="VTest">
+            <directory suffix="VTestTestRunner.php">./tests/PHPUnit/VTest</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <var name="HTMLPurifierTest[Net_IDNA2]" value="true" />
+    </php>
+</phpunit>
