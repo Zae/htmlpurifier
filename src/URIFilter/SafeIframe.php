@@ -49,9 +49,9 @@ class SafeIframe extends URIFilter
     }
 
     /**
-     * @param URI                 $uri
-     * @param Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      * @throws \HTMLPurifier\Exception

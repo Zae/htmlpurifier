@@ -40,22 +40,22 @@ class ID extends AttrDef
     }
 
     /**
-     * @param string  $id
+     * @param string  $string
      * @param Config  $config
      * @param Context $context
      *
      * @return bool|string
      * @throws Exception
      */
-    public function validate($id, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         if (!$this->selector && !$config->get('Attr.EnableID')) {
             return false;
         }
 
-        $id = trim($id); // trim it first
+        $string = trim($string); // trim it first
 
-        if ($id === '') {
+        if ($string === '') {
             return false;
         }
 
@@ -63,8 +63,8 @@ class ID extends AttrDef
         if ($prefix !== '') {
             $prefix .= $config->get('Attr.IDPrefixLocal');
             // prevent re-appending the prefix
-            if (strpos($id, $prefix) !== 0) {
-                $id = $prefix . $id;
+            if (strpos($string, $prefix) !== 0) {
+                $string = $prefix . $string;
             }
         } elseif ($config->get('Attr.IDPrefixLocal') !== '') {
             trigger_error(
@@ -76,7 +76,7 @@ class ID extends AttrDef
 
         if (!$this->selector) {
             $id_accumulator =& $context->get('IDAccumulator');
-            if (isset($id_accumulator->ids[$id])) {
+            if (isset($id_accumulator->ids[$string])) {
                 return false;
             }
         }
@@ -84,20 +84,20 @@ class ID extends AttrDef
         // we purposely avoid using regex, hopefully this is faster
 
         if ($config->get('Attr.ID.HTML5') === true) {
-            if (preg_match('/[\t\n\x0b\x0c ]/', $id)) {
+            if (preg_match('/[\t\n\x0b\x0c ]/', $string)) {
                 return false;
             }
         } else {
-            if (ctype_alpha($id)) {
+            if (ctype_alpha($string)) {
                 // OK
             } else {
-                if (!ctype_alpha(@$id[0])) {
+                if (!ctype_alpha(@$string[0])) {
                     return false;
                 }
 
                 // primitive style of regexps, I suppose
                 $trim = trim(
-                    $id,
+                    $string,
                     'A..Za..z0..9:-._'
                 );
 
@@ -108,17 +108,17 @@ class ID extends AttrDef
         }
 
         $regexp = $config->get('Attr.IDBlacklistRegexp');
-        if ($regexp && preg_match($regexp, $id)) {
+        if ($regexp && preg_match($regexp, $string)) {
             return false;
         }
 
         if (!$this->selector && isset($id_accumulator)) {
-            $id_accumulator->add($id);
+            $id_accumulator->add($string);
         }
 
         // if no change was made to the ID, return the result
         // else, return the new id if stripping whitespace made it
         //     valid, or return false.
-        return $id;
+        return $string;
     }
 }

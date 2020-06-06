@@ -45,8 +45,10 @@ class CSSDefinition extends Definition
      * Constructs the info array.  The meat of this class.
      *
      * @param Config $config
+     *
+     * @throws Exception
      */
-    protected function doSetup($config): void
+    protected function doSetup(Config $config): void
     {
         $this->info['text-align'] = new Enum(
             ['left', 'right', 'center', 'justify'],
@@ -420,7 +422,7 @@ class CSSDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetupProprietary(\HTMLPurifier\Config $config): void
+    protected function doSetupProprietary(Config $config): void
     {
         // Internet Explorer only scrollbar colors
         $this->info['scrollbar-arrow-color'] = new Color();
@@ -468,7 +470,7 @@ class CSSDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetupTricky($config): void
+    protected function doSetupTricky(Config $config): void
     {
         $this->info['display'] = new Enum(
             [
@@ -503,7 +505,7 @@ class CSSDefinition extends Definition
     /**
      * @param Config $config
      */
-    protected function doSetupTrusted($config): void
+    protected function doSetupTrusted(Config $config): void
     {
         $this->info['position'] = new Enum(
             ['static', 'relative', 'absolute', 'fixed']
@@ -536,7 +538,7 @@ class CSSDefinition extends Definition
      * @throws Exception
      * @todo Refactor duplicate elements into common class (probably using composition, not inheritance).
      */
-    protected function setupConfigStuff($config): void
+    protected function setupConfigStuff(Config $config): void
     {
         // setup allowed elements
         $support = '(for information on implementing this, see the support forums) ';
@@ -548,6 +550,7 @@ class CSSDefinition extends Definition
                 }
                 unset($allowed_properties[$name]);
             }
+
             // emit errors
             foreach ($allowed_properties as $name => $d) {
                 // :TODO: Is this htmlspecialchars() call really necessary?

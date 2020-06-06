@@ -7,6 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier\Token\Text;
+use function count;
 
 /**
  * Injects tokens into the document while parsing for well-formedness.
@@ -114,7 +115,7 @@ abstract class Injector
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      * @throws Exception
      */
-    public function prepare(\HTMLPurifier\Config $config, Context $context)
+    public function prepare(Config $config, Context $context)
     {
         $this->htmlDefinition = $config->getHTMLDefinition();
 
@@ -143,7 +144,7 @@ abstract class Injector
      * @return bool|string Boolean false if success, string of missing needed element/attribute if failure
      * @throws Exception
      */
-    public function checkNeeded(\HTMLPurifier\Config $config)
+    public function checkNeeded(Config $config)
     {
         $def = $config->getHTMLDefinition();
         foreach ($this->needed as $element => $attributes) {
@@ -173,7 +174,6 @@ abstract class Injector
      * Tests if the context node allows a certain element
      *
      * @param string $name Name of element to test for
-     *
      * @return bool True if element is allowed, false if it is not
      */
     public function allowsElement(string $name): bool
@@ -192,7 +192,7 @@ abstract class Injector
 
         // check for exclusion
         if (!empty($this->currentNesting)) {
-            for ($i = \count($this->currentNesting) - 2; $i >= 0; $i--) {
+            for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
                 $def = $this->htmlDefinition->info[$node->name];
 
@@ -221,7 +221,7 @@ abstract class Injector
     protected function forward(?int &$i, ?Token &$current): bool
     {
         if ($i === null) {
-            $i = \count($this->inputZipper->back) - 1;
+            $i = count($this->inputZipper->back) - 1;
         } else {
             $i--;
         }
@@ -288,7 +288,7 @@ abstract class Injector
     protected function backward(?int &$i, ?Token &$current): bool
     {
         if ($i === null) {
-            $i = \count($this->inputZipper->front) - 1;
+            $i = count($this->inputZipper->front) - 1;
         } else {
             $i--;
         }

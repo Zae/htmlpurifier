@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function is_array;
+use function is_string;
+use function strlen;
+
 /**
  * Definition of the purified HTML that describes allowed children,
  * attributes, and many other things.
@@ -225,6 +229,7 @@ class HTMLDefinition extends Definition
 
     /**
      * @param Config $config
+     * @throws Exception
      */
     protected function doSetup(Config $config): void
     {
@@ -245,6 +250,7 @@ class HTMLDefinition extends Definition
      * Extract out the information from the manager
      *
      * @param Config $config
+     * @throws Exception
      */
     protected function processModules(Config $config): void
     {
@@ -338,14 +344,14 @@ class HTMLDefinition extends Definition
         $allowed_elements = $config->get('HTML.AllowedElements');
         $allowed_attributes = $config->get('HTML.AllowedAttributes'); // retrieve early
 
-        if (!\is_array($allowed_elements) && !\is_array($allowed_attributes)) {
+        if (!is_array($allowed_elements) && !is_array($allowed_attributes)) {
             $allowed = $config->get('HTML.Allowed');
-            if (\is_string($allowed)) {
+            if (is_string($allowed)) {
                 [$allowed_elements, $allowed_attributes] = $this->parseTinyMCEAllowedList($allowed);
             }
         }
 
-        if (\is_array($allowed_elements)) {
+        if (is_array($allowed_elements)) {
             foreach ($this->info as $name => $d) {
                 if (!isset($allowed_elements[$name])) {
                     unset($this->info[$name]);
@@ -363,7 +369,7 @@ class HTMLDefinition extends Definition
         // setup allowed attributes ---------------------------------------
 
         $allowed_attributes_mutable = $allowed_attributes; // by copy!
-        if (\is_array($allowed_attributes)) {
+        if (is_array($allowed_attributes)) {
             // This actually doesn't do anything, since we went away from
             // global attributes. It's possible that userland code uses
             // it, but HTMLModuleManager doesn't!
@@ -411,6 +417,7 @@ class HTMLDefinition extends Definition
                     }
                 }
             }
+
             // emit errors
             foreach ($allowed_attributes_mutable as $elattr => $d) {
                 $bits = preg_split('/[.@]/', $elattr, 2);
@@ -477,12 +484,14 @@ class HTMLDefinition extends Definition
         }
 
         foreach ($forbidden_attributes as $key => $v) {
-            if (\strlen($key) < 2) {
+            if (strlen($key) < 2) {
                 continue;
             }
+
             if ($key[0] !== '*') {
                 continue;
             }
+
             if ($key[1] === '.') {
                 trigger_error(
                     "Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead",

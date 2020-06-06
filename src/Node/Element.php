@@ -75,7 +75,7 @@ class Element extends Node
      * Returns a pair of start and end tokens, where the end token
      * is null if it is not necessary. Does not include children.
      *
-     * @var array
+     *
      * @return array
      */
     public function toTokenPair(): array

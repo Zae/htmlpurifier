@@ -21,6 +21,8 @@ class AttrValidator
      * @param Token   $token   Token to validate.
      * @param Config  $config  Instance of \HTMLPurifier\Config
      * @param Context $context Instance of HTMLPurifier\HTMLPurifier_Context
+     *
+     * @throws Exception
      */
     public function validateToken(Token $token, Config $config, Context $context): void
     {

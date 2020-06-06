@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\Token\Tag;
+use function count;
+use function is_array;
 
 /**
  * Represents a language and defines localizable string formatting and
@@ -151,7 +153,7 @@ class Language
         $sep_last = $this->getMessage('Item separator last');
         $ret = '';
 
-        for ($i = 0, $c = \count($array); $i < $c; $i++) {
+        for ($i = 0, $c = count($array); $i < $c; $i++) {
             if ($i === 0) {
                 //do nothing
             } elseif ($i + 1 < $c) {
@@ -183,7 +185,7 @@ class Language
         }
 
         if (!isset($this->messages[$key])) {
-            return "[$key]";
+            return "[{$key}]";
         }
 
         $raw = $this->messages[$key];
@@ -223,7 +225,7 @@ class Language
                 continue;
             }
 
-            if (\is_array($value)) {
+            if (is_array($value)) {
                 $keys = array_keys($value);
                 if (array_keys($keys) === $keys) {
                     // list

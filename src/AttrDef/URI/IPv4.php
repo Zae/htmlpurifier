@@ -22,20 +22,20 @@ class IPv4 extends AttrDef
     protected $ip4;
 
     /**
-     * @param string                $aIP
+     * @param string                $string
      * @param Config                $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */
-    public function validate($aIP, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         if (!$this->ip4) {
             $this->loadRegex();
         }
 
-        if (preg_match('#^' . $this->ip4 . '$#s', $aIP)) {
-            return $aIP;
+        if (preg_match('#^' . $this->ip4 . '$#s', $string)) {
+            return $string;
         }
 
         return false;

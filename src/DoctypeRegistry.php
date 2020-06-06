@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function is_array;
+use function is_object;
+
 /**
  * Class DoctypeRegistry
  *
@@ -50,19 +53,19 @@ class DoctypeRegistry
         ?string $dtd_public = null,
         ?string $dtd_system = null
     ) {
-        if (!\is_array($modules)) {
+        if (!is_array($modules)) {
             $modules = [$modules];
         }
 
-        if (!\is_array($tidy_modules)) {
+        if (!is_array($tidy_modules)) {
             $tidy_modules = [$tidy_modules];
         }
 
-        if (!\is_array($aliases)) {
+        if (!is_array($aliases)) {
             $aliases = [$aliases];
         }
 
-        if (!\is_object($doctype)) {
+        if (!is_object($doctype)) {
             $doctype = new Doctype(
                 $doctype,
                 $xml,
@@ -111,9 +114,8 @@ class DoctypeRegistry
 
         if (!isset($this->doctypes[$doctype])) {
             trigger_error('Doctype ' . htmlspecialchars($doctype) . ' does not exist', E_USER_ERROR);
-            $anon = new Doctype($doctype);
 
-            return $anon;
+            return new Doctype($doctype);
         }
 
         return $this->doctypes[$doctype];
@@ -131,6 +133,7 @@ class DoctypeRegistry
      * @param Config $config
      *
      * @return Doctype
+     * @throws Exception
      */
     public function make(Config $config): Doctype
     {

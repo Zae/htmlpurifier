@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function is_null;
+
 /**
  * Validator for the components of a URI for a specific scheme
  */
@@ -60,7 +62,7 @@ abstract class URIScheme
      *
      * @return bool success or failure
      */
-    abstract public function doValidate(URI &$uri, Config $config, Context $context);
+    abstract public function doValidate(URI &$uri, Config $config, Context $context): bool;
 
     /**
      * Public interface for validating components of a URI.  Performs a
@@ -85,21 +87,21 @@ abstract class URIScheme
             (
                 !$this->may_omit_host
                 // if the scheme is present, a missing host is always in error
-                && (!\is_null($uri->scheme) && ($uri->host === '' || \is_null($uri->host)))
+                && (!is_null($uri->scheme) && ($uri->host === '' || is_null($uri->host)))
             )
             // if the scheme is not present, a *blank* host is in error,
             // since this translates into '///path' which most browsers
             // interpret as being 'http://path'.
-            || ($uri->host === '' && \is_null($uri->scheme))
+            || ($uri->host === '' && is_null($uri->scheme))
         ) {
             do {
-                if (\is_null($uri->scheme) && substr((string)$uri->path, 0, 2) !== '//') {
+                if (is_null($uri->scheme) && substr((string)$uri->path, 0, 2) !== '//') {
                     $uri->host = null;
                     break;
                 }
                 // first see if we can manually insert a hostname
                 $host = $config->get('URI.Host');
-                if (!\is_null($host)) {
+                if (!is_null($host)) {
                     $uri->host = $host;
                 } else {
                     // we can't do anything sensible, reject the URL.

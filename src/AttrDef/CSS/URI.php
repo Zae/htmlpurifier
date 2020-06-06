@@ -24,32 +24,32 @@ class URI extends BaseURI
     }
 
     /**
-     * @param string                $uri_string
-     * @param \HTMLPurifier\Config   $config
+     * @param string                $string
+     * @param \HTMLPurifier\Config  $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */
-    public function validate($uri_string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         // parse the URI out of the string and then pass it onto
         // the parent object
 
-        $uri_string = $this->parseCDATA($uri_string);
-        if (strpos($uri_string, 'url(') !== 0) {
+        $string = $this->parseCDATA($string);
+        if (strpos($string, 'url(') !== 0) {
             return false;
         }
-        $uri_string = substr($uri_string, 4);
-        if ($uri_string === '') {
-            return false;
-        }
-
-        $new_length = \strlen($uri_string) - 1;
-        if ($uri_string[$new_length] != ')') {
+        $string = substr($string, 4);
+        if ($string === '') {
             return false;
         }
 
-        $uri = trim(substr($uri_string, 0, $new_length));
+        $new_length = \strlen($string) - 1;
+        if ($string[$new_length] != ')') {
+            return false;
+        }
+
+        $uri = trim(substr($string, 0, $new_length));
 
         if (!empty($uri) && ($uri[0] === "'" || $uri[0] === '"')) {
             $quote = $uri[0];

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function array_key_exists;
+
 /**
  * Registry object that contains information about the current context.
  *
@@ -29,7 +31,7 @@ class Context
      */
     public function register(string $name, &$ref): void
     {
-        if (\array_key_exists($name, $this->storage)) {
+        if (array_key_exists($name, $this->storage)) {
             trigger_error(
                 "Name $name produces collision, cannot re-register",
                 E_USER_ERROR
@@ -51,7 +53,7 @@ class Context
      */
     public function &get(string $name, bool $ignore_error = false)
     {
-        if (!\array_key_exists($name, $this->storage)) {
+        if (!array_key_exists($name, $this->storage)) {
             if (!$ignore_error) {
                 trigger_error(
                     "Attempted to retrieve non-existent variable $name",
@@ -74,7 +76,7 @@ class Context
      */
     public function destroy(string $name): void
     {
-        if (!\array_key_exists($name, $this->storage)) {
+        if (!array_key_exists($name, $this->storage)) {
             trigger_error(
                 "Attempted to destroy non-existent variable $name",
                 E_USER_ERROR
@@ -95,7 +97,7 @@ class Context
      */
     public function exists(string $name): bool
     {
-        return \array_key_exists($name, $this->storage);
+        return array_key_exists($name, $this->storage);
     }
 
     /**

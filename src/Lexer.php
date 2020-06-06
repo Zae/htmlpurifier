@@ -8,6 +8,7 @@ use _PH5P;
 use DOMDocument;
 use HTMLPurifier\Lexer\DOMLex;
 use HTMLPurifier\Lexer\DirectLex;
+use function extension_loaded;
 
 /**
  * Forgivingly lexes HTML (SGML-style) markup into tokens.
@@ -105,7 +106,7 @@ class Lexer
                     if (
                         class_exists(DOMDocument::class, false)
                         && method_exists(DOMDocument::class, 'loadHTML')
-                        && !\extension_loaded('domxml')
+                        && !extension_loaded('domxml')
                     ) {
                         // check for DOM support, because while it's part of the
                         // core, it can be disabled compile time. Also, the PECL
@@ -283,7 +284,7 @@ class Lexer
     {
         return preg_replace_callback(
             '/<!\[CDATA\[(.+?)\]\]>/s',
-            [Lexer::class, 'CDATACallback'],
+            [static::class, 'CDATACallback'],
             $string
         );
     }
@@ -299,7 +300,7 @@ class Lexer
     {
         return preg_replace_callback(
             '#<!--//--><!\[CDATA\[//><!--(.+?)//--><!\]\]>#s',
-            [Lexer::class, 'CDATACallback'],
+            [static::class, 'CDATACallback'],
             $string
         );
     }

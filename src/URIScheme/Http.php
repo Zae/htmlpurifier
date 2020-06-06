@@ -30,9 +30,9 @@ class Http extends URIScheme
     public $hierarchical = true;
 
     /**
-     * @param URI                 $uri
-     * @param Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */

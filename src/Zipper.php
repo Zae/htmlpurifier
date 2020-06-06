@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function count;
+
 /**
  * A zipper is a purely-functional data structure which contains
  * a focus that can be efficiently manipulated.  It is known as
@@ -50,7 +52,7 @@ class Zipper
      */
     public static function fromArray(array $array): array
     {
-        $z = new self([], array_reverse($array));
+        $z = new static([], array_reverse($array));
         $t = $z->delete(); // delete the "dummy hole"
 
         return [$z, $t];
@@ -72,7 +74,7 @@ class Zipper
             $a[] = $t;
         }
 
-        for ($i = \count($this->back) - 1; $i >= 0; $i--) {
+        for ($i = count($this->back) - 1; $i >= 0; $i--) {
             $a[] = $this->back[$i];
         }
 
@@ -208,7 +210,7 @@ class Zipper
         }
 
         // insert
-        for ($i = \count($replacement) - 1; $i >= 0; $i--) {
+        for ($i = count($replacement) - 1; $i >= 0; $i--) {
             $this->insertAfter($r);
             $r = $replacement[$i];
         }

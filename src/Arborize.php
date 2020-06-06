@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\Node\Element;
-use HTMLPurifier\Queue;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 

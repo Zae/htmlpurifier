@@ -22,16 +22,16 @@ use HTMLPurifier\Context;
 class CSS extends AttrDef
 {
     /**
-     * @param string              $css
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      * @throws \HTMLPurifier\Exception
      */
-    public function validate($css, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
-        $css = $this->parseCDATA($css);
+        $string = $this->parseCDATA($string);
 
         $definition = $config->getCSSDefinition();
         $allow_duplicates = $config->get('CSS.AllowDuplicates');
@@ -40,21 +40,21 @@ class CSS extends AttrDef
         // non-delimiting semicolon can appear are in strings
         // escape sequences.   So here is some dumb hack to
         // handle quotes.
-        $len = \strlen($css);
+        $len = \strlen($string);
         $accum = '';
         $declarations = [];
         $quoted = false;
 
         for ($i = 0; $i < $len; $i++) {
-            $c = strcspn($css, ";'\"", $i);
-            $accum .= substr($css, $i, $c);
+            $c = strcspn($string, ";'\"", $i);
+            $accum .= substr($string, $i, $c);
             $i += $c;
 
             if ($i === $len) {
                 break;
             }
 
-            $d = $css[$i];
+            $d = $string[$i];
             if ($quoted) {
                 $accum .= $d;
                 if ($d === $quoted) {

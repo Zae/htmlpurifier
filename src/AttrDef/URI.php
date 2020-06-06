@@ -48,24 +48,24 @@ class URI extends AttrDef
     }
 
     /**
-     * @param string                $uri
-     * @param \HTMLPurifier\Config   $config
+     * @param string                $string
+     * @param \HTMLPurifier\Config  $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      * @throws \HTMLPurifier\Exception
      */
-    public function validate($uri, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         if ($config->get('URI.Disable')) {
             return false;
         }
 
-        $uri = $this->parseCDATA($uri);
+        $string = $this->parseCDATA($string);
 
         // parse the URI
-        $uri = $this->parser->parse($uri);
-        if ($uri === false) {
+        $string = $this->parser->parse($string);
+        if ($string === false) {
             return false;
         }
 
@@ -75,7 +75,7 @@ class URI extends AttrDef
         $ok = false;
         do {
             // generic validation
-            $result = $uri->validate($config, $context);
+            $result = $string->validate($config, $context);
             if (!$result) {
                 break;
             }
@@ -83,13 +83,13 @@ class URI extends AttrDef
             // chained filtering
             /** @var URIDefinition $uri_def */
             $uri_def = $config->getDefinition('URI');
-            $result = $uri_def->filter($uri, $config, $context);
+            $result = $uri_def->filter($string, $config, $context);
             if (!$result) {
                 break;
             }
 
             // scheme-specific validation
-            $scheme_obj = $uri->getSchemeObj($config, $context);
+            $scheme_obj = $string->getSchemeObj($config, $context);
             if (!$scheme_obj instanceof URIScheme) {
                 break;
             }
@@ -98,13 +98,13 @@ class URI extends AttrDef
                 break;
             }
 
-            $result = $scheme_obj->validate($uri, $config, $context);
+            $result = $scheme_obj->validate($string, $config, $context);
             if (!$result) {
                 break;
             }
 
             // Post chained filtering
-            $result = $uri_def->postFilter($uri, $config, $context);
+            $result = $uri_def->postFilter($string, $config, $context);
             if (!$result) {
                 break;
             }
@@ -120,6 +120,6 @@ class URI extends AttrDef
         }
 
         // back to string
-        return $uri->toString();
+        return $string->toString();
     }
 }

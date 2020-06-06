@@ -36,17 +36,17 @@ class TokenFactory
     private $p_end;
 
     /**
-     * @type \HTMLPurifier\Token\EmptyToken
+     * @type EmptyToken
      */
     private $p_empty;
 
     /**
-     * @type \HTMLPurifier\Token\Text
+     * @type Text
      */
     private $p_text;
 
     /**
-     * @type \HTMLPurifier\Token\Comment
+     * @type Comment
      */
     private $p_comment;
 
@@ -70,7 +70,7 @@ class TokenFactory
      *
      * @return Start Generated HTMLPurifier\Token\HTMLPurifier_Token_Start
      */
-    public function createStart(string $name, array $attr = []): \HTMLPurifier\Token\Start
+    public function createStart(string $name, array $attr = []): Start
     {
         $p = clone $this->p_start;
         $p->__construct($name, $attr);
@@ -114,7 +114,7 @@ class TokenFactory
      *
      * @param string $data Data of text token
      *
-     * @return \HTMLPurifier\Token\Text Generated HTMLPurifier\Token\HTMLPurifier_Token_Text
+     * @return Text Generated HTMLPurifier\Token\HTMLPurifier_Token_Text
      */
     public function createText(string $data): Text
     {

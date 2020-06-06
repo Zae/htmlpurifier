@@ -159,7 +159,7 @@ class ElementDef
      *
      * @return ElementDef
      */
-    public static function create(?string $content_model, ?string $content_model_type, array $attr): ElementDef
+    public static function create(?string $content_model, ?string $content_model_type, array $attr): self
     {
         $def = new static();
         $def->content_model = $content_model ?? '';

@@ -57,7 +57,7 @@ class DisableExternal extends URIFilter
      *
      * @return bool
      */
-    public function filter(URI &$uri, Config $config, Context $context)
+    public function filter(URI &$uri, Config $config, Context $context): bool
     {
         if (\is_null($uri->host)) {
             return true;

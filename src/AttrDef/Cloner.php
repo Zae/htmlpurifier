@@ -29,15 +29,15 @@ class Cloner extends AttrDef
     }
 
     /**
-     * @param string              $v
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate($v, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
-        return $this->clone->validate($v, $config, $context);
+        return $this->clone->validate($string, $config, $context);
     }
 
     /**

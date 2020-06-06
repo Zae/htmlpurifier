@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\URI\Host;
+use function is_null;
 
 /**
  * HTML Purifier's internal representation of a URI.
@@ -72,7 +73,7 @@ class URI
         ?string $query,
         ?string $fragment
     ) {
-        $this->scheme = \is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
+        $this->scheme = is_null($scheme) || ctype_lower($scheme) ? $scheme : strtolower($scheme);
         $this->userinfo = $userinfo;
         $this->host = $host;
         $this->port = $port;
@@ -107,7 +108,7 @@ class URI
             }
 
             $scheme_obj = $def->getDefaultScheme($config, $context);
-            if (\is_null($scheme_obj)) {
+            if (is_null($scheme_obj)) {
                 if ($def->defaultScheme !== null) {
                     // something funky happened to the default scheme object
                     trigger_error(
@@ -140,7 +141,7 @@ class URI
         $chars_pchar = $chars_sub_delims . ':@';
 
         // validate host
-        if (!\is_null($this->host)) {
+        if (!is_null($this->host)) {
             $host_def = new Host();
             $this->host = $host_def->validate((string)$this->host, $config, $context);
         }
@@ -151,7 +152,7 @@ class URI
         // URI that we don't allow into one we do.  So instead, we just
         // check if the scheme can be dropped because there is no host
         // and it is our default scheme.
-        if ($this->host === '' || (!\is_null($this->scheme) && \is_null($this->host))) {
+        if ($this->host === '' || (!is_null($this->scheme) && is_null($this->host))) {
             // support for relative paths is pretty abysmal when the
             // scheme is present, so axe it when possible
             $def = $config->getDefinition('URI');
@@ -162,13 +163,13 @@ class URI
         }
 
         // validate username
-        if (!\is_null($this->userinfo)) {
+        if (!is_null($this->userinfo)) {
             $encoder = new PercentEncoder($chars_sub_delims . ':');
             $this->userinfo = $encoder->encode($this->userinfo);
         }
 
         // validate port
-        if (!\is_null($this->port)) {
+        if (!is_null($this->port)) {
             if ($this->port < 1 || $this->port > 65535) {
                 $this->port = null;
             }
@@ -176,7 +177,7 @@ class URI
 
         // validate path
         $segments_encoder = new PercentEncoder($chars_pchar . '/');
-        if (!\is_null($this->host)) { // this catches $this->host === ''
+        if (!is_null($this->host)) { // this catches $this->host === ''
             // path-abempty (hier and relative)
             // http://www.example.com/my/path
             // //www.example.com/my/path (looks odd, but works, and
@@ -187,7 +188,7 @@ class URI
             // ///my/path
             $this->path = $segments_encoder->encode((string)$this->path);
         } elseif ($this->path !== '') {
-            if (!\is_null($this->path) && $this->path[0] === '/') {
+            if (!is_null($this->path) && $this->path[0] === '/') {
                 // path-absolute (hier and relative)
                 // http:/my/path
                 // /my/path
@@ -200,7 +201,7 @@ class URI
                 } else {
                     $this->path = $segments_encoder->encode((string)$this->path);
                 }
-            } elseif (!\is_null($this->scheme)) {
+            } elseif (!is_null($this->scheme)) {
                 // path-rootless (hier)
                 // http:my/path
                 // Short circuit evaluation means we don't need to check nz
@@ -227,11 +228,11 @@ class URI
         // qf = query and fragment
         $qf_encoder = new PercentEncoder($chars_pchar . '/?');
 
-        if (!\is_null($this->query)) {
+        if (!is_null($this->query)) {
             $this->query = $qf_encoder->encode($this->query);
         }
 
-        if (!\is_null($this->fragment)) {
+        if (!is_null($this->fragment)) {
             $this->fragment = $qf_encoder->encode($this->fragment);
         }
 
@@ -251,15 +252,15 @@ class URI
         // there is a rendering difference between a null authority
         // (http:foo-bar) and an empty string authority
         // (http:///foo-bar).
-        if (!\is_null($this->host)) {
+        if (!is_null($this->host)) {
             $authority = '';
 
-            if (!\is_null($this->userinfo)) {
+            if (!is_null($this->userinfo)) {
                 $authority .= $this->userinfo . '@';
             }
 
             $authority .= $this->host;
-            if (!\is_null($this->port)) {
+            if (!is_null($this->port)) {
                 $authority .= ':' . $this->port;
             }
         }
@@ -271,20 +272,20 @@ class URI
         // differently than http:///foo), so unfortunately we have to
         // defer to the schemes to do the right thing.
         $result = '';
-        if (!\is_null($this->scheme)) {
+        if (!is_null($this->scheme)) {
             $result .= $this->scheme . ':';
         }
 
-        if (!\is_null($authority)) {
+        if (!is_null($authority)) {
             $result .= '//' . $authority;
         }
 
         $result .= $this->path;
-        if (!\is_null($this->query)) {
+        if (!is_null($this->query)) {
             $result .= '?' . $this->query;
         }
 
-        if (!\is_null($this->fragment)) {
+        if (!is_null($this->fragment)) {
             $result .= '#' . $this->fragment;
         }
 

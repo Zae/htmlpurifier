@@ -27,13 +27,13 @@ class FrameTarget extends Enum
     }
 
     /**
-     * @param string              $string
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         if ($this->valid_values === false) {
             $this->valid_values = $config->get('Attr.AllowedFrameTargets');

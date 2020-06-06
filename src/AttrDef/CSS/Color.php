@@ -24,35 +24,34 @@ class Color extends AttrDef
     }
 
     /**
-     * @param string              $color
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      * @throws Exception
-     *
      * @psalm-suppress RedundantCondition (line 143)
      */
-    public function validate($color, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         static $colors = null;
         if ($colors === null) {
             $colors = $config->get('Core.ColorKeywords');
         }
 
-        $color = trim($color);
-        if ($color === '') {
+        $string = trim($string);
+        if ($string === '') {
             return false;
         }
 
-        $lower = strtolower($color);
+        $lower = strtolower($string);
         if (isset($colors[$lower])) {
             return $colors[$lower];
         }
 
-        if (preg_match('#(rgb|rgba|hsl|hsla)\(#', $color, $matches) === 1) {
-            $length = \strlen($color);
-            if (strpos($color, ')') !== $length - 1) {
+        if (preg_match('#(rgb|rgba|hsl|hsla)\(#', $string, $matches) === 1) {
+            $length = \strlen($string);
+            if (strpos($string, ')') !== $length - 1) {
                 return false;
             }
 
@@ -86,7 +85,7 @@ class Color extends AttrDef
                 $allow_different_types = true;
             }
 
-            $values = trim(str_replace($function, '', $color), ' ()');
+            $values = trim(str_replace($function, '', $string), ' ()');
 
             $parts = explode(',', $values);
             if (\count($parts) !== $parameters_size) {
@@ -147,14 +146,14 @@ class Color extends AttrDef
 
             $new_values = implode(',', $new_parts);
 
-            $color = $function . '(' . $new_values . ')';
+            $string = $function . '(' . $new_values . ')';
         } else {
             // hexadecimal handling
-            if ($color[0] === '#') {
-                $hex = substr($color, 1);
+            if ($string[0] === '#') {
+                $hex = substr($string, 1);
             } else {
-                $hex = $color;
-                $color = '#' . $color;
+                $hex = $string;
+                $string = '#' . $string;
             }
 
             $length = \strlen($hex);
@@ -167,6 +166,6 @@ class Color extends AttrDef
             }
         }
 
-        return $color;
+        return $string;
     }
 }

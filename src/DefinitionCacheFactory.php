@@ -7,6 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\DefinitionCache\DevNull;
+use function is_string;
 
 /**
  * Responsible for creating definition caches.
@@ -76,7 +77,7 @@ class DefinitionCacheFactory
      * @return mixed
      * @throws Exception
      */
-    public function create(string $type, \HTMLPurifier\Config $config)
+    public function create(string $type, Config $config)
     {
         $method = $config->get('Cache.DefinitionImpl');
         if ($method === null) {
@@ -119,7 +120,7 @@ class DefinitionCacheFactory
      */
     public function addDecorator($decorator): void
     {
-        if (\is_string($decorator)) {
+        if (is_string($decorator)) {
             $class = "HTMLPurifier\\DefinitionCache\\Decorator\\$decorator";
             $decorator = new $class();
         }

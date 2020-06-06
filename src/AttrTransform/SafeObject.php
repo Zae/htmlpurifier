@@ -19,9 +19,9 @@ class SafeObject extends AttrTransform
     public $name = 'SafeObject';
 
     /**
-     * @param array               $attr
-     * @param Config $config
-     * @param Context             $context
+     * @param array   $attr
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */

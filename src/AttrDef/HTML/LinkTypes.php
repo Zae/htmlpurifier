@@ -47,13 +47,13 @@ class LinkTypes extends AttrDef
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config   $config
+     * @param \HTMLPurifier\Config  $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      * @throws \HTMLPurifier\Exception
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         $allowed = $config->get('Attr.' . $this->name);
         if (empty($allowed)) {

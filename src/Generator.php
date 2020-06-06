@@ -11,6 +11,8 @@ use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
 use stdClass;
 use Tidy;
+use function count;
+use function extension_loaded;
 
 /**
  * Generates HTML from tokens.
@@ -113,7 +115,7 @@ class Generator
 
         // Basic algorithm
         $html = '';
-        for ($i = 0, $size = \count($tokens); $i < $size; $i++) {
+        for ($i = 0, $size = count($tokens); $i < $size; $i++) {
             if (
                 $this->scriptFix && $tokens[$i]->name === 'script'
                 && $i + 2 < $size && $tokens[$i + 2] instanceof End
@@ -128,7 +130,7 @@ class Generator
         }
 
         // Tidy cleanup
-        if (\extension_loaded('tidy') && $this->config->get('Output.TidyFormat')) {
+        if (extension_loaded('tidy') && $this->config->get('Output.TidyFormat')) {
             $tidy = new Tidy();
             $tidy->parseString(
                 $html,
@@ -168,7 +170,6 @@ class Generator
      * Generates HTML from a single token.
      *
      * @param Token $token HTMLPurifier\HTMLPurifier_Token object.
-     *
      * @return string Generated HTML
      */
     public function generateFromToken(Token $token): string
@@ -196,7 +197,7 @@ class Generator
 
         if ($token instanceof EmptyToken) {
             if ($this->flashCompat && $token->name === 'param' && !empty($this->flashStack)) {
-                $this->flashStack[\count($this->flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
+                $this->flashStack[count($this->flashStack) - 1]->param[$token->attr['name']] = $token->attr['value'];
             }
             $attr = $this->generateAttributes($token->attr, $token->name);
 

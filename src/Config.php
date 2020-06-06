@@ -333,11 +333,13 @@ class Config
     /**
      * Sets a value to configuration.
      *
-     * @param string $key key
-     * @param mixed $value value
-     * @param mixed $a
+     * @param string $key   key
+     * @param mixed  $value value
+     * @param mixed  $a
+     *
+     * @throws Exception
      */
-    public function set($key, $value, $a = null): void
+    public function set(string $key, $value, $a = null): void
     {
         if (strpos($key, '.') === false) {
             $namespace = $key;
@@ -468,7 +470,7 @@ class Config
      *
      * @psalm-suppress MoreSpecificReturnType
      */
-    public function getHTMLDefinition(bool $raw = false, bool $optimized = false)
+    public function getHTMLDefinition(bool $raw = false, bool $optimized = false): ?HTMLDefinition
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
@@ -513,12 +515,12 @@ class Config
      *                        maybeGetRawURIDefinition, which is more explicitly
      *                        named, instead.
      *
-     * @return URIDefinition|null
+     * @return URIDefinition
      * @throws Exception
      *
      * @psalm-suppress MoreSpecificReturnType
      */
-    public function getURIDefinition(bool $raw = false, bool $optimized = false): ?URIDefinition
+    public function getURIDefinition(bool $raw = false, bool $optimized = false): URIDefinition
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
@@ -543,7 +545,7 @@ class Config
      * @return Definition|null
      * @throws Exception
      */
-    public function getDefinition(string $type, bool $raw = false, bool $optimized = false)
+    public function getDefinition(string $type, bool $raw = false, bool $optimized = false): ?Definition
     {
         if ($optimized && !$raw) {
             throw new Exception('Cannot set optimized = true when raw = false');
@@ -784,6 +786,8 @@ class Config
      * Namespace.Directive => Value
      *
      * @param array $config_array Configuration associative array
+     *
+     * @throws Exception
      */
     public function loadArray(array $config_array): void
     {
@@ -895,10 +899,12 @@ class Config
     /**
      * Merges in configuration values from $_GET/$_POST to object. NOT STATIC.
      *
-     * @param array $array $_GET or $_POST array to import
-     * @param string|bool $index Index/name that the config variables are in
-     * @param array|bool $allowed List of allowed namespaces/directives
-     * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
+     * @param array       $array   $_GET or $_POST array to import
+     * @param string|bool $index   Index/name that the config variables are in
+     * @param array|bool  $allowed List of allowed namespaces/directives
+     * @param bool        $mq_fix  Boolean whether or not to enable magic quotes fix
+     *
+     * @throws Exception
      */
     public function mergeArrayFromForm(array $array, $index = false, $allowed = true, bool $mq_fix = true): void
     {
@@ -937,8 +943,8 @@ class Config
         foreach ($allowed as $key) {
             [$ns, $directive] = $key;
 
-            $skey = "$ns.$directive";
-            if (!empty($array["Null_$skey"])) {
+            $skey = "{$ns}.{$directive}";
+            if (!empty($array["Null_{$skey}"])) {
                 $ret[$ns][$directive] = null;
                 continue;
             }
@@ -958,6 +964,8 @@ class Config
      * Loads configuration values from an ini file
      *
      * @param string $filename Name of ini file
+     *
+     * @throws Exception
      */
     public function loadIni(string $filename): void
     {
@@ -965,8 +973,7 @@ class Config
             return;
         }
 
-        $array = parse_ini_file($filename, true);
-        $this->loadArray($array);
+        $this->loadArray(parse_ini_file($filename, true));
     }
 
     /**

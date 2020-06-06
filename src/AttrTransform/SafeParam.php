@@ -47,9 +47,9 @@ class SafeParam extends AttrTransform
     }
 
     /**
-     * @param array               $attr
-     * @param Config $config
-     * @param Context             $context
+     * @param array   $attr
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      * @throws Exception

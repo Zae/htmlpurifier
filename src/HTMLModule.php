@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function func_get_args;
+use function is_array;
+use function is_null;
+use function is_string;
+
 /**
  * Represents an XHTML 1.1 module, with information on elements, tags
  * and attributes.
@@ -171,7 +176,7 @@ class HTMLModule
         [$content_model_type, $content_model] = $this->parseContents($contents);
 
         // merge in attribute inclusions
-        if (!\is_null($attr_includes)) {
+        if (!is_null($attr_includes)) {
             $this->mergeInAttrIncludes($attr, $attr_includes);
         }
 
@@ -188,7 +193,7 @@ class HTMLModule
         );
 
         // literal object $contents means direct child manipulation
-        if (!\is_string($contents)) {
+        if (!is_string($contents)) {
             $this->info[$element]->child = $contents;
         }
 
@@ -248,7 +253,7 @@ class HTMLModule
      */
     public function parseContents($contents): array
     {
-        if (!\is_string($contents)) {
+        if (!is_string($contents)) {
             return [null, null];
         } // defer
 
@@ -276,9 +281,9 @@ class HTMLModule
      * @param array $attr          Reference to attr array to modify
      * @param array|string $attr_includes Array of includes / string include to merge in
      */
-    public function mergeInAttrIncludes(&$attr, $attr_includes): void
+    public function mergeInAttrIncludes(array &$attr, $attr_includes): void
     {
-        if (!\is_array($attr_includes)) {
+        if (!is_array($attr_includes)) {
             if (empty($attr_includes)) {
                 $attr_includes = [];
             } else {
@@ -301,8 +306,8 @@ class HTMLModule
      */
     public function makeLookup($list): array
     {
-        if (\is_string($list)) {
-            $list = \func_get_args();
+        if (is_string($list)) {
+            $list = func_get_args();
         }
 
         $ret = [];

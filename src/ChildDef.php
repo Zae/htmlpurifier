@@ -42,7 +42,7 @@ abstract class ChildDef
      *
      * @return array
      */
-    public function getAllowedElements(Config $config)
+    public function getAllowedElements(Config $config): array
     {
         return $this->elements;
     }
