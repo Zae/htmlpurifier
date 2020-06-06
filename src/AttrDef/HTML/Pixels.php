@@ -26,13 +26,13 @@ class Pixels extends AttrDef
     }
 
     /**
-     * @param string              $string
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         $string = trim($string);
         if ($string === '0') {

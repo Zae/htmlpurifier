@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use HTMLPurifier\PercentEncoder;
-
 /**
  * Parses a URI into the components and fragment identifier as specified
  * by RFC 3986.

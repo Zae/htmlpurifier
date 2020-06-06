@@ -8,8 +8,6 @@ use HTMLPurifier\ChildDef\Custom;
 use HTMLPurifier\ChildDef\Nothing;
 use HTMLPurifier\ChildDef\Optional;
 use HTMLPurifier\ChildDef\Required;
-use HTMLPurifier\ElementDef;
-use HTMLPurifier\HTMLModule;
 
 /**
  * @todo Unit test
@@ -96,7 +94,7 @@ class ContentSets
      * @param ElementDef $def    HTMLPurifier\HTMLPurifier_ElementDef reference
      * @param HTMLModule $module Module that defined the ElementDef
      */
-    public function generateChildDef(ElementDef &$def, HTMLModule $module): void
+    public function generateChildDef(ElementDef $def, HTMLModule $module): void
     {
         if (!empty($def->child)) { // already done!
             return;
@@ -186,7 +184,6 @@ class ContentSets
      * a lookup array.
      *
      * @param string $string List of elements
-     *
      * @return array Lookup array of elements
      */
     protected function convertToLookup(string $string): array

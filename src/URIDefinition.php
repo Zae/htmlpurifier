@@ -75,7 +75,7 @@ class URIDefinition extends Definition
      * @param $filter
      * @param $config
      */
-    public function addFilter(URIFilter $filter, \HTMLPurifier\Config $config): void
+    public function addFilter(URIFilter $filter, Config $config): void
     {
         $r = $filter->prepare($config);
 
@@ -98,7 +98,7 @@ class URIDefinition extends Definition
      *
      * @throws Exception
      */
-    protected function doSetup(\HTMLPurifier\Config $config): void
+    protected function doSetup(Config $config): void
     {
         $this->setupMemberVariables($config);
         $this->setupFilters($config);
@@ -109,7 +109,7 @@ class URIDefinition extends Definition
      *
      * @throws Exception
      */
-    protected function setupFilters(\HTMLPurifier\Config $config): void
+    protected function setupFilters(Config $config): void
     {
         foreach ($this->registeredFilters as $name => $filter) {
             if ($filter->always_load) {
@@ -130,7 +130,7 @@ class URIDefinition extends Definition
      *
      * @throws Exception
      */
-    protected function setupMemberVariables(\HTMLPurifier\Config $config): void
+    protected function setupMemberVariables(Config $config): void
     {
         $this->host = $config->get('URI.Host');
         $base_uri = $config->get('URI.Base');
@@ -158,8 +158,9 @@ class URIDefinition extends Definition
      * @param Context $context
      *
      * @return URIScheme|null
+     * @throws Exception
      */
-    public function getDefaultScheme(\HTMLPurifier\Config $config, Context $context): ?URIScheme
+    public function getDefaultScheme(Config $config, Context $context): ?URIScheme
     {
         return URISchemeRegistry::instance()->getScheme($this->defaultScheme, $config, $context);
     }
@@ -171,7 +172,7 @@ class URIDefinition extends Definition
      *
      * @return bool
      */
-    public function filter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function filter(URI $uri, Config $config, Context $context): bool
     {
         foreach ($this->filters as $name => $f) {
             $result = $f->filter($uri, $config, $context);
@@ -190,7 +191,7 @@ class URIDefinition extends Definition
      *
      * @return bool
      */
-    public function postFilter(URI &$uri, \HTMLPurifier\Config $config, Context $context): bool
+    public function postFilter(URI &$uri, Config $config, Context $context): bool
     {
         foreach ($this->postFilters as $name => $f) {
             $result = $f->filter($uri, $config, $context);

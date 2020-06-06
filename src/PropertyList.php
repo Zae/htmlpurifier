@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function array_key_exists;
+
 /**
  * Generic property list implementation
  */
@@ -80,7 +82,7 @@ class PropertyList
      */
     public function has($name): bool
     {
-        return \array_key_exists($name, $this->data);
+        return array_key_exists($name, $this->data);
     }
 
     /**

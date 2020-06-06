@@ -72,5 +72,5 @@ abstract class Node
      *
      * @return array
      */
-    abstract public function toTokenPair();
+    abstract public function toTokenPair(): array;
 }

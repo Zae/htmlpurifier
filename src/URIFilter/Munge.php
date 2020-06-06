@@ -73,12 +73,12 @@ class Munge extends URIFilter
     }
 
     /**
-     * @param URI                 $uri
-     * @param Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function filter(URI &$uri, Config $config, Context $context): bool
     {

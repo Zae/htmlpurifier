@@ -58,7 +58,7 @@ class Text extends Node
      * Returns a pair of start and end tokens, where the end token
      * is null if it is not necessary. Does not include children.
      *
-     * @type array
+     *
      * @return array
      */
     public function toTokenPair(): array

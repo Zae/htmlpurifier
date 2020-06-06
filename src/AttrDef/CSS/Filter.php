@@ -27,23 +27,23 @@ class Filter extends AttrDef
     }
 
     /**
-     * @param string              $value
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate($value, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
-        $value = $this->parseCDATA($value);
+        $string = $this->parseCDATA($string);
 
-        if ($value === 'none') {
-            return $value;
+        if ($string === 'none') {
+            return $string;
         }
 
         // if we looped this we could support multiple filters
-        $function_length = strcspn($value, '(');
-        $function = trim(substr($value, 0, $function_length));
+        $function_length = strcspn($string, '(');
+        $function = trim(substr($string, 0, $function_length));
         if (
             $function !== 'alpha'
             && $function !== 'Alpha'
@@ -53,16 +53,16 @@ class Filter extends AttrDef
         }
 
         $cursor = $function_length + 1;
-        $parameters_length = strcspn($value, ')', $cursor);
-        $parameters = substr($value, $cursor, $parameters_length);
+        $parameters_length = strcspn($string, ')', $cursor);
+        $parameters = substr($string, $cursor, $parameters_length);
         $params = explode(',', $parameters);
         $ret_params = [];
         $lookup = [];
 
         foreach ($params as $param) {
-            [$key, $value] = explode('=', $param);
+            [$key, $string] = explode('=', $param);
             $key = trim($key);
-            $value = trim($value);
+            $string = trim($string);
 
             if (isset($lookup[$key])) {
                 continue;
@@ -72,21 +72,21 @@ class Filter extends AttrDef
                 continue;
             }
 
-            $value = $this->intValidator->validate($value, $config, $context);
-            if ($value === false) {
+            $string = $this->intValidator->validate($string, $config, $context);
+            if ($string === false) {
                 continue;
             }
 
-            $int = (int)$value;
+            $int = (int)$string;
             if ($int > 100) {
-                $value = '100';
+                $string = '100';
             }
 
             if ($int < 0) {
-                $value = '0';
+                $string = '0';
             }
 
-            $ret_params[] = "$key=$value";
+            $ret_params[] = "$key=$string";
             $lookup[$key] = true;
         }
 

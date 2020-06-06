@@ -35,13 +35,13 @@ class Composite extends AttrDef
     }
 
     /**
-     * @param string              $string
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         foreach ($this->defs as $i => $def) {
             $result = $this->defs[$i]->validate($string, $config, $context);

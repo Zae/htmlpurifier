@@ -27,28 +27,28 @@ class Number extends AttrDef
     }
 
     /**
-     * @param string                $number
-     * @param \HTMLPurifier\Config|null   $config
+     * @param string                     $string
+     * @param \HTMLPurifier\Config|null  $config
      * @param \HTMLPurifier\Context|null $context
      *
      * @return string|false
      * @warning Some contexts do not pass $config, $context. These
      *          variables should not be used without checking HTMLPurifier\HTMLPurifier_Length
      */
-    public function validate($number, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
-        $number = $this->parseCDATA($number);
+        $string = $this->parseCDATA($string);
 
-        if ($number === '') {
+        if ($string === '') {
             return false;
         }
 
-        if ($number === '0') {
+        if ($string === '0') {
             return '0';
         }
 
         $sign = '';
-        switch ($number[0]) {
+        switch ($string[0]) {
             case '-':
                 if ($this->non_negative) {
                     return false;
@@ -56,21 +56,21 @@ class Number extends AttrDef
                 $sign = '-';
                 // falls through to +
             case '+':
-                $number = substr($number, 1);
+                $string = substr($string, 1);
         }
 
-        if (ctype_digit($number)) {
-            $number = ltrim($number, '0');
+        if (ctype_digit($string)) {
+            $string = ltrim($string, '0');
 
-            return $number ? $sign . $number : '0';
+            return $string ? $sign . $string : '0';
         }
 
         // Period is the only non-numeric character allowed
-        if (strpos($number, '.') === false) {
+        if (strpos($string, '.') === false) {
             return false;
         }
 
-        [$left, $right] = explode('.', $number, 2);
+        [$left, $right] = explode('.', $string, 2);
 
         if ($left === '' && $right === '') {
             return false;

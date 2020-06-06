@@ -37,9 +37,10 @@ abstract class AttrDef
      * @param string  $string  String to be validated and cleaned.
      * @param Config  $config  Mandatory \HTMLPurifier\Config object.
      * @param Context $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
+     *
      * @return bool|string|null
      */
-    abstract public function validate($string, $config, $context);
+    abstract public function validate(string $string, ?Config $config, ?Context $context);
 
     /**
      * Convenience method that parses a string as if it were CDATA.
@@ -116,6 +117,9 @@ abstract class AttrDef
     /**
      * Parses a possibly escaped CSS string and returns the "pure"
      * version of it.
+     *
+     * @param string $string
+     * @return string
      */
     protected function expandCSSEscape(string $string): string
     {
@@ -124,18 +128,22 @@ abstract class AttrDef
         for ($i = 0, $c = \strlen($string); $i < $c; $i++) {
             if ($string[$i] === '\\') {
                 $i++;
+
                 if ($i >= $c) {
                     $ret .= '\\';
                     break;
                 }
+
                 if (ctype_xdigit($string[$i])) {
                     $code = $string[$i];
+
                     for ($a = 1, $i++; $i < $c && $a < 6; $i++, $a++) {
                         if (!ctype_xdigit($string[$i])) {
                             break;
                         }
                         $code .= $string[$i];
                     }
+
                     // We have to be extremely careful when adding
                     // new characters, to make sure we're not breaking
                     // the encoding.
@@ -143,16 +151,21 @@ abstract class AttrDef
                     if (Encoder::cleanUTF8($char) === '') {
                         continue;
                     }
+
                     $ret .= $char;
+
                     if ($i < $c && trim($string[$i]) !== '') {
                         $i--;
                     }
+
                     continue;
                 }
+
                 if ($string[$i] === "\n") {
                     continue;
                 }
             }
+
             $ret .= $string[$i];
         }
 

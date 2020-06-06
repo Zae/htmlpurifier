@@ -41,16 +41,8 @@ namespace HTMLPurifier;
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-use HTMLPurifier\Encoder;
-use HTMLPurifier\Context;
-use HTMLPurifier\Filter;
-use HTMLPurifier\ErrorCollector;
-use HTMLPurifier\Generator;
-use HTMLPurifier\Exception;
-use HTMLPurifier\Lexer;
-use HTMLPurifier\LanguageFactory;
-use HTMLPurifier\IDAccumulator;
 use HTMLPurifier\Strategy\Core;
+use function count;
 
 /**
  * Facade that coordinates HTML Purifier's subsystems in order to purify HTML.
@@ -68,7 +60,6 @@ use HTMLPurifier\Strategy\Core;
  */
 class HTMLPurifier
 {
-
     /**
      * Version of HTML Purifier.
      *
@@ -142,7 +133,7 @@ class HTMLPurifier
      *
      * @param Filter $filter HTMLPurifier\HTMLPurifier_Filter object
      */
-    public function addFilter($filter): void
+    public function addFilter(Filter $filter): void
     {
         trigger_error(
             'HTMLPurifier->addFilter() is deprecated, use configuration directives' .
@@ -223,7 +214,7 @@ class HTMLPurifier
         $filters = array_merge($filters, $this->filters);
         // maybe prepare(), but later
 
-        $filter_size = \count($filters);
+        $filter_size = count($filters);
         foreach ($filters as $filter) {
             $html = $filter->preFilter($html, $config, $context);
         }

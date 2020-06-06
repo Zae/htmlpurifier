@@ -29,7 +29,7 @@ abstract class AttrTransform
      *
      * @return array Processed attribute array.
      */
-    abstract public function transform(array $attr, Config $config, Context $context);
+    abstract public function transform(array $attr, Config $config, Context $context): array;
 
     /**
      * Prepends CSS properties to the style attribute, creating the

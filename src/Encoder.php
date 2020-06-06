@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function function_exists;
+use function ord;
+use function strlen;
+
 /**
  * A UTF-8 specific character encoder that handles cleaning and transforming.
  *
@@ -35,7 +39,7 @@ class Encoder
      *
      * @return string|null
      */
-    public static function unsafeIconv($in, $out, $text): ?string
+    public static function unsafeIconv(string $in, string $out, string $text): ?string
     {
         /**
          * @psalm-suppress InvalidArgument
@@ -80,7 +84,7 @@ class Encoder
 
             // split into 8000 byte chunks, but be careful to handle
             // multibyte boundaries properly
-            if (($c = \strlen($text)) <= $max_chunk_size) {
+            if (($c = strlen($text)) <= $max_chunk_size) {
                 return self::unsafeIconv($in, $out, $text);
             }
 
@@ -94,13 +98,13 @@ class Encoder
                 }
 
                 // wibble the boundary
-                if ((0xC0 & \ord($text[$i + $max_chunk_size])) !== 0x80) {
+                if ((0xC0 & ord($text[$i + $max_chunk_size])) !== 0x80) {
                     $chunk_size = $max_chunk_size;
-                } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 1])) !== 0x80) {
+                } elseif ((0xC0 & ord($text[$i + $max_chunk_size - 1])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 1;
-                } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 2])) !== 0x80) {
+                } elseif ((0xC0 & ord($text[$i + $max_chunk_size - 2])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 2;
-                } elseif ((0xC0 & \ord($text[$i + $max_chunk_size - 3])) !== 0x80) {
+                } elseif ((0xC0 & ord($text[$i + $max_chunk_size - 3])) !== 0x80) {
                     $chunk_size = $max_chunk_size - 3;
                 } else {
                     return null; // rather confusing UTF-8...
@@ -182,9 +186,9 @@ class Encoder
         $out = '';
         $char = '';
 
-        $len = \strlen($str);
+        $len = strlen($str);
         for ($i = 0; $i < $len; $i++) {
-            $in = \ord($str[$i]);
+            $in = ord($str[$i]);
             $char .= $str[$i]; // append byte to char
             if ($mState === 0) {
                 // When mState is zero we expect either a US-ASCII character
@@ -400,7 +404,7 @@ class Encoder
     {
         static $iconv = null;
         if ($iconv === null) {
-            $iconv = \function_exists('iconv') && self::testIconvTruncateBug() !== self::ICONV_UNUSABLE;
+            $iconv = function_exists('iconv') && self::testIconvTruncateBug() !== self::ICONV_UNUSABLE;
         }
 
         return $iconv;
@@ -546,9 +550,10 @@ class Encoder
         $bytesleft = 0;
         $result = '';
         $working = 0;
-        $len = \strlen($str);
+        $len = strlen($str);
+
         for ($i = 0; $i < $len; $i++) {
-            $bytevalue = \ord($str[$i]);
+            $bytevalue = ord($str[$i]);
             if ($bytevalue <= 0x7F) { //0xxx xxxx
                 $result .= \chr($bytevalue);
                 $bytesleft = 0;
@@ -611,7 +616,7 @@ class Encoder
                 return $code = self::ICONV_UNUSABLE;
             }
 
-            $c = \strlen($r);
+            $c = strlen($r);
             if ($c < 9000) {
                 return $code = self::ICONV_TRUNCATES;
             }

@@ -51,16 +51,16 @@ class Integer extends AttrDef
     }
 
     /**
-     * @param string              $integer
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate($integer, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
-        $integer = $this->parseCDATA($integer);
-        if ($integer === '') {
+        $string = $this->parseCDATA($string);
+        if ($string === '') {
             return false;
         }
 
@@ -68,15 +68,15 @@ class Integer extends AttrDef
         // certain fringe cases that must not return an integer.
 
         // clip leading sign
-        if ($this->negative && $integer[0] === '-') {
-            $digits = substr($integer, 1);
+        if ($this->negative && $string[0] === '-') {
+            $digits = substr($string, 1);
             if ($digits === '0') {
-                $integer = '0';
+                $string = '0';
             } // rm minus sign for zero
-        } elseif ($this->positive && $integer[0] === '+') {
-            $digits = $integer = substr($integer, 1); // rm unnecessary plus
+        } elseif ($this->positive && $string[0] === '+') {
+            $digits = $string = substr($string, 1); // rm unnecessary plus
         } else {
-            $digits = $integer;
+            $digits = $string;
         }
 
         // test if it's numeric
@@ -85,19 +85,19 @@ class Integer extends AttrDef
         }
 
         // perform scope tests
-        if (!$this->zero && (int)$integer === 0) {
+        if (!$this->zero && (int)$string === 0) {
             return false;
         }
 
-        if (!$this->positive && (int)$integer > 0) {
+        if (!$this->positive && (int)$string > 0) {
             return false;
         }
 
-        if (!$this->negative && (int)$integer < 0) {
+        if (!$this->negative && (int)$string < 0) {
             return false;
         }
 
-        return $integer;
+        return $string;
     }
 }
 

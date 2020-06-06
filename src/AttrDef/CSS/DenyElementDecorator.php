@@ -35,12 +35,12 @@ class DenyElementDecorator extends AttrDef
      * Checks if CurrentToken is set and equal to $this->element
      *
      * @param string                $string
-     * @param \HTMLPurifier\Config   $config
+     * @param \HTMLPurifier\Config  $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         $token = $context->get('CurrentToken', true);
         if ($token && $token->name === $this->element) {

@@ -78,5 +78,5 @@ abstract class URIFilter
      *         URL is no good, true indicates continue processing. Note that
      *         all changes are committed directly on the URI object
      */
-    abstract public function filter(URI &$uri, Config $config, Context $context);
+    abstract public function filter(URI &$uri, Config $config, Context $context): bool;
 }

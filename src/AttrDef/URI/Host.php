@@ -35,14 +35,14 @@ class Host extends AttrDef
     }
 
     /**
-     * @param string              $string
+     * @param string               $string
      * @param \HTMLPurifier\Config $config
-     * @param Context             $context
+     * @param Context              $context
      *
      * @return string|null
      * @throws Exception
      */
-    public function validate($string, $config, $context): ?string
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context): ?string
     {
         $length = \strlen($string);
         // empty hostname is OK; it's usually semantically equivalent:

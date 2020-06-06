@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function is_array;
+use function is_object;
+use function is_string;
+
 /**
  * Class HTMLModuleManager
  *
@@ -173,11 +177,11 @@ class HTMLModuleManager
      * overloading pre-existing modules.
      *
      * @param string|HTMLModule $module   Mixed: string module name, with or without
-     *                  HTMLPurifier\HTMLPurifier_HTMLModule prefix, or instance of
-     *                  subclass of HTMLPurifier\HTMLPurifier_HTMLModule.
-     * @param bool $overload Boolean whether or not to overload previous modules.
-     *                  If this is not set, and you do overload a module,
-     *                  HTML Purifier will complain with a warning.
+     *                                    HTMLPurifier\HTMLPurifier_HTMLModule prefix, or instance of
+     *                                    subclass of HTMLPurifier\HTMLPurifier_HTMLModule.
+     * @param bool              $overload Boolean whether or not to overload previous modules.
+     *                                    If this is not set, and you do overload a module,
+     *                                    HTML Purifier will complain with a warning.
      *
      * @note This function will not call autoload, you must instantiate
      *       (and thus invoke) autoload outside the method.
@@ -191,10 +195,11 @@ class HTMLModuleManager
      *       If your object name collides with an internal class, specify
      *       your module manually. All modules must have been included
      *       externally: registerModule will not perform inclusions for you!
+     * @throws Exception
      */
     public function registerModule($module, bool $overload = false): void
     {
-        if (\is_string($module)) {
+        if (is_string($module)) {
             // attempt to load the module
             $original_module = $module;
             $ok = false;
@@ -244,12 +249,13 @@ class HTMLModuleManager
      * and then tacking it on to the active doctype
      *
      * @param string|HTMLModule $module
+     * @throws Exception
      */
     public function addModule($module): void
     {
         $this->registerModule($module);
 
-        if (\is_object($module)) {
+        if (is_object($module)) {
             $module = $module->name;
         }
 
@@ -259,6 +265,8 @@ class HTMLModuleManager
     /**
      * Adds a class prefix that registerModule() will use to resolve a
      * string name to a concrete class
+     *
+     * @param string $prefix
      */
     public function addPrefix(string $prefix): void
     {
@@ -286,7 +294,7 @@ class HTMLModuleManager
         $lookup = $config->get('HTML.AllowedModules');
         $special_cases = $config->get('HTML.CoreModules');
 
-        if (\is_array($lookup)) {
+        if (is_array($lookup)) {
             foreach ($modules as $k => $m) {
                 if (isset($special_cases[$m])) {
                     continue;
@@ -349,7 +357,7 @@ class HTMLModuleManager
         foreach ($this->modules as $module) {
             $n = [];
             foreach ($module->info_injector as $injector) {
-                if (!\is_object($injector)) {
+                if (!is_object($injector)) {
                     $class = "HTMLPurifier\\Injector\\$injector";
                     $injector = new $class();
                 }
@@ -389,11 +397,13 @@ class HTMLModuleManager
      * registering it if necessary.
      *
      * @param string|HTMLModule $module
+     *
      * @return void
+     * @throws Exception
      */
     public function processModule($module): void
     {
-        if (\is_object($module) || !isset($this->registeredModules[$module])) {
+        if (is_object($module) || !isset($this->registeredModules[$module])) {
             $this->registerModule($module);
         }
 
@@ -501,7 +511,7 @@ class HTMLModuleManager
 
             // descendants_are_inline, for ChildDef_Chameleon
             if (
-                \is_string($def->content_model)
+                is_string($def->content_model)
                 && $name !== 'del'
                 && $name !== 'ins'
                 && strpos($def->content_model, 'Inline') !== false

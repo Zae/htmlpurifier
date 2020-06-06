@@ -14,13 +14,13 @@ class Color extends AttrDef
 {
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config   $config
+     * @param \HTMLPurifier\Config  $config
      * @param \HTMLPurifier\Context $context
      *
      * @return bool|string
      * @throws Exception
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         static $colors = null;
         if ($colors === null) {

@@ -20,7 +20,7 @@ class Nmtokens extends AttrDef
      *
      * @return bool|string
      */
-    public function validate($string, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
         $string = trim($string);
 

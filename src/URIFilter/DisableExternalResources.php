@@ -19,9 +19,9 @@ class DisableExternalResources extends DisableExternal
     public $name = 'DisableExternalResources';
 
     /**
-     * @param URI                 $uri
-     * @param Config $config
-     * @param Context             $context
+     * @param URI     $uri
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool
      */

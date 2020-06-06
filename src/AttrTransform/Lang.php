@@ -17,9 +17,9 @@ use HTMLPurifier\AttrTransform;
 class Lang extends AttrTransform
 {
     /**
-     * @param array                $attr
-     * @param \\HTMLPurifier\Config $config
-     * @param Context              $context
+     * @param array   $attr
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array
      */

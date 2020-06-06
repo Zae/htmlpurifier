@@ -24,7 +24,7 @@ class AttrCollections
      * @param AttrTypes    $attr_types HTMLPurifier\HTMLPurifier_AttrTypes instance
      * @param HTMLModule[] $modules    Hash array of HTMLPurifier\HTMLPurifier_HTMLModule members
      */
-    public function __construct($attr_types, $modules)
+    public function __construct(AttrTypes $attr_types, array $modules)
     {
         $this->doConstruct($attr_types, $modules);
     }

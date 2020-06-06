@@ -18,15 +18,15 @@ class AlphaValue extends Number
     }
 
     /**
-     * @param string  $number
+     * @param string       $string
      * @param Config|null  $config
      * @param Context|null $context
      *
      * @return string|false
      */
-    public function validate($number, $config, $context)
+    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
     {
-        $result = parent::validate($number, $config, $context);
+        $result = parent::validate($string, $config, $context);
         if ($result === false) {
             return $result;
         }

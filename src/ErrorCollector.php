@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
+use function count;
+
 /**
  * Error collection class that enables HTML Purifier to report HTML
  * problems back to the user
@@ -168,6 +170,7 @@ class ErrorCollector
      * @param array  $errors Errors array to display; used for recursion.
      *
      * @return string
+     * @throws Exception
      */
     public function getHTMLFormatted(Config $config, ?array $errors = null): string
     {
@@ -243,7 +246,7 @@ class ErrorCollector
                 $context[] = $current;
                 $stack = array_merge($stack, array_reverse($array, true));
 
-                for ($i = \count($array); $i > 0; $i--) {
+                for ($i = count($array); $i > 0; $i--) {
                     $context_stack[] = $context;
                 }
             }
