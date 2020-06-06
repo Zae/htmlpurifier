@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 
 /**
  * Validates the value for the CSS property text-decoration
@@ -16,12 +18,12 @@ class TextDecoration extends AttrDef
 {
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         static $allowed_values = [
             'line-through' => true,

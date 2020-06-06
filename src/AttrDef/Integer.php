@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -43,7 +44,7 @@ class Integer extends AttrDef
      * @param bool $zero     indicating whether or not zero is allowed
      * @param bool $positive indicating whether or not positive values are allowed
      */
-    public function __construct($negative = true, $zero = true, $positive = true)
+    public function __construct(bool $negative = true, bool $zero = true, bool $positive = true)
     {
         $this->negative = $negative;
         $this->zero = $zero;
@@ -52,12 +53,12 @@ class Integer extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
         if ($string === '') {
@@ -100,5 +101,3 @@ class Integer extends AttrDef
         return $string;
     }
 }
-
-// vim: et sw=4 sts=4

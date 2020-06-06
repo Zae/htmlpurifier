@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 
 /**
  * Decorator which enables CSS properties to be disabled for specific elements.
@@ -35,12 +37,12 @@ class DenyElementDecorator extends AttrDef
      * Checks if CurrentToken is set and equal to $this->element
      *
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $token = $context->get('CurrentToken', true);
         if ($token && $token->name === $this->element) {

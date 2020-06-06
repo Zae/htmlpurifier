@@ -14,13 +14,13 @@ use HTMLPurifier\Context;
 class Nmtokens extends AttrDef
 {
     /**
-     * @param string                $string
-     * @param Config                $config
-     * @param \HTMLPurifier\Context $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = trim($string);
 

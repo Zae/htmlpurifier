@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+
+use function array_slice;
+use function count;
+use function is_null;
 
 /**
  * Validates shorthand CSS property font.
@@ -24,15 +30,15 @@ class Font extends AttrDef
     protected $info = [];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
-    public function __construct($config)
+    public function __construct(Config $config)
     {
         $def = $config->getCSSDefinition();
 
-        if (\is_null($def)) {
+        if (is_null($def)) {
             throw new Exception('CSSDefinition not found');
         }
 
@@ -46,12 +52,12 @@ class Font extends AttrDef
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config                $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         static $system_fonts = [
             'caption' => true,
@@ -80,7 +86,7 @@ class Font extends AttrDef
         $stage_1 = ['font-style', 'font-variant', 'font-weight'];
         $final = ''; // output
 
-        for ($i = 0, $size = \count($bits); $i < $size; $i++) {
+        for ($i = 0, $size = count($bits); $i < $size; $i++) {
             if ($bits[$i] === '') {
                 continue;
             }
@@ -105,7 +111,7 @@ class Font extends AttrDef
                     }
 
                     // all three caught, continue on
-                    if (\count($caught) >= 3) {
+                    if (count($caught) >= 3) {
                         $stage = 1;
                     }
 
@@ -186,7 +192,7 @@ class Font extends AttrDef
 
                     return false;
                 case 2: // attempting to catch font-family
-                    $font_family = implode(' ', \array_slice($bits, $i, $size - $i));
+                    $font_family = implode(' ', array_slice($bits, $i, $size - $i));
 
                     $r = $this->info['font-family']->validate(
                         $font_family,

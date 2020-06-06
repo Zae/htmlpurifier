@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\URI;
 
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
+use function count;
+use function strlen;
+
 /**
  * Validates an IPv6 address.
  *
@@ -15,12 +20,12 @@ class IPv6 extends IPv4
 {
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         if (!$this->ip4) {
             $this->loadRegex();
@@ -33,7 +38,7 @@ class IPv6 extends IPv4
         //      prefix check
         if (strpos($string, '/') !== false) {
             if (preg_match('#' . $pre . '$#s', $string, $find)) {
-                $string = substr($string, 0, 0 - \strlen($find[0]));
+                $string = substr($string, 0, 0 - strlen($find[0]));
                 unset($find);
             } else {
                 return false;
@@ -42,7 +47,7 @@ class IPv6 extends IPv4
 
         //      IPv4-compatiblity check
         if (preg_match('#(?<=:' . ')' . $this->ip4 . '$#s', $string, $find)) {
-            $string = substr($string, 0, 0 - \strlen($find[0]));
+            $string = substr($string, 0, 0 - strlen($find[0]));
             $ip = explode('.', $find[0]);
             /**
              * @psalm-suppress InvalidScalarArgument
@@ -54,7 +59,7 @@ class IPv6 extends IPv4
 
         //      compression check
         $string = explode('::', $string);
-        $c = \count($string);
+        $c = count($string);
         if ($c > 2) {
             return false;
         }
@@ -64,21 +69,21 @@ class IPv6 extends IPv4
             $first = explode(':', $first);
             $second = explode(':', $second);
 
-            if (\count($first) + \count($second) > 8) {
+            if (count($first) + count($second) > 8) {
                 return false;
             }
 
-            while (\count($first) < 8) {
+            while (count($first) < 8) {
                 $first[] = '0';
             }
 
-            array_splice($first, 8 - \count($second), 8, $second);
+            array_splice($first, 8 - count($second), 8, $second);
             $string = $first;
             unset($first, $second);
         } else {
             $string = explode(':', $string[0]);
         }
-        $c = \count($string);
+        $c = count($string);
 
         if ($c !== 8) {
             return false;

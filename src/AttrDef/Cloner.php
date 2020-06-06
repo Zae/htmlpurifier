@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -30,12 +31,12 @@ class Cloner extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         return $this->clone->validate($string, $config, $context);
     }
@@ -45,7 +46,7 @@ class Cloner extends AttrDef
      *
      * @return AttrDef
      */
-    public function make($string)
+    public function make($string): \HTMLPurifier\AttrDef
     {
         return clone $this->clone;
     }

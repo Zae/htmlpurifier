@@ -7,6 +7,8 @@ namespace HTMLPurifier\AttrDef\HTML;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
+use function strlen;
+
 /**
  * Validates a MultiLength as defined by the HTML spec.
  *
@@ -22,7 +24,7 @@ class MultiLength extends Length
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = trim($string);
         if ($string === '') {
@@ -34,7 +36,7 @@ class MultiLength extends Length
             return $parent_result;
         }
 
-        $length = \strlen($string);
+        $length = strlen($string);
         $last_char = $string[$length - 1];
 
         if ($last_char !== '*') {

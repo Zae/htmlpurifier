@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+
+use function get_class;
+use function strlen;
 
 /**
  * Validates an integer representation of pixels according to the HTML spec.
@@ -27,12 +31,12 @@ class Pixels extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = trim($string);
         if ($string === '0') {
@@ -43,7 +47,7 @@ class Pixels extends AttrDef
             return false;
         }
 
-        $length = \strlen($string);
+        $length = strlen($string);
         if (substr($string, $length - 2) === 'px') {
             $string = substr($string, 0, $length - 2);
         }
@@ -74,7 +78,7 @@ class Pixels extends AttrDef
      *
      * @return AttrDef
      */
-    public function make(string $string): AttrDef
+    public function make(string $string): \HTMLPurifier\AttrDef
     {
         if ($string === '') {
             $max = null;
@@ -82,7 +86,7 @@ class Pixels extends AttrDef
             $max = (int)$string;
         }
 
-        $class = \get_class($this);
+        $class = get_class($this);
 
         return new $class($max);
     }

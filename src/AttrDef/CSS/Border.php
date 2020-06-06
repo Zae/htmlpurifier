@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
 /**
@@ -20,11 +22,11 @@ class Border extends AttrDef
     protected $info = [];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    public function __construct($config)
+    public function __construct(Config $config)
     {
         $def = $config->getCSSDefinition();
 
@@ -39,12 +41,12 @@ class Border extends AttrDef
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config                $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
         $string = $this->mungeRgb($string);

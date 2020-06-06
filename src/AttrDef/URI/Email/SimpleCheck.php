@@ -21,7 +21,7 @@ class SimpleCheck extends Email
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         // no support for named mailboxes i.e. "Bob <bob@example.com>"
         // that needs more percent encoding to be done

@@ -6,6 +6,7 @@ namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 
 /**
  * Validates an IPv4 address
@@ -24,11 +25,11 @@ class IPv4 extends AttrDef
     /**
      * @param string                $string
      * @param Config                $config
-     * @param \HTMLPurifier\Context $context
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         if (!$this->ip4) {
             $this->loadRegex();

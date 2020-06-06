@@ -42,7 +42,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use function count;
 
 /**
  * Validates the value of background-position.
@@ -66,13 +68,13 @@ class BackgroundPosition extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context              $context
+     * @param string    $string
+     * @param Config    $config
+     * @param Context   $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
         $bits = explode(' ', $string);
@@ -142,7 +144,7 @@ class BackgroundPosition extends AttrDef
         } elseif ($keywords['ch']) {
             $ret[] = $keywords['ch'];
             $keywords['cv'] = false; // prevent re-use: center = center center
-        } elseif (\count($measures)) {
+        } elseif (count($measures)) {
             $ret[] = array_shift($measures);
         }
 
@@ -150,7 +152,7 @@ class BackgroundPosition extends AttrDef
             $ret[] = $keywords['v'];
         } elseif ($keywords['cv']) {
             $ret[] = $keywords['cv'];
-        } elseif (\count($measures)) {
+        } elseif (count($measures)) {
             $ret[] = array_shift($measures);
         }
 

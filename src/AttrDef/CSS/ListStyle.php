@@ -8,6 +8,7 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use function is_null;
 
 /**
  * Validates shorthand CSS property list-style.
@@ -27,13 +28,13 @@ class ListStyle extends AttrDef
     /**
      * @param Config $config
      *
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function __construct(Config $config)
     {
         $def = $config->getCSSDefinition();
 
-        if (\is_null($def)) {
+        if (is_null($def)) {
             throw new Exception('CSSDefinition not found');
         }
 
@@ -49,7 +50,7 @@ class ListStyle extends AttrDef
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         // regular pre-processing
         $string = $this->parseCDATA($string);
