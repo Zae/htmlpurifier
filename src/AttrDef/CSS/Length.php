@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
+use function strlen;
 
 /**
  * Represents a Length as defined by CSS.
@@ -33,12 +36,12 @@ class Length extends AttrDef
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
 
@@ -51,7 +54,7 @@ class Length extends AttrDef
             return '0';
         }
 
-        if (\strlen($string) === 1) {
+        if (strlen($string) === 1) {
             return false;
         }
 

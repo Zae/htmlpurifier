@@ -9,6 +9,8 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLDefinition;
 
+use function in_array;
+
 /**
  * Implements special behavior for class attribute (normally NMTOKENS)
  */
@@ -55,7 +57,7 @@ class Classname extends Nmtokens
                 && !isset($forbidden[$token])
                 // We need this O(n) check because of PHP's array
                 // implementation that casts -0 to 0.
-                && !\in_array($token, $ret, true)
+                && !in_array($token, $ret, true)
             ) {
                 $ret[] = $token;
             }

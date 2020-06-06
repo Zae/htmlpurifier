@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use Net_IDNA2;
+use function strlen;
 
 /**
  * Validates a host according to the IPv4, IPv6 and DNS (future) specifications.
@@ -36,15 +38,15 @@ class Host extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return string|null
      * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context): ?string
+    public function validate(string $string, ?Config $config, ?Context $context): ?string
     {
-        $length = \strlen($string);
+        $length = strlen($string);
         // empty hostname is OK; it's usually semantically equivalent:
         // the default host as defined by a URI scheme is used:
         //
@@ -132,7 +134,7 @@ class Host extends AttrDef
                 $new_parts = [];
                 foreach ($parts as $part) {
                     $encodable = false;
-                    for ($i = 0, $c = \strlen($part); $i < $c; $i++) {
+                    for ($i = 0, $c = strlen($part); $i < $c; $i++) {
                         if (\ord($part[$i]) > 0x7a) {
                             $encodable = true;
                             break;

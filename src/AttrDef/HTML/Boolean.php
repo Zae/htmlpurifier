@@ -14,7 +14,7 @@ use HTMLPurifier\Context;
 class Boolean extends AttrDef
 {
     /**
-     * @type string
+     * @type string|bool
      */
     protected $name;
 
@@ -32,13 +32,13 @@ class Boolean extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context              $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         return $this->name;
     }
@@ -48,7 +48,7 @@ class Boolean extends AttrDef
      *
      * @return Boolean
      */
-    public function make($string)
+    public function make(string $string): \HTMLPurifier\AttrDef
     {
         return new Boolean($string);
     }

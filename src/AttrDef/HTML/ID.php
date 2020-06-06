@@ -34,7 +34,7 @@ class ID extends AttrDef
     /**
      * @param bool $selector
      */
-    public function __construct($selector = false)
+    public function __construct(bool $selector = false)
     {
         $this->selector = $selector;
     }
@@ -47,7 +47,7 @@ class ID extends AttrDef
      * @return bool|string
      * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         if (!$this->selector && !$config->get('Attr.EnableID')) {
             return false;

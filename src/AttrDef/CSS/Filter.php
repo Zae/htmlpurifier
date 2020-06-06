@@ -6,6 +6,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef\Integer;
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -17,7 +18,7 @@ use HTMLPurifier\Context;
 class Filter extends AttrDef
 {
     /**
-     * @type \HTMLPurifier\AttrDef\Integer
+     * @type Integer
      */
     protected $intValidator;
 
@@ -28,12 +29,12 @@ class Filter extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
 

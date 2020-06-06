@@ -6,6 +6,8 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 
 /**
  * Validates a keyword against a list of valid values.
@@ -35,7 +37,7 @@ class Enum extends AttrDef
      * @param array $valid_values   List of valid values
      * @param bool  $case_sensitive Whether or not case sensitive
      */
-    public function __construct($valid_values = [], $case_sensitive = false)
+    public function __construct(array $valid_values = [], bool $case_sensitive = false)
     {
         $this->valid_values = array_flip($valid_values);
         $this->case_sensitive = $case_sensitive;
@@ -43,12 +45,12 @@ class Enum extends AttrDef
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = trim($string);
         if (!$this->case_sensitive) {
@@ -68,7 +70,7 @@ class Enum extends AttrDef
      *
      * @return Enum
      */
-    public function make($string)
+    public function make(string $string): AttrDef
     {
         if (\strlen($string) > 2 && $string[0] === 's' && $string[1] === ':') {
             $string = substr($string, 2);

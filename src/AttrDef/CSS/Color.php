@@ -5,8 +5,13 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+
+use function array_key_exists;
+use function count;
+use function strlen;
 
 /**
  * Validates Color as defined by CSS.
@@ -24,15 +29,15 @@ class Color extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context              $context
+     * @param string    $string
+     * @param Config    $config
+     * @param Context   $context
      *
      * @return bool|string
      * @throws Exception
      * @psalm-suppress RedundantCondition (line 143)
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         static $colors = null;
         if ($colors === null) {
@@ -50,7 +55,7 @@ class Color extends AttrDef
         }
 
         if (preg_match('#(rgb|rgba|hsl|hsla)\(#', $string, $matches) === 1) {
-            $length = \strlen($string);
+            $length = strlen($string);
             if (strpos($string, ')') !== $length - 1) {
                 return false;
             }
@@ -88,7 +93,7 @@ class Color extends AttrDef
             $values = trim(str_replace($function, '', $string), ' ()');
 
             $parts = explode(',', $values);
-            if (\count($parts) !== $parameters_size) {
+            if (count($parts) !== $parameters_size) {
                 return false;
             }
 
@@ -105,14 +110,14 @@ class Color extends AttrDef
                 }
 
                 // different check for alpha channel
-                if ($alpha_channel === true && $i === \count($parts)) {
+                if ($alpha_channel === true && $i === count($parts)) {
                     $result = $this->alpha->validate($part, $config, $context);
 
                     if ($result === false) {
                         return false;
                     }
 
-                    $new_parts[] = (string)$result;
+                    $new_parts[] = $result;
                     continue;
                 }
 
@@ -122,7 +127,7 @@ class Color extends AttrDef
                     $current_type = 'integer';
                 }
 
-                if (!\array_key_exists($current_type, $allowed_types[$i])) {
+                if (!array_key_exists($current_type, $allowed_types[$i])) {
                     return false;
                 }
 
@@ -156,7 +161,7 @@ class Color extends AttrDef
                 $string = '#' . $string;
             }
 
-            $length = \strlen($hex);
+            $length = strlen($hex);
             if ($length !== 3 && $length !== 6) {
                 return false;
             }

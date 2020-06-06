@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+
+use function count;
 
 /**
  * Framework class for strings that involve multiple values.
@@ -39,7 +42,7 @@ class Multiple extends AttrDef
      * @param AttrDef $single HTMLPurifier_AttrDef to multiply
      * @param int     $max    Max number of values allowed (usually four)
      */
-    public function __construct($single, $max = 4)
+    public function __construct(AttrDef $single, int $max = 4)
     {
         $this->single = $single;
         $this->max = $max;
@@ -47,12 +50,12 @@ class Multiple extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->mungeRgb($this->parseCDATA($string));
 
@@ -61,7 +64,7 @@ class Multiple extends AttrDef
         }
 
         $parts = explode(' ', $string); // parseCDATA replaced \r, \t and \n
-        $length = \count($parts);
+        $length = count($parts);
         $final = '';
 
         for ($i = 0, $num = 0; $i < $length && $num < $this->max; $i++) {

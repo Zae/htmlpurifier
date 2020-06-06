@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
+use function strlen;
 
 /**
  * Validates a font family list according to CSS spec
@@ -70,13 +73,13 @@ class FontFamily extends AttrDef
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         static $generic_names = [
             'serif' => true,
@@ -107,7 +110,7 @@ class FontFamily extends AttrDef
 
             // match a quoted name
             if ($font[0] === '"' || $font[0] === "'") {
-                $length = \strlen($font);
+                $length = strlen($font);
                 if ($length <= 2) {
                     continue;
                 }
@@ -217,7 +220,7 @@ class FontFamily extends AttrDef
             // Edgy: alphanumeric, spaces, dashes, underscores and Unicode.  Use of
             // str(c)spn assumes that the string was already well formed
             // Unicode (which of course it is).
-            if (strspn($font, $this->mask) !== \strlen($font)) {
+            if (strspn($font, $this->mask) !== strlen($font)) {
                 continue;
             }
 

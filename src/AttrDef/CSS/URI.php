@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef\URI as BaseURI;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
+
+use function strlen;
 
 /**
  * Validates a URI in CSS syntax, which uses url('http://example.com')
@@ -25,12 +30,13 @@ class URI extends BaseURI
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
+     * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         // parse the URI out of the string and then pass it onto
         // the parent object
@@ -44,7 +50,7 @@ class URI extends BaseURI
             return false;
         }
 
-        $new_length = \strlen($string) - 1;
+        $new_length = strlen($string) - 1;
         if ($string[$new_length] != ')') {
             return false;
         }
@@ -53,7 +59,7 @@ class URI extends BaseURI
 
         if (!empty($uri) && ($uri[0] === "'" || $uri[0] === '"')) {
             $quote = $uri[0];
-            $new_length = \strlen($uri) - 1;
+            $new_length = strlen($uri) - 1;
             if ($uri[$new_length] !== $quote) {
                 return false;
             }

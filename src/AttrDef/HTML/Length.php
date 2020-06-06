@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\AttrDef\HTML;
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+
+use function strlen;
 
 /**
  * Validates the HTML type length (not to be confused with CSS's length).
@@ -16,12 +19,12 @@ class Length extends Pixels
 {
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = trim($string);
         if ($string === '') {
@@ -33,7 +36,7 @@ class Length extends Pixels
             return $parent_result;
         }
 
-        $length = \strlen($string);
+        $length = strlen($string);
         $last_char = $string[$length - 1];
 
         if ($last_char !== '%') {

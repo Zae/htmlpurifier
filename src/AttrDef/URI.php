@@ -40,7 +40,7 @@ class URI extends AttrDef
      *
      * @return URI
      */
-    public function make(string $string): URI
+    public function make(string $string): \HTMLPurifier\AttrDef
     {
         $embeds = ($string === 'embedded');
 

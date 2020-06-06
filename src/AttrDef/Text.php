@@ -20,7 +20,7 @@ class Text extends AttrDef
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         return $this->parseCDATA($string);
     }

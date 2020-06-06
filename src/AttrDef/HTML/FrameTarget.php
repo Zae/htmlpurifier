@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\HTML;
 
 use HTMLPurifier\AttrDef\Enum;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 
 /**
  * Special-case enum attribute definition that lazy loads allowed frame targets
@@ -27,13 +29,14 @@ class FrameTarget extends Enum
     }
 
     /**
-     * @param string               $string
-     * @param \HTMLPurifier\Config $config
-     * @param Context              $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
+     * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         if ($this->valid_values === false) {
             $this->valid_values = $config->get('Attr.AllowedFrameTargets');

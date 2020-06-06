@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 
 /**
  * Validates the HTML attribute style, otherwise known as CSS.
@@ -23,13 +25,13 @@ class CSS extends AttrDef
 {
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
 

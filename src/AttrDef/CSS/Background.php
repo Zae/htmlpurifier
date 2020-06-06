@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use function is_null;
 
 /**
  * Validates shorthand CSS property background.
@@ -23,15 +26,15 @@ class Background extends AttrDef
     protected $info = [];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws \HTMLPurifier\Exception
      */
-    public function __construct($config)
+    public function __construct(Config $config)
     {
         $def = $config->getCSSDefinition();
 
-        if (\is_null($def)) {
+        if (is_null($def)) {
             throw new Exception('CSSDefinition not found');
         }
 
@@ -43,13 +46,13 @@ class Background extends AttrDef
     }
 
     /**
-     * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param string  $string
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         // regular pre-processing
         $string = $this->parseCDATA($string);

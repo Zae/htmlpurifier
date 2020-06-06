@@ -24,7 +24,7 @@ class AlphaValue extends Number
      *
      * @return string|false
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $result = parent::validate($string, $config, $context);
         if ($result === false) {

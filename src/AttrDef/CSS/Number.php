@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
 
 /**
  * Validates a number as defined by the CSS spec.
@@ -21,21 +23,21 @@ class Number extends AttrDef
     /**
      * @param bool $non_negative indicates whether negatives are forbidden
      */
-    public function __construct($non_negative = false)
+    public function __construct(bool $non_negative = false)
     {
         $this->non_negative = $non_negative;
     }
 
     /**
      * @param string                     $string
-     * @param \HTMLPurifier\Config|null  $config
-     * @param \HTMLPurifier\Context|null $context
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return string|false
      * @warning Some contexts do not pass $config, $context. These
      *          variables should not be used without checking HTMLPurifier\HTMLPurifier_Length
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
 

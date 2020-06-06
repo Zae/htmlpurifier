@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use function strlen;
 
 /**
  * Decorator which enables !important to be used in CSS values.
@@ -35,19 +37,19 @@ class ImportantDecorator extends AttrDef
      * Intercepts and removes !important if necessary
      *
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         // test for ! and important tokens
         $string = trim($string);
         $is_important = false;
 
         // :TODO: optimization: test directly for !important and ! important
-        if (\strlen($string) >= 9 && substr($string, -9) === 'important') {
+        if (strlen($string) >= 9 && substr($string, -9) === 'important') {
             $temp = rtrim(substr($string, 0, -9));
             // use a temp, because we might want to restore important
             if ($temp !== '' && substr($temp, -1) === '!') {

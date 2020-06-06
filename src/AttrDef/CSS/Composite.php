@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -29,19 +30,19 @@ class Composite extends AttrDef
     /**
      * @param AttrDef[] $defs List of HTMLPurifier_AttrDef objects
      */
-    public function __construct($defs)
+    public function __construct(array $defs)
     {
         $this->defs = $defs;
     }
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         foreach ($this->defs as $i => $def) {
             $result = $this->defs[$i]->validate($string, $config, $context);

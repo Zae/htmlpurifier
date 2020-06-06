@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+
+use function strlen;
 
 /**
  * Validates a Percentage as defined by the CSS spec.
@@ -22,19 +25,19 @@ class Percentage extends AttrDef
     /**
      * @param bool $non_negative Whether to forbid negative values
      */
-    public function __construct($non_negative = false)
+    public function __construct(bool $non_negative = false)
     {
         $this->number_def = new Number($non_negative);
     }
 
     /**
      * @param string               $string
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context              $context
      *
      * @return bool|string
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         $string = $this->parseCDATA($string);
 
@@ -42,7 +45,7 @@ class Percentage extends AttrDef
             return false;
         }
 
-        $length = \strlen($string);
+        $length = strlen($string);
         if ($length === 1) {
             return false;
         }

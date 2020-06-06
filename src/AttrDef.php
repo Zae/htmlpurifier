@@ -82,7 +82,7 @@ abstract class AttrDef
      *
      * @return AttrDef Created AttrDef object corresponding to $string
      */
-    public function make(string $string)
+    public function make(string $string): AttrDef
     {
         // default implementation, return a flyweight of this object.
         // If $string has an effect on the returned object (i.e. you
