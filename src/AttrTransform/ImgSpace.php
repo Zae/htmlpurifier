@@ -29,7 +29,7 @@ class ImgSpace extends AttrTransform
     /**
      * @param string $attr
      */
-    public function __construct($attr)
+    public function __construct(string $attr)
     {
         $this->attr = $attr;
         if (!isset($this->css[$attr])) {

@@ -10,9 +10,15 @@ namespace HTMLPurifier\URIFilter;
 
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 
+/**
+ * Class HostBlacklist
+ *
+ * @package HTMLPurifier\URIFilter
+ */
 class HostBlacklist extends URIFilter
 {
     /**
@@ -29,7 +35,7 @@ class HostBlacklist extends URIFilter
      * @param Config $config
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function prepare(Config $config): bool
     {

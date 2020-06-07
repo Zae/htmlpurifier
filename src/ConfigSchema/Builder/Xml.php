@@ -59,6 +59,7 @@ class Xml extends XMLWriter
 
     /**
      * @param Interchange $interchange
+     * @throws Exception
      */
     public function build(Interchange $interchange): void
     {

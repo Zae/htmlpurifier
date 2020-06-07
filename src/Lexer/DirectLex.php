@@ -403,9 +403,9 @@ class DirectLex extends Lexer
     /**
      * Takes the inside of an HTML tag and makes an assoc array of attributes.
      *
-     * @param string               $string Inside of tag excluding name.
-     * @param \\HTMLPurifier\Config $config
-     * @param Context              $context
+     * @param string  $string Inside of tag excluding name.
+     * @param Config  $config
+     * @param Context $context
      *
      * @return array Assoc array of attributes.
      * @throws Exception

@@ -43,11 +43,11 @@ abstract class Tag extends Token
     /**
      * Non-overloaded constructor, which lower-cases passed tag name.
      *
-     * @param string $name String name.
-     * @param array  $attr Associative array of attributes.
-     * @param int    $line
-     * @param int    $col
-     * @param array  $armor
+     * @param string    $name String name.
+     * @param array     $attr Associative array of attributes.
+     * @param int|null  $line
+     * @param int|null  $col
+     * @param array     $armor
      */
     public function __construct(string $name, array $attr = [], ?int $line = null, ?int $col = null, array $armor = [])
     {

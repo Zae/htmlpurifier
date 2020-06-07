@@ -7,6 +7,9 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\Config;
 use HTMLPurifier\HTMLModule;
 
+use function count;
+use function is_null;
+
 /**
  * Abstract class for a set of proprietary modules that clean up (tidy)
  * poorly written HTML.
@@ -97,7 +100,7 @@ class Tidy extends HTMLModule
         }
 
         $activated_levels = [];
-        for ($i = 1, $c = \count($this->levels); $i < $c; $i++) {
+        for ($i = 1, $c = count($this->levels); $i < $c; $i++) {
             $activated_levels[] = $this->levels[$i];
             if ($this->levels[$i] === $level) {
                 break;
@@ -226,13 +229,13 @@ class Tidy extends HTMLModule
             $params['element'] = $name;
         }
 
-        if (!\is_null($attr)) {
+        if (!is_null($attr)) {
             $params['attr'] = $attr;
         }
 
         // special case: attribute transform
-        if (!\is_null($attr)) {
-            if (\is_null($property)) {
+        if (!is_null($attr)) {
+            if (is_null($property)) {
                 $property = 'pre';
             }
 
@@ -240,7 +243,7 @@ class Tidy extends HTMLModule
         }
 
         // special case: tag transform
-        if (\is_null($property)) {
+        if (is_null($property)) {
             return ['tag_transform', $params];
         }
 
@@ -253,7 +256,7 @@ class Tidy extends HTMLModule
      *
      * @return array
      */
-    public function makeFixes()
+    public function makeFixes(): array
     {
         return [];
     }

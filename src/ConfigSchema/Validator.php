@@ -67,7 +67,7 @@ class Validator
         // arrays, so we don't use the identical !== comparison
         foreach ($interchange->directives as $i => $directive) {
             $id = $directive->id->toString();
-            if ($i !== $id) {
+            if ($i != $id) {
                 $this->error(false, "Integrity violation: key '$i' does not match internal id '$id'");
             }
 

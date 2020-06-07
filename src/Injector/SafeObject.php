@@ -8,6 +8,8 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\EmptyToken;
 
+use function count;
+
 /**
  * Adds important param elements to inside of object in order to make
  * things safe.
@@ -63,7 +65,7 @@ class SafeObject extends Injector
      */
     public function handleElement(Token &$token): void
     {
-        if ($token->name == 'object') {
+        if ($token->name === 'object') {
             $this->objectStack[] = $token;
             $this->paramStack[] = [];
             $new = [$token];
@@ -74,9 +76,9 @@ class SafeObject extends Injector
 
             $token = $new;
         } elseif ($token->name === 'param') {
-            $nest = \count($this->currentNesting) - 1;
+            $nest = count($this->currentNesting) - 1;
             if ($nest >= 0 && $this->currentNesting[$nest]->name === 'object') {
-                $i = \count($this->objectStack) - 1;
+                $i = count($this->objectStack) - 1;
 
                 /**
                  * @psalm-suppress InvalidArrayOffset

@@ -27,9 +27,9 @@ class Id
      * @warning This is NOT magic, to ensure that people don't abuse SPL and
      *          cause problems for PHP 5.0 support.
      */
-    public function toString()
+    public function toString(): string
     {
-        return $this->key;
+        return (string)$this->key;
     }
 
     /**

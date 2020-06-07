@@ -33,7 +33,7 @@ class Native extends VarParser
      * @return mixed
      * @throws VarParserException
      */
-    protected function evalExpression($expr)
+    protected function evalExpression(string $expr)
     {
         $var = null;
         $result = eval("\$var = $expr;");

@@ -82,12 +82,14 @@ class RemoveEmpty extends Injector
 
     /**
      * @param Token $token
+     *
+     * @return void
+     * @throws Exception
+     *
      * @param-out Token|int $token
      *
-     * @throws Exception
-     * @return void
      */
-    public function handleElement(Token &$token)
+    public function handleElement(Token &$token):void
     {
         if (!$token instanceof Start) {
             return;

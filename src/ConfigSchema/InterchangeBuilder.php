@@ -52,6 +52,7 @@ class InterchangeBuilder
      * @param string      $dir
      *
      * @return Interchange
+     * @throws Exception
      */
     public function buildDir(
         Interchange $interchange,
@@ -135,7 +136,7 @@ class InterchangeBuilder
      * @param Interchange $interchange
      * @param StringHash  $hash
      *
-     * @throws Exception|Exception
+     * @throws Exception
      */
     public function buildDirective(
         Interchange $interchange,

@@ -140,7 +140,7 @@ class HTMLModule
      *
      * @return ChildDef|null
      */
-    public function getChildDef(ElementDef $def)
+    public function getChildDef(ElementDef $def): ?ChildDef
     {
         return null;
     }

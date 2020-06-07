@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\Config;
+use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\URIScheme;
@@ -29,7 +32,7 @@ class URI extends AttrDef
     /**
      * @param bool $embeds_resource Does the URI here result in an extra HTTP request?
      */
-    public function __construct($embeds_resource = false)
+    public function __construct(bool $embeds_resource = false)
     {
         $this->parser = new URIParser();
         $this->embedsResource = (bool)$embeds_resource;
@@ -40,7 +43,7 @@ class URI extends AttrDef
      *
      * @return URI
      */
-    public function make(string $string): \HTMLPurifier\AttrDef
+    public function make(string $string): AttrDef
     {
         $embeds = ($string === 'embedded');
 
@@ -49,13 +52,13 @@ class URI extends AttrDef
 
     /**
      * @param string                $string
-     * @param \HTMLPurifier\Config  $config
-     * @param \HTMLPurifier\Context $context
+     * @param Config  $config
+     * @param Context $context
      *
      * @return bool|string
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
-    public function validate(string $string, ?\HTMLPurifier\Config $config, ?\HTMLPurifier\Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
         if ($config->get('URI.Disable')) {
             return false;
