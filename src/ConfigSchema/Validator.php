@@ -8,6 +8,7 @@ use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 use HTMLPurifier\ConfigSchema\Interchange\Directive;
 use HTMLPurifier\ConfigSchema\Interchange\Id;
+
 use function is_null;
 use function is_string;
 

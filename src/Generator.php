@@ -11,6 +11,7 @@ use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
 use stdClass;
 use Tidy;
+
 use function count;
 use function extension_loaded;
 

@@ -9,6 +9,7 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use Net_IDNA2;
+
 use function strlen;
 
 /**

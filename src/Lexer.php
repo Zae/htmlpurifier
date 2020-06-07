@@ -8,6 +8,7 @@ use _PH5P;
 use DOMDocument;
 use HTMLPurifier\Lexer\DOMLex;
 use HTMLPurifier\Lexer\DirectLex;
+
 use function extension_loaded;
 
 /**

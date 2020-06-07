@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\AttrDef\URI\Host;
+
 use function is_null;
 
 /**

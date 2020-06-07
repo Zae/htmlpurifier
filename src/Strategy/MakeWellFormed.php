@@ -16,6 +16,7 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
+
 use function is_array;
 use function is_int;
 use function is_null;

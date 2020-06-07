@@ -7,6 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\DefinitionCache\Serializer;
 use HTMLPurifier\DefinitionCache\Decorator;
 use HTMLPurifier\DefinitionCache\DevNull;
+
 use function is_string;
 
 /**

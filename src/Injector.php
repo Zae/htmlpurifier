@@ -7,6 +7,7 @@ namespace HTMLPurifier;
 use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier\Token\Text;
+
 use function count;
 
 /**
