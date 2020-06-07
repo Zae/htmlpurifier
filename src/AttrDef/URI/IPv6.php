@@ -6,6 +6,7 @@ namespace HTMLPurifier\AttrDef\URI;
 
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+
 use function count;
 use function strlen;
 

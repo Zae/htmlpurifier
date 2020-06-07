@@ -31,7 +31,7 @@ class Linkify extends Injector
      *
      * @param-out Text|list<Start|End|Text> $token
      */
-    public function handleText(Text &$token):void
+    public function handleText(Text &$token): void
     {
         if (!$this->allowsElement('a')) {
             return;

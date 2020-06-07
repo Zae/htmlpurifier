@@ -42,6 +42,7 @@ namespace HTMLPurifier;
  */
 
 use HTMLPurifier\Strategy\Core;
+
 use function count;
 
 /**
