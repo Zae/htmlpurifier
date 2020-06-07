@@ -16,6 +16,10 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\Token\EmptyToken;
 use HTMLPurifier\Token\Text;
+use function is_array;
+use function is_int;
+use function is_null;
+use function is_object;
 
 /**
  * Takes tokens makes them well-formed (balance end tags, etc.)
@@ -191,12 +195,12 @@ class MakeWellFormed extends Strategy
             $reprocess ? $reprocess = false : $token = $zipper->next($token)
         ) {
             // check for a rewind
-            if (\is_int($i)) {
+            if (is_int($i)) {
                 // possibility: disable rewinding if the current token has a
                 // rewind set on it already. This would offer protection from
                 // infinite loop, but might hinder some advanced rewinding.
                 $rewind_offset = $this->injectors[$i]->getRewindOffset();
-                if (\is_int($rewind_offset)) {
+                if (is_int($rewind_offset)) {
                     for ($j = 0; $j < $rewind_offset; $j++) {
                         if (empty($zipper->front)) {
                             break;
@@ -228,7 +232,7 @@ class MakeWellFormed extends Strategy
 
                 // peek
                 $top_nesting = array_pop($this->stack);
-                if (\is_null($top_nesting)) {
+                if (is_null($top_nesting)) {
                     continue;
                 }
 
@@ -334,7 +338,7 @@ class MakeWellFormed extends Strategy
                     $parent_elements = null;
                     $autoclose = false;
 
-                    if (\is_array($definition->info) && isset($definition->info[$parent->name])) {
+                    if (is_array($definition->info) && isset($definition->info[$parent->name])) {
                         $parent_def = $definition->info[$parent->name];
 
                         $parent_elements = [];
@@ -403,7 +407,7 @@ class MakeWellFormed extends Strategy
                             }
                         }
 
-                        if ($autoclose_ok && !\is_null($parent)) {
+                        if ($autoclose_ok && !is_null($parent)) {
                             // errors need to be updated
                             $new_token = new End($parent->name);
                             $new_token->start = $parent;
@@ -539,7 +543,7 @@ class MakeWellFormed extends Strategy
             }
 
             // we didn't find the tag, so remove
-            if (\is_null($skipped_tags)) {
+            if (is_null($skipped_tags)) {
                 if ($escape_invalid_tags) {
                     if ($e) {
                         $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag to text');
@@ -572,7 +576,7 @@ class MakeWellFormed extends Strategy
             $replace = [$token];
             for ($j = 1; $j < $c; $j++) {
                 // ...as well as from the insertions
-                if (!\is_null($skipped_tags[$j])) {
+                if (!is_null($skipped_tags[$j])) {
                     $new_token = new End($skipped_tags[$j]->name);
                     $new_token->start = $skipped_tags[$j];
                     array_unshift($replace, $new_token);
@@ -629,12 +633,12 @@ class MakeWellFormed extends Strategy
         // avoid this pattern.  See: https://github.com/ezyang/htmlpurifier/issues/108
 
         // normalize forms of token
-        if (\is_object($token)) {
+        if (is_object($token)) {
             $tmp = $token;
             $token = [1, $tmp];
         }
 
-        if (\is_int($token)) {
+        if (is_int($token)) {
             $tmp = $token;
             $token = [$tmp];
         }
@@ -643,11 +647,11 @@ class MakeWellFormed extends Strategy
             $token = [1];
         }
 
-        if (!\is_array($token)) {
+        if (!is_array($token)) {
             throw new Exception('Invalid token type from injector');
         }
 
-        if (!\is_int($token[0])) {
+        if (!is_int($token[0])) {
             array_unshift($token, 1);
         }
 

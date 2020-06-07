@@ -26,18 +26,21 @@ class DisplayLinkURI extends Injector
 
     /**
      * @param Token $token
+     *
      * @return void
      */
-    public function handleElement(Token &$token)
+    public function handleElement(Token &$token): void
     {
     }
 
     /**
      * @param Token $token
-     * @param-out Token|array{0: End, 1:Text} $token
+     *
      * @return void
+     *
+     * @param-out Token|array{0: End, 1:Text} $token
      */
-    public function handleEnd(Token &$token)
+    public function handleEnd(Token &$token):void
     {
         /**
          * @psalm-suppress InvalidArrayOffset No idea why psalm doesnt like this, TODO FIX.

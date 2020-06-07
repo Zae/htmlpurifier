@@ -9,6 +9,8 @@ use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\Exception;
 
+use function function_exists;
+
 /**
  * Class HTMLPurifier\DefinitionCache\HTMLPurifier_DefinitionCache_Serializer
  */
@@ -19,6 +21,7 @@ class Serializer extends DefinitionCache
      * @param Config     $config
      *
      * @return int|bool
+     * @throws Exception
      */
     public function add(Definition $def, Config $config)
     {
@@ -43,6 +46,7 @@ class Serializer extends DefinitionCache
      * @param Config     $config
      *
      * @return int|bool
+     * @throws Exception
      */
     public function set(Definition $def, Config $config)
     {
@@ -63,6 +67,7 @@ class Serializer extends DefinitionCache
      * @param Config     $config
      *
      * @return int|bool
+     * @throws Exception
      */
     public function replace(Definition $def, Config $config)
     {
@@ -86,6 +91,7 @@ class Serializer extends DefinitionCache
      * @param Config $config
      *
      * @return bool|Config
+     * @throws Exception
      */
     public function get(Config $config)
     {
@@ -101,6 +107,7 @@ class Serializer extends DefinitionCache
      * @param Config $config
      *
      * @return bool
+     * @throws Exception
      */
     public function remove(Config $config): bool
     {
@@ -116,6 +123,7 @@ class Serializer extends DefinitionCache
      * @param Config $config
      *
      * @return bool
+     * @throws Exception
      */
     public function flush(Config $config): bool
     {
@@ -349,7 +357,7 @@ class Serializer extends DefinitionCache
             return false;
         }
 
-        if (\function_exists('posix_getuid') && $chmod !== null) {
+        if (function_exists('posix_getuid') && $chmod !== null) {
             // POSIX system, we can give more specific advice
             if (fileowner($dir) === posix_getuid()) {
                 // we can chmod it ourselves

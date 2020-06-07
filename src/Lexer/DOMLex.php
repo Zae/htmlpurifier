@@ -17,6 +17,9 @@ use HTMLPurifier\Token;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier\TokenFactory;
 
+use function defined;
+use function is_null;
+
 /**
  * Parser that uses PHP 5's DOM extension (part of the core).
  *
@@ -87,7 +90,7 @@ class DOMLex extends Lexer
         $doc->encoding = 'UTF-8'; // theoretically, the above has this covered
 
         $options = 0;
-        if (\defined('LIBXML_PARSEHUGE') && $config->get('Core.AllowParseManyTags')) {
+        if (defined('LIBXML_PARSEHUGE') && $config->get('Core.AllowParseManyTags')) {
             $options |= LIBXML_PARSEHUGE;
         }
 
@@ -302,7 +305,7 @@ class DOMLex extends Lexer
     protected function createEndNode(DOMNode $node, array &$tokens): void
     {
         $tag_name = $this->getTagName($node); // Handle variable tagName property
-        if (!\is_null($tag_name)) {
+        if (!is_null($tag_name)) {
             $tokens[] = $this->factory->createEnd($tag_name);
         }
     }
@@ -316,7 +319,7 @@ class DOMLex extends Lexer
      */
     protected function transformAttrToAssoc(?DOMNamedNodeMap $node_map): array
     {
-        if (\is_null($node_map)) {
+        if (is_null($node_map)) {
             return [];
         }
 

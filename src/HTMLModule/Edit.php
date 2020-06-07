@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\HTMLModule;
 
+use HTMLPurifier\ChildDef;
 use HTMLPurifier\ChildDef\Chameleon;
 use HTMLPurifier\ElementDef;
 use HTMLPurifier\HTMLModule;
@@ -51,7 +52,7 @@ class Edit extends HTMLModule
      *
      * @return Chameleon|null
      */
-    public function getChildDef(ElementDef $def): ?Chameleon
+    public function getChildDef(ElementDef $def): ?ChildDef
     {
         if ($def->content_model_type !== 'chameleon') {
             return null;

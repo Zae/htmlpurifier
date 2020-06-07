@@ -11,6 +11,8 @@ use HTMLPurifier\Token\Start;
 use HTMLPurifier\Config;
 use HTMLPurifier\Token\EmptyToken;
 
+use function is_null;
+
 /**
  * Simple transformation, just change tag name to something else,
  * and possibly add some styling. This will cover most of the deprecated
@@ -46,7 +48,7 @@ class Simple extends TagTransform
         $new_tag->name = $this->transform_to;
         if (
             ($new_tag instanceof Start || $new_tag instanceof EmptyToken)
-            && !\is_null($this->style)
+            && !is_null($this->style)
         ) {
             $this->prependCSS($new_tag->attr, $this->style);
         }

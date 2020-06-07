@@ -40,9 +40,9 @@ class Text extends Token
     /**
      * Constructor, accepts data and determines if it is whitespace.
      *
-     * @param string $data String parsed character data.
-     * @param int    $line
-     * @param int    $col
+     * @param string    $data String parsed character data.
+     * @param int|null  $line
+     * @param int|null  $col
      */
     public function __construct(string $data, ?int $line = null, ?int $col = null)
     {

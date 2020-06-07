@@ -6,10 +6,13 @@ declare(strict_types=1);
 namespace HTMLPurifier\URIFilter;
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use HTMLPurifier\Config;
 use HTMLPurifier\URIScheme;
+
+use function is_null;
 
 /**
  * Class HTMLPurifier\URIFilter\MakeAbsolute
@@ -35,19 +38,19 @@ class MakeAbsolute extends URIFilter
      * @param Config $config
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function prepare(Config $config): bool
     {
         $def = $config->getDefinition('URI');
 
-        if (\is_null($def)) {
+        if (is_null($def)) {
             return false;
         }
 
         $this->base = $def->base;
 
-        if (\is_null($this->base)) {
+        if (is_null($this->base)) {
             trigger_error(
                 'URI.MakeAbsolute is being ignored due to lack of ' .
                 'value for URI.Base configuration',
@@ -72,20 +75,20 @@ class MakeAbsolute extends URIFilter
      * @param Context $context
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function filter(URI &$uri, Config $config, Context $context): bool
     {
-        if (\is_null($this->base)) {
+        if (is_null($this->base)) {
             return true;
         } // abort early
 
         if (
             $uri->path === ''
-            && \is_null($uri->scheme)
-            && \is_null($uri->host)
-            && \is_null($uri->query)
-            && \is_null($uri->fragment)
+            && is_null($uri->scheme)
+            && is_null($uri->host)
+            && is_null($uri->query)
+            && is_null($uri->fragment)
         ) {
             // reference to current document
             $uri = clone $this->base;
@@ -93,9 +96,9 @@ class MakeAbsolute extends URIFilter
             return true;
         }
 
-        if (!\is_null($uri->scheme)) {
+        if (!is_null($uri->scheme)) {
             // absolute URI already: don't change
-            if (!\is_null($uri->host)) {
+            if (!is_null($uri->host)) {
                 return true;
             }
 
@@ -111,19 +114,19 @@ class MakeAbsolute extends URIFilter
             }
             // special case: had a scheme but always is hierarchical and had no authority
         }
-        if (!\is_null($uri->host)) {
+        if (!is_null($uri->host)) {
             // network path, don't bother
             return true;
         }
 
         if ($uri->path === '') {
             $uri->path = $this->base->path;
-        } elseif (!\is_null($uri->path) && $uri->path[0] !== '/') {
+        } elseif (!is_null($uri->path) && $uri->path[0] !== '/') {
             // relative path, needs more complicated processing
             $stack = explode('/', (string)$uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
 
-            if ($new_stack[0] !== '' && !\is_null($this->base->host)) {
+            if ($new_stack[0] !== '' && !is_null($this->base->host)) {
                 array_unshift($new_stack, '');
             }
 
@@ -136,18 +139,18 @@ class MakeAbsolute extends URIFilter
 
         // re-combine
         $uri->scheme = $this->base->scheme;
-        if (\is_null($uri->userinfo)) {
+        if (is_null($uri->userinfo)) {
             $uri->userinfo = $this->base->userinfo;
         }
 
         /**
          * @psalm-suppress RedundantCondition
          */
-        if (\is_null($uri->host)) {
+        if (is_null($uri->host)) {
             $uri->host = $this->base->host;
         }
 
-        if (\is_null($uri->port)) {
+        if (is_null($uri->port)) {
             $uri->port = $this->base->port;
         }
 

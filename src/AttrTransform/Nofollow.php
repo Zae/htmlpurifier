@@ -8,6 +8,7 @@ namespace HTMLPurifier\AttrTransform;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIParser;
 
 /**
@@ -32,7 +33,7 @@ class Nofollow extends AttrTransform
      * @param Context $context
      *
      * @return array
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function transform(array $attr, Config $config, Context $context): array
     {

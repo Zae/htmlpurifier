@@ -9,6 +9,9 @@ use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 use HTMLPurifier\Config;
 
+use function function_exists;
+use function strlen;
+
 /**
  * Implements data: URI for base64 encoded images supported by GD.
  */
@@ -96,7 +99,7 @@ class Data extends URIScheme
             $raw_data = $data;
         }
 
-        if (\strlen($raw_data) < 12) {
+        if (strlen($raw_data) < 12) {
             // error; exif_imagetype throws exception with small files,
             // and this likely indicates a corrupt URI/failed parse anyway
             return false;
@@ -104,17 +107,17 @@ class Data extends URIScheme
 
         // XXX probably want to refactor this into a general mechanism
         // for filtering arbitrary content types
-        if (\function_exists('sys_get_temp_dir')) {
+        if (function_exists('sys_get_temp_dir')) {
             $file = tempnam(sys_get_temp_dir(), '');
         } else {
             $file = tempnam('/tmp', '');
         }
 
         file_put_contents($file, $raw_data);
-        if (\function_exists('exif_imagetype')) {
+        if (function_exists('exif_imagetype')) {
             $image_code = exif_imagetype($file);
             unlink($file);
-        } elseif (\function_exists('getimagesize')) {
+        } elseif (function_exists('getimagesize')) {
             /**
              * @psalm-suppress InvalidArgument
              */

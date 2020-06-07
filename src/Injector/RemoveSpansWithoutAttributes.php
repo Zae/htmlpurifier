@@ -55,12 +55,14 @@ class RemoveSpansWithoutAttributes extends Injector
 
     /**
      * @param Token $token
+     *
+     * @return void
+     * @throws \HTMLPurifier\Exception
+     *
      * @param-out Token|false $token
      *
-     * @throws \HTMLPurifier\Exception
-     * @return void
      */
-    public function handleElement(Token &$token)
+    public function handleElement(Token &$token): void
     {
         if ($token->name !== 'span' || !$token instanceof Start) {
             return;
@@ -91,10 +93,12 @@ class RemoveSpansWithoutAttributes extends Injector
 
     /**
      * @param Token $token
-     * @param-out Token|false $token
+     *
      * @return void
+     *
+     * @param-out Token|false $token
      */
-    public function handleEnd(Token &$token)
+    public function handleEnd(Token &$token): void
     {
         if ($token->markForDeletion) {
             $token = false;

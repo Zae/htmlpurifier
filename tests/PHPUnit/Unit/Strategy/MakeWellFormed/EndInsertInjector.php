@@ -24,9 +24,10 @@ class EndInsertInjector extends Injector
      * Handler that is called when an end token is processed
      *
      * @param Token $token
+     *
      * @return void
      */
-    public function handleEnd(Token &$token)
+    public function handleEnd(Token &$token): void
     {
         if ($token->name === 'div') {
             return;

@@ -10,6 +10,8 @@ use HTMLPurifier\Node\Element;
 use HTMLPurifier\Node\Text;
 use HTMLPurifier\Config;
 
+use function count;
+
 /**
  * Definition that allows a set of elements, but disallows empty children.
  */
@@ -112,7 +114,7 @@ class Required extends ChildDef
                 // spill the child contents in
                 // ToDo: Make configurable
                 if ($node instanceof Element) {
-                    for ($i = \count($node->children) - 1; $i >= 0; $i--) {
+                    for ($i = count($node->children) - 1; $i >= 0; $i--) {
                         $stack[] = $node->children[$i];
                     }
 

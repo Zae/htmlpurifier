@@ -11,6 +11,8 @@ use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use HTMLPurifier\Exception;
 
+use function is_null;
+
 /**
  * Class HTMLPurifier\URIFilter\HTMLPurifier_URIFilter_DisableExternal
  */
@@ -37,7 +39,7 @@ class DisableExternal extends URIFilter
         /** @var URIDefinition|null $def */
         $def = $config->getDefinition('URI');
 
-        if (\is_null($def)) {
+        if (is_null($def)) {
             return false;
         }
 
@@ -59,7 +61,7 @@ class DisableExternal extends URIFilter
      */
     public function filter(URI &$uri, Config $config, Context $context): bool
     {
-        if (\is_null($uri->host)) {
+        if (is_null($uri->host)) {
             return true;
         }
 

@@ -56,7 +56,7 @@ class Munge extends URIFilter
      * @param Config $config
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function prepare(Config $config): bool
     {

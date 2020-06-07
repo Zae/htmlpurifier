@@ -6,6 +6,7 @@ namespace HTMLPurifier\URIFilter;
 
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 
@@ -39,7 +40,7 @@ class SafeIframe extends URIFilter
      * @param Config $config
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function prepare(Config $config): bool
     {
@@ -54,7 +55,7 @@ class SafeIframe extends URIFilter
      * @param Context $context
      *
      * @return bool
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      */
     public function filter(URI &$uri, Config $config, Context $context): bool
     {

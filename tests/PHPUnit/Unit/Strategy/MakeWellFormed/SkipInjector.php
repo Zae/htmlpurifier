@@ -21,9 +21,10 @@ class SkipInjector extends Injector
      * Handler that is called when a start or empty token is processed
      *
      * @param Token $token
+     *
      * @return void
      */
-    public function handleElement(Token &$token)
+    public function handleElement(Token &$token): void
     {
         $token = [clone $token, clone $token];
     }
