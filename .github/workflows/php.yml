@@ -1,0 +1,42 @@
+name: Workflow
+
+on: [push]
+
+jobs:
+  run:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest, macos-latest]
+        php-versions: ['7.2', '7.3', '7.4']
+        dependency-version: [prefer-lowest, prefer-stable]
+        tools: ['test', 'infect', 'psalm', 'codestyle', 'lint']
+    name: PHP ${{ matrix.php-versions }} ${{ matrix.tools } on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: ctype, dom, libxml, iconv, exif, bcmath
+          coverage: phpcov
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Check Composer Version
+        run: composer -V
+
+      - name: Check PHP Extensions
+        run: php -m
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-suggest --prefer-dist
+
+      - name: Run test suite
+        run: composer run ${{ matrix.tools }}
