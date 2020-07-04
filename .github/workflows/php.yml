@@ -11,7 +11,7 @@ jobs:
         php-versions: ['7.2', '7.3', '7.4']
         dependency-version: [prefer-lowest, prefer-stable]
         tools: ['test', 'infect', 'psalm', 'codestyle', 'lint']
-    name: PHP ${{ matrix.php-versions }} ${{ matrix.tools } on ${{ matrix.operating-system }}
+    name: PHP ${{ matrix.php-versions }} ${{ matrix.tools }} on ${{ matrix.operating-system }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
