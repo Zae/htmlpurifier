@@ -79,7 +79,9 @@ class URISchemeRegistry
             return null;
         }
 
-        $this->schemes[$scheme] = new $class();
+        /** @var URIScheme $object */
+        $object = new $class();
+        $this->schemes[$scheme] = $object;
 
         return $this->schemes[$scheme];
     }

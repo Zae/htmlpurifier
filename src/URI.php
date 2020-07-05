@@ -313,6 +313,7 @@ class URI
             return true;
         }
 
+        /** @var URIDefinition|null $uri_def */
         $uri_def = $config->getDefinition('URI');
 
         return $uri_def instanceof Definition && $uri_def->host === $this->host;

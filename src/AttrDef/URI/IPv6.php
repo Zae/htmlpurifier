@@ -50,9 +50,9 @@ class IPv6 extends IPv4
         if (preg_match('#(?<=:' . ')' . $this->ip4 . '$#s', $string, $find)) {
             $string = substr($string, 0, 0 - strlen($find[0]));
             $ip = explode('.', $find[0]);
-            /**
-             * @psalm-suppress InvalidScalarArgument
-             */
+            $ip = array_map(static function ($ip) {
+                return (int)$ip;
+            }, $ip);
             $ip = array_map('dechex', $ip);
             $string .= $ip[0] . $ip[1] . ':' . $ip[2] . $ip[3];
             unset($find, $ip);
