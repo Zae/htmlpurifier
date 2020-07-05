@@ -73,7 +73,7 @@
             "@htmlt"
         ],
         "infect": "@php -d memory_limit=-1 vendor/bin/infection -j4 --only-covered",
-        "psalm": "@php vendor/bin/psalm --threads=8 --diff --diff-methods",
+        "psalm": "@php vendor/bin/psalm --threads=8",
         "codestyle": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src",
         "lint": "@php vendor/bin/parallel-lint -j 8 --no-progress src"
     }
