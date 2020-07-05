@@ -10,6 +10,7 @@ use HTMLPurifier\ConfigSchema\Interchange\Id;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLPurifier;
 use XMLWriter;
+
 use function is_null;
 
 /**
@@ -153,7 +154,10 @@ class Xml extends XMLWriter
         if ($directive->deprecatedVersion) {
             $this->startElement('deprecated');
             $this->writeElement('version', $directive->deprecatedVersion);
-            $this->writeElement('use', !is_null($directive->deprecatedUse) ? $directive->deprecatedUse->toString() : null);
+            $this->writeElement(
+                'use',
+                !is_null($directive->deprecatedUse) ? $directive->deprecatedUse->toString() : null
+            );
             $this->endElement(); // deprecated
         }
 

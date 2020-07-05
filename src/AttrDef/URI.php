@@ -11,6 +11,7 @@ use HTMLPurifier\Exception;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\URIScheme;
+
 use function is_null;
 
 /**
