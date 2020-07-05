@@ -8,6 +8,7 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use function is_null;
 
 /**
  * Validates the HTML attribute ID.
@@ -40,16 +41,16 @@ class ID extends AttrDef
     }
 
     /**
-     * @param string  $string
-     * @param Config  $config
-     * @param Context $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {
-        if (!$this->selector && !$config->get('Attr.EnableID')) {
+        if (is_null($config) || (!$this->selector && !$config->get('Attr.EnableID'))) {
             return false;
         }
 
@@ -74,7 +75,7 @@ class ID extends AttrDef
             );
         }
 
-        if (!$this->selector) {
+        if (!$this->selector && !is_null($context)) {
             $id_accumulator =& $context->get('IDAccumulator');
             if (isset($id_accumulator->ids[$string])) {
                 return false;

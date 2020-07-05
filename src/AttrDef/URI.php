@@ -11,6 +11,7 @@ use HTMLPurifier\Exception;
 use HTMLPurifier\URIDefinition;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\URIScheme;
+use function is_null;
 
 /**
  * Validates a URI as defined by RFC 3986.
@@ -51,16 +52,16 @@ class URI extends AttrDef
     }
 
     /**
-     * @param string                $string
-     * @param Config  $config
-     * @param Context $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {
-        if ($config->get('URI.Disable')) {
+        if (is_null($config) || $config->get('URI.Disable')) {
             return false;
         }
 
@@ -73,10 +74,20 @@ class URI extends AttrDef
         }
 
         // add embedded flag to context for validators
-        $context->register('EmbeddedURI', $this->embedsResource);
+        if (!is_null($context)) {
+            $context->register('EmbeddedURI', $this->embedsResource);
+        }
 
         $ok = false;
         do {
+            /**
+             * @psalm-suppress RedundantCondition
+             * @psalm-suppress TypeDoesNotContainNull
+             */
+            if (is_null($config) || is_null($context)) {
+                break;
+            }
+
             // generic validation
             $result = $string->validate($config, $context);
             if (!$result) {
@@ -116,7 +127,9 @@ class URI extends AttrDef
             $ok = true;
         } while (false);
 
-        $context->destroy('EmbeddedURI');
+        if (!is_null($context)) {
+            $context->destroy('EmbeddedURI');
+        }
 
         if (!$ok) {
             return false;

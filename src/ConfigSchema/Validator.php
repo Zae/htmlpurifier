@@ -67,6 +67,10 @@ class Validator
         // PHP is a bit lax with integer <=> string conversions in
         // arrays, so we don't use the identical !== comparison
         foreach ($interchange->directives as $i => $directive) {
+            if (!$directive->id instanceof Id) {
+                throw new \Exception('Id on directive is null');
+            }
+
             $id = $directive->id->toString();
             if ($i != $id) {
                 $this->error(false, "Integrity violation: key '$i' does not match internal id '$id'");
@@ -90,11 +94,6 @@ class Validator
         $id_string = $id->toString();
         $this->context[] = "id '$id_string'";
 
-        if (!$id instanceof Id) {
-            // handled by InterchangeBuilder
-            $this->error(false, 'is not an instance of HTMLPurifier\ConfigSchema\Interchange\Id');
-        }
-
         // keys are now unconstrained (we might want to narrow down to A-Za-z0-9.)
         // we probably should check that it has at least one namespace
         $this->with($id, 'key')
@@ -113,6 +112,10 @@ class Validator
      */
     public function validateDirective(Directive $d): void
     {
+        if (!$d->id instanceof Id) {
+            throw new \Exception('Id on directive is null');
+        }
+
         $id = $d->id->toString();
         $this->context[] = "directive '$id'";
         $this->validateId($d->id);
@@ -249,7 +252,9 @@ class Validator
                 $this->error("alias '$s'", "collides with alias for directive '$other_directive'");
             }
 
-            $this->aliases[$s] = $d->id->toString();
+            if ($d->id instanceof Id) {
+                $this->aliases[$s] = $d->id->toString();
+            }
         }
 
         array_pop($this->context);
@@ -261,7 +266,7 @@ class Validator
      * Convenience function for generating HTMLPurifier_ConfigSchema_ValidatorAtom
      * for validating simple member variables of objects.
      *
-     * @param object $obj
+     * @param Directive|Id $obj
      * @param string $member
      *
      * @return ValidatorAtom
@@ -274,12 +279,12 @@ class Validator
     /**
      * Emits an error, providing helpful context.
      *
-     * @param string $target
+     * @param string|false $target
      * @param string $msg
      *
      * @throws Exception
      */
-    protected function error($target, $msg): void
+    protected function error($target, string $msg): void
     {
         if ($target !== false) {
             $prefix = ucfirst($target) . ' in ' . $this->getFormattedContext();

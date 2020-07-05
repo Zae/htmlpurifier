@@ -10,6 +10,7 @@ use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLDefinition;
 
 use function in_array;
+use function is_null;
 
 /**
  * Implements special behavior for class attribute (normally NMTOKENS)
@@ -24,8 +25,12 @@ class Classname extends Nmtokens
      * @return string[]|false
      * @throws Exception
      */
-    protected function split($string, $config, $context)
+    protected function split(string $string, ?Config $config, ?Context $context)
     {
+        if (is_null($config)) {
+            throw new \Exception('Config is null');
+        }
+
         // really, this twiddle should be lazy loaded
         /** @var HTMLDefinition $def */
         $def = $config->getDefinition('HTML');
@@ -39,14 +44,18 @@ class Classname extends Nmtokens
 
     /**
      * @param array   $tokens
-     * @param Config  $config
-     * @param Context $context
+     * @param ?Config  $config
+     * @param ?Context $context
      *
      * @return array
      * @throws Exception
      */
-    protected function filter($tokens, $config, $context): array
+    protected function filter(array $tokens, ?Config $config, ?Context $context): array
     {
+        if (is_null($config)) {
+            throw new \Exception('Config is null');
+        }
+
         $allowed = $config->get('Attr.AllowedClasses');
         $forbidden = $config->get('Attr.ForbiddenClasses');
         $ret = [];

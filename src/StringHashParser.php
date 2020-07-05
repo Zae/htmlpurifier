@@ -41,17 +41,17 @@ class StringHashParser
      *
      * @param string $file
      *
-     * @return array|bool
+     * @return array|null
      */
-    public function parseFile(string $file)
+    public function parseFile(string $file): ?array
     {
         if (!file_exists($file)) {
-            return false;
+            return null;
         }
 
         $fh = fopen($file, 'rb');
         if (!$fh) {
-            return false;
+            return null;
         }
 
         $ret = $this->parseHandle($fh);

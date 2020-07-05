@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\ConfigSchema;
 
+use HTMLPurifier\ConfigSchema\Interchange\Directive;
+use HTMLPurifier\ConfigSchema\Interchange\Id;
 use function is_array;
 use function is_bool;
 use function is_string;
@@ -40,7 +42,7 @@ class ValidatorAtom
      * HTMLPurifier_ConfigSchema_ValidatorAtom constructor.
      *
      * @param string $context
-     * @param        $obj
+     * @param Directive|Id $obj
      * @param string $member
      */
     public function __construct(string $context, $obj, string $member)
@@ -156,3 +158,4 @@ class ValidatorAtom
         throw new Exception(ucfirst($this->member) . ' in ' . $this->context . ' ' . $msg);
     }
 }
+

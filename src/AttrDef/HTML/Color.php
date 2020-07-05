@@ -9,6 +9,7 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
+use function is_null;
 use function strlen;
 
 /**
@@ -17,9 +18,9 @@ use function strlen;
 class Color extends AttrDef
 {
     /**
-     * @param string                $string
-     * @param Config  $config
-     * @param Context $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
@@ -27,7 +28,7 @@ class Color extends AttrDef
     public function validate(string $string, ?Config $config, ?Context $context)
     {
         static $colors = null;
-        if ($colors === null) {
+        if ($colors === null && !is_null($config)) {
             $colors = $config->get('Core.ColorKeywords');
         }
 

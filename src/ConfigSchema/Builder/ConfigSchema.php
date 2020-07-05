@@ -22,6 +22,10 @@ class ConfigSchema
         $schema = new \HTMLPurifier\ConfigSchema();
 
         foreach ($interchange->directives as $d) {
+            if (!$d->id instanceof Interchange\Id) {
+                throw new \Exception('Directive id is wrong type');
+            }
+
             $schema->add(
                 $d->id->key,
                 $d->default,

@@ -67,20 +67,6 @@ class ValidatorTest extends TestCase
     /**
      * @test
      */
-    public function testDirectiveIdIsString(): void
-    {
-        $d = $this->makeDirective(3);
-        $d->default = 0;
-        $d->type = 'int';
-        $d->description = 'Description';
-
-        $this->expectValidationException("Key in id '3' in directive '3' must be a string");
-        $this->validator->validate($this->interchange);
-    }
-
-    /**
-     * @test
-     */
     public function testDirectiveTypeAllowsNullIsBool(): void
     {
         $d = $this->makeDirective('Ns.Dir');

@@ -111,9 +111,11 @@ class InterchangeBuilder
      */
     public function build(Interchange $interchange, StringHash $hash): void
     {
-        if (!$hash instanceof StringHash) {
-            $hash = new StringHash($hash);
-        }
+        // TODO: Do we want to force users to provide a StringHash or do we change the API to allow
+        //  other stuff as well and we create the StringHash ourselves?
+//        if (!$hash instanceof StringHash) {
+//            $hash = new StringHash($hash);
+//        }
 
         if (!isset($hash['ID'])) {
             throw new Exception('Hash does not have any ID');

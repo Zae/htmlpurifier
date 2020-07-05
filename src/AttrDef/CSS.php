@@ -8,6 +8,7 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use function is_null;
 
 /**
  * Validates the HTML attribute style, otherwise known as CSS.
@@ -24,15 +25,19 @@ use HTMLPurifier\Exception;
 class CSS extends AttrDef
 {
     /**
-     * @param string               $string
-     * @param Config $config
-     * @param Context              $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {
+        if (is_null($config)) {
+            throw new \Exception('Config is null');
+        }
+
         $string = $this->parseCDATA($string);
 
         $definition = $config->getCSSDefinition();
@@ -84,7 +89,9 @@ class CSS extends AttrDef
          * Name of the current CSS property being validated.
          */
         $property = false;
-        $context->register('CurrentCSSProperty', $property);
+        if (!is_null($context)) {
+            $context->register('CurrentCSSProperty', $property);
+        }
 
         foreach ($declarations as $declaration) {
             if (!$declaration) {
@@ -145,7 +152,9 @@ class CSS extends AttrDef
             }
         }
 
-        $context->destroy('CurrentCSSProperty');
+        if (!is_null($context)) {
+            $context->destroy('CurrentCSSProperty');
+        }
 
         // procedure does not write the new CSS simultaneously, so it's
         // slightly inefficient, but it's the only way of getting rid of

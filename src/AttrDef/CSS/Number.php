@@ -29,7 +29,7 @@ class Number extends AttrDef
     }
 
     /**
-     * @param string                     $string
+     * @param string       $string
      * @param Config|null  $config
      * @param Context|null $context
      *

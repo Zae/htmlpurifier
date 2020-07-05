@@ -8,6 +8,7 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use function is_null;
 
 /**
  * Validates a rel/rev link attribute against a directive of allowed values
@@ -49,15 +50,19 @@ class LinkTypes extends AttrDef
     }
 
     /**
-     * @param string                $string
-     * @param Config  $config
-     * @param Context $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {
+        if (is_null($config)) {
+            return false;
+        }
+
         $allowed = $config->get('Attr.' . $this->name);
         if (empty($allowed)) {
             return false;
