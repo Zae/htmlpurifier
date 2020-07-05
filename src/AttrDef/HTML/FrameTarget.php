@@ -8,6 +8,7 @@ use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+
 use function is_null;
 
 /**

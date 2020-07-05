@@ -7,6 +7,7 @@ namespace HTMLPurifier\AttrDef\CSS;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+
 use function is_null;
 
 /**

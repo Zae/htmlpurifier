@@ -6,6 +6,7 @@ namespace HTMLPurifier\ConfigSchema;
 
 use HTMLPurifier\ConfigSchema\Interchange\Directive;
 use HTMLPurifier\ConfigSchema\Interchange\Id;
+
 use function is_array;
 use function is_bool;
 use function is_string;
@@ -158,4 +159,3 @@ class ValidatorAtom
         throw new Exception(ucfirst($this->member) . ' in ' . $this->context . ' ' . $msg);
     }
 }
-
