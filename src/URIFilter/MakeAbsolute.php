@@ -48,7 +48,9 @@ class MakeAbsolute extends URIFilter
             return false;
         }
 
-        $this->base = $def->base;
+        if (isset($def->base)) {
+            $this->base = $def->base;
+        }
 
         if (is_null($this->base)) {
             trigger_error(

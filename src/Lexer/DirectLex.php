@@ -569,8 +569,8 @@ class DirectLex extends Lexer
                 $cursor++;
             } else {
                 /**
-                 * @psalm-suppress RedundantCondition
-                 * @todo fix?
+                 * @psalm-suppress DocblockTypeContradiction
+                 * @todo fix? psalm bug?
                  */
                 if ($key !== '') {
                     $array[$key] = $key;

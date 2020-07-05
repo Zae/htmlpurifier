@@ -308,7 +308,8 @@ class UnitConverter
      * @return string
      *
      * @psalm-suppress ArgumentTypeCoercion
-     * @todo: fix the suppression, something about numeric-strings?
+     * @psalm-suppress DocblockTypeContradiction (line 331)
+     * @todo: fix the suppression, something about numeric-strings and docblocks?
      */
     private function round(string $n, int $sigfigs): string
     {
