@@ -7,6 +7,7 @@ namespace HTMLPurifier\AttrDef;
 use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use function is_null;
 
 /**
  * Decorator that, depending on a token, switches between two definitions.
@@ -45,13 +46,15 @@ class Switcher
      * @param Config    $config
      * @param Context   $context
      *
-     * @return bool|string
+     * @return bool|string|null
      */
-    public function validate(string $string, Config $config, Context $context)
+    public function validate(string $string, ?Config $config, ?Context $context)
     {
-        $token = $context->get('CurrentToken', true);
+        if (!is_null($context)) {
+            $token = $context->get('CurrentToken', true);
+        }
 
-        if (!$token || $token->name !== $this->tag) {
+        if (!isset($token) || !$token || $token->name !== $this->tag) {
             return $this->withoutTag->validate($string, $config, $context);
         }
 

@@ -14,9 +14,9 @@ use HTMLPurifier\Context;
 class Nmtokens extends AttrDef
 {
     /**
-     * @param string  $string
-     * @param Config  $config
-     * @param Context $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      */
@@ -46,12 +46,12 @@ class Nmtokens extends AttrDef
      * Splits a space separated list of tokens into its constituent parts.
      *
      * @param string  $string
-     * @param Config  $config
-     * @param Context $context
+     * @param ?Config  $config
+     * @param ?Context $context
      *
      * @return string[]|false
      */
-    protected function split(string $string, Config $config, Context $context)
+    protected function split(string $string, ?Config $config, ?Context $context)
     {
         // OPTIMIZABLE!
         // do the preg_match, capture all subpatterns for reformulation
@@ -75,12 +75,12 @@ class Nmtokens extends AttrDef
      *       with a callback. But... we're not.
      *
      * @param array   $tokens
-     * @param Config  $config
-     * @param Context $context
+     * @param ?Config  $config
+     * @param ?Context $context
      *
      * @return array
      */
-    protected function filter(array $tokens, Config $config, Context $context)
+    protected function filter(array $tokens, ?Config $config, ?Context $context)
     {
         return $tokens;
     }

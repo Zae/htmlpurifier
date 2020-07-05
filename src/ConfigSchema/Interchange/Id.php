@@ -10,14 +10,14 @@ namespace HTMLPurifier\ConfigSchema\Interchange;
 class Id
 {
     /**
-     * @type string
+     * @var string
      */
     public $key;
 
     /**
      * @param string $key
      */
-    public function __construct($key)
+    public function __construct(string $key)
     {
         $this->key = $key;
     }
@@ -37,7 +37,7 @@ class Id
      */
     public function getRootNamespace(): string
     {
-        return substr($this->key, 0, strpos($this->key, '.'));
+        return substr($this->key, 0, (int)strpos($this->key, '.'));
     }
 
     /**
@@ -45,7 +45,7 @@ class Id
      */
     public function getDirective(): string
     {
-        return substr($this->key, strpos($this->key, '.') + 1);
+        return substr($this->key, (int)strpos($this->key, '.') + 1);
     }
 
     /**

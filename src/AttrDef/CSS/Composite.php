@@ -36,11 +36,11 @@ class Composite extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param Config $config
-     * @param Context              $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
-     * @return bool|string
+     * @return bool|string|null
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

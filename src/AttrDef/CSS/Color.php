@@ -11,6 +11,7 @@ use HTMLPurifier\Exception;
 
 use function array_key_exists;
 use function count;
+use function is_null;
 use function strlen;
 
 /**
@@ -29,9 +30,9 @@ class Color extends AttrDef
     }
 
     /**
-     * @param string    $string
-     * @param Config    $config
-     * @param Context   $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
@@ -40,7 +41,7 @@ class Color extends AttrDef
     public function validate(string $string, ?Config $config, ?Context $context)
     {
         static $colors = null;
-        if ($colors === null) {
+        if ($colors === null && !is_null($config)) {
             $colors = $config->get('Core.ColorKeywords');
         }
 

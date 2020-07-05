@@ -6,9 +6,11 @@ namespace HTMLPurifier\ConfigSchema\Builder;
 
 use HTMLPurifier\ConfigSchema\Interchange;
 use HTMLPurifier\ConfigSchema\Interchange\Directive;
+use HTMLPurifier\ConfigSchema\Interchange\Id;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLPurifier;
 use XMLWriter;
+use function is_null;
 
 /**
  * Converts HTMLPurifier_ConfigSchema_Interchange to an XML format,
@@ -17,14 +19,14 @@ use XMLWriter;
 class Xml extends XMLWriter
 {
     /**
-     * @type Interchange
+     * @var Interchange|null
      */
     protected $interchange;
 
     /**
-     * @type string
+     * @var string
      */
-    private $namespace;
+    private $namespace = '';
 
     /**
      * @param string $html
@@ -38,7 +40,10 @@ class Xml extends XMLWriter
         $purifier = HTMLPurifier::getInstance();
         $html = $purifier->purify($html);
         $this->writeAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-        $this->writeRaw($html);
+
+        if (!is_null($html)) {
+            $this->writeRaw($html);
+        }
 
         $this->endElement(); // div
     }
@@ -90,6 +95,10 @@ class Xml extends XMLWriter
      */
     public function buildDirective(Directive $directive): void
     {
+        if (!$directive->id instanceof Id) {
+            throw new Exception('Directive id is wrong type');
+        }
+
         // Kludge, although I suppose having a notion of a "root namespace"
         // certainly makes things look nicer when documentation is built.
         // Depends on things being sorted.
@@ -105,7 +114,6 @@ class Xml extends XMLWriter
 
         $this->startElement('directive');
         $this->writeAttribute('id', $directive->id->toString());
-
         $this->writeElement('name', $directive->id->getDirective());
 
         $this->startElement('aliases');
@@ -145,7 +153,7 @@ class Xml extends XMLWriter
         if ($directive->deprecatedVersion) {
             $this->startElement('deprecated');
             $this->writeElement('version', $directive->deprecatedVersion);
-            $this->writeElement('use', $directive->deprecatedUse->toString());
+            $this->writeElement('use', !is_null($directive->deprecatedUse) ? $directive->deprecatedUse->toString() : null);
             $this->endElement(); // deprecated
         }
 

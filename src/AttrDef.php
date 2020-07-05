@@ -34,9 +34,9 @@ abstract class AttrDef
     /**
      * Validates and cleans passed string according to a definition.
      *
-     * @param string  $string  String to be validated and cleaned.
-     * @param Config  $config  Mandatory \HTMLPurifier\Config object.
-     * @param Context $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
+     * @param string       $string  String to be validated and cleaned.
+     * @param Config|null  $config  Mandatory \HTMLPurifier\Config object.
+     * @param Context|null $context Mandatory HTMLPurifier\HTMLPurifier_Context object.
      *
      * @return bool|string|null
      */

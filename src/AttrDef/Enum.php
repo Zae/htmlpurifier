@@ -44,9 +44,9 @@ class Enum extends AttrDef
     }
 
     /**
-     * @param string                $string
-     * @param Config  $config
-     * @param Context $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      */

@@ -9,6 +9,7 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
+use function is_null;
 use function strlen;
 
 /**
@@ -73,9 +74,9 @@ class FontFamily extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param Config $config
-     * @param Context              $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string
      * @throws Exception
@@ -89,7 +90,10 @@ class FontFamily extends AttrDef
             'fantasy' => true,
             'cursive' => true
         ];
-        $allowed_fonts = $config->get('CSS.AllowedFonts');
+        $allowed_fonts = [];
+        if (!is_null($config)) {
+            $allowed_fonts = $config->get('CSS.AllowedFonts');
+        }
 
         // assume that no font names contain commas in them
         $fonts = explode(',', $string);

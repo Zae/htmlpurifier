@@ -10,6 +10,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 use Net_IDNA2;
 
+use function is_null;
 use function strlen;
 
 /**
@@ -38,9 +39,9 @@ class Host extends AttrDef
     }
 
     /**
-     * @param string               $string
-     * @param Config $config
-     * @param Context              $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return string|null
      * @throws Exception
@@ -92,7 +93,10 @@ class Host extends AttrDef
         // for browser behavior, for example, a large number of browsers
         // cannot handle foo_.example.com, but foo_bar.example.com is
         // fairly well supported.
-        $underscore = $config->get('Core.AllowHostnameUnderscore') ? '_' : '';
+        $underscore = '';
+        if (!is_null($config) && $config->get('Core.AllowHostnameUnderscore')) {
+            $underscore = '_';
+        }
 
         // Based off of RFC 1738, but amended so that
         // as per RFC 3696, the top label need only not be all numeric.
@@ -127,7 +131,7 @@ class Host extends AttrDef
             // If we have Net_IDNA2 support, we can support IRIs by
             // punycoding them. (This is the most portable thing to do,
             // since otherwise we have to assume browsers support
-        } elseif ($config->get('Core.EnableIDNA')) {
+        } elseif (!is_null($config) && $config->get('Core.EnableIDNA')) {
             $idna = new Net_IDNA2(['encoding' => 'utf8', 'overlong' => false, 'strict' => true]);
             // we need to encode each period separately
             $parts = explode('.', $string);

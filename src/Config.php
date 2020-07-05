@@ -515,12 +515,12 @@ class Config
      *                        maybeGetRawURIDefinition, which is more explicitly
      *                        named, instead.
      *
-     * @return URIDefinition
+     * @return URIDefinition|null
      * @throws Exception
      *
      * @psalm-suppress MoreSpecificReturnType
      */
-    public function getURIDefinition(bool $raw = false, bool $optimized = false): URIDefinition
+    public function getURIDefinition(bool $raw = false, bool $optimized = false): ?URIDefinition
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
