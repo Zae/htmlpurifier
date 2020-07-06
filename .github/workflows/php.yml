@@ -10,7 +10,7 @@ jobs:
         operating-system: [ubuntu-latest, windows-latest, macos-latest]
         php-versions: ['7.4']
         dependency-version: [prefer-lowest, prefer-stable]
-        tools: ['test', 'lint']
+        tools: ['test', 'lint', 'infect']
 
     name: PHP ${{ matrix.php-versions }} ${{ matrix.tools }} on ${{ matrix.operating-system }}
     steps:
