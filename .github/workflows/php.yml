@@ -60,7 +60,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: ctype, dom, libxml, iconv, exif, bcmath
+          extensions: ctype, dom, xml, iconv, exif, bcmath, intl
           coverage: phpcov
 
       - name: Check PHP Version
