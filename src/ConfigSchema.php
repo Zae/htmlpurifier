@@ -76,6 +76,7 @@ class ConfigSchema
      * Unserializes the default ConfigSchema.
      *
      * @return ConfigSchema
+     * @throws Exception
      */
     public static function makeFromSerial(): self
     {
@@ -83,7 +84,7 @@ class ConfigSchema
         $r = unserialize($contents);
         if (!$r) {
             $hash = sha1($contents);
-            trigger_error("Unserialization of configuration schema failed, sha1 of file was $hash", E_USER_ERROR);
+            throw new Exception("Unserialization of configuration schema failed, sha1 of file was {$hash}");
         }
 
         return $r;

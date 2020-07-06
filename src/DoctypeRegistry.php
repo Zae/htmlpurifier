@@ -105,6 +105,7 @@ class DoctypeRegistry
      * @param string $doctype Name of doctype
      *
      * @return Doctype Editable doctype object
+     * @throws Exception
      */
     public function get(string $doctype): Doctype
     {
@@ -113,9 +114,7 @@ class DoctypeRegistry
         }
 
         if (!isset($this->doctypes[$doctype])) {
-            trigger_error('Doctype ' . htmlspecialchars($doctype) . ' does not exist', E_USER_ERROR);
-
-            return new Doctype($doctype);
+            throw new Exception(sprintf('Doctype %s does not exist', htmlspecialchars($doctype)));
         }
 
         return $this->doctypes[$doctype];

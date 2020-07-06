@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\HTMLModule;
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLModule\Tidy;
 use HTMLPurifier\Tests\Unit\TestCase;
 use \HTMLPurifier\Config;
@@ -175,8 +176,8 @@ class TidyTest extends TestCase
         $module = new Tidy();
         $module->defaultLevel = 'bananas';
 
-        $this->expectError();
-        $this->expectErrorMessage('Default level bananas does not exist');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Default level bananas does not exist');
 
         $module->makeFixesForLevel([
             'fix-1' => 0

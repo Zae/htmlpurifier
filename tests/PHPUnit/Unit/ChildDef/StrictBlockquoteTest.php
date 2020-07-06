@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\ChildDef;
 
 use HTMLPurifier\ChildDef\StrictBlockquote;
+use HTMLPurifier\Exception;
 
 /**
  * Class StrictBlockquoteTest
@@ -128,8 +129,9 @@ class StrictBlockquoteTest extends TestCase
      */
     public function testError(): void
     {
-        $this->expectError();
-        $this->expectErrorMessage('Cannot use non-block element as block wrapper');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot use non-block element as block wrapper');
+
         $this->obj = new StrictBlockquote('div | p');
         $this->config->set('HTML.BlockWrapper', 'dav');
         $this->config->set('Cache.DefinitionImpl', null);

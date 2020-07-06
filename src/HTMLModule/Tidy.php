@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\Config;
+use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLModule;
 
 use function count;
@@ -140,12 +141,7 @@ class Tidy extends HTMLModule
         }
 
         if (!isset($this->fixesForLevel[$this->defaultLevel])) {
-            trigger_error(
-                'Default level ' . $this->defaultLevel . ' does not exist',
-                E_USER_ERROR
-            );
-
-            return;
+            throw new Exception("Default level {$this->defaultLevel} does not exist");
         }
 
         $this->fixesForLevel[$this->defaultLevel] = array_keys($fixes);
@@ -196,8 +192,7 @@ class Tidy extends HTMLModule
                     $e->$type = $fix;
                     break;
                 default:
-                    trigger_error("Fix type $type not supported", E_USER_ERROR);
-                    break;
+                    throw new Exception("Fix type {$type} not supported");
             }
         }
     }

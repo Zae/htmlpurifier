@@ -6,6 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Doctype;
 use HTMLPurifier\DoctypeRegistry;
+use HTMLPurifier\Exception;
 
 /**
  * Class DoctypeRegistryTest
@@ -52,13 +53,13 @@ class DoctypeRegistryTest extends TestCase
 
         $registry = new DoctypeRegistry();
 
-        $this->expectError();
-        $this->expectErrorMessage('Doctype XHTML 2.0 does not exist');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Doctype XHTML 2.0 does not exist');
         $registry->get('XHTML 2.0');
 
         // prevent XSS
-        $this->expectError();
-        $this->expectErrorMessage('Doctype &lt;foo&gt; does not exist');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Doctype &lt;foo&gt; does not exist');
         $registry->get('<foo>');
     }
 

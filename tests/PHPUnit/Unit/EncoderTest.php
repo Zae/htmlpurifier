@@ -6,6 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Encoder;
 use HTMLPurifier\EntityLookup;
+use HTMLPurifier\Exception;
 
 /**
  * Class EncoderTest
@@ -78,8 +79,8 @@ class EncoderTest extends TestCase
 
         $this->config->set('Core.Encoding', 'utf99');
 
-        $this->expectError();
-        $this->expectErrorMessage('Invalid encoding utf99');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Invalid encoding utf99');
         static::assertEquals(
             '',
             Encoder::convertToUTF8("\xF6", $this->config, $this->context)
