@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace HTMLPurifier;
 
-use function function_exists;
-use function is_null;
+use HTMLPurifier\Math\MathFactory;
+use HTMLPurifier\Math\MathInterface;
+
 use function strlen;
 
 /**
@@ -58,24 +59,22 @@ class UnitConverter
     protected $internalPrecision;
 
     /**
-     * Whether or not BCMath is available.
-     *
-     * @type bool
+     * @var MathInterface
      */
-    private $bcmath;
+    private $math;
 
     /**
      * HTMLPurifier\HTMLPurifier_UnitConverter constructor.
      *
      * @param int  $output_precision
      * @param int  $internal_precision
-     * @param bool $force_no_bcmath
+     * @param bool $force_native
      */
-    public function __construct(int $output_precision = 4, int $internal_precision = 10, bool $force_no_bcmath = false)
+    public function __construct(int $output_precision = 4, int $internal_precision = 10, bool $force_native = false)
     {
         $this->outputPrecision = $output_precision;
         $this->internalPrecision = $internal_precision;
-        $this->bcmath = !$force_no_bcmath && function_exists('bcmul');
+        $this->math = MathFactory::make($force_native);
     }
 
     /**
@@ -151,12 +150,12 @@ class UnitConverter
 
             // Do the conversion if necessary
             if ($dest_unit !== $unit) {
-                $factor = $this->div(
+                $factor = $this->math->divide(
                     (string)self::$units[$state][$unit],
                     (string)self::$units[$state][$dest_unit],
                     $cp
                 );
-                $n = $this->mul($n, $factor, $cp);
+                $n = $this->math->multiply($n, $factor, $cp);
                 $unit = $dest_unit;
             }
 
@@ -181,7 +180,7 @@ class UnitConverter
             // Pre-condition: $i == 0
 
             // Perform conversion to next system of units
-            $n = $this->mul($n, self::$units[$state][$dest_state][1], $cp);
+            $n = $this->math->multiply($n, self::$units[$state][$dest_state][1], $cp);
             $unit = self::$units[$state][$dest_state][2];
             $state = $dest_state;
 
@@ -197,7 +196,7 @@ class UnitConverter
         //echo "<pre>n";
         //echo "$n\nsigfigs = $sigfigs\nnew_log = $new_log\nlog = $log\nrp = $rp\n</pre>\n";
 
-        $n = $this->round($n, $sigfigs);
+        $n = $this->math->round($n, $sigfigs);
         if (strpos($n, '.') !== false) {
             $n = rtrim($n, '0');
         }
@@ -227,141 +226,5 @@ class UnitConverter
         }
 
         return $sigfigs;
-    }
-
-    /**
-     * Adds two numbers, using arbitrary precision when available.
-     *
-     * @param string $s1
-     * @param string $s2
-     * @param int    $scale
-     *
-     * @return string
-     *
-     * @psalm-suppress ArgumentTypeCoercion
-     * @todo: fix the suppression, something about numeric-strings?
-     */
-    private function add(string $s1, string $s2, int $scale): string
-    {
-        if ($this->bcmath) {
-            return bcadd($s1, $s2, $scale);
-        }
-
-        return $this->scale((float)$s1 + (float)$s2, $scale);
-    }
-
-    /**
-     * Multiples two numbers, using arbitrary precision when available.
-     *
-     * @param string $s1
-     * @param string $s2
-     * @param int    $scale
-     *
-     * @return string
-     *
-     * @psalm-suppress ArgumentTypeCoercion
-     * @todo: fix the suppression, something about numeric-strings?
-     */
-    private function mul(string $s1, string $s2, int $scale): string
-    {
-        if ($this->bcmath) {
-            return bcmul($s1, $s2, $scale);
-        }
-
-        return $this->scale((float)$s1 * (float)$s2, $scale);
-    }
-
-    /**
-     * Divides two numbers, using arbitrary precision when available.
-     *
-     * @param string $s1
-     * @param string $s2
-     * @param int    $scale
-     *
-     * @return string
-     *
-     * @psalm-suppress ArgumentTypeCoercion
-     * @todo: fix the suppression, something about numeric-strings?
-     */
-    private function div(string $s1, string $s2, int $scale): string
-    {
-        if ($this->bcmath) {
-            $out = bcdiv($s1, $s2, $scale);
-
-            if (is_null($out)) {
-                return '0';
-            }
-
-            return $out;
-        }
-
-        return $this->scale((float)$s1 / (float)$s2, $scale);
-    }
-
-    /**
-     * Rounds a number according to the number of sigfigs it should have,
-     * using arbitrary precision when available.
-     *
-     * @param string $n
-     * @param int    $sigfigs
-     *
-     * @return string
-     *
-     * @psalm-suppress ArgumentTypeCoercion
-     * @psalm-suppress DocblockTypeContradiction (line 331)
-     * @todo: fix the suppression, something about numeric-strings and docblocks?
-     */
-    private function round(string $n, int $sigfigs): string
-    {
-        $new_log = (int)floor(log(abs((float)$n), 10)); // Number of digits left of decimal - 1
-        $rp = $sigfigs - $new_log - 1; // Number of decimal places needed
-        $neg = $n < 0 ? '-' : ''; // Negative sign
-
-        if ($this->bcmath) {
-            if ($rp >= 0) {
-                $out = bcadd($n, $neg . '0.' . str_repeat('0', $rp) . '5', $rp + 1);
-                $out = bcdiv($out, '1', $rp);
-            } else {
-                // This algorithm partially depends on the standardized
-                // form of numbers that comes out of bcmath.
-                $out = bcadd($n, $neg . '5' . str_repeat('0', $new_log - $sigfigs), 0);
-                $out = substr($out, 0, $sigfigs + strlen($neg)) . str_repeat('0', $new_log - $sigfigs + 1);
-            }
-
-            if (is_null($out)) {
-                return '0';
-            }
-
-            return $out;
-        }
-
-        return $this->scale(round((float)$n, $sigfigs - $new_log - 1), $rp + 1);
-    }
-
-    /**
-     * Scales a float to $scale digits right of decimal point, like BCMath.
-     *
-     * @param float $r
-     * @param int   $scale
-     *
-     * @return string
-     */
-    private function scale(float $r, int $scale): string
-    {
-        if ($scale < 0) {
-            // The f sprintf type doesn't support negative numbers, so we
-            // need to cludge things manually. First get the string.
-            $r = sprintf('%.0f', $r);
-            // Due to floating point precision loss, $r will more than likely
-            // look something like 4652999999999.9234. We grab one more digit
-            // than we need to precise from $r and then use that to round
-            // appropriately.
-            $precise = (string)round((float)substr($r, 0, strlen($r) + $scale), -1);
-
-            // Now we return it, truncating the zero that was rounded off.
-            return substr($precise, 0, -1) . str_repeat('0', -$scale + 1);
-        }
-
-        return sprintf('%.' . $scale . 'f', $r);
     }
 }
