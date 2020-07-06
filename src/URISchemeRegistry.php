@@ -74,7 +74,7 @@ class URISchemeRegistry
             return null;
         }
 
-        $class = 'HTMLPurifier\\URIScheme\\' . $scheme;
+        $class = 'HTMLPurifier\\URIScheme\\' . ucfirst($scheme);
         if (!class_exists($class)) {
             return null;
         }
