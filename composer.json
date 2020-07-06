@@ -18,14 +18,14 @@
         "ext-dom": "*",
         "ext-libxml": "*",
         "ext-iconv": "*",
-        "ext-exif": "*"
+        "ext-exif": "*",
+        "symfony/polyfill-intl-idn": "^1.17"
     },
     "require-dev": {
         "simpletest/simpletest": "^1.2.0",
         "phpunit/phpunit": "^8.4 | ^9.0",
         "mockery/mockery": "^1.0",
         "vimeo/psalm": "^3.12",
-        "pear/net_idna2": "^0.2.0",
         "infection/infection": "^0.15.0 | ^0.16.0",
         "cerdic/css-tidy": "^1.7",
         "squizlabs/php_codesniffer": "^3.5",
