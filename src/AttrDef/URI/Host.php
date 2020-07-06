@@ -8,8 +8,8 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
-use Net_IDNA2;
 
+use function defined;
 use function is_null;
 use function strlen;
 
@@ -120,44 +120,12 @@ class Host extends AttrDef
             }
         }
 
-        // PHP 5.3 and later support this functionality natively
-        if (\function_exists('idn_to_ascii')) {
-            if (\defined('IDNA_NONTRANSITIONAL_TO_ASCII') && \defined('INTL_IDNA_VARIANT_UTS46')) {
-                $string = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
-            } else {
-                $string = idn_to_ascii($string);
-            }
-
-            // If we have Net_IDNA2 support, we can support IRIs by
-            // punycoding them. (This is the most portable thing to do,
-            // since otherwise we have to assume browsers support
-        } elseif (!is_null($config) && $config->get('Core.EnableIDNA')) {
-            $idna = new Net_IDNA2(['encoding' => 'utf8', 'overlong' => false, 'strict' => true]);
-            // we need to encode each period separately
-            $parts = explode('.', $string);
-            try {
-                $new_parts = [];
-                foreach ($parts as $part) {
-                    $encodable = false;
-                    for ($i = 0, $c = strlen($part); $i < $c; $i++) {
-                        if (\ord($part[$i]) > 0x7a) {
-                            $encodable = true;
-                            break;
-                        }
-                    }
-
-                    if (!$encodable) {
-                        $new_parts[] = $part;
-                    } else {
-                        $new_parts[] = $idna->encode($part);
-                    }
-                }
-
-                $string = implode('.', $new_parts);
-            } catch (Exception $e) {
-                // XXX error reporting
-            }
+        if (defined('IDNA_NONTRANSITIONAL_TO_ASCII') && defined('INTL_IDNA_VARIANT_UTS46')) {
+            $string = idn_to_ascii($string, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+        } else {
+            $string = idn_to_ascii($string);
         }
+
         // Try again
         if (preg_match("/^($domainlabel\.)*$toplabel\.?$/i", (string)$string)) {
             return $string;
