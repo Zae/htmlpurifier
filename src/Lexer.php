@@ -271,7 +271,7 @@ class Lexer
      */
     public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
-        trigger_error('Call to abstract class', E_USER_ERROR);
+        throw new Exception('Call to abstract class');
     }
 
     /**

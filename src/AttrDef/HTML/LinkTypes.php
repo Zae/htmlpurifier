@@ -38,13 +38,7 @@ class LinkTypes extends AttrDef
         ];
 
         if (!isset($configLookup[$name])) {
-            trigger_error(
-                'Unrecognized attribute name for link ' .
-                'relationship.',
-                E_USER_ERROR
-            );
-
-            return;
+            throw new Exception('Unrecognized attribute name for link relationship');
         }
 
         $this->name = $configLookup[$name];

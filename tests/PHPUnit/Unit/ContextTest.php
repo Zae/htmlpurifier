@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\IDAccumulator;
 use Mockery;
 
@@ -39,15 +40,14 @@ class ContextTest extends TestCase
         $this->context->destroy('IDAccumulator');
         static::assertFalse($this->context->exists('IDAccumulator'));
 
-        $this->expectError();
-        $this->expectErrorMessage('Attempted to retrieve non-existent variable IDAccumulator');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Attempted to retrieve non-existent variable IDAccumulator');
         $accumulator_3 =& $this->context->get('IDAccumulator');
         static::assertNull($accumulator_3);
 
-        $this->expectError();
-        $this->expectErrorMessage('Attempted to destroy non-existent variable IDAccumulator');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Attempted to destroy non-existent variable IDAccumulator');
         $this->context->destroy('IDAccumulator');
-
     }
 
     /**
@@ -58,14 +58,13 @@ class ContextTest extends TestCase
         $var = true;
         $this->context->register('OnceOnly', $var);
 
-        $this->expectError();
-        $this->expectErrorMessage('Name OnceOnly produces collision, cannot re-register');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Name OnceOnly produces collision, cannot re-register');
         $this->context->register('OnceOnly', $var);
 
         // destroy it, now registration is okay
         $this->context->destroy('OnceOnly');
         $this->context->register('OnceOnly', $var);
-
     }
 
     /**

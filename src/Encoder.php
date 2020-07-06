@@ -17,10 +17,12 @@ class Encoder
 {
     /**
      * Constructor throws fatal error if you attempt to instantiate class
+     *
+     * @throws Exception
      */
     private function __construct()
     {
-        trigger_error('Cannot instantiate encoder, call methods statically', E_USER_ERROR);
+        throw new Exception('Cannot instantiate encoder, call methods statically');
     }
 
     /**
@@ -437,9 +439,7 @@ class Encoder
             $str = self::unsafeIconv($encoding, 'utf-8//IGNORE', $str);
             if ($str === null) {
                 // $encoding is not a valid encoding
-                trigger_error('Invalid encoding ' . $encoding, E_USER_ERROR);
-
-                return '';
+                throw new Exception("Invalid encoding {$encoding}");
             }
 
             // If the string is bjorked by Shift_JIS or a similar encoding
@@ -459,12 +459,11 @@ class Encoder
         $bug = static::testIconvTruncateBug();
 
         if ($bug === static::ICONV_OK) {
-            trigger_error('Encoding not supported, please install iconv', E_USER_ERROR);
+            throw new Exception('Encoding not supported, please install iconv');
         } else {
-            trigger_error(
+            throw new Exception(
                 'You have a buggy version of iconv, see https://bugs.php.net/bug.php?id=48147 ' .
-                'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541',
-                E_USER_ERROR
+                'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541'
             );
         }
     }
@@ -520,7 +519,7 @@ class Encoder
             return utf8_decode($str);
         }
 
-        trigger_error('Encoding not supported', E_USER_ERROR);
+        throw new Exception('Encoding not supported');
         // You might be tempted to assume that the ASCII representation
         // might be OK, however, this is *not* universally true over all
         // encodings.  So we take the conservative route here, rather
@@ -603,6 +602,7 @@ class Encoder
      * paying attention to the error code, iconv becomes unusable.
      *
      * @return int Error code indicating severity of bug.
+     * @throws Exception
      */
     public static function testIconvTruncateBug(): int
     {
@@ -622,10 +622,9 @@ class Encoder
             }
 
             if ($c > 9000) {
-                trigger_error(
+                throw new Exception(
                     'Your copy of iconv is extremely buggy. Please notify HTML Purifier maintainers: ' .
-                    'include your iconv version as per phpversion()',
-                    E_USER_ERROR
+                    'include your iconv version as per phpversion()'
                 );
             } else {
                 return $code = self::ICONV_OK;

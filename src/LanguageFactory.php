@@ -203,13 +203,7 @@ class LanguageFactory
         if (!empty($fallback)) {
             // infinite recursion guard
             if (isset($languages_seen[$code])) {
-                trigger_error(
-                    'Circular fallback reference in language ' .
-                    $code,
-                    E_USER_ERROR
-                );
-
-                $fallback = 'en';
+                throw new Exception("Circular fallback reference in language {$code}");
             }
 
             $languages_seen[$code] = true;

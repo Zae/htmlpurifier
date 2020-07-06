@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\URIScheme;
 
 use HTMLPurifier\Context;
+use HTMLPurifier\Exception;
 use HTMLPurifier\URIScheme;
 use HTMLPurifier\URI;
 use HTMLPurifier\Config;
@@ -130,7 +131,7 @@ class Data extends URIScheme
             }
             $image_code = $info[2];
         } else {
-            trigger_error('could not find exif_imagetype or getimagesize functions', E_USER_ERROR);
+            throw new Exception('could not find exif_imagetype or getimagesize functions');
         }
 
         $real_content_type = image_type_to_mime_type((int)$image_code);
