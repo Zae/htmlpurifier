@@ -21,7 +21,7 @@ use HTMLPurifier\Config;
 class Presentation extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Presentation';
 

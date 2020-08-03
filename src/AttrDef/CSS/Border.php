@@ -17,7 +17,7 @@ class Border extends AttrDef
     /**
      * Local copy of properties this property is shorthand for.
      *
-     * @type AttrDef[]
+     * @var AttrDef[]
      */
     protected $info = [];
 

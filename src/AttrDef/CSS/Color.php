@@ -20,7 +20,7 @@ use function strlen;
 class Color extends AttrDef
 {
     /**
-     * @type AlphaValue
+     * @var AlphaValue
      */
     protected $alpha;
 

@@ -17,14 +17,14 @@ class Cloner extends AttrDef
     /**
      * What we're cloning.
      *
-     * @type AttrDef
+     * @var AttrDef
      */
     protected $clone;
 
     /**
      * @param AttrDef $clone
      */
-    public function __construct($clone)
+    public function __construct(AttrDef $clone)
     {
         $this->clone = $clone;
     }
@@ -34,7 +34,7 @@ class Cloner extends AttrDef
      * @param Config|null  $config
      * @param Context|null $context
      *
-     * @return bool|string
+     * @return bool|string|null
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {
@@ -46,7 +46,7 @@ class Cloner extends AttrDef
      *
      * @return AttrDef
      */
-    public function make($string): \HTMLPurifier\AttrDef
+    public function make(string $string): AttrDef
     {
         return clone $this->clone;
     }

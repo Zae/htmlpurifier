@@ -18,7 +18,7 @@ class Percentage extends AttrDef
     /**
      * Instance to defer number validation to.
      *
-     * @type Number
+     * @var Number
      */
     protected $number_def;
 

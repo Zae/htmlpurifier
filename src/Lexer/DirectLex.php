@@ -28,14 +28,14 @@ use HTMLPurifier\Config;
 class DirectLex extends Lexer
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $tracksLineNumbers = true;
 
     /**
      * Whitespace characters for str(c)spn.
      *
-     * @type string
+     * @var string
      */
     protected $whitespace = "\x20\x09\x0D\x0A";
 

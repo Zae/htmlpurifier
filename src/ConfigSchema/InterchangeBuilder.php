@@ -22,7 +22,7 @@ class InterchangeBuilder
     /**
      * Used for processing DEFAULT, nothing else.
      *
-     * @type VarParser
+     * @var VarParser
      */
     protected $varParser;
 

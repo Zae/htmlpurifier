@@ -23,7 +23,7 @@ class ErrorStruct
     /**
      * Type of this struct.
      *
-     * @type string
+     * @var string
      */
     public $type;
 
@@ -34,14 +34,14 @@ class ErrorStruct
      *  - ATTR: array('attr-name', 'value')
      *  - CSSPROP: array('prop-name', 'value')
      *
-     * @type mixed
+     * @var mixed
      */
     public $value;
 
     /**
      * Errors registered for this structure.
      *
-     * @type array
+     * @var array
      */
     public $errors = [];
 
@@ -50,7 +50,7 @@ class ErrorStruct
      * ErrorStruct would contain ATTR ErrorStructs. This is a multi-dimensional
      * array in structure: [TYPE]['identifier']
      *
-     * @type array
+     * @var array
      */
     public $children = [];
 

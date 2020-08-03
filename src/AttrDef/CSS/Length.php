@@ -16,12 +16,12 @@ use function strlen;
 class Length extends AttrDef
 {
     /**
-     * @type \HTMLPurifier\Length|string
+     * @var \HTMLPurifier\Length|string
      */
     protected $min;
 
     /**
-     * @type \HTMLPurifier\Length|string
+     * @var \HTMLPurifier\Length|string
      */
     protected $max;
 

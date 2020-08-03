@@ -18,7 +18,7 @@ use HTMLPurifier\HTMLModule;
 class SafeObject extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeObject';
 

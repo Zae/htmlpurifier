@@ -15,7 +15,7 @@ use HTMLPurifier\Config;
 class Proprietary extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Proprietary';
 

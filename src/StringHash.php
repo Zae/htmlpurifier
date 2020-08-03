@@ -17,7 +17,7 @@ use ArrayObject;
 class StringHash extends ArrayObject
 {
     /**
-     * @type array
+     * @var array
      */
     protected $accessed = [];
 

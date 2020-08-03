@@ -19,12 +19,12 @@ use function is_null;
 class DisableExternal extends URIFilter
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'DisableExternal';
 
     /**
-     * @type array
+     * @var array
      */
     protected $ourHostParts = false;
 

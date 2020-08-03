@@ -15,12 +15,12 @@ use HTMLPurifier\Config;
 class Bdo extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Bdo';
 
     /**
-     * @type array
+     * @var array
      */
     public $attr_collections = [
         'I18N' => ['dir' => false]

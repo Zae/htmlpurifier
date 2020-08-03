@@ -26,12 +26,12 @@ use HTMLPurifier\Exception;
 class SafeParam extends AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeParam';
 
     /**
-     * @type URI
+     * @var URI
      */
     private $uri;
 

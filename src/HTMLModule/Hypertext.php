@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class Hypertext extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Hypertext';
 

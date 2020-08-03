@@ -22,7 +22,7 @@ class Composite extends AttrDef
     /**
      * List of objects that may process strings.
      *
-     * @type AttrDef[]
+     * @var AttrDef[]
      * @todo Make protected
      */
     public $defs;

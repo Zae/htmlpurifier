@@ -18,7 +18,7 @@ use HTMLPurifier\URIParser;
 class Nofollow extends AttrTransform
 {
     /**
-     * @type URIParser
+     * @var URIParser
      */
     private $parser;
 

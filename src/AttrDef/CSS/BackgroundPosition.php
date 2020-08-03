@@ -53,12 +53,12 @@ use function count;
 class BackgroundPosition extends AttrDef
 {
     /**
-     * @type Length
+     * @var Length
      */
     protected $length;
 
     /**
-     * @type Percentage
+     * @var Percentage
      */
     protected $percentage;
 

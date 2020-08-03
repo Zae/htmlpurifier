@@ -47,14 +47,14 @@ class UnitConverter
     /**
      * Minimum bcmath precision for output.
      *
-     * @type int
+     * @var int
      */
     protected $outputPrecision;
 
     /**
      * Bcmath precision for internal calculations.
      *
-     * @type int
+     * @var int
      */
     protected $internalPrecision;
 

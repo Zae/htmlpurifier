@@ -18,26 +18,26 @@ use HTMLPurifier\Config;
 class Custom extends ChildDef
 {
     /**
-     * @type string
+     * @var string
      */
     public $type = 'custom';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = false;
 
     /**
      * Allowed child pattern as defined by the DTD.
      *
-     * @type string
+     * @var string
      */
     public $dtd_regex;
 
     /**
      * PCRE regex derived from $dtd_regex.
      *
-     * @type string
+     * @var string
      */
     public $_pcre_regex; //phpcs:ignore
     //todo: fix casing of pcre_regex, it's breaks if I change it, no idea why...

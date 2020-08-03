@@ -16,11 +16,11 @@ use function strlen;
 class ImportantDecorator extends AttrDef
 {
     /**
-     * @type AttrDef
+     * @var AttrDef
      */
     public $def;
     /**
-     * @type bool
+     * @var bool
      */
     public $allow;
 

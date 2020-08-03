@@ -20,34 +20,34 @@ use HTMLPurifier\Token\Text;
 class RemoveEmpty extends Injector
 {
     /**
-     * @type Context
+     * @var Context
      */
     private $context;
 
     /**
-     * @type Config
+     * @var Config
      */
     private $config;
 
     /**
-     * @type AttrValidator
+     * @var AttrValidator
      */
     private $attrValidator;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $removeNbsp;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $removeNbspExceptions;
 
     /**
      * Cached contents of %AutoFormat.RemoveEmpty.Predicate
      *
-     * @type array
+     * @var array
      */
     private $exclude;
 

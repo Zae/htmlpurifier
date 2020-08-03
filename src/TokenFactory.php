@@ -26,27 +26,27 @@ class TokenFactory
     // p stands for prototype
 
     /**
-     * @type Start
+     * @var Start
      */
     private $p_start;
 
     /**
-     * @type End
+     * @var End
      */
     private $p_end;
 
     /**
-     * @type EmptyToken
+     * @var EmptyToken
      */
     private $p_empty;
 
     /**
-     * @type Text
+     * @var Text
      */
     private $p_text;
 
     /**
-     * @type Comment
+     * @var Comment
      */
     private $p_comment;
 

@@ -16,7 +16,7 @@ use HTMLPurifier\Config;
 class Input extends AttrTransform
 {
     /**
-     * @type Pixels
+     * @var Pixels
      */
     protected $pixels;
 

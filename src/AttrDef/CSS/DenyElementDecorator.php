@@ -16,12 +16,12 @@ use function is_null;
 class DenyElementDecorator extends AttrDef
 {
     /**
-     * @type AttrDef
+     * @var AttrDef
      */
     public $def;
 
     /**
-     * @type string
+     * @var string
      */
     public $element;
 

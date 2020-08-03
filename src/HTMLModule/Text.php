@@ -23,12 +23,12 @@ use HTMLPurifier\Config;
 class Text extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Text';
 
     /**
-     * @type array
+     * @var array
      */
     public $content_sets = [
         'Flow' => 'Heading | Block | Inline'

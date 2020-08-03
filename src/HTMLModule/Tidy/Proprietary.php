@@ -14,12 +14,12 @@ use HTMLPurifier\HTMLModule\Tidy;
 class Proprietary extends Tidy
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy\\Proprietary';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'light';
 

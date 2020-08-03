@@ -16,14 +16,14 @@ class BoolToCSS extends AttrTransform
     /**
      * Name of boolean attribute that is trigger.
      *
-     * @type string
+     * @var string
      */
     protected $attr;
 
     /**
      * CSS declarations to add to style, needs trailing semicolon.
      *
-     * @type string
+     * @var string
      */
     protected $css;
 

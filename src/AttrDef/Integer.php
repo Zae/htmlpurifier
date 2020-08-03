@@ -21,21 +21,21 @@ class Integer extends AttrDef
     /**
      * Whether or not negative values are allowed.
      *
-     * @type bool
+     * @var bool
      */
     protected $negative = true;
 
     /**
      * Whether or not zero is allowed.
      *
-     * @type bool
+     * @var bool
      */
     protected $zero = true;
 
     /**
      * Whether or not positive values are allowed.
      *
-     * @type bool
+     * @var bool
      */
     protected $positive = true;
 
@@ -94,6 +94,8 @@ class Integer extends AttrDef
             return false;
         }
 
+        // Fixme: this can't happen because ctype_digit does
+        //  not handle negative numbers.
         if (!$this->negative && (int)$string < 0) {
             return false;
         }

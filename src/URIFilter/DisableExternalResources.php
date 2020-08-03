@@ -14,7 +14,7 @@ use HTMLPurifier\URI;
 class DisableExternalResources extends DisableExternal
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'DisableExternalResources';
 

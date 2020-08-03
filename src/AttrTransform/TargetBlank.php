@@ -19,7 +19,7 @@ use HTMLPurifier\Exception;
 class TargetBlank extends AttrTransform
 {
     /**
-     * @type URIParser
+     * @var URIParser
      */
     private $parser;
 

@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class TargetNoopener extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'TargetNoopener';
 

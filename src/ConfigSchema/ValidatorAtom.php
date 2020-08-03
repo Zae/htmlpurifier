@@ -20,22 +20,22 @@ use function is_string;
 class ValidatorAtom
 {
     /**
-     * @type string
+     * @var string
      */
     protected $context;
 
     /**
-     * @type object
+     * @var object
      */
     protected $obj;
 
     /**
-     * @type string
+     * @var string
      */
     protected $member;
 
     /**
-     * @type mixed
+     * @var mixed
      */
     protected $contents;
 

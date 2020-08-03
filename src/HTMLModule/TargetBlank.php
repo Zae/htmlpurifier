@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class TargetBlank extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'TargetBlank';
 

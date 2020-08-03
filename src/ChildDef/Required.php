@@ -20,14 +20,14 @@ class Required extends ChildDef
     /**
      * Lookup table of allowed elements.
      *
-     * @type array
+     * @var array
      */
     public $elements = [];
 
     /**
      * Whether or not the last passed node was all whitespace.
      *
-     * @type bool
+     * @var bool
      */
     protected $whitespace = false;
 
@@ -57,12 +57,12 @@ class Required extends ChildDef
     }
 
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = false;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'required';
 

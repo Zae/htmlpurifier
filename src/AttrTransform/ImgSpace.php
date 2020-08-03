@@ -14,12 +14,12 @@ use HTMLPurifier\AttrTransform;
 class ImgSpace extends AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
     protected $attr;
 
     /**
-     * @type array
+     * @var array
      */
     protected $css = [
         'hspace' => ['left', 'right'],

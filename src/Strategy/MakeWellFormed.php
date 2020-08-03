@@ -38,49 +38,49 @@ class MakeWellFormed extends Strategy
     /**
      * Array stream of tokens being processed.
      *
-     * @type Token[]
+     * @var Token[]
      */
     protected $tokens;
 
     /**
      * Current token.
      *
-     * @type Token
+     * @var Token
      */
     protected $token;
 
     /**
      * Zipper managing the true state.
      *
-     * @type Zipper
+     * @var Zipper
      */
     protected $zipper;
 
     /**
      * Current nesting of elements.
      *
-     * @type array|Token\Tag[]
+     * @var array|Token\Tag[]
      */
     protected $stack;
 
     /**
      * Injectors active in this stream processing.
      *
-     * @type Injector[]
+     * @var Injector[]
      */
     protected $injectors;
 
     /**
      * Current instance of \HTMLPurifier\Config.
      *
-     * @type Config
+     * @var Config
      */
     protected $config;
 
     /**
      * Current instance of HTMLPurifier\HTMLPurifier_Context.
      *
-     * @type Context
+     * @var Context
      */
     protected $context;
 

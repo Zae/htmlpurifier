@@ -29,7 +29,7 @@ class ID extends AttrDef
      * Determines whether or not we're validating an ID in a CSS
      * selector context.
      *
-     * @type bool
+     * @var bool
      */
     protected $selector;
 

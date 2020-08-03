@@ -15,17 +15,17 @@ use HTMLPurifier\Config;
 class Ftp extends URIScheme
 {
     /**
-     * @type int
+     * @var int
      */
     public $default_port = 21;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = true; // usually
 
     /**
-     * @type bool
+     * @var bool
      */
     public $hierarchical = true;
 

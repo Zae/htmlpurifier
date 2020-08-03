@@ -15,12 +15,12 @@ use HTMLPurifier\HTMLModule\Tidy\XHTMLAndHTML4;
 class Strict extends XHTMLAndHTML4
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy\\Strict';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'light';
 
@@ -36,7 +36,7 @@ class Strict extends XHTMLAndHTML4
     }
 
     /**
-     * @type bool
+     * @var bool
      */
     public $defines_child_def = true;
 
