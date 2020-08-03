@@ -17,7 +17,8 @@ use Mockery;
  */
 class CompositeTest extends TestCase
 {
-    protected $def1, $def2;
+    protected $def1;
+    protected $def2;
 
     /**
      * @test

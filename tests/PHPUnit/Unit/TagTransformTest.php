@@ -71,7 +71,8 @@ class TagTransformTest extends TestCase
             new Start($expect_name, $expect_attributes),
             $transformer->transform(
                 new Start($name, $attributes),
-                $config, $context
+                $config,
+                $context
             )
         );
 
@@ -79,7 +80,9 @@ class TagTransformTest extends TestCase
         static::assertEquals(
             new End($expect_name),
             $transformer->transform(
-                new End($name), $config, $context
+                new End($name),
+                $config,
+                $context
             )
         );
 
@@ -87,7 +90,9 @@ class TagTransformTest extends TestCase
         static::assertEquals(
             new EmptyToken($expect_name, $expect_added_attributes),
             $transformer->transform(
-                new EmptyToken($name), $config, $context
+                new EmptyToken($name),
+                $config,
+                $context
             )
         );
 
@@ -96,7 +101,8 @@ class TagTransformTest extends TestCase
             new EmptyToken($expect_name, $expect_attributes),
             $transformer->transform(
                 new EmptyToken($name, $attributes),
-                $config, $context
+                $config,
+                $context
             )
         );
     }
@@ -194,6 +200,7 @@ class TagTransformTest extends TestCase
         $this->assertSizeToStyle($transformer, '5', 'x-large');
         $this->assertSizeToStyle($transformer, '6', 'xx-large');
         $this->assertSizeToStyle($transformer, '7', '300%');
+        $this->assertSizeToStyle($transformer, '8', '300%');
         $this->assertSizeToStyle($transformer, '-1', 'smaller');
         $this->assertSizeToStyle($transformer, '-2', '60%');
         $this->assertSizeToStyle($transformer, '-3', '60%');
@@ -217,6 +224,14 @@ class TagTransformTest extends TestCase
             ['color' => 'red', 'face' => 'Arial', 'size' => '6'],
             'span',
             ['style' => 'color:red;font-family:Arial;font-size:xx-large;']
+        );
+
+        $this->assertTransformation(
+            $transformer,
+            'font',
+            ['style' => 'color:red;', 'color' => 'blue'],
+            'span',
+            ['style' => 'color:blue;color:red;']
         );
     }
 }

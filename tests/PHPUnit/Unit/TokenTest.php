@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit;
 
+use HTMLPurifier\Exception;
+use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 
 /**
@@ -48,8 +50,11 @@ class TokenTest extends TestCase
         $this->assertTokenConstruction('a', ['href' => 'about:blank']);
 
         // lowercase the tag's name
-        $this->assertTokenConstruction('A', ['href' => 'about:blank'],
-            'a');
+        $this->assertTokenConstruction(
+            'A',
+            ['href' => 'about:blank'],
+            'a'
+        );
 
         // lowercase attributes
         $this->assertTokenConstruction(
@@ -58,5 +63,27 @@ class TokenTest extends TestCase
             'a',
             ['href' => 'about:blank']
         );
+    }
+
+    /**
+     * @test
+     */
+    public function testMagicGetter(): void
+    {
+        $token = new Start('a', []);
+
+        $this->expectError();
+        $this->expectErrorMessage('Deprecated type property called; use instanceof');
+
+        $type = $token->type;
+    }
+
+    public function testEndtoNode(): void
+    {
+        $token = new End('a');
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('HTMLPurifier\Token\HTMLPurifier_Token_End->toNode not supported!');
+        $token->toNode();
     }
 }

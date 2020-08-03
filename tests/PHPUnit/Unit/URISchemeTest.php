@@ -163,6 +163,17 @@ class URISchemeTest extends UriTestCase
     /**
      * @test
      */
+    public function test_ftp_encodeExtraSemicolonsWithoutEquals(): void
+    {
+        $this->assertValidation(
+            'ftp://example.com/too;many;semicolons',
+            'ftp://example.com/too%3Bmany%3Bsemicolons'
+        );
+    }
+
+    /**
+     * @test
+     */
     public function test_news_regular(): void
     {
         $this->assertValidation(
@@ -313,6 +324,61 @@ class URISchemeTest extends UriTestCase
         $this->assertValidation(
             'data:base64,'.$this->pngBase64,
             'data:image/png;base64,'.$this->pngBase64
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function test_data_charset(): void
+    {
+        $this->assertValidation(
+            'data:charset=utf-8;base64,' . $this->pngBase64,
+            'data:image/png;base64,' . $this->pngBase64
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function test_data_charsets(): void
+    {
+        $this->assertValidation(
+            'data:charset=utf-8;charset=utf-8;base64,' . $this->pngBase64,
+            'data:image/png;base64,' . $this->pngBase64
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function test_data_contentTypes(): void
+    {
+        $this->assertValidation(
+            'data:image/png;image/png;base64,' . $this->pngBase64,
+            'data:image/png;base64,' . $this->pngBase64
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function test_data_fallback(): void
+    {
+        $this->assertValidation(
+            'data:' . $this->pngBase64,
+            false
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function test_data_invalid_contentType(): void
+    {
+        $this->assertValidation(
+            'data:image/jpeg2000;base64,' . $this->pngBase64,
+            false
         );
     }
 
