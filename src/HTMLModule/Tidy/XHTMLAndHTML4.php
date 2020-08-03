@@ -162,7 +162,7 @@ class XHTMLAndHTML4 extends Tidy
         // @size for hr  --------------------------------------------------
         $r['hr@size'] = new Length('size', 'height');
 
-        // @type for li, ol, ul -------------------------------------------
+        // @var for li, ol, ul -------------------------------------------
         // {{{
         $ul_types = [
             'disc' => 'list-style-type:disc;',
@@ -180,9 +180,9 @@ class XHTMLAndHTML4 extends Tidy
         $li_types = array_merge($ul_types, $ol_types);
         // }}}
 
-        $r['ul@type'] = new EnumToCSS('type', $ul_types);
-        $r['ol@type'] = new EnumToCSS('type', $ol_types, true);
-        $r['li@type'] = new EnumToCSS('type', $li_types, true);
+        $r['ul@var'] = new EnumToCSS('type', $ul_types);
+        $r['ol@var'] = new EnumToCSS('type', $ol_types, true);
+        $r['li@var'] = new EnumToCSS('type', $li_types, true);
 
         // @vspace for img ------------------------------------------------
         $r['img@vspace'] = new ImgSpace('vspace');

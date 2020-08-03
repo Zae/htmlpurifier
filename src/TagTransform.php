@@ -14,7 +14,7 @@ abstract class TagTransform
     /**
      * Tag name to transform the tag to.
      *
-     * @type string
+     * @var string
      */
     public $transform_to;
 

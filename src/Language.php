@@ -18,28 +18,28 @@ class Language
     /**
      * ISO 639 language code of language. Prefers shortest possible version.
      *
-     * @type string
+     * @var string
      */
     public $code = 'en';
 
     /**
      * Fallback language code.
      *
-     * @type bool|string
+     * @var bool|string
      */
     public $fallback = false;
 
     /**
      * Array of localizable messages.
      *
-     * @type array
+     * @var array
      */
     public $messages = [];
 
     /**
      * Array of localizable error codes.
      *
-     * @type array
+     * @var array
      */
     public $errorNames = [];
 
@@ -48,25 +48,25 @@ class Language
      * is being used instead. Check this if you'd like to notify the
      * user that they've used a non-supported language.
      *
-     * @type bool
+     * @var bool
      */
     public $error = false;
 
     /**
      * Has the language object been loaded yet?
      *
-     * @type bool
+     * @var bool
      * @todo Make it private, fix usage in HTMLPurifier_LanguageTest
      */
     public $loaded = false;
 
     /**
-     * @type Config
+     * @var Config
      */
     protected $config;
 
     /**
-     * @type Context
+     * @var Context
      */
     protected $context;
 

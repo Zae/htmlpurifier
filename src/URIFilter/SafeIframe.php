@@ -19,17 +19,17 @@ use HTMLPurifier\URI;
 class SafeIframe extends URIFilter
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeIframe';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $always_load = true;
 
     /**
-     * @type string
+     * @var ?string
      */
     protected $regexp = null;
 

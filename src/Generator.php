@@ -28,14 +28,14 @@ class Generator
     /**
      * Whether or not generator should produce XML output.
      *
-     * @type bool
+     * @var bool
      */
     private $xhtml = true;
 
     /**
      * :HACK: Whether or not generator should comment the insides of <script> tags.
      *
-     * @type bool
+     * @var bool
      */
     private $scriptFix = false;
 
@@ -43,28 +43,28 @@ class Generator
      * Cache of HTMLDefinition during HTML output to determine whether or
      * not attributes should be minimized.
      *
-     * @type HTMLDefinition
+     * @var HTMLDefinition
      */
     private $def;
 
     /**
      * Cache of %Output.SortAttr.
      *
-     * @type bool
+     * @var bool
      */
     private $sortAttr;
 
     /**
      * Cache of %Output.FlashCompat.
      *
-     * @type bool
+     * @var bool
      */
     private $flashCompat;
 
     /**
      * Cache of %Output.FixInnerHTML.
      *
-     * @type bool
+     * @var bool
      */
     private $innerHTMLFix;
 
@@ -72,14 +72,14 @@ class Generator
      * Stack for keeping track of object information when outputting IE
      * compatibility code.
      *
-     * @type array
+     * @var array
      */
     private $flashStack = [];
 
     /**
      * Configuration for the generator
      *
-     * @type Config
+     * @var Config
      */
     protected $config;
 

@@ -12,12 +12,12 @@ use HTMLPurifier\HTMLModule\Tidy;
 class Name extends Tidy
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy\\Name';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'heavy';
 

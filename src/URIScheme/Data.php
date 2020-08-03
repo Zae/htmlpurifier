@@ -18,12 +18,12 @@ use function strlen;
 class Data extends URIScheme
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = true;
 
     /**
-     * @type array
+     * @var array
      */
     public $allowed_types = [
         // you better write validation code for other types if you
@@ -37,7 +37,7 @@ class Data extends URIScheme
     // component
 
     /**
-     * @type bool
+     * @var bool
      */
     public $may_omit_host = true;
 

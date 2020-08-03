@@ -15,17 +15,17 @@ use HTMLPurifier\URI;
 class Http extends URIScheme
 {
     /**
-     * @type int
+     * @var int
      */
     public $default_port = 80;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = true;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $hierarchical = true;
 

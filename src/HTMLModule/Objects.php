@@ -16,12 +16,12 @@ use HTMLPurifier\Config;
 class Objects extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Objects';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $safe = false;
 

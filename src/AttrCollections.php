@@ -12,7 +12,7 @@ class AttrCollections
     /**
      * Associative array of attribute collections, indexed by name.
      *
-     * @type array
+     * @var array
      */
     public $info = [];
 

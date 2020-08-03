@@ -169,7 +169,7 @@ class Lexer
     /**
      * Most common entity to raw value conversion table for special entities.
      *
-     * @type array
+     * @var array
      */
     protected $special_entity2str = [
         '&quot;' => '"',

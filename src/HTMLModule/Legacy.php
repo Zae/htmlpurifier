@@ -26,7 +26,7 @@ use HTMLPurifier\Config;
 class Legacy extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Legacy';
 

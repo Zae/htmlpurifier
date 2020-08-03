@@ -19,7 +19,7 @@ class Context
     /**
      * Private array that stores the references.
      *
-     * @type array
+     * @var array
      */
     private $storage = [];
 

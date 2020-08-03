@@ -28,12 +28,12 @@ use HTMLPurifier\Config;
 class Font extends TagTransform
 {
     /**
-     * @type string
+     * @var string
      */
     public $transform_to = 'span';
 
     /**
-     * @type array
+     * @var array
      */
     protected $sizeLookup = [
         '-2' => '60%',

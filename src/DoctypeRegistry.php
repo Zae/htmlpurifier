@@ -17,14 +17,14 @@ class DoctypeRegistry
     /**
      * Hash of doctype names to doctype objects.
      *
-     * @type array
+     * @var array
      */
     protected $doctypes;
 
     /**
      * Lookup table of aliases to real doctype names.
      *
-     * @type array
+     * @var array
      */
     protected $aliases;
 

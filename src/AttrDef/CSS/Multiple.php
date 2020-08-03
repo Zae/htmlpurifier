@@ -26,7 +26,7 @@ class Multiple extends AttrDef
     /**
      * Instance of component definition to defer validation to.
      *
-     * @type AttrDef
+     * @var AttrDef
      * @todo Make protected
      */
     public $single;

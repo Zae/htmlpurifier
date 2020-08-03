@@ -18,17 +18,17 @@ use HTMLPurifier\Token\Text;
 class PurifierLinkify extends Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'PurifierLinkify';
 
     /**
-     * @type string
+     * @var string
      */
     public $docURL;
 
     /**
-     * @type array
+     * @var array
      */
     public $needed = ['a' => ['href']];
 

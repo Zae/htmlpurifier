@@ -18,29 +18,29 @@ use HTMLPurifier\Config;
 class RemoveSpansWithoutAttributes extends Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'RemoveSpansWithoutAttributes';
 
     /**
-     * @type array
+     * @var array
      */
     public $needed = ['span'];
 
     /**
-     * @type AttrValidator
+     * @var AttrValidator
      */
     private $attrValidator;
 
     /**
      * Used by AttrValidator.
      *
-     * @type Config
+     * @var Config
      */
     private $config;
 
     /**
-     * @type Context
+     * @var Context
      */
     private $context;
 

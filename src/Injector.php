@@ -28,12 +28,12 @@ abstract class Injector
     /**
      * Advisory name of injector, this is for friendly error messages.
      *
-     * @type string
+     * @var string
      */
     public $name;
 
     /**
-     * @type HTMLDefinition
+     * @var HTMLDefinition
      */
     protected $htmlDefinition;
 
@@ -41,21 +41,21 @@ abstract class Injector
      * Reference to CurrentNesting variable in Context. This is an array
      * list of tokens that we are currently "inside"
      *
-     * @type array
+     * @var array
      */
     protected $currentNesting;
 
     /**
      * Reference to current token.
      *
-     * @type Token
+     * @var Token
      */
     protected $currentToken;
 
     /**
      * Reference to InputZipper variable in Context.
      *
-     * @type Zipper
+     * @var Zipper
      */
     protected $inputZipper;
 
@@ -64,14 +64,14 @@ abstract class Injector
      * need to be allowed by the definition. Takes form of
      * array('element' => array('attr', 'attr2'), 'element2')
      *
-     * @type array
+     * @var array
      */
     public $needed = [];
 
     /**
      * Number of elements to rewind backwards (relative).
      *
-     * @type bool|int
+     * @var bool|int
      */
     protected $rewindOffset = false;
 

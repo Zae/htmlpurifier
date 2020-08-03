@@ -18,37 +18,37 @@ use HTMLPurifier\URIScheme;
 class Munge extends URIFilter
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Munge';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $post = true;
 
     /**
-     * @type string
+     * @var string
      */
     private $target;
 
     /**
-     * @type URIParser
+     * @var URIParser
      */
     private $parser;
 
     /**
-     * @type bool
+     * @var bool
      */
     private $doEmbed;
 
     /**
-     * @type string
+     * @var string
      */
     private $secretKey;
 
     /**
-     * @type array
+     * @var array
      */
     protected $replace = [];
 

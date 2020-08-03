@@ -15,17 +15,17 @@ use HTMLPurifier\Config;
 class Forms extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Forms';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $safe = false;
 
     /**
-     * @type array
+     * @var array
      */
     public $content_sets = [
         'Block' => 'Form',

@@ -15,7 +15,7 @@ use HTMLPurifier\Config;
 class DisableResources extends URIFilter
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'DisableResources';
 

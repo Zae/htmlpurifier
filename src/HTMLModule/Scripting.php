@@ -28,22 +28,22 @@ use HTMLPurifier\Config;
 class Scripting extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Scripting';
 
     /**
-     * @type array
+     * @var array
      */
     public $elements = ['script', 'noscript'];
 
     /**
-     * @type array
+     * @var array
      */
     public $content_sets = ['Block' => 'script | noscript', 'Inline' => 'script | noscript'];
 
     /**
-     * @type bool
+     * @var bool
      */
     public $safe = false;
 

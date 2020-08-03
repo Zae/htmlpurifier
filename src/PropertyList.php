@@ -14,21 +14,21 @@ class PropertyList
     /**
      * Internal data-structure for properties.
      *
-     * @type array
+     * @var array
      */
     protected $data = [];
 
     /**
      * Parent plist.
      *
-     * @type PropertyList
+     * @var PropertyList
      */
     protected $parent;
 
     /**
      * Cache.
      *
-     * @type array
+     * @var array
      */
     protected $cache;
 

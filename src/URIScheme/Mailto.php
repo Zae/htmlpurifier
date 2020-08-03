@@ -20,12 +20,12 @@ use HTMLPurifier\Config;
 class Mailto extends URIScheme
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = false;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $may_omit_host = true;
 

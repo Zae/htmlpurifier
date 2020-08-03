@@ -24,12 +24,12 @@ use function is_null;
 class AutoParagraph extends Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'AutoParagraph';
 
     /**
-     * @type array
+     * @var array
      */
     public $needed = ['p'];
 

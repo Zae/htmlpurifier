@@ -22,12 +22,12 @@ use HTMLPurifier\Exception;
 class Lists extends ChildDef
 {
     /**
-     * @type string
+     * @var string
      */
     public $type = 'list';
 
     /**
-     * @type array
+     * @var array
      */
     public $elements = ['li' => true, 'ul' => true, 'ol' => true];
     // lying a little bit, so that we can handle ul and ol ourselves

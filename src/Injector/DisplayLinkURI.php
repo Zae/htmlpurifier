@@ -15,12 +15,12 @@ use HTMLPurifier\Token\Text;
 class DisplayLinkURI extends Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'DisplayLinkURI';
 
     /**
-     * @type array
+     * @var array
      */
     public $needed = ['a'];
 

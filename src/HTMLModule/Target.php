@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class Target extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Target';
 

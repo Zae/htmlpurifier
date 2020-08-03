@@ -14,12 +14,12 @@ use HTMLPurifier\Context;
 class Boolean extends AttrDef
 {
     /**
-     * @type string|bool
+     * @var string|bool
      */
     protected $name;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $minimized = true;
 

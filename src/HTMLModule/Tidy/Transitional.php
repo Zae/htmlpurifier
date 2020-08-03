@@ -10,12 +10,12 @@ namespace HTMLPurifier\HTMLModule\Tidy;
 class Transitional extends XHTMLAndHTML4
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy\\Transitional';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'heavy';
 }

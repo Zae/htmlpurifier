@@ -17,7 +17,7 @@ use HTMLPurifier\Exception;
 class SafeScripting extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeScripting';
 

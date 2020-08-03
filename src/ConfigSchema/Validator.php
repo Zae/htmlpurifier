@@ -23,26 +23,26 @@ use function is_string;
 class Validator
 {
     /**
-     * @type Interchange
+     * @var Interchange
      */
     protected $interchange;
 
     /**
-     * @type array
+     * @var array
      */
     protected $aliases;
 
     /**
      * Context-stack to provide easy to read error messages.
      *
-     * @type array
+     * @var array
      */
     protected $context = [];
 
     /**
      * to test default's type.
      *
-     * @type VarParser
+     * @var VarParser
      */
     protected $parser;
 

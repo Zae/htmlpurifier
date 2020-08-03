@@ -12,12 +12,12 @@ use HTMLPurifier\HTMLModule;
 class NonXMLCommonAttributes extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'NonXMLCommonAttributes';
 
     /**
-     * @type array
+     * @var array
      */
     public $attr_collections = [
         'Lang' => [

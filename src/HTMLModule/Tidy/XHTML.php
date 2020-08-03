@@ -13,12 +13,12 @@ use HTMLPurifier\HTMLModule\Tidy;
 class XHTML extends Tidy
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tidy\\XHTML';
 
     /**
-     * @type string
+     * @var string
      */
     public $defaultLevel = 'medium';
 

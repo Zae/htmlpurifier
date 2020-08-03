@@ -17,7 +17,7 @@ abstract class Composite extends Strategy
     /**
      * List of strategies to run tokens through.
      *
-     * @type Strategy[]
+     * @var Strategy[]
      */
     protected $strategies = [];
 

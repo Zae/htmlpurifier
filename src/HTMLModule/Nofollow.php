@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class Nofollow extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Nofollow';
 

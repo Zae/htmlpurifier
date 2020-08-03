@@ -13,12 +13,12 @@ use Iterator;
 class PropertyListIterator extends FilterIterator
 {
     /**
-     * @type int
+     * @var int
      */
     protected $l;
 
     /**
-     * @type string
+     * @var string
      */
     protected $filter;
 

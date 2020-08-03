@@ -35,7 +35,7 @@ class URISchemeRegistry
     /**
      * Cache of retrieved schemes.
      *
-     * @type URIScheme[]
+     * @var URIScheme[]
      */
     protected $schemes = [];
 

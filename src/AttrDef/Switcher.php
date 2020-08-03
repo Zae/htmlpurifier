@@ -16,17 +16,17 @@ use function is_null;
 class Switcher
 {
     /**
-     * @type string
+     * @var string
      */
     protected $tag;
 
     /**
-     * @type AttrDef
+     * @var AttrDef
      */
     protected $withTag;
 
     /**
-     * @type AttrDef
+     * @var AttrDef
      */
     protected $withoutTag;
 

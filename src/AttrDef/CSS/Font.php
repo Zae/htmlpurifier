@@ -21,7 +21,7 @@ class Font extends AttrDef
     /**
      * Local copy of validators
      *
-     * @type AttrDef[]
+     * @var AttrDef[]
      * @note If we moved specific CSS property definitions to their own
      *       classes instead of having them be assembled at run time by
      *       CSSDefinition, this wouldn't be necessary.  We'd instantiate

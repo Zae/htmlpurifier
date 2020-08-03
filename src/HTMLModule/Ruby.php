@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class Ruby extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Ruby';
 

@@ -22,7 +22,7 @@ class Tidy extends HTMLModule
      * List of supported levels.
      * Index zero is a special case "no fixes" level.
      *
-     * @type array
+     * @var array
      */
     public $levels = [0 => 'none', 'light', 'medium', 'heavy'];
 
@@ -30,7 +30,7 @@ class Tidy extends HTMLModule
      * Default level to place all fixes in.
      * Disabled by default.
      *
-     * @type string
+     * @var string
      */
     public $defaultLevel = null;
 
@@ -39,7 +39,7 @@ class Tidy extends HTMLModule
      * Format is:
      *      HTMLModule_Tidy->fixesForLevel[$level] = array('fix-1', 'fix-2');
      *
-     * @type array
+     * @var array
      */
     public $fixesForLevel = [
         'light' => [],

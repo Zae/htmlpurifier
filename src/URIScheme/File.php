@@ -18,7 +18,7 @@ class File extends URIScheme
      * Generally file:// URLs are not accessible from most
      * machines, so placing them as an img src is incorrect.
      *
-     * @type bool
+     * @var bool
      */
     public $browsable = false;
 
@@ -29,7 +29,7 @@ class File extends URIScheme
      * authority, though I hear it is used on Windows to refer to
      * network shares.
      *
-     * @type bool
+     * @var bool
      */
     public $may_omit_host = true;
 

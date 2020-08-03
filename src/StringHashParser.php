@@ -32,7 +32,7 @@ namespace HTMLPurifier;
 class StringHashParser
 {
     /**
-     * @type string
+     * @var string
      */
     public $default = 'ID';
 
