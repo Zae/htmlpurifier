@@ -44,5 +44,15 @@ class ZipperTest extends TestCase
         static::assertEquals([0, 1, 4, 6, 7], $z->toArray($t));
     }
 
+    /**
+     * @test
+     */
+    public function testDone(): void
+    {
+        [$z, $t] = Zipper::fromArray([]);
+        
+        static::assertTrue($z->done());
+    }
+
     // ToDo: QuickCheck style test comparing with array_splice
 }

@@ -24,6 +24,11 @@
             <directory suffix="VTestTestRunner.php">./tests/PHPUnit/VTest</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">src</directory>
+        </whitelist>
+    </filter>
     <php>
         <var name="HTMLPurifierTest[Net_IDNA2]" value="true" />
     </php>

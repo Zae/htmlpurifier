@@ -139,4 +139,18 @@ class InputTest extends TestCase
             'value' => '',
         ]);
     }
+
+    /**
+     * @test
+     * @throws \HTMLPurifier\Exception
+     */
+    public function testInvalidSize(): void
+    {
+        $this->assertResult([
+            'size' => 'a',
+            'type' => 'submit'
+        ], [
+            'type' => 'submit'
+        ]);
+    }
 }

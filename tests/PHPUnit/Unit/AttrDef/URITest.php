@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit\AttrDef;
 
 use HTMLPurifier\AttrDef\URI;
+use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier\URIDefinition;
@@ -167,7 +168,7 @@ class URITest extends TestCase
         $uri_def = Mockery::mock(URIDefinition::class);
 
         $uri_def->shouldReceive('filter')
-            ->withArgs(static function($a) use ($uri) {
+            ->withArgs(static function ($a) use ($uri) {
                 // We are comparing with == here, because $a is not the same instance of
                 // the object we passed in, but the properties should be the same.
                 return $a == $uri;
@@ -176,7 +177,7 @@ class URITest extends TestCase
             ->andReturn(true);
 
         $uri_def->shouldReceive('postFilter')
-            ->withArgs(static function($a) use ($uri) {
+            ->withArgs(static function ($a) use ($uri) {
                 // We are comparing with == here, because $a is not the same instance of
                 // the object we passed in, but the properties should be the same.
                 return $a == $uri;
@@ -224,5 +225,23 @@ class URITest extends TestCase
         $def = $factory->make('embedded');
         $def2 = new URI(true);
         static::assertEquals($def, $def2);
+    }
+
+    /**
+     * @test
+     */
+    public function testInvalid(): void
+    {
+        $false = $this->def->validate('https://', null, null);
+        static::assertFalse($false);
+
+        /** @var Config $config */
+        $config = $this->config;
+        $config->set('URI.Disable', true);
+        $false = $this->def->validate('https://', $config, null);
+        static::assertFalse($false);
+
+        $false = $this->def->validate('https://', $this->config, null);
+        static::assertFalse($false);
     }
 }

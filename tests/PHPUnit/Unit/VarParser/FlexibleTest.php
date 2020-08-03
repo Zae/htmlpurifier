@@ -88,4 +88,63 @@ class FlexibleTest extends TestCase
         $this->expectException(VarParserException::class);
         $this->parser->parse(null, 'string', false);
     }
+
+    /**
+     * @test
+     * @throws VarParserException
+     * @throws \HTMLPurifier\Exception
+     */
+    public function testInvalidBool(): void
+    {
+        $this->expectException(VarParserException::class);
+        $this->expectExceptionMessage('Unrecognized value \'a\' for 7');
+        $this->parser->parse('a', VarParser::C_BOOL, true);
+    }
+
+    /**
+     * @test
+     * @throws VarParserException
+     * @throws \HTMLPurifier\Exception
+     */
+    public function testInvalidArray(): void
+    {
+        $this->expectException(VarParserException::class);
+        $this->expectExceptionMessage('Expected type lookup, got int');
+
+        $this->parser->parse(2, VarParser::LOOKUP, true);
+    }
+
+    /**
+     * @test
+     * @throws VarParserException
+     * @throws \HTMLPurifier\Exception
+     */
+    public function testInvalidFlexibleAlist(): void
+    {
+        $this->expectError();
+        $this->expectErrorMessage('Array list did not have consecutive integer indexes');
+
+        $this->parser->parse(['b' => true, 'd' => false], VarParser::ALIST, true);
+    }
+
+    /**
+     * @test
+     */
+    public function testInvalidFlexibleLookup(): void
+    {
+        $this->expectError();
+        $this->expectErrorMessage("Lookup array has non-true value at key 'a'; " .
+                                  'maybe your input array was not indexed numerically');
+        $this->parser->parse(["a" => false], VarParser::LOOKUP, true);
+    }
+
+    /**
+     * @test
+     */
+    public function testInvalidFlexibleUnknown(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Inconsistency in HTMLPurifier\VarParser\Flexible: unknown not implemented');
+        $this->parser->parse('a', 999999, true);
+    }
 }
