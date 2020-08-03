@@ -17,21 +17,21 @@ class EnumToCSS extends AttrTransform
     /**
      * Name of attribute to transform from.
      *
-     * @type string
+     * @var string
      */
     protected $attr;
 
     /**
      * Lookup array of attribute values to CSS.
      *
-     * @type array
+     * @var array
      */
     protected $enumToCSS = [];
 
     /**
      * Case sensitivity of the matching.
      *
-     * @type bool
+     * @var bool
      * @warning Currently can only be guaranteed to work with ASCII
      *          values.
      */

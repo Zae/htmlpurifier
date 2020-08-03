@@ -20,12 +20,12 @@ use HTMLPurifier\Node;
 class Nothing extends ChildDef
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = true;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'empty';
 

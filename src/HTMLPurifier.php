@@ -64,7 +64,7 @@ class HTMLPurifier
     /**
      * Version of HTML Purifier.
      *
-     * @type string
+     * @var string
      */
     public $version = '4.12.0';
 
@@ -76,7 +76,7 @@ class HTMLPurifier
     /**
      * Global configuration object.
      *
-     * @type Config
+     * @var Config
      */
     public $config;
 
@@ -84,24 +84,24 @@ class HTMLPurifier
      * Array of extra filter objects to run on HTML,
      * for backwards compatibility.
      *
-     * @type Filter[]
+     * @var Filter[]
      */
     private $filters = [];
 
     /**
      * Single instance of HTML Purifier.
      *
-     * @type HTMLPurifier
+     * @var HTMLPurifier
      */
     private static $instance;
 
     /**
-     * @type Core
+     * @var Core
      */
     protected $strategy;
 
     /**
-     * @type Generator
+     * @var Generator
      */
     protected $generator;
 
@@ -109,7 +109,7 @@ class HTMLPurifier
      * Resultant context of last run purification.
      * Is an array of contexts if the last called method was purifyArray().
      *
-     * @type Context
+     * @var Context
      */
     public $context;
 

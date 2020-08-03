@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class Tables extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Tables';
 

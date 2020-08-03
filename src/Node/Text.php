@@ -21,18 +21,18 @@ class Text extends Node
      * PCDATA tag name compatible with DTD, see
      * HTMLPurifier\ChildDef\HTMLPurifier_ChildDef_Custom for details.
      *
-     * @type string
+     * @var string
      */
     public $name = '#PCDATA';
 
     /**
-     * @type string
+     * @var string
      */
     public $data;
     /**< Parsed character data of text. */
 
     /**
-     * @type bool
+     * @var bool
      */
     public $is_whitespace;
 

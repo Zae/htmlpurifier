@@ -28,7 +28,7 @@ class AttrTypes
     /**
      * Lookup array of attribute string identifiers to concrete implementations.
      *
-     * @type AttrDef[]
+     * @var AttrDef[]
      */
     protected $info = [];
 

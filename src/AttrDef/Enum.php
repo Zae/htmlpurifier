@@ -21,7 +21,7 @@ class Enum extends AttrDef
     /**
      * Lookup table of valid values.
      *
-     * @type array
+     * @var array
      * @todo Make protected
      */
     public $valid_values = [];

@@ -14,12 +14,12 @@ use HTMLPurifier\Config;
 class Length extends AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
     protected $name;
 
     /**
-     * @type string
+     * @var string
      */
     protected $cssName;
 

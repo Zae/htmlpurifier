@@ -14,12 +14,12 @@ class Comment extends Node
     /**
      * Character data within comment.
      *
-     * @type string
+     * @var string
      */
     public $data;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $is_whitespace = true;
 

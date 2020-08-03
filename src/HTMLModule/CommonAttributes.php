@@ -14,12 +14,12 @@ use HTMLPurifier\HTMLModule;
 class CommonAttributes extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'CommonAttributes';
 
     /**
-     * @type array
+     * @var array
      */
     public $attr_collections = [
         'Core' => [

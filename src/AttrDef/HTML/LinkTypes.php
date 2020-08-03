@@ -23,7 +23,7 @@ class LinkTypes extends AttrDef
     /**
      * Name config attribute to pull.
      *
-     * @type string
+     * @var string
      */
     protected $name;
 

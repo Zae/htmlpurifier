@@ -17,7 +17,7 @@ use HTMLPurifier\Config;
 class Edit extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Edit';
 
@@ -43,7 +43,7 @@ class Edit extends HTMLModule
     // separator, see getChildDef for parsing)
 
     /**
-     * @type bool
+     * @var bool
      */
     public $defines_child_def = true;
 

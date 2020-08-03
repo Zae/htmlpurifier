@@ -15,12 +15,12 @@ use HTMLPurifier\Config;
 class StyleAttribute extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'StyleAttribute';
 
     /**
-     * @type array
+     * @var array
      */
     public $attr_collections = [
         // The inclusion routine differs from the Abstract Modules but

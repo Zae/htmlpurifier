@@ -13,7 +13,7 @@ use HTMLPurifier\Config;
 class Lists extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Lists';
 
@@ -27,7 +27,7 @@ class Lists extends HTMLModule
     // the incredibly inefficient and draconic Custom ChildDef.
 
     /**
-     * @type array
+     * @var array
      */
     public $content_sets = ['Flow' => 'List'];
 

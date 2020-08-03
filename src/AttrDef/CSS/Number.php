@@ -16,7 +16,7 @@ class Number extends AttrDef
     /**
      * Indicates whether or not only positive values are allowed.
      *
-     * @type bool
+     * @var bool
      */
     protected $non_negative = false;
 

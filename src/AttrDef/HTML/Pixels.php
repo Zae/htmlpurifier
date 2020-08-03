@@ -17,7 +17,7 @@ use function strlen;
 class Pixels extends AttrDef
 {
     /**
-     * @type int
+     * @var int
      */
     protected $max;
 

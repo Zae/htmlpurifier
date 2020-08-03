@@ -14,7 +14,7 @@ use HTMLPurifier\AttrTransform;
 class SafeObject extends AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeObject';
 

@@ -21,7 +21,7 @@ use function is_null;
 class Simple extends TagTransform
 {
     /**
-     * @type string
+     * @var string
      */
     protected $style;
 

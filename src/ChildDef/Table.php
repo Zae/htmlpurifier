@@ -42,17 +42,17 @@ use HTMLPurifier\Config;
 class Table extends ChildDef
 {
     /**
-     * @type bool
+     * @var bool
      */
     public $allow_empty = false;
 
     /**
-     * @type string
+     * @var string
      */
     public $type = 'table';
 
     /**
-     * @type array
+     * @var array
      */
     public $elements = [
         'tr' => true,

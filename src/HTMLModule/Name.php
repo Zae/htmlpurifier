@@ -15,7 +15,7 @@ use HTMLPurifier\Exception;
 class Name extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Name';
 

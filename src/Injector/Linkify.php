@@ -15,12 +15,12 @@ use HTMLPurifier\Token\Text;
 class Linkify extends Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Linkify';
 
     /**
-     * @type array
+     * @var array
      */
     public $needed = ['a' => ['href']];
 

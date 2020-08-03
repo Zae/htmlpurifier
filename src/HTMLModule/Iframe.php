@@ -17,12 +17,12 @@ use HTMLPurifier\HTMLModule;
 class Iframe extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Iframe';
 
     /**
-     * @type bool
+     * @var bool
      */
     public $safe = false;
 

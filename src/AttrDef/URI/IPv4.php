@@ -18,7 +18,7 @@ class IPv4 extends AttrDef
     /**
      * IPv4 regex, protected so that IPv6 can reuse it.
      *
-     * @type string
+     * @var string
      */
     protected $ip4;
 

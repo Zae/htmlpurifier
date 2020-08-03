@@ -21,14 +21,14 @@ class Host extends AttrDef
     /**
      * IPv4 sub-validator.
      *
-     * @type IPv4
+     * @var IPv4
      */
     protected $ipv4;
 
     /**
      * IPv6 sub-validator.
      *
-     * @type IPv6
+     * @var IPv6
      */
     protected $ipv6;
 

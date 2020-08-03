@@ -10,11 +10,12 @@ namespace HTMLPurifier\URIScheme;
 class Https extends Http
 {
     /**
-     * @type int
+     * @var int
      */
     public $default_port = 443;
+
     /**
-     * @type bool
+     * @var bool
      */
     public $secure = true;
 }

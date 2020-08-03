@@ -14,7 +14,7 @@ use HTMLPurifier\Config;
 class SafeEmbed extends AttrTransform
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeEmbed';
 

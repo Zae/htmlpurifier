@@ -17,29 +17,29 @@ use function count;
 class SafeObject extends Injector
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeObject';
 
     /**
-     * @type array
+     * @var array
      */
     public $needed = ['object', 'param'];
 
     /**
-     * @type array
+     * @var array
      */
     protected $objectStack = [];
 
     /**
-     * @type array
+     * @var array
      */
     protected $paramStack = [];
 
     /**
      * Keep this synchronized with AttrTransform/SafeParam.php.
      *
-     * @type array
+     * @var array
      */
     protected $addParam = [
         'allowScriptAccess' => 'never',
@@ -49,7 +49,7 @@ class SafeObject extends Injector
     /**
      * These are all lower-case keys.
      *
-     * @type array
+     * @var array
      */
     protected $allowedParam = [
         'wmode' => true,

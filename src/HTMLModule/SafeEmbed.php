@@ -13,7 +13,7 @@ use HTMLPurifier\Config;
 class SafeEmbed extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'SafeEmbed';
 

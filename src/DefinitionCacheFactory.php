@@ -16,17 +16,17 @@ use function is_string;
 class DefinitionCacheFactory
 {
     /**
-     * @type array
+     * @var array
      */
     protected $caches = ['Serializer' => []];
 
     /**
-     * @type array
+     * @var array
      */
     protected $implementations = [];
 
     /**
-     * @type \HTMLPurifier\DefinitionCache\Decorator[]
+     * @var \HTMLPurifier\DefinitionCache\Decorator[]
      */
     protected $decorators = [];
 

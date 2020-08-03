@@ -19,7 +19,7 @@ use HTMLPurifier\Exception;
 class Image extends HTMLModule
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'Image';
 

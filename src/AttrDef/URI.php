@@ -22,12 +22,12 @@ use function is_null;
 class URI extends AttrDef
 {
     /**
-     * @type URIParser
+     * @var URIParser
      */
     protected $parser;
 
     /**
-     * @type bool
+     * @var bool
      */
     protected $embedsResource;
 
@@ -81,14 +81,6 @@ class URI extends AttrDef
 
         $ok = false;
         do {
-            /**
-             * @psalm-suppress RedundantCondition
-             * @psalm-suppress TypeDoesNotContainNull
-             */
-            if (is_null($config) || is_null($context)) {
-                break;
-            }
-
             // generic validation
             $result = $string->validate($config, $context);
             if (!$result) {

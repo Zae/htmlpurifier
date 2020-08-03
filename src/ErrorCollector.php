@@ -22,37 +22,37 @@ class ErrorCollector
     public const CHILDREN = 3;
 
     /**
-     * @type array
+     * @var array
      */
     protected $errors;
 
     /**
-     * @type array
+     * @var array
      */
     protected $current;
 
     /**
-     * @type array
+     * @var array
      */
     protected $stacks = [[]];
 
     /**
-     * @type Language
+     * @var Language
      */
     protected $locale;
 
     /**
-     * @type Generator
+     * @var Generator
      */
     protected $generator;
 
     /**
-     * @type Context
+     * @var Context
      */
     protected $context;
 
     /**
-     * @type array
+     * @var array
      */
     protected $lines = [];
 

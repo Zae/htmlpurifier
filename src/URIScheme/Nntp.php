@@ -15,12 +15,12 @@ use HTMLPurifier\Config;
 class Nntp extends URIScheme
 {
     /**
-     * @type int
+     * @var int
      */
     public $default_port = 119;
 
     /**
-     * @type bool
+     * @var bool
      */
     public $browsable = false;
 

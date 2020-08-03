@@ -15,21 +15,21 @@ class EntityParser
     /**
      * Reference to entity lookup table.
      *
-     * @type EntityLookup
+     * @var EntityLookup
      */
     protected $entityLookup;
 
     /**
      * Callback regex string for entities in text.
      *
-     * @type string
+     * @var string
      */
     protected $textEntitiesRegex;
 
     /**
      * Callback regex string for entities in attributes.
      *
-     * @type string
+     * @var string
      */
     protected $attrEntitiesRegex;
 
@@ -163,7 +163,7 @@ class EntityParser
     /**
      * Callback regex string for parsing entities.
      *
-     * @type string
+     * @var string
      */
     protected $substituteEntitiesRegex = '/&(?:[#]x([a-fA-F0-9]+)|[#]0*(\d+)|([A-Za-z_:][A-Za-z0-9.\-_:]*));?/';
     //                                       1. hex                2. dec     3. string (XML style)
@@ -171,7 +171,7 @@ class EntityParser
     /**
      * Decimal to parsed string conversion table for special entities.
      *
-     * @type array
+     * @var array
      */
     protected $specialDec2str = [
         34 => '"',
@@ -184,7 +184,7 @@ class EntityParser
     /**
      * Stripped entity names to decimal conversion table for special entities.
      *
-     * @type array
+     * @var array
      */
     protected $specialEnt2dec = [
         'quot' => 34,

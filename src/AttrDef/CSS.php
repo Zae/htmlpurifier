@@ -68,14 +68,12 @@ class CSS extends AttrDef
                 if ($d === $quoted) {
                     $quoted = false;
                 }
+            } elseif ($d === ';') {
+                $declarations[] = $accum;
+                $accum = '';
             } else {
-                if ($d === ';') {
-                    $declarations[] = $accum;
-                    $accum = '';
-                } else {
-                    $accum .= $d;
-                    $quoted = $d;
-                }
+                $accum .= $d;
+                $quoted = $d;
             }
         }
 
