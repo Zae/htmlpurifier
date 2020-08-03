@@ -91,4 +91,14 @@ class LangTest extends TestCase
         // with the RFC's SHOULD NOT designation.
         $this->assertDef('mul');
     }
+
+    /**
+     * @test
+     */
+    public function testInvalid(): void
+    {
+        $this->def = new Lang();
+
+        $this->assertDef('', false);
+    }
 }

@@ -82,4 +82,34 @@ class ListTest extends TestCase
     {
         $this->assertResult('<ul />', '<li><ul /></li>');
     }
+
+    /**
+     * @test
+     */
+    public function testDisabledLi(): void
+    {
+        $this->expectError();
+        $this->expectErrorMessage('Cannot allow ul/ol without allowing li');
+
+        $def = $this->config->getHTMLDefinition();
+        unset($def->info['li']);
+
+        $this->assertResult('<li></li>', false);
+    }
+
+    /**
+     * @test
+     */
+    public function testWhitespace(): void
+    {
+        $this->assertResult('<li>a</li><!--WHITESPACE--><li>b</li>');
+    }
+
+    /**
+     * @test
+     */
+    public function testAllWhitespace(): void
+    {
+        $this->assertResult('<!--WHITESPASCE-->', false);
+    }
 }

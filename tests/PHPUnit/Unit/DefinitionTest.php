@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Config;
+use HTMLPurifier\CSSDefinition;
 
 /**
  * Class DefinitionTest
@@ -18,11 +19,17 @@ class DefinitionTest extends TestCase
      */
     public function test_setup(): void
     {
-        static::markTestSkipped('what\'s a HTMLPurifier_DefinitionTestable... who knows?');
-        $def = new HTMLPurifier_DefinitionTestable();
-
         $config = Config::createDefault();
-        $def->expectOnce('doSetup', [$config]);
+
+        $def = \Mockery::spy(CSSDefinition::class . '[doSetup]')
+                       ->makePartial()
+                       ->shouldAllowMockingProtectedMethods();
+
+        $def->shouldReceive('doSetup')
+            ->once()
+
+            ->withArgs([$config]);
+
         $def->setup($config);
     }
 
@@ -31,12 +38,15 @@ class DefinitionTest extends TestCase
      */
     public function test_setup_redundant(): void
     {
-        static::markTestSkipped('what\'s a HTMLPurifier_DefinitionTestable... who knows?');
-
-        $def = new HTMLPurifier_DefinitionTestable();
-
         $config = Config::createDefault();
-        $def->expectNever('doSetup');
+
+        $def = \Mockery::spy(CSSDefinition::class . '[doSetup]')
+                       ->makePartial()
+                       ->shouldAllowMockingProtectedMethods();
+
+        $def->shouldReceive('doSetup')
+            ->never();
+
         $def->setup = true;
         $def->setup($config);
     }

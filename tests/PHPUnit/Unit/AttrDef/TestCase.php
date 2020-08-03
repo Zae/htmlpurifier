@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\AttrDef;
 
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
 /**
@@ -15,7 +15,8 @@ use HTMLPurifier\Context;
 abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
 {
     protected $def;
-    protected $context, $config;
+    protected $context;
+    protected $config;
 
     protected function setUp(): void
     {
@@ -26,11 +27,11 @@ abstract class TestCase extends \HTMLPurifier\Tests\Unit\TestCase
     /**
      * cannot be used for accumulator
      *
-     * @param      $string
-     * @param bool $expect
-     * @param bool $or_false
+     * @param mixed         $string
+     * @param bool|string   $expect
+     * @param bool          $or_false
      */
-    public function assertDef($string, $expect = true, $or_false = false)
+    public function assertDef($string, $expect = true, bool $or_false = false): void
     {
         // $expect can be a string or bool
         $result = $this->def->validate($string, $this->config, $this->context);

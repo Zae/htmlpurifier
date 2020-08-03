@@ -95,7 +95,7 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             static::assertFalse($status, 'Expected false result, got true');
         } else {
             static::assertTrue($status, 'Expected true result, got false');
-            static::assertEquals($result, $expect);
+            static::assertEquals($expect, $result);
         }
     }
 

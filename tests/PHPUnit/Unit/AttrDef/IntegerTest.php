@@ -75,4 +75,13 @@ class IntegerTest extends TestCase
         $this->def = new Integer(true, true, false);
         $this->assertRange(true, true, false); // non-positive
     }
+
+    /**
+     * @test
+     */
+    public function testStuff(): void
+    {
+        $this->def = new Integer(false, true, true);
+        $this->assertDef('-1', false);
+    }
 }

@@ -216,4 +216,23 @@ class CssTest extends TestCase
         $this->assertDef('text-align:right;text-align:left;');
         $this->assertDef('text-align:right;text-align:left;text-align:right;');
     }
+
+    /**
+     * @test
+     */
+    public function testNoConfig(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Config is null');
+
+        $this->def->validate('test', null, null);
+    }
+
+    /**
+     * @test
+     */
+    public function testInvalidDefinitions(): void
+    {
+        $this->assertDef('test', false);
+    }
 }
