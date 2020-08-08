@@ -23,14 +23,14 @@ use function is_string;
 class Validator
 {
     /**
-     * @var Interchange
+     * @var Interchange|null
      */
     protected $interchange;
 
     /**
      * @var array
      */
-    protected $aliases;
+    protected $aliases = [];
 
     /**
      * Context-stack to provide easy to read error messages.

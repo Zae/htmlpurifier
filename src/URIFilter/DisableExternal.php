@@ -24,7 +24,7 @@ class DisableExternal extends URIFilter
     public $name = 'DisableExternal';
 
     /**
-     * @var array
+     * @var array|boolean
      */
     protected $ourHostParts = false;
 
@@ -70,13 +70,15 @@ class DisableExternal extends URIFilter
         }
 
         $host_parts = array_reverse(explode('.', $uri->host));
-        foreach ($this->ourHostParts as $i => $x) {
-            if (!isset($host_parts[$i])) {
-                return false;
-            }
+        if (\is_array($this->ourHostParts)) {
+            foreach ($this->ourHostParts as $i => $x) {
+                if (!isset($host_parts[$i])) {
+                    return false;
+                }
 
-            if ($host_parts[$i] !== $this->ourHostParts[$i]) {
-                return false;
+                if ($host_parts[$i] !== $this->ourHostParts[$i]) {
+                    return false;
+                }
             }
         }
 

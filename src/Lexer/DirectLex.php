@@ -133,6 +133,9 @@ class DirectLex extends Lexer
                 $current_col = $rcursor - (\is_bool($nl_pos) ? 0 : $nl_pos + 1);
 
                 // recalculate lines
+                /**
+                 * @psalm-suppress TypeDoesNotContainType
+                 */
                 if (
                     $synchronize_interval  // synchronization is on
                     && $cursor > 0  // cursor is further than zero
@@ -170,7 +173,7 @@ class DirectLex extends Lexer
                     $current_line += $this->substrCount($string, $nl, $cursor, $position_next_lt - $cursor);
                 }
                 $array[] = $token;
-                $cursor = $position_next_lt + 1;
+                $cursor = (int)$position_next_lt + 1;
                 $inside_tag = true;
                 continue;
             } elseif (!$inside_tag) {
@@ -246,7 +249,7 @@ class DirectLex extends Lexer
                         $current_line += $this->substrCount($string, $nl, $cursor, $strlen_segment);
                     }
                     $array[] = $token;
-                    $cursor = $end ? $position_comment_end : $position_comment_end + 3;
+                    $cursor = (int)($end ? $position_comment_end : $position_comment_end + 3);
                     $inside_tag = false;
                     continue;
                 }
@@ -480,6 +483,7 @@ class DirectLex extends Lexer
 
         // setup loop environment
         $array = []; // return assoc array of attributes
+        /** @var int|boolean $cursor */
         $cursor = 0; // current position in string (moves forward)
         $size = \strlen($string); // size of the string (stays the same)
 
@@ -494,7 +498,10 @@ class DirectLex extends Lexer
             }
             $old_cursor = $cursor;
 
-            $cursor += ($value = strspn($string, $this->whitespace, $cursor));
+            /**
+             * @psalm-suppress PossiblyInvalidOperand
+             */
+            $cursor += ($value = strspn($string, $this->whitespace, (int)$cursor));
             // grab the key
 
             $key_begin = $cursor; //we're currently at the start of the key
@@ -546,12 +553,12 @@ class DirectLex extends Lexer
                     $cursor++;
                     $value_begin = $cursor;
                     $cursor = strpos($string, $char, $cursor);
-                    $value_end = (int)$cursor;
+                    $value_end = $cursor;
                 } else {
                     // it's not quoted, end bound is whitespace
                     $value_begin = $cursor;
                     $cursor += strcspn($string, $this->whitespace, $cursor);
-                    $value_end = (int)$cursor;
+                    $value_end = $cursor;
                 }
 
                 // we reached a premature end
@@ -560,7 +567,7 @@ class DirectLex extends Lexer
                     $value_end = $cursor;
                 }
 
-                $value = substr($string, $value_begin, $value_end - $value_begin);
+                $value = substr($string, $value_begin, (int)$value_end - $value_begin);
                 if ($value === false) {
                     $value = '';
                 }

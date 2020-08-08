@@ -40,19 +40,19 @@ class MakeWellFormed extends Strategy
      *
      * @var Token[]
      */
-    protected $tokens;
+    protected $tokens = [];
 
     /**
      * Current token.
      *
-     * @var Token
+     * @var Token|null
      */
     protected $token;
 
     /**
      * Zipper managing the true state.
      *
-     * @var Zipper
+     * @var Zipper|null
      */
     protected $zipper;
 
@@ -61,26 +61,26 @@ class MakeWellFormed extends Strategy
      *
      * @var array|Token\Tag[]
      */
-    protected $stack;
+    protected $stack = [];
 
     /**
      * Injectors active in this stream processing.
      *
-     * @var Injector[]
+     * @var array|Injector[]
      */
-    protected $injectors;
+    protected $injectors = [];
 
     /**
      * Current instance of \HTMLPurifier\Config.
      *
-     * @var Config
+     * @var Config|null
      */
     protected $config;
 
     /**
      * Current instance of HTMLPurifier\HTMLPurifier_Context.
      *
-     * @var Context
+     * @var Context|null
      */
     protected $context;
 
@@ -660,6 +660,10 @@ class MakeWellFormed extends Strategy
             throw new Exception('Deleting zero tokens is not valid');
         }
 
+        if ($this->zipper === null) {
+            throw new Exception('Zipper is null');
+        }
+
         // $token is now an array with the following form:
         // array(number nodes to delete, new node 1, new node 2, ...)
 
@@ -697,6 +701,10 @@ class MakeWellFormed extends Strategy
      */
     private function insertBefore(Token $token)
     {
+        if ($this->zipper === null) {
+            return false;
+        }
+
         // NB not $this->zipper->insertBefore(), due to positioning
         // differences
         $splice = $this->zipper->splice($this->token, 0, [$token]);
@@ -712,7 +720,9 @@ class MakeWellFormed extends Strategy
      */
     private function remove()
     {
-        return $this->zipper->delete();
+        if ($this->zipper !== null) {
+            return $this->zipper->delete();
+        }
     }
 }
 

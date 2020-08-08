@@ -20,7 +20,7 @@ abstract class Strategy
      * @param Config  $config
      * @param Context $context
      *
-     * @return Token[]|string Processed array of token objects.
+     * @return Token[] Processed array of token objects.
      */
     abstract public function execute($tokens, Config $config, Context $context);
 }

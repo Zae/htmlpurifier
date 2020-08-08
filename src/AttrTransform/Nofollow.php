@@ -10,6 +10,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
 use HTMLPurifier\Exception;
 use HTMLPurifier\URIParser;
+use HTMLPurifier\URIScheme;
 
 /**
  * Adds rel="nofollow" to all outbound links.  This transform is
@@ -43,9 +44,14 @@ class Nofollow extends AttrTransform
 
         // XXX Kind of inefficient
         $url = $this->parser->parse($attr['href']);
+
+        if ($url === null) {
+            return $attr;
+        }
+
         $scheme = $url->getSchemeObj($config, $context);
 
-        if ($scheme->browsable && !$url->isLocal($config)) {
+        if ($scheme instanceof URIScheme && $scheme->browsable && !$url->isLocal($config)) {
             if (isset($attr['rel'])) {
                 $rels = explode(' ', $attr['rel']);
                 if (!\in_array('nofollow', $rels, true)) {

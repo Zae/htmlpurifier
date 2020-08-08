@@ -10,6 +10,7 @@ use HTMLPurifier\AttrTransform;
 use HTMLPurifier\URIParser;
 use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
+use HTMLPurifier\URIScheme;
 
 /**
  * Adds target="blank" to all outbound links.  This transform is
@@ -44,9 +45,14 @@ class TargetBlank extends AttrTransform
 
         // XXX Kind of inefficient
         $url = $this->parser->parse($attr['href']);
+
+        if ($url === null) {
+            return $attr;
+        }
+
         $scheme = $url->getSchemeObj($config, $context);
 
-        if ($scheme->browsable && !$url->isBenign($config, $context)) {
+        if ($scheme instanceof URIScheme && $scheme->browsable && !$url->isBenign($config, $context)) {
             $attr['target'] = '_blank';
         }
 

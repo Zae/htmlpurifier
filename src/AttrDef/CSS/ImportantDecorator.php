@@ -41,7 +41,7 @@ class ImportantDecorator extends AttrDef
      * @param Config|null  $config
      * @param Context|null $context
      *
-     * @return bool|string
+     * @return bool|string|null
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

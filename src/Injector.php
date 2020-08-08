@@ -30,10 +30,10 @@ abstract class Injector
      *
      * @var string
      */
-    public $name;
+    public $name = '';
 
     /**
-     * @var HTMLDefinition
+     * @var HTMLDefinition|null
      */
     protected $htmlDefinition;
 
@@ -43,19 +43,19 @@ abstract class Injector
      *
      * @var array
      */
-    protected $currentNesting;
+    protected $currentNesting = [];
 
     /**
      * Reference to current token.
      *
-     * @var Token
+     * @var Token|null
      */
     protected $currentToken;
 
     /**
      * Reference to InputZipper variable in Context.
      *
-     * @var Zipper
+     * @var Zipper|null
      */
     protected $inputZipper;
 
@@ -182,8 +182,15 @@ abstract class Injector
         if (!empty($this->currentNesting)) {
             $parent_token = array_pop($this->currentNesting);
             $this->currentNesting[] = $parent_token;
+            /**
+             * @psalm-suppress PossiblyNullArrayAccess
+             * @psalm-suppress PossiblyNullPropertyFetch
+             */
             $parent = $this->htmlDefinition->info[$parent_token->name];
         } else {
+            /**
+             * @psalm-suppress PossiblyNullPropertyFetch
+             */
             $parent = $this->htmlDefinition->info_parent_def;
         }
 
@@ -195,6 +202,10 @@ abstract class Injector
         if (!empty($this->currentNesting)) {
             for ($i = count($this->currentNesting) - 2; $i >= 0; $i--) {
                 $node = $this->currentNesting[$i];
+                /**
+                 * @psalm-suppress PossiblyNullArrayAccess
+                 * @psalm-suppress PossiblyNullPropertyFetch
+                 */
                 $def = $this->htmlDefinition->info[$node->name];
 
                 if (isset($def->excludes[$name])) {
@@ -221,6 +232,10 @@ abstract class Injector
      */
     protected function forward(?int &$i, ?Token &$current): bool
     {
+        if ($this->inputZipper === null) {
+            return false;
+        }
+
         if ($i === null) {
             $i = count($this->inputZipper->back) - 1;
         } else {
@@ -288,6 +303,10 @@ abstract class Injector
      */
     protected function backward(?int &$i, ?Token &$current): bool
     {
+        if ($this->inputZipper === null) {
+            return false;
+        }
+
         if ($i === null) {
             $i = count($this->inputZipper->front) - 1;
         } else {

@@ -28,19 +28,19 @@ class RemoveSpansWithoutAttributes extends Injector
     public $needed = ['span'];
 
     /**
-     * @var AttrValidator
+     * @var AttrValidator|null
      */
     private $attrValidator;
 
     /**
      * Used by AttrValidator.
      *
-     * @var Config
+     * @var Config|null
      */
     private $config;
 
     /**
-     * @var Context
+     * @var Context|null
      */
     private $context;
 
@@ -65,6 +65,10 @@ class RemoveSpansWithoutAttributes extends Injector
     public function handleElement(Token &$token): void
     {
         if ($token->name !== 'span' || !$token instanceof Start) {
+            return;
+        }
+
+        if ($this->attrValidator === null || $this->config === null || $this->context === null) {
             return;
         }
 

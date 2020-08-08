@@ -21,19 +21,19 @@ class PropertyList
     /**
      * Parent plist.
      *
-     * @var PropertyList
+     * @var PropertyList|null
      */
     protected $parent;
 
     /**
      * Cache.
      *
-     * @var array
+     * @var array|null
      */
     protected $cache;
 
     /**
-     * @param PropertyList $parent Parent plist
+     * @param PropertyList|null $parent Parent plist
      */
     public function __construct($parent = null)
     {
@@ -89,7 +89,7 @@ class PropertyList
      * Resets a value to the value of it's parent, usually the default. If
      * no value is specified, the entire plist is reset.
      *
-     * @param string $name
+     * @param string|null $name
      */
     public function reset(?string $name = null): void
     {

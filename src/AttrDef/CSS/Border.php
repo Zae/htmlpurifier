@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\AttrDef\Switcher;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
@@ -17,7 +18,7 @@ class Border extends AttrDef
     /**
      * Local copy of properties this property is shorthand for.
      *
-     * @var AttrDef[]
+     * @var array<AttrDef|Switcher>
      */
     protected $info = [];
 

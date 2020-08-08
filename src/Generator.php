@@ -43,7 +43,7 @@ class Generator
      * Cache of HTMLDefinition during HTML output to determine whether or
      * not attributes should be minimized.
      *
-     * @var HTMLDefinition
+     * @var HTMLDefinition|null
      */
     private $def;
 

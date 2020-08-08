@@ -30,22 +30,22 @@ class Munge extends URIFilter
     /**
      * @var string
      */
-    private $target;
+    private $target = '';
 
     /**
-     * @var URIParser
+     * @var URIParser|null
      */
     private $parser;
 
     /**
      * @var bool
      */
-    private $doEmbed;
+    private $doEmbed = false;
 
     /**
      * @var string
      */
-    private $secretKey;
+    private $secretKey = '';
 
     /**
      * @var array
@@ -102,11 +102,18 @@ class Munge extends URIFilter
         $this->makeReplace($uri, $config, $context);
         $this->replace = array_map('rawurlencode', $this->replace);
 
-        $new_uri = strtr($this->target, $this->replace);
-        $new_uri = $this->parser->parse($new_uri);
-        // don't redirect if the target host is the same as the
-        // starting host
+        if ($this->parser === null) {
+            return true;
+        }
 
+        $new_uri = $this->parser->parse(strtr($this->target, $this->replace));
+
+        // don't redirect if the target host is null
+        if ($new_uri === null) {
+            return true;
+        }
+
+        // don't redirect if the target host is the same as the starting host
         if ($uri->host === $new_uri->host) {
             return true;
         }

@@ -18,7 +18,7 @@ class IPv4 extends AttrDef
     /**
      * IPv4 regex, protected so that IPv6 can reuse it.
      *
-     * @var string
+     * @var string|null
      */
     protected $ip4;
 
@@ -27,7 +27,7 @@ class IPv4 extends AttrDef
      * @param Config|null  $config
      * @param Context|null $context
      *
-     * @return bool|string
+     * @return false|string
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

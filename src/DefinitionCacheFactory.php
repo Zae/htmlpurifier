@@ -93,12 +93,14 @@ class DefinitionCacheFactory
             isset($this->implementations[$method]) &&
             class_exists($class = $this->implementations[$method], false)
         ) {
+            /** @var DefinitionCache $cache */
             $cache = new $class($type);
         } else {
             if ($method !== 'Serializer') {
                 trigger_error("Unrecognized DefinitionCache $method, using Serializer instead", E_USER_WARNING);
             }
 
+            /** @var Serializer $cache */
             $cache = new Serializer($type);
         }
 
@@ -123,6 +125,8 @@ class DefinitionCacheFactory
     {
         if (is_string($decorator)) {
             $class = "HTMLPurifier\\DefinitionCache\\Decorator\\$decorator";
+
+            /** @var Decorator $decorator */
             $decorator = new $class();
         }
 

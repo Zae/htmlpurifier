@@ -27,7 +27,7 @@ class Filter
     /**
      * Name of the filter for identification purposes.
      *
-     * @var string
+     * @var string|null
      */
     public $name;
 
