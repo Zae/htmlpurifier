@@ -24,7 +24,7 @@ class IPv6 extends IPv4
      * @param Config|null  $config
      * @param Context|null $context
      *
-     * @return bool|string
+     * @return false|string
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

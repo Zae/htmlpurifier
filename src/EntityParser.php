@@ -15,7 +15,7 @@ class EntityParser
     /**
      * Reference to entity lookup table.
      *
-     * @var EntityLookup
+     * @var EntityLookup|null
      */
     protected $entityLookup;
 

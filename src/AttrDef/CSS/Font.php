@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\AttrDef\Switcher;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
@@ -21,7 +22,7 @@ class Font extends AttrDef
     /**
      * Local copy of validators
      *
-     * @var AttrDef[]
+     * @var array<AttrDef|Switcher>
      * @note If we moved specific CSS property definitions to their own
      *       classes instead of having them be assembled at run time by
      *       CSSDefinition, this wouldn't be necessary.  We'd instantiate
@@ -175,7 +176,7 @@ class Font extends AttrDef
                              */
                             $i = $j;
                             $r = $this->info['line-height']->validate(
-                                $line_height,
+                                (string)$line_height,
                                 $config,
                                 $context
                             );

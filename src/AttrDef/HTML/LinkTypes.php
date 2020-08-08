@@ -29,8 +29,10 @@ class LinkTypes extends AttrDef
 
     /**
      * @param string $name
+     *
+     * @throws Exception
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $configLookup = [
             'rel' => 'AllowedRel',
@@ -38,13 +40,7 @@ class LinkTypes extends AttrDef
         ];
 
         if (!isset($configLookup[$name])) {
-            trigger_error(
-                'Unrecognized attribute name for link ' .
-                'relationship.',
-                E_USER_ERROR
-            );
-
-            return;
+            throw new Exception('Unrecognized attribute name for link relationship.');
         }
 
         $this->name = $configLookup[$name];

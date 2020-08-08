@@ -62,7 +62,7 @@ class URI extends AttrDef
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {
-        if (is_null($config) || $config->get('URI.Disable')) {
+        if (is_null($config) || is_null($context) || $config->get('URI.Disable')) {
             return false;
         }
 
@@ -70,14 +70,12 @@ class URI extends AttrDef
 
         // parse the URI
         $string = $this->parser->parse($string);
-        if ($string === false) {
+        if ($string === null) {
             return false;
         }
 
         // add embedded flag to context for validators
-        if (!is_null($context)) {
-            $context->register('EmbeddedURI', $this->embedsResource);
-        }
+        $context->register('EmbeddedURI', $this->embedsResource);
 
         $ok = false;
         do {
@@ -120,9 +118,7 @@ class URI extends AttrDef
             $ok = true;
         } while (false);
 
-        if (!is_null($context)) {
-            $context->destroy('EmbeddedURI');
-        }
+        $context->destroy('EmbeddedURI');
 
         if (!$ok) {
             return false;

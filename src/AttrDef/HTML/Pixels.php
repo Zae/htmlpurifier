@@ -17,14 +17,14 @@ use function strlen;
 class Pixels extends AttrDef
 {
     /**
-     * @var int
+     * @var int|null
      */
     protected $max;
 
     /**
-     * @param int $max
+     * @param int|null $max
      */
-    public function __construct($max = null)
+    public function __construct(int $max = null)
     {
         $this->max = $max;
     }

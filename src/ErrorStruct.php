@@ -23,7 +23,7 @@ class ErrorStruct
     /**
      * Type of this struct.
      *
-     * @var string
+     * @var int|null
      */
     public $type;
 
@@ -55,7 +55,7 @@ class ErrorStruct
     public $children = [];
 
     /**
-     * @param string|int $type
+     * @param int $type
      * @param string     $id
      *
      * @return mixed

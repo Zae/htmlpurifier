@@ -19,14 +19,14 @@ class DoctypeRegistry
      *
      * @var array
      */
-    protected $doctypes;
+    protected $doctypes = [];
 
     /**
      * Lookup table of aliases to real doctype names.
      *
      * @var array
      */
-    protected $aliases;
+    protected $aliases = [];
 
     /**
      * Registers a doctype to the registry

@@ -30,9 +30,9 @@ class Tidy extends HTMLModule
      * Default level to place all fixes in.
      * Disabled by default.
      *
-     * @var string
+     * @var string|null
      */
-    public $defaultLevel = null;
+    public $defaultLevel;
 
     /**
      * Lists of fixes used by getFixesForLevel().

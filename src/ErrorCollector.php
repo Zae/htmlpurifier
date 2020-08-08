@@ -42,7 +42,7 @@ class ErrorCollector
     protected $locale;
 
     /**
-     * @var Generator
+     * @var Generator|null
      */
     protected $generator;
 
@@ -232,7 +232,9 @@ class ErrorCollector
                     $string .= '<em class="location">End of Document: </em> ';
                 }
 
-                $string .= '<strong class="description">' . $this->generator->escape($msg) . '</strong> ';
+                if ($this->generator !== null) {
+                    $string .= '<strong class="description">' . $this->generator->escape($msg) . '</strong> ';
+                }
                 $string .= '</div>';
                 // Here, have a marker for the character on the column appropriate.
                 // Be sure to clip extremely long lines.
