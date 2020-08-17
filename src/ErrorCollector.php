@@ -215,6 +215,7 @@ class ErrorCollector
         $stack = [$struct];
         $context_stack = [[]];
 
+        /** @var ErrorStruct $current */
         while ($current = array_pop($stack)) {
             $context = array_pop($context_stack);
 

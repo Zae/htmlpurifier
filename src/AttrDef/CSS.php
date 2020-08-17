@@ -10,6 +10,7 @@ use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
 use function is_null;
+use function strlen;
 
 /**
  * Validates the HTML attribute style, otherwise known as CSS.
@@ -36,7 +37,7 @@ class CSS extends AttrDef
     public function validate(string $string, ?Config $config, ?Context $context)
     {
         if (is_null($config)) {
-            throw new \Exception('Config is null');
+            throw new Exception('Config is null');
         }
 
         $string = $this->parseCDATA($string);
@@ -48,7 +49,7 @@ class CSS extends AttrDef
         // non-delimiting semicolon can appear are in strings
         // escape sequences.   So here is some dumb hack to
         // handle quotes.
-        $len = \strlen($string);
+        $len = strlen($string);
         $accum = '';
         $declarations = [];
         $quoted = false;

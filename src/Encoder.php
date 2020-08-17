@@ -15,6 +15,17 @@ use function strlen;
  */
 class Encoder
 {
+    /** @var ?int */
+    protected static $iconvCode = null;
+
+    /** @var ?bool  */
+    private static $iconvAvailable = null;
+
+    /**
+     * @var array
+     */
+    private static $asciiEncodings = [];
+
     /**
      * Constructor throws fatal error if you attempt to instantiate class
      */
@@ -68,14 +79,14 @@ class Encoder
      */
     public static function iconv(string $in, string $out, string $text, int $max_chunk_size = 8000): ?string
     {
-        $code = self::testIconvTruncateBug();
-        if ($code === self::ICONV_OK) {
-            return self::unsafeIconv($in, $out, $text);
+        $code = static::testIconvTruncateBug();
+        if ($code === static::ICONV_OK) {
+            return static::unsafeIconv($in, $out, $text);
         }
 
         // we can only work around this if the input character set
         // is utf-8
-        if (($code === self::ICONV_TRUNCATES) && $in === 'utf-8') {
+        if (($code === static::ICONV_TRUNCATES) && $in === 'utf-8') {
             if ($max_chunk_size < 4) {
                 trigger_error('max_chunk_size is too small', E_USER_WARNING);
 
@@ -85,7 +96,7 @@ class Encoder
             // split into 8000 byte chunks, but be careful to handle
             // multibyte boundaries properly
             if (($c = strlen($text)) <= $max_chunk_size) {
-                return self::unsafeIconv($in, $out, $text);
+                return static::unsafeIconv($in, $out, $text);
             }
 
             $r = '';
@@ -93,7 +104,7 @@ class Encoder
 
             while (true) {
                 if ($i + $max_chunk_size >= $c) {
-                    $r .= self::unsafeIconv($in, $out, substr($text, $i));
+                    $r .= static::unsafeIconv($in, $out, substr($text, $i));
                     break;
                 }
 
@@ -111,7 +122,7 @@ class Encoder
                 }
 
                 $chunk = substr($text, $i, $chunk_size); // substr doesn't mind overlong lengths
-                $r .= self::unsafeIconv($in, $out, $chunk);
+                $r .= static::unsafeIconv($in, $out, $chunk);
                 $i += $chunk_size;
             }
 
@@ -402,12 +413,12 @@ class Encoder
      */
     public static function iconvAvailable(): bool
     {
-        static $iconv = null;
-        if ($iconv === null) {
-            $iconv = function_exists('iconv') && self::testIconvTruncateBug() !== self::ICONV_UNUSABLE;
+        if (static::$iconvAvailable === null) {
+            static::$iconvAvailable = function_exists('iconv')
+                                      && static::testIconvTruncateBug() !== static::ICONV_UNUSABLE;
         }
 
-        return $iconv;
+        return static::$iconvAvailable;
     }
 
     /**
@@ -429,23 +440,21 @@ class Encoder
 
         static $iconv = null;
         if ($iconv === null) {
-            $iconv = self::iconvAvailable();
+            $iconv = static::iconvAvailable();
         }
 
         if ($iconv && !$config->get('Test.ForceNoIconv')) {
             // unaffected by bugs, since UTF-8 support all characters
-            $str = self::unsafeIconv($encoding, 'utf-8//IGNORE', $str);
+            $str = static::unsafeIconv($encoding, 'utf-8//IGNORE', $str);
             if ($str === null) {
                 // $encoding is not a valid encoding
                 trigger_error('Invalid encoding ' . $encoding, E_USER_ERROR);
-
-                return '';
             }
 
             // If the string is bjorked by Shift_JIS or a similar encoding
             // that doesn't support all of ASCII, convert the naughty
             // characters to their true byte-wise ASCII/UTF-8 equivalents.
-            $replacements = self::testEncodingSupportsASCII($encoding);
+            $replacements = static::testEncodingSupportsASCII($encoding);
             if (\is_array($replacements)) {
                 return strtr($str, $replacements);
             }
@@ -474,7 +483,7 @@ class Encoder
      *
      * @param string  $str The string to convert
      * @param Config  $config
-     * @param Context $context
+     * @param ?Context $context
      *
      * @return string
      * @note Currently, this is a lossy conversion, with unexpressable
@@ -492,12 +501,11 @@ class Encoder
             return $str;
         }
 
-        static $iconv = null;
-        if ($iconv === null) {
-            $iconv = static::iconvAvailable();
+        if (static::$iconvAvailable === null) {
+            static::$iconvAvailable = static::iconvAvailable();
         }
 
-        if ($iconv && !$config->get('Test.ForceNoIconv')) {
+        if (static::$iconvAvailable && !$config->get('Test.ForceNoIconv')) {
             // Undo our previous fix in convertToUTF8, otherwise iconv will barf
             $ascii_fix = static::testEncodingSupportsASCII($encoding);
             if (!$escape && !empty($ascii_fix) && \is_iterable($ascii_fix)) {
@@ -606,19 +614,17 @@ class Encoder
      */
     public static function testIconvTruncateBug(): int
     {
-        static $code = null;
-
-        if ($code === null) {
+        if (static::$iconvCode === null) {
             // better not use iconv, otherwise infinite loop!
-            $r = self::unsafeIconv('utf-8', 'ascii//IGNORE', "\xCE\xB1" . str_repeat('a', 9000));
+            $r = static::unsafeIconv('utf-8', 'ascii//IGNORE', "\xCE\xB1" . str_repeat('a', 9000));
 
             if ($r === null) {
-                return $code = self::ICONV_UNUSABLE;
+                return static::$iconvCode = static::ICONV_UNUSABLE;
             }
 
             $c = strlen($r);
             if ($c < 9000) {
-                return $code = self::ICONV_TRUNCATES;
+                return static::$iconvCode = static::ICONV_TRUNCATES;
             }
 
             if ($c > 9000) {
@@ -628,11 +634,11 @@ class Encoder
                     E_USER_ERROR
                 );
             } else {
-                return $code = self::ICONV_OK;
+                return static::$iconvCode = static::ICONV_OK;
             }
         }
 
-        return $code;
+        return static::$iconvCode;
     }
 
     /**
@@ -654,10 +660,11 @@ class Encoder
         // If ICONV_TRUNCATE, all calls involve one character inputs,
         // so bug is not triggered.
         // If ICONV_UNUSABLE, this call is irrelevant
-        static $encodings = [];
+        static::$asciiEncodings = [];
         if (!$bypass) {
-            if (isset($encodings[$encoding])) {
-                return $encodings[$encoding];
+            // fixme: this could never be true because of line 663 right?
+            if (isset(static::$asciiEncodings[$encoding])) {
+                return static::$asciiEncodings[$encoding];
             }
 
             $lenc = strtolower($encoding);
@@ -674,30 +681,30 @@ class Encoder
         }
 
         $ret = [];
-        if (self::unsafeIconv('UTF-8', $encoding, 'a') === null) {
+        if (static::unsafeIconv('UTF-8', $encoding, 'a') === null) {
             return false;
         }
 
         for ($i = 0x20; $i <= 0x7E; $i++) { // all printable ASCII chars
             $c = \chr($i); // UTF-8 char
-            $r = self::unsafeIconv('UTF-8', "$encoding//IGNORE", $c); // initial conversion
+            $r = static::unsafeIconv('UTF-8', "$encoding//IGNORE", $c); // initial conversion
             if (
                 $r === ''
                 // This line is needed for iconv implementations that do not
                 // omit characters that do not exist in the target character set
-                || ($r === $c && self::unsafeIconv($encoding, 'UTF-8//IGNORE', $r) !== $c)
+                || ($r === $c && static::unsafeIconv($encoding, 'UTF-8//IGNORE', $r) !== $c)
             ) {
                 // Reverse engineer: what's the UTF-8 equiv of this byte
                 // sequence? This assumes that there's no variable width
                 // encoding that doesn't support ASCII.
-                $key = self::unsafeIconv($encoding, 'UTF-8//IGNORE', $c);
+                $key = static::unsafeIconv($encoding, 'UTF-8//IGNORE', $c);
                 if (!\is_null($key)) {
                     $ret[$key] = $c;
                 }
             }
         }
 
-        $encodings[$encoding] = $ret;
+        static::$asciiEncodings[$encoding] = $ret;
 
         return $ret;
     }

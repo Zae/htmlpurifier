@@ -358,9 +358,9 @@ class HTMLModuleManager
             $n = [];
             foreach ($module->info_injector as $injector) {
                 if (!is_object($injector)) {
-                    $class = "HTMLPurifier\\Injector\\$injector";
-                    $injector = new $class();
+                    $injector = Injector::make($injector);
                 }
+
                 $n[$injector->name] = $injector;
             }
             $module->info_injector = $n;

@@ -133,4 +133,21 @@ class Decorator extends DefinitionCache
     {
         return $this->cache->cleanup($config);
     }
+
+    /**
+     * @param string $decorator
+     * @return self
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public static function make(string $decorator): self
+    {
+        $class = sprintf(
+            "%s\\%s",
+            __CLASS__,
+            $decorator
+        );
+
+        return new $class();
+    }
 }

@@ -74,13 +74,7 @@ class URISchemeRegistry
             return null;
         }
 
-        $class = 'HTMLPurifier\\URIScheme\\' . ucfirst($scheme);
-        if (!class_exists($class)) {
-            return null;
-        }
-
-        /** @var URIScheme $object */
-        $object = new $class();
+        $object = URIScheme::make($scheme);
         $this->schemes[$scheme] = $object;
 
         return $this->schemes[$scheme];

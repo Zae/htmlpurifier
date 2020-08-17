@@ -78,7 +78,7 @@ class Pixels extends AttrDef
      *
      * @return AttrDef
      */
-    public function make(string $string): \HTMLPurifier\AttrDef
+    public function make(string $string): AttrDef
     {
         if ($string === '') {
             $max = null;
@@ -86,8 +86,6 @@ class Pixels extends AttrDef
             $max = (int)$string;
         }
 
-        $class = get_class($this);
-
-        return new $class($max);
+        return new static($max);
     }
 }

@@ -58,4 +58,25 @@ class Filter
     {
         return $html;
     }
+
+    /**
+     * Factory function for filters.
+     *
+     * @param string $name
+     * @return Filter
+     *
+     * @psalm-param class-string $injector
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public static function make(string $name): Filter
+    {
+        $class = sprintf(
+            "%s\\%s",
+            __CLASS__,
+            $name
+        );
+
+        return new $class();
+    }
 }
