@@ -202,14 +202,15 @@ class HTMLPurifier
             if (!$flag) {
                 continue;
             }
+
             if (strpos($filter, '.') !== false) {
                 continue;
             }
-            $class = "HTMLPurifier_Filter_$filter";
-            $filters[] = new $class();
+
+            $filters[] = Filter::make($filter);
         }
         foreach ($custom_filters as $filter) {
-            // maybe "HTMLPurifier_Filter_$filter", but be consistent with AutoFormat
+            // maybe "HTMLPurifier\\Filter\\$filter", but be consistent with AutoFormat
             $filters[] = $filter;
         }
         $filters = array_merge($filters, $this->filters);

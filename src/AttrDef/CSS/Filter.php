@@ -87,7 +87,7 @@ class Filter extends AttrDef
                 $string = '0';
             }
 
-            $ret_params[] = "$key=$string";
+            $ret_params[] = "{$key}={$string}";
             $lookup[$key] = true;
         }
 

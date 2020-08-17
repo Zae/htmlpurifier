@@ -366,4 +366,23 @@ abstract class Injector
     public function notifyEnd($token): void
     {
     }
+
+    /**
+     * @param string $injector
+     * @return self
+     *
+     * @psalm-param class-string $injector
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public static function make(string $injector): self
+    {
+        $class = sprintf(
+            "%s\\%s",
+            __CLASS__,
+            $injector
+        );
+
+        return new $class();
+    }
 }

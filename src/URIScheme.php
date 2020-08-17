@@ -112,4 +112,21 @@ abstract class URIScheme
 
         return $this->doValidate($uri, $config, $context);
     }
+
+    /**
+     * @param string $scheme
+     * @return self
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public static function make(string $scheme): self
+    {
+        $class = sprintf(
+            "%s\\%s",
+            __CLASS__,
+            ucfirst($scheme)
+        );
+
+        return new $class();
+    }
 }
