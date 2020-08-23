@@ -65,7 +65,6 @@ class Filter
      * @param string $name
      * @return Filter
      *
-     * @psalm-param class-string $name
      * @psalm-suppress LessSpecificReturnStatement
      * @psalm-suppress MoreSpecificReturnType
      */

@@ -207,7 +207,7 @@ class HTMLPurifier
                 continue;
             }
 
-            $filters[] = Filter::make($filter);
+            $filters[] = Filter::make((string)$filter);
         }
         foreach ($custom_filters as $filter) {
             // maybe "HTMLPurifier\\Filter\\$filter", but be consistent with AutoFormat
