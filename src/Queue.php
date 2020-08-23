@@ -53,7 +53,7 @@ class Queue
      * Shifts an element off the front of the queue.
      *
      * @return mixed
-     * @psalm-return T
+     * @psalm-return T|null
      */
     public function shift()
     {

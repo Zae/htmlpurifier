@@ -477,6 +477,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('HTML', $raw, $optimized);
     }
@@ -502,6 +503,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('CSS', $raw, $optimized);
     }
@@ -527,6 +529,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('URI', $raw, $optimized);
     }
@@ -752,6 +755,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('HTML', true, true);
     }
@@ -766,6 +770,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('CSS', true, true);
     }
@@ -780,6 +785,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('URI', true, true);
     }

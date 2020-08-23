@@ -59,7 +59,8 @@ class MakeWellFormed extends Strategy
     /**
      * Current nesting of elements.
      *
-     * @var array|Token\Tag[]
+     * @var array
+     * @psalm-var array<array-key, \HTMLPurifier\Token\Tag|Token|null>
      */
     protected $stack = [];
 
