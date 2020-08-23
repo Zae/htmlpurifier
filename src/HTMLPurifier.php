@@ -172,7 +172,7 @@ class HTMLPurifier
         $context = new Context();
 
         // setup HTML generator
-        $this->generator = new Generator($config, $context);
+        $this->generator = new Generator($config);
         $context->register('Generator', $this->generator);
 
         // set up global context variables
@@ -293,9 +293,9 @@ class HTMLPurifier
             if ($prototype instanceof static) {
                 self::$instance = $prototype;
             } elseif ($prototype) {
-                self::$instance = new static($prototype);
+                self::$instance = new self($prototype);
             } else {
-                self::$instance = new static();
+                self::$instance = new self();
             }
         }
 

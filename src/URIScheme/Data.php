@@ -131,7 +131,7 @@ class Data extends URIScheme
             }
             $image_code = $info[2];
         } else {
-            throw new Exception('could not find exif_imagetype or getimagesize functions');
+            throw new Exception('Could not find exif_imagetype or getimagesize functions');
         }
 
         $real_content_type = image_type_to_mime_type((int)$image_code);

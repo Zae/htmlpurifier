@@ -30,7 +30,8 @@
         "cerdic/css-tidy": "^1.7",
         "squizlabs/php_codesniffer": "^3.5",
         "sensiolabs/security-checker": "^6.0",
-        "php-parallel-lint/php-parallel-lint": "^1.0"
+        "php-parallel-lint/php-parallel-lint": "^1.0",
+        "phpstan/phpstan": "^0.12.38"
     },
     "suggest": {
         "ext-bcmath": "Makes math much faster",
@@ -62,6 +63,7 @@
             "Composer\\Config::disableProcessTimeout",
             "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Snapshots"
         ],
+        "cover": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Unit,VTest --coverage-clover=coverage.xml --coverage-html=coverage-html",
         "unit": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite Unit",
         "vtest": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite VTest",
         "htmlt": "@php vendor/bin/phpunit -d memory_limit=-1 --testsuite HTMLT",
@@ -72,10 +74,16 @@
         ],
         "infect": [
             "Composer\\Config::disableProcessTimeout",
-            "@php -d memory_limit=-1 vendor/bin/infection -j8 --only-covered"
+            "@php -d memory_limit=-1 vendor/bin/infection -j8 --only-covered --no-progress"
         ],
+        "static": [
+            "@psalm",
+            "@phpstan"
+        ],
+        "phpstan": "@php  -d memory_limit=-1 vendor/bin/phpstan analyse",
         "psalm": "@php vendor/bin/psalm --threads=8",
         "codestyle": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src",
-        "lint": "@php vendor/bin/parallel-lint -j 8 --no-progress src"
+        "lint": "@php vendor/bin/parallel-lint -j 8 --no-progress src",
+        "security": "@php vendor/bin/security-checker security:check"
     }
 }

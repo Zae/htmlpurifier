@@ -35,7 +35,9 @@ abstract class AttrTransform
      * Prepends CSS properties to the style attribute, creating the
      * attribute if it doesn't exist.
      *
-     * @param array &$attr Attribute array to process (passed by reference)
+     * @param array $attr Attribute array to process (passed by reference)
+     * @psalm-param string[] $attr
+     * @phpstan-param string[] $attr
      * @param string $css  CSS to prepend
      */
     public function prependCSS(array &$attr, string $css): void
@@ -47,8 +49,11 @@ abstract class AttrTransform
     /**
      * Retrieves and removes an attribute
      *
-     * @param array &$attr Attribute array to process (passed by reference)
-     * @param mixed  $key  Key of attribute to confiscate
+     * @param array $attr Attribute array to process (passed by reference)
+     * @param mixed $key  Key of attribute to confiscate
+     *
+     * @psalm-param string[] $attr
+     * @phpstan-param string[] $attr
      *
      * @return mixed
      */

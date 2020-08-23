@@ -23,7 +23,6 @@ use function count;
  * Nota bene: the current class gets confused if you try to store NULLs
  * in the list.
  *
- * @template T
  */
 class Zipper
 {
@@ -46,13 +45,18 @@ class Zipper
      * Creates a zipper from an array, with a hole in the
      * 0-index position.
      *
-     * @param array to zipper-ify.
+     * @template T
+     * @param array $array to zipper-ify.
+     * @psalm-param T[] $array
+     * @phpstan-param T[] $array
      *
-     * @return array|array{Zipper, T} of zipper and element of first position.
+     * @return array of zipper and element of first position.
+     * @phpstan-return array{Zipper, T|null}
+     * @psalm-return array{Zipper, T|null}
      */
     public static function fromArray(array $array): array
     {
-        $z = new static([], array_reverse($array));
+        $z = new self([], array_reverse($array));
         $t = $z->delete(); // delete the "dummy hole"
 
         return [$z, $t];
@@ -63,6 +67,7 @@ class Zipper
      * the hole with a value. (Usually you should supply a $t, unless you
      * are at the end of the array.)
      *
+     * @template T
      * @param T|null $t
      *
      * @return array
@@ -84,6 +89,7 @@ class Zipper
     /**
      * Move hole to the next element.
      *
+     * @template T
      * @param T|null $t Element to fill hole with
      *
      * @return T Original contents of new hole.
@@ -100,6 +106,7 @@ class Zipper
     /**
      * Iterated hole advancement.
      *
+     * @template T
      * @param T|null $t Element to fill hole with
      * @param int $n How many forward to advance hole
      *
@@ -117,6 +124,7 @@ class Zipper
     /**
      * Move hole to the previous element
      *
+     * @template T
      * @param T|null $t Element to fill hole with
      *
      * @return T Original contents of new hole.
@@ -134,7 +142,8 @@ class Zipper
      * Delete contents of current hole, shifting hole to
      * next element.
      *
-     * @return T Original contents of new hole.
+     * @template T
+     * @return T|null Original contents of new hole.
      */
     public function delete()
     {
@@ -154,6 +163,7 @@ class Zipper
     /**
      * Insert element before hole.
      *
+     * @template T
      * @param T|null $t Element to insert
      */
     public function insertBefore($t): void
@@ -166,6 +176,7 @@ class Zipper
     /**
      * Insert element after hole.
      *
+     * @template T
      * @param T|null $t Element to insert
      */
     public function insertAfter($t): void
@@ -193,9 +204,10 @@ class Zipper
      * NB: the absolute index location after this operation is
      * *unchanged!*
      *
+     * @template T
      * @param T     $t
      * @param int       $delete
-     * @param array     $replacement
+     * @param array|T[]     $replacement
      *
      * @return array|array{Zipper, T}
      */

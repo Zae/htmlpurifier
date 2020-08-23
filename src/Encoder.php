@@ -432,6 +432,7 @@ class Encoder
      *
      * @return string
      * @throws Exception
+     * @throws \Exception
      */
     public static function convertToUTF8(string $str, Config $config, Context $context): string
     {
@@ -467,16 +468,14 @@ class Encoder
         if ($encoding === 'iso-8859-1') {
             return utf8_encode($str);
         }
-        $bug = static::testIconvTruncateBug();
 
+        $bug = static::testIconvTruncateBug();
         if ($bug === static::ICONV_OK) {
             throw new Exception('Encoding not supported, please install iconv');
-        } else {
-            throw new Exception(
-                'You have a buggy version of iconv, see https://bugs.php.net/bug.php?id=48147 ' .
-                'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541'
-            );
         }
+
+        throw new Exception('You have a buggy version of iconv, see https://bugs.php.net/bug.php?id=48147 ' .
+                             'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541');
     }
 
     /**

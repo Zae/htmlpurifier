@@ -77,7 +77,7 @@ class Length
             $unit = false;
         }
 
-        return new static($n, $unit);
+        return new self($n, $unit);
     }
 
     /**

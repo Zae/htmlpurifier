@@ -6,6 +6,7 @@ namespace HTMLPurifier\Tests\Unit\Strategy\MakeWellFormed;
 
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
+use HTMLPurifier\Token\End;
 use HTMLPurifier\Token\Start;
 use HTMLPurifier\Token\Text;
 
@@ -48,11 +49,11 @@ class EndRewindInjector extends Injector
     /**
      * Handler that is called when an end token is processed
      *
-     * @param Token $token
+     * @param End $token
      *
      * @return void
      */
-    public function handleEnd(Token &$token): void
+    public function handleEnd(End &$token): void
     {
         $i = null;
         if (

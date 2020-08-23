@@ -7,6 +7,8 @@ namespace HTMLPurifier\Injector;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\End;
+use HTMLPurifier\Token\Start;
+use HTMLPurifier\Token\Tag;
 use HTMLPurifier\Token\Text;
 
 /**
@@ -34,23 +36,21 @@ class DisplayLinkURI extends Injector
     }
 
     /**
-     * @param Token $token
+     * @param End $token
      *
      * @return void
      *
-     * @param-out Token|array{0: End, 1:Text} $token
+     * @param-out End|array{End, Text} $token
      */
-    public function handleEnd(Token &$token): void
+    public function handleEnd(End &$token): void
     {
         /**
          * @psalm-suppress InvalidArrayOffset No idea why psalm doesnt like this, TODO FIX.
          */
-        if ($token instanceof End && isset($token->start->attr['href'])) {
+        if ($token->start instanceof Tag && isset($token->start->attr['href'])) {
             $url = $token->start->attr['href'];
             unset($token->start->attr['href']);
             $token = [$token, new Text(" ($url)")];
-        } else {
-            // nothing to display
         }
     }
 }

@@ -18,7 +18,7 @@ use HTMLPurifier\Context;
 class Filter extends AttrDef
 {
     /**
-     * @var Integer
+     * @var \HTMLPurifier\AttrDef\Integer
      */
     protected $intValidator;
 

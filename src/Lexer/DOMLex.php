@@ -11,6 +11,7 @@ use DOMNode;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Lexer;
 use HTMLPurifier\Queue;
 use HTMLPurifier\Token;
@@ -379,30 +380,23 @@ class DOMLex extends Lexer
     /**
      * Wraps an HTML fragment in the necessary HTML
      *
-     * @param string                $html
-     * @param Config                $config
-     * @param \HTMLPurifier\Context $context
+     * @param string  $html
+     * @param Config  $config
+     * @param Context $context
      *
-     * @param bool                  $use_div
+     * @param bool    $use_div
      *
      * @return string
      * @throws Exception
      */
     protected function wrapHTML(string $html, Config $config, Context $context, bool $use_div = true): string
     {
+        /** @var HTMLDefinition $def */
         $def = $config->getDefinition('HTML');
         $ret = '';
 
-        /**
-         * @psalm-suppress NullPropertyFetch
-         * @todo fix?
-         */
         if (!empty($def->doctype->dtdPublic) || !empty($def->doctype->dtdSystem)) {
             $ret .= '<!DOCTYPE html ';
-            /**
-             * @psalm-suppress NullPropertyFetch
-             * @todo fix?
-             */
             if (!empty($def->doctype->dtdPublic)) {
                 $ret .= 'PUBLIC "' . $def->doctype->dtdPublic . '" ';
             }

@@ -70,7 +70,7 @@ class AttrCollections
      * Takes a reference to an attribute associative array and performs
      * all inclusions specified by the zero index.
      *
-     * @param array &$attr Reference to attribute array
+     * @param array $attr Reference to attribute array
      */
     public function performInclusions(array &$attr): void
     {

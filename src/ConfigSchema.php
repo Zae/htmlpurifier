@@ -57,6 +57,8 @@ class ConfigSchema
      * which uses more memory but has much richer information.
      *
      * @var array|int[]|object[]
+     * @psalm-var array<string, object|int>
+     * @phpstan-var array<string, object|int>
      */
     public $info = [];
 
@@ -147,6 +149,7 @@ class ConfigSchema
     public function addValueAliases(string $key, array $aliases): void
     {
         if (!\is_object($this->info[$key]) || !isset($this->info[$key]->aliases)) {
+            /* @phpstan-ignore-next-line */
             $this->info[$key]->aliases = [];
         }
 
@@ -155,6 +158,11 @@ class ConfigSchema
          * @todo: fix?
          */
         foreach ($aliases as $alias => $real) {
+            /**
+             * @psalm-suppress PossiblyInvalidPropertyFetch
+             * @phpstan-ignore-next-line
+             * @todo: fix?
+             */
             $this->info[$key]->aliases[$alias] = $real;
         }
     }
@@ -170,6 +178,7 @@ class ConfigSchema
      */
     public function addAllowedValues(string $key, array $allowed): void
     {
+        /** @phpstan-ignore-next-line @todo fix? */
         $this->info[$key]->allowed = $allowed;
     }
 
@@ -196,6 +205,7 @@ class ConfigSchema
             if (\is_object($v) && \count((array)$v) === 1) {
                 $this->info[$key] = $v->type;
             } elseif (\is_object($v) && isset($v->allow_null) && \count((array)$v) === 2) {
+                /** @phpstan-ignore-next-line @todo fix? */
                 $this->info[$key] = -$v->type;
             }
         }

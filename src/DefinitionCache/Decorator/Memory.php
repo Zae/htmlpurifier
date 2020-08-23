@@ -33,7 +33,7 @@ class Memory extends Decorator
      */
     public function copy(): Decorator
     {
-        return new static();
+        return new self();
     }
 
     /**

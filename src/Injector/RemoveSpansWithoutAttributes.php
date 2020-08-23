@@ -96,13 +96,13 @@ class RemoveSpansWithoutAttributes extends Injector
     }
 
     /**
-     * @param Token $token
+     * @param End $token
      *
      * @return void
      *
      * @param-out Token|false $token
      */
-    public function handleEnd(Token &$token): void
+    public function handleEnd(End &$token): void
     {
         if ($token->markForDeletion) {
             $token = false;

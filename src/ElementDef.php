@@ -161,7 +161,7 @@ class ElementDef
      */
     public static function create(?string $content_model, ?string $content_model_type, array $attr): self
     {
-        $def = new static();
+        $def = new self();
         $def->content_model = $content_model ?? '';
         $def->content_model_type = $content_model_type ?? '';
         $def->attr = $attr;

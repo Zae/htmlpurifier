@@ -9,8 +9,10 @@ use HTMLPurifier\AttrDef\CSS\Ident;
 use HTMLPurifier\AttrDef\HTML\ID;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\CSSDefinition;
 use HTMLPurifier\Filter;
 use HTMLPurifier\Exception;
+use HTMLPurifier\HTMLDefinition;
 
 /**
  * This filter extracts <style> blocks from input HTML, cleans them up
@@ -161,8 +163,12 @@ class ExtractStyleBlocks extends Filter
         set_error_handler([$this, 'muteerrorhandler']);
         $this->tidy->parse($css);
         restore_error_handler();
+
+        /** @var CSSDefinition $css_definition */
         $css_definition = $config->getDefinition('CSS');
+        /** @var HTMLDefinition $html_definition */
         $html_definition = $config->getDefinition('HTML');
+
         $new_css = [];
 
         foreach ($this->tidy->css as $k => $decls) {

@@ -48,7 +48,7 @@ class EntityLookup
         if ($prototype) {
             $instance = $prototype;
         } elseif (!$instance) {
-            $instance = new static();
+            $instance = new self();
             $instance->setup();
         }
 

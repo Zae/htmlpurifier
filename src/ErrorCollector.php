@@ -176,7 +176,7 @@ class ErrorCollector
     {
         $ret = [];
 
-        $this->generator = new Generator($config, $this->context);
+        $this->generator = new Generator($config);
         if ($errors === null) {
             $errors = $this->errors;
         }
@@ -215,8 +215,9 @@ class ErrorCollector
         $stack = [$struct];
         $context_stack = [[]];
 
-        /** @var ErrorStruct $current */
         while ($current = array_pop($stack)) {
+            /** @var ErrorStruct $current */
+
             $context = array_pop($context_stack);
 
             foreach ($current->errors as $error) {

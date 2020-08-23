@@ -31,7 +31,7 @@ class IDAccumulator
      */
     public static function build(Config $config, $context): IDAccumulator
     {
-        $id_accumulator = new static();
+        $id_accumulator = new self();
         $id_accumulator->load($config->get('Attr.IDBlacklist'));
 
         return $id_accumulator;

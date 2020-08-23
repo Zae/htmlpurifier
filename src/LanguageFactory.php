@@ -76,7 +76,7 @@ class LanguageFactory
         if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
-            $instance = new static();
+            $instance = new self();
         }
 
         return $instance;

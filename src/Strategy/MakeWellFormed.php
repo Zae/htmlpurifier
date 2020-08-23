@@ -90,7 +90,7 @@ class MakeWellFormed extends Strategy
      * @param Context $context
      *
      * @return Token[]
-     * @throws \HTMLPurifier\Exception
+     * @throws Exception
      *
      * @psalm-suppress TypeDoesNotContainType
      * @psalm-suppress RedundantCondition
@@ -101,7 +101,7 @@ class MakeWellFormed extends Strategy
         $definition = $config->getHTMLDefinition();
 
         // local variables
-        $generator = new Generator($config, $context);
+        $generator = new Generator($config);
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');
 
         // used for autoclose early abortion
@@ -111,6 +111,7 @@ class MakeWellFormed extends Strategy
         }
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
+
         [$zipper, $token] = Zipper::fromArray($tokens);
 
         if ($token === null) {
@@ -207,11 +208,23 @@ class MakeWellFormed extends Strategy
                             break;
                         }
 
+                        if (!$zipper instanceof Zipper) {
+                            throw new Exception('Something went really wrong');
+                        }
+
                         $token = $zipper->prev($token);
+
                         // indicate that other injectors should not process this token,
                         // but we need to reprocess it.  See Note [Injector skips]
-                        unset($token->skip[$i]);
-                        $token->rewind = $i;
+
+                        // do not merge issets, it confuses psalm.
+                        if (isset($token, $token->skip) && isset($token->skip[$i])) {
+                            unset($token->skip[$i]);
+                        }
+
+                        if ($token instanceof Token) {
+                            $token->rewind = $i;
+                        }
 
                         if ($token instanceof Start) {
                             array_pop($this->stack);
@@ -281,7 +294,7 @@ class MakeWellFormed extends Strategy
                 continue;
             }
 
-            if (isset($definition->info[$token->name])) {
+            if ($token instanceof Token && isset($definition->info[$token->name])) {
                 $type = $definition->info[$token->name]->child->type ?? false;
             } else {
                 $type = false; // Type is unknown, treat accordingly
@@ -339,7 +352,7 @@ class MakeWellFormed extends Strategy
                     $parent_elements = null;
                     $autoclose = false;
 
-                    if (is_array($definition->info) && isset($definition->info[$parent->name])) {
+                    if (isset($definition, $definition->info[$parent->name])) {
                         $parent_def = $definition->info[$parent->name];
 
                         $parent_elements = [];
@@ -625,10 +638,13 @@ class MakeWellFormed extends Strategy
      * @param Injector|int         $injector              Injector that performed the substitution; default is if
      *                                                    this is not an injector related operation.
      *
-     * @return mixed
-     * @throws \HTMLPurifier\Exception
+     * @psalm-param Token|array<int|Token>|int|bool $token
+     * @phpstan-param Token|Token<int|Token>|int|bool $token
+     *
+     * @return Token|null
+     * @throws Exception
      */
-    protected function processToken($token, $injector = -1)
+    protected function processToken($token, $injector = -1): ?Token
     {
         // Zend OpCache miscompiles $token = array($token), so
         // avoid this pattern.  See: https://github.com/ezyang/htmlpurifier/issues/108
@@ -648,6 +664,13 @@ class MakeWellFormed extends Strategy
             $token = [1];
         }
 
+        if ($token === true) {
+            throw new Exception('This should never happen...');
+        }
+
+        /**
+         * @psalm-suppress DocblockTypeContradiction
+         */
         if (!is_array($token)) {
             throw new Exception('Invalid token type from injector');
         }
@@ -668,9 +691,13 @@ class MakeWellFormed extends Strategy
         // array(number nodes to delete, new node 1, new node 2, ...)
 
         $delete = array_shift($token);
+        if (!is_int($delete)) {
+            throw new Exception('I don\'t know how many items to delete');
+        }
+
         [$old, $r] = $this->zipper->splice($this->token, $delete, $token);
 
-        if ($injector > -1) {
+        if (is_int($injector) && $injector > -1) {
             // See Note [Injector skips]
             // Determine appropriate skips.  Here's what the code does:
             //  *If* we deleted one or more tokens, copy the skips
@@ -679,12 +706,10 @@ class MakeWellFormed extends Strategy
             //  $injector.
             $oldskip = isset($old[0]) ? $old[0]->skip : [];
             foreach ($token as $object) {
-                $object->skip = $oldskip;
-                /**
-                 * @psalm-suppress InvalidPropertyFetch
-                 * @todo fix?
-                 */
-                $object->skip[$injector] = true;
+                if ($object instanceof Token) {
+                    $object->skip = $oldskip;
+                    $object->skip[$injector] = true;
+                }
             }
         }
 
