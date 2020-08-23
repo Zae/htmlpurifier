@@ -111,6 +111,7 @@ class FixNesting extends Strategy
         // children.
 
         $parent_def = $definition->info_parent_def;
+        /** @var array{\HTMLPurifier\Node\Element,bool,array,int}[] $stack */
         $stack = [
             [
                 $top_node,

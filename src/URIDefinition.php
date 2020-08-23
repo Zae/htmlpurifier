@@ -72,8 +72,8 @@ class URIDefinition extends Definition
     }
 
     /**
-     * @param $filter
-     * @param $config
+     * @param URIFilter $filter
+     * @param Config    $config
      */
     public function addFilter(URIFilter $filter, Config $config): void
     {

@@ -56,7 +56,7 @@ class Element extends Node
     /**
      * HTMLPurifier\Node\HTMLPurifier_Node_Element constructor.
      *
-     * @param          $name
+     * @param string   $name
      * @param array    $attr
      * @param int|null $line
      * @param int|null $col

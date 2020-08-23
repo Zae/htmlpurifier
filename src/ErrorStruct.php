@@ -63,7 +63,7 @@ class ErrorStruct
     public function getChild($type, string $id)
     {
         if (!isset($this->children[$type][$id])) {
-            $this->children[$type][$id] = new static();
+            $this->children[$type][$id] = new self();
             $this->children[$type][$id]->type = $type;
         }
 

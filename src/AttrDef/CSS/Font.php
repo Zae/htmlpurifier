@@ -116,6 +116,7 @@ class Font extends AttrDef
                         $stage = 1;
                     }
 
+                    /* @phpstan-ignore-next-line */
                     if ($r !== false) {
                         break;
                     }

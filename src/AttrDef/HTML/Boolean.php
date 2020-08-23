@@ -46,9 +46,9 @@ class Boolean extends AttrDef
     /**
      * @param string $string Name of attribute
      *
-     * @return Boolean
+     * @return \HTMLPurifier\AttrDef\HTML\Boolean
      */
-    public function make(string $string): \HTMLPurifier\AttrDef
+    public function make(string $string): AttrDef
     {
         return new Boolean($string);
     }

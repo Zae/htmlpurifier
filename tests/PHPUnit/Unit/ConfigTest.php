@@ -7,7 +7,6 @@ namespace HTMLPurifier\Tests\Unit;
 use \HTMLPurifier\Config;
 use HTMLPurifier\ConfigSchema;
 use HTMLPurifier\CSSDefinition;
-use HTMLPurifier\Definition;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier\Exception;
@@ -250,14 +249,13 @@ class ConfigTestt extends TestCase
         static::assertEquals('q', $config->get('Shortcut.Copy'));
         static::assertEquals('p', $config->get('Shortcut.Paste'));
         static::assertEquals('t', $config->get('Shortcut.Cut'));
-
     }
 
     /**
      * @test
      * @throws \HTMLPurifier\Exception
      */
-    public function test_getHTMLDefinition(): void
+    public function testGetHTMLDefinition(): void
     {
         // we actually want to use the old copy, because the definition
         // generation routines have dependencies on configuration values
@@ -272,17 +270,19 @@ class ConfigTestt extends TestCase
         $def = $config->getHTMLDefinition();
         $def2 = $config->getHTMLDefinition();
         static::assertInstanceOf(HTMLDefinition::class, $def);
-        static::assertTrue($def === $def2);
+        static::assertSame($def, $def2);
         static::assertTrue($def->setup);
 
         $old_def = clone $def2;
 
         $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
         $def = $config->getHTMLDefinition();
-        static::assertInstanceOf( HTMLDefinition::class, $def);
-        static::assertTrue($def !== $old_def);
+        static::assertInstanceOf(HTMLDefinition::class, $def);
+        static::assertNotSame($def, $old_def);
         static::assertTrue($def->setup);
 
+        $def = $config->getDefinition('HTML');
+        static::assertInstanceOf(HTMLDefinition::class, $def);
     }
 
     /**

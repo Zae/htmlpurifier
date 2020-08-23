@@ -37,7 +37,7 @@ class RemoveForeignElements extends Strategy
     public function execute($tokens, Config $config, Context $context): array
     {
         $definition = $config->getHTMLDefinition();
-        $generator = new Generator($config, $context);
+        $generator = new Generator($config);
         $result = [];
 
         $escape_invalid_tags = $config->get('Core.EscapeInvalidTags');

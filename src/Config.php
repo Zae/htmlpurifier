@@ -138,7 +138,7 @@ class Config
             return $config;
         }
         if ($schema) {
-            $ret = new static($schema);
+            $ret = new self($schema);
         } else {
             $ret = static::createDefault();
         }
@@ -161,7 +161,7 @@ class Config
      */
     public static function inherit(self $config): Config
     {
-        return new static($config->def, $config->plist);
+        return new self($config->def, $config->plist);
     }
 
     /**
@@ -173,7 +173,7 @@ class Config
     {
         $definition = ConfigSchema::instance();
 
-        return new static($definition);
+        return new self($definition);
     }
 
     /**
@@ -219,6 +219,7 @@ class Config
             $this->triggerError(
                 /**
                  * @psalm-suppress PossiblyInvalidPropertyFetch
+                 * @phpstan-ignore-next-line
                  * @todo fix?
                  */
                 'Cannot get value from aliased directive, use real name ' . $d->key,
@@ -376,8 +377,10 @@ class Config
             }
 
             $this->aliasMode = true;
+            /* @phpstan-ignore-next-line */
             $this->set($def->key, $value);
             $this->aliasMode = false;
+            /* @phpstan-ignore-next-line */
             $this->triggerError("$key is an alias, preferred directive name is {$def->key}", E_USER_NOTICE);
             return;
         }

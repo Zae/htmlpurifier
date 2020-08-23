@@ -430,6 +430,7 @@ class Encoder
      *
      * @return string
      * @throws Exception
+     * @throws \Exception
      */
     public static function convertToUTF8(string $str, Config $config, Context $context): string
     {
@@ -465,17 +466,14 @@ class Encoder
         if ($encoding === 'iso-8859-1') {
             return utf8_encode($str);
         }
-        $bug = static::testIconvTruncateBug();
 
+        $bug = static::testIconvTruncateBug();
         if ($bug === static::ICONV_OK) {
-            trigger_error('Encoding not supported, please install iconv', E_USER_ERROR);
-        } else {
-            trigger_error(
-                'You have a buggy version of iconv, see https://bugs.php.net/bug.php?id=48147 ' .
-                'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541',
-                E_USER_ERROR
-            );
+            throw new Exception('Encoding not supported, please install iconv');
         }
+
+        throw new Exception('You have a buggy version of iconv, see https://bugs.php.net/bug.php?id=48147 ' .
+                             'and http://sourceware.org/bugzilla/show_bug.cgi?id=13541');
     }
 
     /**
@@ -528,7 +526,7 @@ class Encoder
             return utf8_decode($str);
         }
 
-        trigger_error('Encoding not supported', E_USER_ERROR);
+        throw new Exception('Encoding not supported');
         // You might be tempted to assume that the ASCII representation
         // might be OK, however, this is *not* universally true over all
         // encodings.  So we take the conservative route here, rather

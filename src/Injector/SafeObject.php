@@ -8,6 +8,7 @@ use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\EmptyToken;
 
+use HTMLPurifier\Token\End;
 use function count;
 
 /**
@@ -82,8 +83,9 @@ class SafeObject extends Injector
 
                 /**
                  * @psalm-suppress InvalidArrayOffset
+                 * do not merge isset, phpstan doesn\'t like that.
                  */
-                if (!isset($token->attr['name'])) {
+                if (!isset($token->attr) || !isset($token->attr['name'])) {
                     $token = false;
 
                     return;
@@ -127,9 +129,9 @@ class SafeObject extends Injector
     /**
      * Handler that is called when an end token is processed
      *
-     * @param Token $token
+     * @param End $token
      */
-    public function handleEnd(Token &$token): void
+    public function handleEnd(End &$token): void
     {
         // This is the WRONG way of handling the object and param stacks;
         // we should be inserting them directly on the relevant object tokens

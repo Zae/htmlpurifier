@@ -268,10 +268,12 @@ class Lexer
      * @return Token[] array representation of HTML.
      *
      * @psalm-suppress InvalidReturnType
+     * @throws Exception
      */
     public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
-        trigger_error('Call to abstract class', E_USER_ERROR);
+        // fixme: just make the class / function actually abstract?
+        throw new Exception('Call to abstract class');
     }
 
     /**

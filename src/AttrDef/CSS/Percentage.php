@@ -18,7 +18,7 @@ class Percentage extends AttrDef
     /**
      * Instance to defer number validation to.
      *
-     * @var Number
+     * @var \HTMLPurifier\AttrDef\CSS\Number
      */
     protected $number_def;
 

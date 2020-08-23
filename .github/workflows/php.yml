@@ -49,7 +49,7 @@ jobs:
         operating-system: [ubuntu-latest]
         php-versions: ['7.4']
         dependency-version: [prefer-stable]
-        tools: ['psalm', 'codestyle', 'infect']
+        tools: ['static', 'codestyle', 'infect']
 
     name: PHP ${{ matrix.php-versions }} ${{ matrix.tools }} on ${{ matrix.operating-system }}
     steps:
