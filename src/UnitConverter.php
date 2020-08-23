@@ -138,6 +138,7 @@ class UnitConverter
         $log = (int)floor(log(abs((float)$n), 10));
         $cp = ($log < 0) ? $this->internalPrecision - $log : $this->internalPrecision; // internal precision
 
+        /* @phpstan-ignore-next-line $i should never become 2, but just in case... */
         for ($i = 0; $i < 2; $i++) {
             // Determine what unit IN THIS SYSTEM we need to convert to
             if ($dest_state === $state) {

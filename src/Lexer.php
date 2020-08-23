@@ -141,7 +141,8 @@ class Lexer
 
         /**
          * @psalm-suppress TypeDoesNotContainType
-         * @todo Psalm weirdness, probably because it can't find the _PHP5 class.
+         * @phpstan-ignore-next-line
+         * @todo Psalm/Phpstan weirdness, probably because it can't find the _PHP5 class.
          */
         if (!$inst) {
             throw new Exception('No lexer was instantiated');

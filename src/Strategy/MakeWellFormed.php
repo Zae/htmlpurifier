@@ -692,10 +692,12 @@ class MakeWellFormed extends Strategy
         // array(number nodes to delete, new node 1, new node 2, ...)
 
         $delete = array_shift($token);
+        /* @phpstan-ignore-next-line the first index is an int, no idea how to tell phpstan this :)) */
         if (!is_int($delete)) {
             throw new Exception('I don\'t know how many items to delete');
         }
 
+        /* @phpstan-ignore-next-line */
         [$old, $r] = $this->zipper->splice($this->token, $delete, $token);
 
         if (is_int($injector) && $injector > -1) {
