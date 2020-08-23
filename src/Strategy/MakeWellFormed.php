@@ -639,8 +639,8 @@ class MakeWellFormed extends Strategy
      * @param Injector|int         $injector              Injector that performed the substitution; default is if
      *                                                    this is not an injector related operation.
      *
-     * @psalm-param Token|array<int|Token>|int|bool $token
-     * @phpstan-param Token|Token<int|Token>|int|bool $token
+     * @psalm-param Token|array<int|Token>|array{Token,Token,mixed}|int|bool $token
+     * @phpstan-param Token|Token<int|Token>|array{Token,Token,mixed}|int|bool $token
      *
      * @return Token|null
      * @throws Exception
@@ -670,7 +670,8 @@ class MakeWellFormed extends Strategy
         }
 
         /**
-         * @psalm-suppress DocblockTypeContradiction
+         * @psalm-suppress TypeDoesNotContainType
+         * @todo: fix?
          */
         if (!is_array($token)) {
             throw new Exception('Invalid token type from injector');
@@ -692,12 +693,10 @@ class MakeWellFormed extends Strategy
         // array(number nodes to delete, new node 1, new node 2, ...)
 
         $delete = array_shift($token);
-        /* @phpstan-ignore-next-line the first index is an int, no idea how to tell phpstan this :)) */
         if (!is_int($delete)) {
             throw new Exception('I don\'t know how many items to delete');
         }
 
-        /* @phpstan-ignore-next-line */
         [$old, $r] = $this->zipper->splice($this->token, $delete, $token);
 
         if (is_int($injector) && $injector > -1) {

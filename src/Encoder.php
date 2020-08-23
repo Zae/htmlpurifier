@@ -54,7 +54,8 @@ class Encoder
     {
         /**
          * @psalm-suppress InvalidArgument
-         * @todo fix? Psalm doesn't seem to understand array callbacks?
+         * @phpstan-ignore-next-line
+         * @todo fix? Psalm/PHPstan doesn't seem to understand array callbacks?
          */
         set_error_handler([__CLASS__, 'muteErrorHandler']);
         $r = iconv($in, $out, $text);
