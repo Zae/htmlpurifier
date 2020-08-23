@@ -704,6 +704,7 @@ class Config
         $def->optimized = $optimized;
 
         return $def;
+        /* @phpstan-ignore-next-line */
         throw new Exception('The impossible happened!');
     }
 

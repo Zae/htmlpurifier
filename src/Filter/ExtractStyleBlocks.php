@@ -115,6 +115,7 @@ class ExtractStyleBlocks extends Filter
         $this->styleMatches = []; // reset
         $context->register('StyleBlocks', $style_blocks); // $context must not be reused
 
+        /* @phpstan-ignore-next-line */
         if ($this->tidy) {
             foreach ($style_blocks as &$style) {
                 $style = $this->cleanCSS($style, $config, $context);

@@ -1,6 +1,7 @@
 parameters:
-	level: 3
+	level: 4
 	paths:
 		- src
 	ignoreErrors:
 		- '#Access to an undefined property DOMNode::\$(tagName|data)#'
+		- '#Comparison operation ">=" between 1114111 and int<65536, 1114111> is always true.#'

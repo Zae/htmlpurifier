@@ -138,6 +138,7 @@ class ContentSets
 
         /**
          * @psalm-suppress DocblockTypeContradiction
+         * @phpstan-ignore-next-line
          */
         if (\is_object($value)) {
             trigger_error(

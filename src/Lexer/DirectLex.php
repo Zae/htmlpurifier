@@ -198,7 +198,9 @@ class DirectLex extends Lexer
                 }
                 $array[] = $token;
                 break;
-            } elseif ($inside_tag && $position_next_gt !== false) {
+            } elseif (/*$inside_tag && */ $position_next_gt !== false) {
+                // commented part in is not needed, but I felt it added readability so kept it in a comment.
+
                 // We are in tag and it is well formed
                 // Grab the internals of the tag
                 $strlen_segment = $position_next_gt - $cursor;
@@ -210,6 +212,7 @@ class DirectLex extends Lexer
                     continue;
                 }
 
+                /** @phpstan-var string|false $segment */
                 $segment = substr($string, $cursor, $strlen_segment);
 
                 if ($segment === false) {
@@ -368,7 +371,6 @@ class DirectLex extends Lexer
                 $array[] = $token;
                 break;
             }
-            break;
         }
 
         $context->destroy('CurrentLine');
@@ -461,6 +463,7 @@ class DirectLex extends Lexer
 
             if ($same_quote && $open_quote) {
                 // well behaved
+                /* @phpstan-var string|false $value */
                 $value = substr($quoted_value, 1, -1);
             } else {
                 if ($open_quote) {
@@ -468,12 +471,14 @@ class DirectLex extends Lexer
                         $e->send(E_ERROR, 'Lexer: Missing end quote');
                     }
 
+                    /* @phpstan-var string|false $value */
                     $value = substr($quoted_value, 1);
                 } else {
                     $value = $quoted_value;
                 }
             }
 
+            /* @phpstan-ignore-next-line phpstan bug? */
             if ($value === false) {
                 $value = '';
             }
@@ -568,6 +573,7 @@ class DirectLex extends Lexer
                 }
 
                 $value = substr($string, $value_begin, (int)$value_end - $value_begin);
+                /* @phpstan-ignore-next-line */
                 if ($value === false) {
                     $value = '';
                 }
