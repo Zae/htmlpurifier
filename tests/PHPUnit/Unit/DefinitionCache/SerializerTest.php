@@ -341,6 +341,11 @@ class SerializerTest extends TestCase
     public static function assertFileDoesNotExist(string $file, string $message = ''): void
     {
         clearstatcache();
-        parent::assertFileDoesNotExist($file, 'Expected ' . $file . ' does not exist');
+
+        if (method_exists(parent::class, 'assertFileDoesNotExist')) {
+            parent::assertFileDoesNotExist($file, "Expected {$file} does not exist");
+        } else {
+            parent::assertFileNotExists($file, "Expected {$file} does not exist");
+        }
     }
 }
