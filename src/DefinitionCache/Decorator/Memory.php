@@ -29,11 +29,19 @@ class Memory extends Decorator
     public $name = 'Memory';
 
     /**
+     * Memory constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * @return Memory
      */
     public function copy(): Decorator
     {
-        return new self();
+        return new static();
     }
 
     /**

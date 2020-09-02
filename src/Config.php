@@ -112,7 +112,7 @@ class Config
      * what directives are allowed.
      * @param PropertyList $parent
      */
-    public function __construct(ConfigSchema $definition, ?PropertyList $parent = null)
+    final public function __construct(ConfigSchema $definition, ?PropertyList $parent = null)
     {
         $parent = $parent ?: $definition->defaultPlist;
         $this->plist = new PropertyList($parent);
@@ -138,7 +138,7 @@ class Config
             return $config;
         }
         if ($schema) {
-            $ret = new self($schema);
+            $ret = new static($schema);
         } else {
             $ret = static::createDefault();
         }
@@ -161,7 +161,7 @@ class Config
      */
     public static function inherit(self $config): Config
     {
-        return new self($config->def, $config->plist);
+        return new static($config->def, $config->plist);
     }
 
     /**
@@ -173,7 +173,7 @@ class Config
     {
         $definition = ConfigSchema::instance();
 
-        return new self($definition);
+        return new static($definition);
     }
 
     /**

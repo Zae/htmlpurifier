@@ -39,6 +39,14 @@ class DefinitionCacheFactory
     }
 
     /**
+     * DefinitionCacheFactory constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor
+    }
+
+    /**
      * Retrieves an instance of global definition cache factory.
      *
      * @param DefinitionCacheFactory|true $prototype
@@ -51,7 +59,7 @@ class DefinitionCacheFactory
         if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
-            $instance = new self();
+            $instance = new static();
             $instance->setup();
         }
 

@@ -8,7 +8,6 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
-use function get_class;
 use function strlen;
 
 /**
@@ -24,7 +23,7 @@ class Pixels extends AttrDef
     /**
      * @param int|null $max
      */
-    public function __construct(int $max = null)
+    final public function __construct(int $max = null)
     {
         $this->max = $max;
     }

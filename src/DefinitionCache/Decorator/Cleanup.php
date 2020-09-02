@@ -22,11 +22,19 @@ class Cleanup extends Decorator
     public $name = 'Cleanup';
 
     /**
+     * Cleanup constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * @return Cleanup
      */
     public function copy(): Decorator
     {
-        return new self();
+        return new static();
     }
 
     /**

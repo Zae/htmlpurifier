@@ -76,7 +76,7 @@ class LanguageFactory
         if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
-            $instance = new self();
+            $instance = new static();
         }
 
         return $instance;
@@ -85,7 +85,7 @@ class LanguageFactory
     /**
      * Private constructor, use instance() to get the singleton.
      */
-    private function __construct()
+    final private function __construct()
     {
         $this->validator = new Lang();
         $this->dir = HTMLPURIFIER_PREFIX . '/';

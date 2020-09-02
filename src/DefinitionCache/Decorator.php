@@ -29,8 +29,12 @@ class Decorator extends DefinitionCache
      */
     public $name;
 
+    /**
+     * Decorator constructor.
+     */
     public function __construct()
     {
+        // empty by choice.
     }
 
     /**

@@ -151,6 +151,14 @@ class ElementDef
     public $formatting;
 
     /**
+     * ElementDef constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * Low-level factory constructor for creating new standalone element defs
      *
      * @param string|null $content_model
@@ -161,7 +169,7 @@ class ElementDef
      */
     public static function create(?string $content_model, ?string $content_model_type, array $attr): self
     {
-        $def = new self();
+        $def = new static();
         $def->content_model = $content_model ?? '';
         $def->content_model_type = $content_model_type ?? '';
         $def->attr = $attr;

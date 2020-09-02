@@ -55,6 +55,14 @@ class ErrorStruct
     public $children = [];
 
     /**
+     * ErrorStruct constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * @param int $type
      * @param string     $id
      *
@@ -63,7 +71,7 @@ class ErrorStruct
     public function getChild($type, string $id)
     {
         if (!isset($this->children[$type][$id])) {
-            $this->children[$type][$id] = new self();
+            $this->children[$type][$id] = new static();
             $this->children[$type][$id]->type = $type;
         }
 

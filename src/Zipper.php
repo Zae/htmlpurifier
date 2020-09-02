@@ -35,7 +35,7 @@ class Zipper
      * @param array $front
      * @param array $back
      */
-    public function __construct(array $front, array $back)
+    final public function __construct(array $front, array $back)
     {
         $this->front = $front;
         $this->back = $back;
@@ -56,7 +56,7 @@ class Zipper
      */
     public static function fromArray(array $array): array
     {
-        $z = new self([], array_reverse($array));
+        $z = new static([], array_reverse($array));
         $t = $z->delete(); // delete the "dummy hole"
 
         return [$z, $t];
