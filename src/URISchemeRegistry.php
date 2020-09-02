@@ -10,6 +10,14 @@ namespace HTMLPurifier;
 class URISchemeRegistry
 {
     /**
+     * URISchemeRegistry constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * Retrieve sole instance of the registry.
      *
      * @param URISchemeRegistry|true|null $prototype    Optional prototype to overload sole instance with,
@@ -26,7 +34,7 @@ class URISchemeRegistry
         if ($prototype !== null && $prototype !== true) {
             $instance = $prototype;
         } elseif ($instance === null || $prototype === true) {
-            $instance = new self();
+            $instance = new static();
         }
 
         return $instance;

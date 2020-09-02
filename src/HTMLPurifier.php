@@ -123,7 +123,7 @@ class HTMLPurifier
      *                                          The parameter can also be any type that
      *                                          \HTMLPurifier\Config::create() supports.
      */
-    public function __construct($config = null)
+    final public function __construct($config = null)
     {
         $this->config = Config::create($config);
         $this->strategy = new Core();
@@ -293,9 +293,9 @@ class HTMLPurifier
             if ($prototype instanceof static) {
                 self::$instance = $prototype;
             } elseif ($prototype) {
-                self::$instance = new self($prototype);
+                self::$instance = new static($prototype);
             } else {
-                self::$instance = new self();
+                self::$instance = new static();
             }
         }
 
