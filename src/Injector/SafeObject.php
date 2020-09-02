@@ -7,8 +7,8 @@ namespace HTMLPurifier\Injector;
 use HTMLPurifier\Injector;
 use HTMLPurifier\Token;
 use HTMLPurifier\Token\EmptyToken;
-
 use HTMLPurifier\Token\End;
+
 use function count;
 
 /**
