@@ -86,6 +86,6 @@ class Pixels extends AttrDef
             $max = (int)$string;
         }
 
-        return new self($max);
+        return new static($max);
     }
 }
