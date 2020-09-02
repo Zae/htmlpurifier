@@ -238,7 +238,7 @@ class SerializerTest extends TestCase
             ->once()
             ->andReturn(1);
 
-        $dir = __DIR__ . '/SerializerTest';
+        $dir = __DIR__ . '/../../../tmp';
         $config->shouldReceive('get')
             ->with('Cache.SerializerPath')
             ->atLeast()
@@ -250,7 +250,7 @@ class SerializerTest extends TestCase
         static::assertFileExist($dir . '/Test/1.0.0,serial,1.ser');
 
         unlink($dir . '/Test/1.0.0,serial,1.ser');
-        rmdir( $dir . '/Test');
+        rmdir($dir . '/Test');
     }
 
     /**
