@@ -24,7 +24,7 @@ class Encoder
     /**
      * @var array
      */
-    private static $asciiEncodings = [];
+    protected static $asciiEncodings = [];
 
     /**
      * Constructor throws fatal error if you attempt to instantiate class
