@@ -19,7 +19,7 @@ class Encoder
     protected static $iconvCode = null;
 
     /** @var ?bool  */
-    private static $iconvAvailable = null;
+    protected static $iconvAvailable = null;
 
     /**
      * @var array
