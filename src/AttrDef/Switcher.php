@@ -43,11 +43,12 @@ class Switcher
     }
 
     /**
-     * @param string    $string
-     * @param Config    $config
-     * @param Context   $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string|null
+     * @throws \HTMLPurifier\Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

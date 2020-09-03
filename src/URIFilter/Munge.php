@@ -82,7 +82,7 @@ class Munge extends URIFilter
      */
     public function filter(URI &$uri, Config $config, Context $context): bool
     {
-        if ($context->get('EmbeddedURI', true) && !$this->doEmbed) {
+        if (!$this->doEmbed && $context->get('EmbeddedURI', true)) {
             return true;
         }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\VTest;
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\StringHash;
 use HTMLPurifier\StringHashParser;
 use HTMLPurifier\Tests\Unit\TestCase;
@@ -53,7 +54,7 @@ class VTestTestRunner extends TestCase
         foreach ($hashes as $hash) {
             if (!isset($hash['ID'])) {
                 if (isset($hash['ERROR'])) {
-                    $this->expectException(\Exception::class);
+                    $this->expectException(Exception::class);
                     $this->expectExceptionMessage($hash['ERROR']);
                 }
 

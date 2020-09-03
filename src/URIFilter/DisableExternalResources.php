@@ -24,6 +24,7 @@ class DisableExternalResources extends DisableExternal
      * @param Context $context
      *
      * @return bool
+     * @throws \HTMLPurifier\Exception
      */
     public function filter(URI &$uri, Config $config, Context $context): bool
     {

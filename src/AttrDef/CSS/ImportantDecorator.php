@@ -28,7 +28,7 @@ class ImportantDecorator extends AttrDef
      * @param AttrDef $def   Definition to wrap
      * @param bool    $allow Whether or not to allow !important
      */
-    public function __construct($def, $allow = false)
+    public function __construct(AttrDef $def, bool $allow = false)
     {
         $this->def = $def;
         $this->allow = $allow;

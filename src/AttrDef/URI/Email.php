@@ -17,7 +17,7 @@ abstract class Email extends AttrDef
      * @param string $string
      * @return void
      */
-    public function unpack($string): void
+    public function unpack(string $string): void
     {
         // needs to be implemented
     }

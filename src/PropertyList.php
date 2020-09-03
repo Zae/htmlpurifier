@@ -35,7 +35,7 @@ class PropertyList
     /**
      * @param PropertyList|null $parent Parent plist
      */
-    public function __construct($parent = null)
+    public function __construct(PropertyList $parent = null)
     {
         $this->parent = $parent;
     }
@@ -80,7 +80,7 @@ class PropertyList
      *
      * @return bool
      */
-    public function has($name): bool
+    public function has(string $name): bool
     {
         return array_key_exists($name, $this->data);
     }

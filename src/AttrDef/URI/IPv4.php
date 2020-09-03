@@ -35,7 +35,7 @@ class IPv4 extends AttrDef
             $this->loadRegex();
         }
 
-        if (preg_match('#^' . $this->ip4 . '$#s', $string)) {
+        if (preg_match("#^{$this->ip4}\$#s", $string)) {
             return $string;
         }
 
