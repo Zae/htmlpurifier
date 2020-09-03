@@ -131,6 +131,7 @@ class ContentSets
      * @param HTMLModule $module Module that defined the ElementDef
      *
      * @return ChildDef|null corresponding to ElementDef
+     * @throws Exception
      */
     public function getChildDef(ElementDef $def, HTMLModule $module): ?ChildDef
     {
@@ -172,12 +173,7 @@ class ContentSets
         }
 
         // error-out
-        trigger_error(
-            'Could not determine which ChildDef class to instantiate',
-            E_USER_ERROR
-        );
-
-        return null;
+        throw new Exception('Could not determine which ChildDef class to instantiate');
     }
 
     /**

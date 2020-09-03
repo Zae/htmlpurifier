@@ -28,10 +28,12 @@ class Encoder
 
     /**
      * Constructor throws fatal error if you attempt to instantiate class
+     *
+     * @throws Exception
      */
     private function __construct()
     {
-        trigger_error('Cannot instantiate encoder, call methods statically', E_USER_ERROR);
+        throw new Exception('Cannot instantiate encoder, call methods statically');
     }
 
     /**
@@ -450,7 +452,7 @@ class Encoder
             $str = static::unsafeIconv($encoding, 'utf-8//IGNORE', $str);
             if ($str === null) {
                 // $encoding is not a valid encoding
-                trigger_error('Invalid encoding ' . $encoding, E_USER_ERROR);
+                throw new Exception("Invalid encoding {$encoding}");
             }
 
             // If the string is bjorked by Shift_JIS or a similar encoding
@@ -610,6 +612,7 @@ class Encoder
      * paying attention to the error code, iconv becomes unusable.
      *
      * @return int Error code indicating severity of bug.
+     * @throws Exception
      */
     public static function testIconvTruncateBug(): int
     {
@@ -627,10 +630,9 @@ class Encoder
             }
 
             if ($c > 9000) {
-                trigger_error(
+                throw new Exception(
                     'Your copy of iconv is extremely buggy. Please notify HTML Purifier maintainers: ' .
-                    'include your iconv version as per phpversion()',
-                    E_USER_ERROR
+                    'include your iconv version as per phpversion()'
                 );
             } else {
                 return static::$iconvCode = static::ICONV_OK;

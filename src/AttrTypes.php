@@ -92,6 +92,7 @@ class AttrTypes
      * @param string $type String type name
      *
      * @return AttrDef Object AttrDef for type
+     * @throws Exception
      */
     public function get(string $type): ?AttrDef
     {
@@ -103,9 +104,7 @@ class AttrTypes
         }
 
         if (!isset($this->info[$type])) {
-            trigger_error('Cannot retrieve undefined attribute type ' . $type, E_USER_ERROR);
-
-            return null;
+            throw new Exception("Cannot retrieve undefined attribute type {$type}");
         }
 
         return $this->info[$type]->make($string);

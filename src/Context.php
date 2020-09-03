@@ -28,16 +28,13 @@ class Context
      *
      * @param string $name String name
      * @param mixed  $ref  Reference to variable to be registered
+     *
+     * @throws Exception
      */
     public function register(string $name, &$ref): void
     {
         if (array_key_exists($name, $this->storage)) {
-            trigger_error(
-                "Name $name produces collision, cannot re-register",
-                E_USER_ERROR
-            );
-
-            return;
+            throw new Exception("Name {$name} produces collision, cannot re-register");
         }
 
         $this->storage[$name] =& $ref;
@@ -50,15 +47,13 @@ class Context
      * @param bool   $ignore_error Boolean whether or not to ignore error
      *
      * @return mixed
+     * @throws Exception
      */
     public function &get(string $name, bool $ignore_error = false)
     {
         if (!array_key_exists($name, $this->storage)) {
             if (!$ignore_error) {
-                trigger_error(
-                    "Attempted to retrieve non-existent variable $name",
-                    E_USER_ERROR
-                );
+                throw new Exception("Attempted to retrieve non-existent variable {$name}");
             }
 
             $var = null; // so we can return by reference
@@ -73,16 +68,13 @@ class Context
      * Destroys a variable in the context.
      *
      * @param string $name String name
+     *
+     * @throws Exception
      */
     public function destroy(string $name): void
     {
         if (!array_key_exists($name, $this->storage)) {
-            trigger_error(
-                "Attempted to destroy non-existent variable $name",
-                E_USER_ERROR
-            );
-
-            return;
+            throw new Exception("Attempted to destroy non-existent variable {$name}");
         }
 
         unset($this->storage[$name]);

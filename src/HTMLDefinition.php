@@ -313,10 +313,7 @@ class HTMLDefinition extends Definition
         if (isset($this->info_content_sets['Block'][$block_wrapper])) {
             $this->info_block_wrapper = $block_wrapper;
         } else {
-            trigger_error(
-                'Cannot use non-block element as block wrapper',
-                E_USER_ERROR
-            );
+            throw new Exception('Cannot use non-block element as block wrapper');
         }
 
         $parent = $config->get('HTML.Parent');
@@ -325,15 +322,7 @@ class HTMLDefinition extends Definition
             $this->info_parent = $parent;
             $this->info_parent_def = $def;
         } else {
-            trigger_error(
-                'Cannot use unrecognized element as parent',
-                E_USER_ERROR
-            );
-
-            $elem = $this->manager->getElement($this->info_parent, true);
-            if ($elem) {
-                $this->info_parent_def = $elem;
-            }
+            throw new Exception('Cannot use unrecognized element as parent');
         }
 
         // support template text

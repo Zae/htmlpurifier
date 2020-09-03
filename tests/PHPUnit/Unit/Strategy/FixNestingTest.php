@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Unit\Strategy;
 
+use HTMLPurifier\Exception;
 use HTMLPurifier\Strategy\FixNesting;
 
 /**
@@ -173,8 +174,10 @@ class FixNestingTest extends TestCase
         // test fallback to div
         $this->config->set('HTML.Parent', 'obviously-impossible');
         $this->config->set('Cache.DefinitionImpl', null);
-        $this->expectError();
-        $this->expectErrorMessage('Cannot use unrecognized element as parent');
+
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot use unrecognized element as parent');
+
         $this->assertResult('<div>Accept</div>');
     }
 

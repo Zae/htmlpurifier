@@ -173,6 +173,8 @@ class LanguageFactory
      * Loads language into the cache, handles message file and fallbacks
      *
      * @param string $code language code
+     *
+     * @throws Exception
      */
     public function loadLanguage(string $code): void
     {
@@ -203,13 +205,7 @@ class LanguageFactory
         if (!empty($fallback)) {
             // infinite recursion guard
             if (isset($languages_seen[$code])) {
-                trigger_error(
-                    'Circular fallback reference in language ' .
-                    $code,
-                    E_USER_ERROR
-                );
-
-                $fallback = 'en';
+                throw new Exception("Circular fallback reference in language {$code}");
             }
 
             $languages_seen[$code] = true;

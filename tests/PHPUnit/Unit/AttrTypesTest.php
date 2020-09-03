@@ -7,6 +7,7 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrDef\Text;
 use HTMLPurifier\AttrTypes;
+use HTMLPurifier\Exception;
 
 /**
  * Class AttrTypesTest
@@ -27,8 +28,9 @@ class AttrTypesTest extends TestCase
             new Text()
         );
 
-        $this->expectError();
-        $this->expectErrorMessage('Cannot retrieve undefined attribute type foobar');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot retrieve undefined attribute type foobar');
+
         $types->get('foobar');
 
         static::assertEquals(
