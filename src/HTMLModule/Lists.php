@@ -32,9 +32,9 @@ class Lists extends HTMLModule
     public $content_sets = ['Flow' => 'List'];
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      */
-    public function setup($config): void
+    public function setup(Config $config): void
     {
         $ol = $this->addElement('ol', 'List', new \HTMLPurifier\ChildDef\Lists(), 'Common');
         $ul = $this->addElement('ul', 'List', new \HTMLPurifier\ChildDef\Lists(), 'Common');

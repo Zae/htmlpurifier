@@ -205,7 +205,7 @@ class DOMLex extends Lexer
      *
      * @return string|null
      */
-    protected function getData($node): ?string
+    protected function getData(DOMNode $node): ?string
     {
         /**
          * @psalm-suppress TypeDoesNotContainType
@@ -315,7 +315,7 @@ class DOMLex extends Lexer
     /**
      * Converts a DOMNamedNodeMap of DOMAttr objects into an assoc array.
      *
-     * @param DOMNamedNodeMap $node_map DOMNamedNodeMap of DOMAttr objects.
+     * @param DOMNamedNodeMap|null $node_map DOMNamedNodeMap of DOMAttr objects.
      *
      * @return array Associative array of attributes.
      */

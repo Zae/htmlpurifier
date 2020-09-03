@@ -38,7 +38,7 @@ class IPv6 extends IPv4
 
         //      prefix check
         if (strpos($string, '/') !== false) {
-            if (preg_match('#' . $pre . '$#s', $string, $find)) {
+            if (preg_match("#{$pre}\$#s", $string, $find)) {
                 $string = substr($string, 0, 0 - strlen($find[0]));
                 unset($find);
             } else {
@@ -47,7 +47,7 @@ class IPv6 extends IPv4
         }
 
         //      IPv4-compatiblity check
-        if (preg_match('#(?<=:' . ')' . $this->ip4 . '$#s', $string, $find)) {
+        if (preg_match("#(?<=:){$this->ip4}\$#s", $string, $find)) {
             $string = substr($string, 0, 0 - strlen($find[0]));
             $ip = explode('.', $find[0]);
             $ip = array_map(static function ($ip) {

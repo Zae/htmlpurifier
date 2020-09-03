@@ -27,7 +27,7 @@ class InterchangeBuilder
     protected $varParser;
 
     /**
-     * @param VarParser $varParser
+     * @param VarParser|null $varParser
      */
     public function __construct(VarParser $varParser = null)
     {
@@ -35,9 +35,10 @@ class InterchangeBuilder
     }
 
     /**
-     * @param string $dir
+     * @param string|null $dir
      *
      * @return Interchange
+     * @throws Exception
      */
     public static function buildFromDirectory(string $dir = null): Interchange
     {
@@ -49,7 +50,7 @@ class InterchangeBuilder
 
     /**
      * @param Interchange $interchange
-     * @param string      $dir
+     * @param string|null $dir
      *
      * @return Interchange
      * @throws Exception
@@ -218,9 +219,9 @@ class InterchangeBuilder
      *
      * @return mixed
      */
-    protected function evalArray($contents)
+    protected function evalArray(string $contents)
     {
-        return eval('return [' . $contents . '];');
+        return eval("return [{$contents}];");
     }
 
     /**

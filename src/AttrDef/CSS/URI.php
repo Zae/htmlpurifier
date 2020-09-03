@@ -80,7 +80,7 @@ class URI extends BaseURI
 
         // suspicious characters are ()'; we're going to percent encode
         // them for safety.
-        $result = str_replace(array('(', ')', "'"), array('%28', '%29', '%27'), $result);
+        $result = str_replace(['(', ')', "'"], ['%28', '%29', '%27'], $result);
 
         // there's an extra bug where ampersands lose their escaping on
         // an innerHTML cycle, so a very unlucky query parameter could

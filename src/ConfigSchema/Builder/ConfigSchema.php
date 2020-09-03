@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\ConfigSchema\Builder;
 
 use HTMLPurifier\ConfigSchema\Interchange;
+use HTMLPurifier\Exception;
 
 /**
  * Converts HTMLPurifier_ConfigSchema_Interchange to our runtime
@@ -16,6 +17,7 @@ class ConfigSchema
      * @param Interchange $interchange
      *
      * @return \HTMLPurifier\ConfigSchema
+     * @throws \Exception
      */
     public function build(Interchange $interchange): \HTMLPurifier\ConfigSchema
     {
@@ -23,7 +25,7 @@ class ConfigSchema
 
         foreach ($interchange->directives as $d) {
             if (!$d->id instanceof Interchange\Id) {
-                throw new \Exception('Directive id is wrong type');
+                throw new Exception('Directive id is wrong type');
             }
 
             $schema->add(

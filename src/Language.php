@@ -74,7 +74,7 @@ class Language
      * @param Config  $config
      * @param Context $context
      */
-    public function __construct($config, $context)
+    public function __construct(Config $config, Context $context)
     {
         $this->config = $config;
         $this->context = $context;

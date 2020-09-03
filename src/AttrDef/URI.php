@@ -37,7 +37,7 @@ class URI extends AttrDef
     public function __construct(bool $embeds_resource = false)
     {
         $this->parser = new URIParser();
-        $this->embedsResource = (bool)$embeds_resource;
+        $this->embedsResource = $embeds_resource;
     }
 
     /**

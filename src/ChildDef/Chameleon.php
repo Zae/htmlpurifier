@@ -57,6 +57,7 @@ class Chameleon extends ChildDef
      * @param Context $context
      *
      * @return bool|array
+     * @throws \HTMLPurifier\Exception
      */
     public function validateChildren(array $children, Config $config, Context $context)
     {

@@ -26,9 +26,9 @@ class Comment extends Node
     /**
      * Transparent constructor.
      *
-     * @param string $data String comment data.
-     * @param int    $line
-     * @param int    $col
+     * @param string   $data String comment data.
+     * @param int|null $line
+     * @param int|null $col
      */
     public function __construct(string $data, ?int $line = null, ?int $col = null)
     {

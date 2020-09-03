@@ -26,8 +26,12 @@ class FrameTarget extends Enum
      */
     protected $case_sensitive = false;
 
+    /**
+     * FrameTarget constructor.
+     */
     public function __construct()
     {
+        // empty by design
     }
 
     /**

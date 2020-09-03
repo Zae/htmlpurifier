@@ -68,7 +68,7 @@ class ErrorStruct
      *
      * @return mixed
      */
-    public function getChild($type, string $id)
+    public function getChild(int $type, string $id)
     {
         if (!isset($this->children[$type][$id])) {
             $this->children[$type][$id] = new static();

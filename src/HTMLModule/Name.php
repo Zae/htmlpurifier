@@ -20,11 +20,11 @@ class Name extends HTMLModule
     public $name = 'Name';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    public function setup($config): void
+    public function setup(Config $config): void
     {
         $elements = ['a', 'applet', 'form', 'frame', 'iframe', 'img', 'map'];
         foreach ($elements as $name) {
