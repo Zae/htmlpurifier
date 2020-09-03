@@ -133,6 +133,8 @@ class Tidy extends HTMLModule
      * with $defaultLevel, or not used at all.
      *
      * @param array $fixes
+     *
+     * @throws Exception
      */
     public function makeFixesForLevel(array $fixes): void
     {
@@ -152,6 +154,8 @@ class Tidy extends HTMLModule
      * based on a list of fixes passed to it
      *
      * @param array $fixes Lookup table of fixes to activate
+     *
+     * @throws Exception
      */
     public function populate(array $fixes): void
     {

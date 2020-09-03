@@ -6,6 +6,7 @@ namespace HTMLPurifier\Tests\Unit;
 
 use HTMLPurifier\Encoder;
 use HTMLPurifier\EntityLookup;
+use HTMLPurifier\Exception;
 use HTMLPurifier\Tests\Unit\Encoder\TestEncoder;
 use HTMLPurifier\Exception;
 

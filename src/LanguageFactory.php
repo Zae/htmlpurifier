@@ -173,6 +173,8 @@ class LanguageFactory
      * Loads language into the cache, handles message file and fallbacks
      *
      * @param string $code language code
+     *
+     * @throws Exception
      */
     public function loadLanguage(string $code): void
     {
