@@ -411,9 +411,7 @@ class CSSDefinition extends Definition
         $allow_important = $config->get('CSS.AllowImportant');
         // wrap all attr-defs with decorator that handles !important
         foreach ($this->info as $k => $v) {
-            if ($v instanceof AttrDef) {
-                $this->info[$k] = new ImportantDecorator($v, $allow_important);
-            }
+            $this->info[$k] = new ImportantDecorator($v, $allow_important);
         }
 
         $this->setupConfigStuff($config);

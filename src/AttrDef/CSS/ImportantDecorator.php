@@ -16,7 +16,7 @@ use function strlen;
 class ImportantDecorator extends AttrDef
 {
     /**
-     * @var AttrDef
+     * @var AttrDef|\HTMLPurifier\AttrDef\Switcher
      */
     public $def;
     /**
@@ -25,10 +25,10 @@ class ImportantDecorator extends AttrDef
     public $allow;
 
     /**
-     * @param AttrDef $def   Definition to wrap
+     * @param AttrDef|\HTMLPurifier\AttrDef\Switcher $def   Definition to wrap
      * @param bool    $allow Whether or not to allow !important
      */
-    public function __construct(AttrDef $def, bool $allow = false)
+    public function __construct($def, bool $allow = false)
     {
         $this->def = $def;
         $this->allow = $allow;
