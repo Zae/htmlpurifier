@@ -172,7 +172,7 @@ class URIDefinition extends Definition
      *
      * @return bool
      */
-    public function filter(URI $uri, Config $config, Context $context): bool
+    public function filter(URI &$uri, Config $config, Context $context): bool
     {
         foreach ($this->filters as $name => $f) {
             $result = $f->filter($uri, $config, $context);
