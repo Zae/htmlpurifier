@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier\AttrDef\CSS;
 
 use HTMLPurifier\AttrDef;
+use HTMLPurifier\AttrDef\AttrDefValidate;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
@@ -16,19 +17,20 @@ use function strlen;
 class ImportantDecorator extends AttrDef
 {
     /**
-     * @var AttrDef|\HTMLPurifier\AttrDef\Switcher
+     * @var AttrDefValidate
      */
     public $def;
+
     /**
      * @var bool
      */
     public $allow;
 
     /**
-     * @param AttrDef|\HTMLPurifier\AttrDef\Switcher $def   Definition to wrap
-     * @param bool    $allow Whether or not to allow !important
+     * @param AttrDefValidate $def   Definition to wrap
+     * @param bool                    $allow Whether or not to allow !important
      */
-    public function __construct($def, bool $allow = false)
+    public function __construct(AttrDefValidate $def, bool $allow = false)
     {
         $this->def = $def;
         $this->allow = $allow;

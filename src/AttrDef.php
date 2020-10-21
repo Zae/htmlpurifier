@@ -13,7 +13,7 @@ namespace HTMLPurifier;
  * Besides defining (through code) what precisely makes the string valid,
  * subclasses are also responsible for cleaning the code if possible.
  */
-abstract class AttrDef
+abstract class AttrDef implements AttrDef\AttrDefValidate
 {
     /**
      * Tells us whether or not an HTML attribute is minimized.

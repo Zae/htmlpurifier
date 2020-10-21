@@ -13,7 +13,7 @@ use function is_null;
 /**
  * Decorator that, depending on a token, switches between two definitions.
  */
-class Switcher
+class Switcher implements AttrDefValidate
 {
     /**
      * @var string
