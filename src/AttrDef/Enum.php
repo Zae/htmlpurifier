@@ -30,6 +30,7 @@ class Enum extends AttrDef
      * Bool indicating whether or not enumeration is case sensitive.
      *
      * @note In general this is always case insensitive.
+     * @var bool
      */
     protected $case_sensitive = false; // values according to W3C spec
 

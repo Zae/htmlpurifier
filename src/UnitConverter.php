@@ -28,6 +28,7 @@ class UnitConverter
      * encode conversion data from one system to the next, with a O(n^2)
      * constraint on memory (this is generally not a problem, since
      * the number of measuring systems is small.)
+     * @var array
      */
     protected static $units = [
         self::ENGLISH => [

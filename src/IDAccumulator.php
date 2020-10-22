@@ -17,6 +17,7 @@ class IDAccumulator
      * Lookup table of IDs we've accumulated.
      *
      * @public
+     * @var array
      */
     public $ids = [];
 

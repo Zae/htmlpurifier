@@ -33,6 +33,7 @@ class VarParser
     /**
      * Lookup table of allowed types. Mainly for backwards compatibility, but
      * also convenient for transforming string type names to the integer constants.
+     * @var array
      */
     public static $types = [
         'string' => self::C_STRING,
@@ -51,6 +52,7 @@ class VarParser
     /**
      * Lookup table of types that are string, and can have aliases or
      * allowed value lists.
+     * @var array
      */
     public static $stringTypes = [
         self::C_STRING => true,

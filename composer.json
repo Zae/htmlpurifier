@@ -22,10 +22,10 @@
         "symfony/polyfill-intl-idn": "^1.17"
     },
     "require-dev": {
+        "vimeo/psalm": "^4.0",
         "simpletest/simpletest": "^1.2.0",
         "phpunit/phpunit": "^8.5 | ^9.0",
         "mockery/mockery": "^1.3",
-        "vimeo/psalm": "^3.12",
         "infection/infection": "^0.15.0 | ^0.16.0",
         "cerdic/css-tidy": "^1.7.1",
         "squizlabs/php_codesniffer": "^3.5",
@@ -81,7 +81,7 @@
             "@phpstan"
         ],
         "phpstan": "@php  -d memory_limit=-1 vendor/bin/phpstan analyse",
-        "psalm": "@php vendor/bin/psalm --threads=8",
+        "psalm": "@php vendor/bin/psalm --threads=8 --no-diff",
         "codestyle": "@php vendor/bin/phpcs --standard=PSR12 --extensions=php src",
         "lint": "@php vendor/bin/parallel-lint -j 8 --no-progress src",
         "security": "@php vendor/bin/security-checker security:check"

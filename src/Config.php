@@ -356,7 +356,9 @@ class Config
             return;
         }
 
-        if (!isset($this->def->info[$key])) {
+        if ($key === 'Core.EnableIDNA') {
+            $this->triggerError("Using deprecated directive: Core.EnableIDNA", E_USER_NOTICE);
+        } elseif (!isset($this->def->info[$key])) {
             $this->triggerError(
                 'Cannot set undefined directive ' . htmlspecialchars($key) . ' to value',
                 E_USER_WARNING
@@ -1049,6 +1051,7 @@ class Config
             }
         }
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         trigger_error($msg . $extra, $no);
     }
 
