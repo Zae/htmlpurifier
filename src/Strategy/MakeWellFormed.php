@@ -278,6 +278,10 @@ class MakeWellFormed extends Strategy
                             continue;
                         }
 
+                        /**
+                         * @psalm-suppress PossiblyNullPropertyFetch
+                         * @todo: psalm bug? we check if $token is instanceof Text, so could not be null...
+                         */
                         if ($token->rewind !== null && $token->rewind !== $i) {
                             continue;
                         }
@@ -285,6 +289,10 @@ class MakeWellFormed extends Strategy
                         // XXX fuckup
                         $r = $token;
                         $injector->handleText($r);
+                        /**
+                         * @psalm-suppress PossiblyNullArgument
+                         * @todo: psalm bug? we check if $token is instanceof Text, so could not be null...
+                         */
                         $token = $this->processToken($r, $i);
                         $reprocess = true;
                         break;
@@ -463,6 +471,11 @@ class MakeWellFormed extends Strategy
                         // See Note [Injector skips]
                         continue;
                     }
+
+                    if ($token === null) {
+                        continue;
+                    }
+
                     if ($token->rewind !== null && $token->rewind !== $i) {
                         continue;
                     }
@@ -520,6 +533,10 @@ class MakeWellFormed extends Strategy
                 foreach ($this->injectors as $i => $injector) {
                     if (isset($token->skip[$i])) {
                         // See Note [Injector skips]
+                        continue;
+                    }
+
+                    if ($token === null) {
                         continue;
                     }
 

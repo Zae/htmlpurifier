@@ -35,6 +35,7 @@ class EntityParser
 
     /**
      * Tests if the beginning of a string is a semi-optional regex
+     * @var string
      */
     protected $semiOptionalPrefixRegex;
 

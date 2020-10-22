@@ -97,6 +97,7 @@ class BCMath implements MathInterface
 
         /**
          * @psalm-suppress DocblockTypeContradiction
+         * @phpstan-ignore-next-line
          */
         if (is_null($out)) {
             return '0';

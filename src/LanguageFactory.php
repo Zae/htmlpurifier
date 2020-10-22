@@ -36,7 +36,6 @@ class LanguageFactory
      * Instance to validate language codes.
      *
      * @var Lang
-     *
      */
     protected $validator;
 
@@ -58,7 +57,7 @@ class LanguageFactory
     /**
      * Keys whose contents are a list and can be merged.
      *
-     * @value array lookup
+     * @var array lookup
      */
     protected $mergeable_keys_list = [];
 

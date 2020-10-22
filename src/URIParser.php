@@ -12,6 +12,7 @@ class URIParser
 {
     /**
      * Instance of HTMLPurifier\HTMLPurifier_PercentEncoder to do normalization with.
+     * @var PercentEncoder
      */
     protected $percentEncoder;
 

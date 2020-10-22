@@ -42,6 +42,8 @@ abstract class Node
      * Who is responsible for ignoring dead nodes?  FixNesting is
      * responsible for removing them before passing on to child
      * validators.
+     *
+     * @var bool
      */
     public $dead = false;
 
@@ -49,7 +51,7 @@ abstract class Node
      * Does this use the <a></a> form or the </a> form, i.e.
      * is it a pair of start/end tokens or an empty token.
      *
-     * @bool
+     * @var bool
      */
     public $empty = false;
 
