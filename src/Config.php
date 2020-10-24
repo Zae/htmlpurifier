@@ -616,7 +616,7 @@ class Config
                 "Cannot retrieve raw version without specifying %$type.DefinitionID"
             );
         }
-        
+
         if (!empty($this->definitions[$type])) {
             $def = $this->definitions[$type];
             if ($def->setup && !$optimized) {
@@ -639,7 +639,7 @@ class Config
                     'Optimization status of definition is unknown' . $extra
                 );
             }
-            
+
             if ($def->optimized !== $optimized) {
                 $msg = $optimized ? 'optimized' : 'unoptimized';
                 $extra = $this->chatty ?
@@ -860,7 +860,7 @@ class Config
         $ret = [];
         foreach ($schema->info as $key => $def) {
             [$ns, $directive] = explode('.', $key, 2);
-            
+
             if ($allowed !== true) {
                 if (isset($blacklisted_directives["$ns.$directive"])) {
                     continue;
@@ -869,7 +869,7 @@ class Config
                     continue;
                 }
             }
-            
+
             if (\is_object($def) && isset($def->isAlias)) {
                 continue;
             }
@@ -892,7 +892,7 @@ class Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
-     * @param ConfigSchema $schema Schema to use, if not global copy
+     * @param ?ConfigSchema $schema Schema to use, if not global copy
      *
      * @return mixed
      */
@@ -933,7 +933,7 @@ class Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
-     * @param ConfigSchema $schema Schema to use, if not global copy
+     * @param ?ConfigSchema $schema Schema to use, if not global copy
      *
      * @return array
      */
@@ -1067,7 +1067,7 @@ class Config
         $this->getDefinition('HTML');
         $this->getDefinition('CSS');
         $this->getDefinition('URI');
-        
+
         return serialize($this);
     }
 }
