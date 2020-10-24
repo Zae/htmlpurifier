@@ -39,8 +39,7 @@ class Custom extends ChildDef
      *
      * @var string
      */
-    public $_pcre_regex; //phpcs:ignore
-    //todo: fix casing of pcre_regex, it's breaks if I change it, no idea why...
+    public $pcre_regex;
 
     /**
      * @param string $dtd_regex Allowed child pattern from the DTD
@@ -82,7 +81,7 @@ class Custom extends ChildDef
         // remove all non-parenthetical commas: they are handled by first regex
         $reg = preg_replace("/,\(/", '(', $reg);
 
-        $this->_pcre_regex = $reg;
+        $this->pcre_regex = $reg;
     }
 
     /**
@@ -107,7 +106,7 @@ class Custom extends ChildDef
         // add leading comma to deal with stray comma declarations
         $list_of_children = ',' . rtrim($list_of_children, ',');
         $okay = preg_match(
-            '/^,?' . $this->_pcre_regex . '$/',
+            '/^,?' . $this->pcre_regex . '$/',
             $list_of_children
         );
 
