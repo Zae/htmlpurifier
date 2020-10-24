@@ -44,6 +44,9 @@ class DisplayLinkURI extends Injector
      */
     public function handleEnd(End &$token): void
     {
+        /**
+         * @psalm-suppress InvalidArrayOffset No idea why psalm doesnt like this, TODO FIX.
+         */
         if ($token->start instanceof Tag && isset($token->start->attr['href'])) {
             $url = $token->start->attr['href'];
             unset($token->start->attr['href']);
