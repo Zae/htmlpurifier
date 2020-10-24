@@ -58,10 +58,6 @@ class DirectLex extends Lexer
      *
      * @return Token[]
      * @throws Exception
-     *
-     * @psalm-suppress RedundantCondition
-     * @todo fix?, $inside_tag can never be false on line 193, because of if's above, but for
-     * readability sake, check anyway?
      */
     public function tokenizeHTML(string $string, Config $config, Context $context): array
     {

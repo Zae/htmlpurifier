@@ -160,8 +160,7 @@ class ExtractStyleBlocks extends Filter
         $css = trim($css);
         /**
          * @psalm-suppress InvalidArgument
-         * @phpstan-ignore-next-line
-         * psalm/phpstan does not understand [$this, 'function'] is a callable
+         * psalm does not understand [$this, 'function'] is a callable
          */
         set_error_handler([$this, 'muteerrorhandler']);
         $this->tidy->parse($css);
