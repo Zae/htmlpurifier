@@ -121,8 +121,7 @@ class Data extends URIScheme
         } elseif (function_exists('getimagesize')) {
             /**
              * @psalm-suppress InvalidArgument
-             * @phpstan-ignore-next-line
-             * psalm/phpstan doesn't understand [$this, 'callback'] is a callable?
+             * psalm doesn't understand [$this, 'callback'] is a callable?
              */
             set_error_handler([$this, 'muteErrorHandler']);
             $info = getimagesize($file);

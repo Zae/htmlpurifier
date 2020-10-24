@@ -97,8 +97,7 @@ class DOMLex extends Lexer
 
         /**
          * @psalm-suppress InvalidArgument
-         * @phpstan-ignore-next-line
-         * @todo fix? Some kind of psalm/phpstan bug, where it doesn't understand array callback format?
+         * @todo fix? Some kind of psalm bug, where it doesn't understand array callback format?
          */
         set_error_handler([$this, 'muteErrorHandler']);
         // loadHTML() fails on PHP 5.3 when second parameter is given
