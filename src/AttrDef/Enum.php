@@ -24,7 +24,7 @@ class Enum extends AttrDef
      * @var array
      * @todo Make protected
      */
-    public $valid_values = [];
+    protected $valid_values = [];
 
     /**
      * Bool indicating whether or not enumeration is case sensitive.
