@@ -151,6 +151,14 @@ class ElementDef
     public $formatting;
 
     /**
+     * ElementDef constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * Low-level factory constructor for creating new standalone element defs
      *
      * @param string|null $content_model

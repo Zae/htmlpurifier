@@ -28,19 +28,19 @@ class RemoveSpansWithoutAttributes extends Injector
     public $needed = ['span'];
 
     /**
-     * @var AttrValidator
+     * @var AttrValidator|null
      */
     private $attrValidator;
 
     /**
      * Used by AttrValidator.
      *
-     * @var Config
+     * @var Config|null
      */
     private $config;
 
     /**
-     * @var Context
+     * @var Context|null
      */
     private $context;
 
@@ -68,6 +68,10 @@ class RemoveSpansWithoutAttributes extends Injector
             return;
         }
 
+        if ($this->attrValidator === null || $this->config === null || $this->context === null) {
+            return;
+        }
+
         // We need to validate the attributes now since this doesn't normally
         // happen until after MakeWellFormed. If all the attributes are removed
         // the span needs to be removed too.
@@ -92,13 +96,13 @@ class RemoveSpansWithoutAttributes extends Injector
     }
 
     /**
-     * @param Token $token
+     * @param End $token
      *
      * @return void
      *
      * @param-out Token|false $token
      */
-    public function handleEnd(Token &$token): void
+    public function handleEnd(End &$token): void
     {
         if ($token->markForDeletion) {
             $token = false;

@@ -27,7 +27,7 @@ class Filter
     /**
      * Name of the filter for identification purposes.
      *
-     * @var string
+     * @var string|null
      */
     public $name;
 
@@ -57,5 +57,25 @@ class Filter
     public function postFilter(string $html, Config $config, Context $context)
     {
         return $html;
+    }
+
+    /**
+     * Factory function for filters.
+     *
+     * @param string $name
+     * @return Filter
+     *
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public static function make(string $name): Filter
+    {
+        $class = sprintf(
+            "%s\\%s",
+            __CLASS__,
+            $name
+        );
+
+        return new $class();
     }
 }

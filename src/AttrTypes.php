@@ -92,6 +92,7 @@ class AttrTypes
      * @param string $type String type name
      *
      * @return AttrDef Object AttrDef for type
+     * @throws Exception
      */
     public function get(string $type): ?AttrDef
     {

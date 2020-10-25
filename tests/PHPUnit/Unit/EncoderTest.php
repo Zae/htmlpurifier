@@ -7,19 +7,22 @@ namespace HTMLPurifier\Tests\Unit;
 use HTMLPurifier\Encoder;
 use HTMLPurifier\EntityLookup;
 use HTMLPurifier\Exception;
+use HTMLPurifier\Tests\Unit\Encoder\TestEncoder;
 
 /**
  * Class EncoderTest
  *
  * @package HTMLPurifier\Tests\Unit
+ * @group encoder
  */
 class EncoderTest extends TestCase
 {
-    private $_entity_lookup;
+    /** @var EntityLookup */
+    private $entityLookup;
 
     protected function setUp(): void
     {
-        $this->_entity_lookup = EntityLookup::instance();
+        $this->entityLookup = EntityLookup::instance();
         parent::setUp();
     }
 
@@ -251,7 +254,7 @@ class EncoderTest extends TestCase
             $ret,
             Encoder::testEncodingSupportsASCII($enc)
         );
-        
+
         static::assertEquals(
             $ret,
             Encoder::testEncodingSupportsASCII($enc, true)
@@ -300,19 +303,25 @@ class EncoderTest extends TestCase
     {
         if (!Encoder::iconvAvailable()) {
             static::markTestSkipped('iconv not available');
-            return;
-        }
 
-        if (Encoder::testIconvTruncateBug() !== Encoder::ICONV_TRUNCATES) {
-            static::markTestSkipped('IconvTruncateBug');
             return;
         }
 
         $this->config->set('Core.Encoding', 'ISO-8859-1');
-        static::assertEquals(
-            str_repeat('a', 10000),
-            Encoder::convertFromUTF8("\xE4\xB8\xAD" . str_repeat('a', 10000), $this->config, $this->context)
-        );
+
+        if (Encoder::testIconvTruncateBug() !== TestEncoder::ICONV_TRUNCATES) {
+            TestEncoder::enableIconvBug(function () {
+                static::assertEquals(
+                    str_repeat('a', 10000),
+                    TestEncoder::convertFromUTF8("\xE4\xB8\xAD" . str_repeat('a', 10000), $this->config, $this->context)
+                );
+            });
+        } else {
+            static::assertEquals(
+                str_repeat('a', 10000),
+                Encoder::convertFromUTF8("\xE4\xB8\xAD" . str_repeat('a', 10000), $this->config, $this->context)
+            );
+        }
     }
 
     /**
@@ -322,19 +331,79 @@ class EncoderTest extends TestCase
     {
         if (!Encoder::iconvAvailable()) {
             static::markTestSkipped('iconv not available');
+
             return;
         }
 
-        if (Encoder::testIconvTruncateBug() !== Encoder::ICONV_TRUNCATES) {
-            static::markTestSkipped('IconvTruncateBug');
+        if (Encoder::testIconvTruncateBug() !== TestEncoder::ICONV_TRUNCATES) {
+            TestEncoder::enableIconvBug(static function () {
+                static::assertEquals('ab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 4));
+                static::assertEquals('aab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aa\xE4\xB8\xADb", 4));
+                static::assertEquals('aaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaa\xCE\xB1b", 4));
+                static::assertEquals('aaaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xF3\xA0\x80\xA0b", 4));
+                static::assertEquals('aaaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xE4\xB8\xADb", 4));
+                static::assertEquals('aaaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xCE\xB1b", 4));
+            });
+        } else {
+            static::assertEquals('ab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 4));
+            static::assertEquals('aab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aa\xE4\xB8\xADb", 4));
+            static::assertEquals('aaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaa\xCE\xB1b", 4));
+            static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xF3\xA0\x80\xA0b", 4));
+            static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xE4\xB8\xADb", 4));
+            static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xCE\xB1b", 4));
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function testIconvChunkingBig(): void
+    {
+        if (!Encoder::iconvAvailable()) {
+            static::markTestSkipped('iconv not available');
+
             return;
         }
 
-        static::assertEquals('ab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 4));
-        static::assertEquals('aab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aa\xE4\xB8\xADb", 4));
-        static::assertEquals('aaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaa\xCE\xB1b", 4));
-        static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xF3\xA0\x80\xA0b", 4));
-        static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xE4\xB8\xADb", 4));
-        static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xCE\xB1b", 4));
+        if (Encoder::testIconvTruncateBug() !== TestEncoder::ICONV_TRUNCATES) {
+            TestEncoder::enableIconvBug(static function () {
+                static::assertEquals('ab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 8500));
+                static::assertEquals('aab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aa\xE4\xB8\xADb", 8500));
+                static::assertEquals('aaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaa\xCE\xB1b", 8500));
+                static::assertEquals('aaaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xF3\xA0\x80\xA0b", 8500));
+                static::assertEquals('aaaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xE4\xB8\xADb", 8500));
+                static::assertEquals('aaaab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xCE\xB1b", 8500));
+            });
+        } else {
+            static::assertEquals('ab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 8500));
+            static::assertEquals('aab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aa\xE4\xB8\xADb", 8500));
+            static::assertEquals('aaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaa\xCE\xB1b", 8500));
+            static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xF3\xA0\x80\xA0b", 8500));
+            static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xE4\xB8\xADb", 8500));
+            static::assertEquals('aaaab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "aaaa\xCE\xB1b", 8500));
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function testIconvChunkingTooSmall(): void
+    {
+        $this->expectError();
+        $this->expectErrorMessage('max_chunk_size is too small');
+
+        if (!Encoder::iconvAvailable()) {
+            static::markTestSkipped('iconv not available');
+
+            return;
+        }
+
+        if (Encoder::testIconvTruncateBug() !== TestEncoder::ICONV_TRUNCATES) {
+            TestEncoder::enableIconvBug(static function () {
+                static::assertEquals('ab', TestEncoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 2));
+            });
+        } else {
+            static::assertEquals('ab', Encoder::iconv('utf-8', 'iso-8859-1//IGNORE', "a\xF3\xA0\x80\xA0b", 2));
+        }
     }
 }

@@ -53,7 +53,7 @@ class Context
     {
         if (!array_key_exists($name, $this->storage)) {
             if (!$ignore_error) {
-                throw new Exception("Attempted to retrieve non-existent variable $name");
+                throw new Exception("Attempted to retrieve non-existent variable {$name}");
             }
 
             $var = null; // so we can return by reference
@@ -74,7 +74,7 @@ class Context
     public function destroy(string $name): void
     {
         if (!array_key_exists($name, $this->storage)) {
-            throw new Exception("Attempted to destroy non-existent variable $name");
+            throw new Exception("Attempted to destroy non-existent variable {$name}");
         }
 
         unset($this->storage[$name]);

@@ -49,7 +49,7 @@ class Length
      * @param string      $n Magnitude
      * @param bool|string $u Unit
      */
-    public function __construct(string $n = '0', $u = false)
+    final public function __construct(string $n = '0', $u = false)
     {
         $this->n = $n;
         $this->unit = $u !== false ? (string)$u : false;

@@ -29,8 +29,10 @@ class LinkTypes extends AttrDef
 
     /**
      * @param string $name
+     *
+     * @throws Exception
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         $configLookup = [
             'rel' => 'AllowedRel',

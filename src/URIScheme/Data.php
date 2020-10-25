@@ -121,6 +121,8 @@ class Data extends URIScheme
         } elseif (function_exists('getimagesize')) {
             /**
              * @psalm-suppress InvalidArgument
+             * @phpstan-ignore-next-line
+             * psalm/phpstan doesn't understand [$this, 'callback'] is a callable?
              */
             set_error_handler([$this, 'muteErrorHandler']);
             $info = getimagesize($file);
@@ -131,7 +133,7 @@ class Data extends URIScheme
             }
             $image_code = $info[2];
         } else {
-            throw new Exception('could not find exif_imagetype or getimagesize functions');
+            throw new Exception('Could not find exif_imagetype or getimagesize functions');
         }
 
         $real_content_type = image_type_to_mime_type((int)$image_code);

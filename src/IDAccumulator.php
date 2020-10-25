@@ -17,8 +17,17 @@ class IDAccumulator
      * Lookup table of IDs we've accumulated.
      *
      * @public
+     * @var array
      */
     public $ids = [];
+
+    /**
+     * IDAccumulator constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
 
     /**
      * Builds an IDAccumulator, also initializing the default blacklist
@@ -29,7 +38,7 @@ class IDAccumulator
      * @return IDAccumulator Fully initialized HTMLPurifier\HTMLPurifier_IDAccumulator
      * @throws Exception
      */
-    public static function build(Config $config, $context): IDAccumulator
+    public static function build(Config $config, Context $context): IDAccumulator
     {
         $id_accumulator = new static();
         $id_accumulator->load($config->get('Attr.IDBlacklist'));

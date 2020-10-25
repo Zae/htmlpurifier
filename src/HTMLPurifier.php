@@ -91,7 +91,7 @@ class HTMLPurifier
     /**
      * Single instance of HTML Purifier.
      *
-     * @var HTMLPurifier
+     * @var HTMLPurifier|null
      */
     private static $instance;
 
@@ -101,7 +101,7 @@ class HTMLPurifier
     protected $strategy;
 
     /**
-     * @var Generator
+     * @var Generator|null
      */
     protected $generator;
 
@@ -109,7 +109,7 @@ class HTMLPurifier
      * Resultant context of last run purification.
      * Is an array of contexts if the last called method was purifyArray().
      *
-     * @var Context
+     * @var Context|array|null
      */
     public $context;
 
@@ -123,7 +123,7 @@ class HTMLPurifier
      *                                          The parameter can also be any type that
      *                                          \HTMLPurifier\Config::create() supports.
      */
-    public function __construct($config = null)
+    final public function __construct($config = null)
     {
         $this->config = Config::create($config);
         $this->strategy = new Core();
@@ -172,7 +172,7 @@ class HTMLPurifier
         $context = new Context();
 
         // setup HTML generator
-        $this->generator = new Generator($config, $context);
+        $this->generator = new Generator($config);
         $context->register('Generator', $this->generator);
 
         // set up global context variables
@@ -202,14 +202,15 @@ class HTMLPurifier
             if (!$flag) {
                 continue;
             }
+
             if (strpos($filter, '.') !== false) {
                 continue;
             }
-            $class = "HTMLPurifier_Filter_$filter";
-            $filters[] = new $class();
+
+            $filters[] = Filter::make((string)$filter);
         }
         foreach ($custom_filters as $filter) {
-            // maybe "HTMLPurifier_Filter_$filter", but be consistent with AutoFormat
+            // maybe "HTMLPurifier\\Filter\\$filter", but be consistent with AutoFormat
             $filters[] = $filter;
         }
         $filters = array_merge($filters, $this->filters);
@@ -251,7 +252,7 @@ class HTMLPurifier
      * Filters an array of HTML snippets
      *
      * @param array  $array_of_html              Array of html snippets
-     * @param Config $config                     Optional config object for this operation.
+     * @param Config|null $config                     Optional config object for this operation.
      *                                           See HTMLPurifier::purify() for more details.
      *
      * @return array Array of purified HTML

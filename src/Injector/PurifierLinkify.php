@@ -25,7 +25,7 @@ class PurifierLinkify extends Injector
     /**
      * @var string
      */
-    public $docURL;
+    public $docURL = '';
 
     /**
      * @var array

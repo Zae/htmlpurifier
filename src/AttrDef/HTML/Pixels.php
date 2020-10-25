@@ -8,7 +8,6 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 
-use function get_class;
 use function strlen;
 
 /**
@@ -17,14 +16,14 @@ use function strlen;
 class Pixels extends AttrDef
 {
     /**
-     * @var int
+     * @var int|null
      */
     protected $max;
 
     /**
-     * @param int $max
+     * @param int|null $max
      */
-    public function __construct($max = null)
+    final public function __construct(int $max = null)
     {
         $this->max = $max;
     }
@@ -78,7 +77,7 @@ class Pixels extends AttrDef
      *
      * @return AttrDef
      */
-    public function make(string $string): \HTMLPurifier\AttrDef
+    public function make(string $string): AttrDef
     {
         if ($string === '') {
             $max = null;
@@ -86,8 +85,6 @@ class Pixels extends AttrDef
             $max = (int)$string;
         }
 
-        $class = get_class($this);
-
-        return new $class($max);
+        return new static($max);
     }
 }

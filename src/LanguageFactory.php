@@ -36,7 +36,6 @@ class LanguageFactory
      * Instance to validate language codes.
      *
      * @var Lang
-     *
      */
     protected $validator;
 
@@ -58,7 +57,7 @@ class LanguageFactory
     /**
      * Keys whose contents are a list and can be merged.
      *
-     * @value array lookup
+     * @var array lookup
      */
     protected $mergeable_keys_list = [];
 
@@ -85,7 +84,7 @@ class LanguageFactory
     /**
      * Private constructor, use instance() to get the singleton.
      */
-    private function __construct()
+    final private function __construct()
     {
         $this->validator = new Lang();
         $this->dir = HTMLPURIFIER_PREFIX . '/';
@@ -173,6 +172,8 @@ class LanguageFactory
      * Loads language into the cache, handles message file and fallbacks
      *
      * @param string $code language code
+     *
+     * @throws Exception
      */
     public function loadLanguage(string $code): void
     {

@@ -29,7 +29,7 @@ class DenyElementDecorator extends AttrDef
      * @param AttrDef $def     Definition to wrap
      * @param string  $element Element to deny
      */
-    public function __construct($def, $element)
+    public function __construct(AttrDef $def, string $element)
     {
         $this->def = $def;
         $this->element = $element;
@@ -42,7 +42,8 @@ class DenyElementDecorator extends AttrDef
      * @param Config|null  $config
      * @param Context|null $context
      *
-     * @return bool|string
+     * @return bool|null|string
+     * @throws \HTMLPurifier\Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

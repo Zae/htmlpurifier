@@ -10,6 +10,14 @@ namespace HTMLPurifier;
 class URISchemeRegistry
 {
     /**
+     * URISchemeRegistry constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * Retrieve sole instance of the registry.
      *
      * @param URISchemeRegistry|true|null $prototype    Optional prototype to overload sole instance with,
@@ -74,13 +82,7 @@ class URISchemeRegistry
             return null;
         }
 
-        $class = 'HTMLPurifier\\URIScheme\\' . ucfirst($scheme);
-        if (!class_exists($class)) {
-            return null;
-        }
-
-        /** @var URIScheme $object */
-        $object = new $class();
+        $object = URIScheme::make($scheme);
         $this->schemes[$scheme] = $object;
 
         return $this->schemes[$scheme];

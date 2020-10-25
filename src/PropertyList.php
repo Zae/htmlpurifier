@@ -21,21 +21,21 @@ class PropertyList
     /**
      * Parent plist.
      *
-     * @var PropertyList
+     * @var PropertyList|null
      */
     protected $parent;
 
     /**
      * Cache.
      *
-     * @var array
+     * @var array|null
      */
     protected $cache;
 
     /**
-     * @param PropertyList $parent Parent plist
+     * @param PropertyList|null $parent Parent plist
      */
-    public function __construct($parent = null)
+    public function __construct(PropertyList $parent = null)
     {
         $this->parent = $parent;
     }
@@ -80,7 +80,7 @@ class PropertyList
      *
      * @return bool
      */
-    public function has($name): bool
+    public function has(string $name): bool
     {
         return array_key_exists($name, $this->data);
     }
@@ -89,7 +89,7 @@ class PropertyList
      * Resets a value to the value of it's parent, usually the default. If
      * no value is specified, the entire plist is reset.
      *
-     * @param string $name
+     * @param string|null $name
      */
     public function reset(?string $name = null): void
     {

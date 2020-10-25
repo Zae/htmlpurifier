@@ -2,20 +2,17 @@
 
 declare(strict_types=1);
 
-// why is this a top level function? Because PHP 5.2.0 doesn't seem to
-// understand how to interpret this filter if it's a static method.
-// It's all really silly, but if we go this route it might be reasonable
-// to coalesce all of these methods into one.
+namespace HTMLPurifier\Filter;
+
 use HTMLPurifier\AttrDef\Enum;
 use HTMLPurifier\AttrDef\CSS\Ident;
 use HTMLPurifier\AttrDef\HTML\ID;
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
+use HTMLPurifier\CSSDefinition;
 use HTMLPurifier\Filter;
 use HTMLPurifier\Exception;
-
-function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
-{
-}
+use HTMLPurifier\HTMLDefinition;
 
 /**
  * This filter extracts <style> blocks from input HTML, cleans them up
@@ -29,47 +26,47 @@ function htmlpurifier_filter_extractstyleblocks_muteerrorhandler()
  * @note
  *      This filter can also be used on stylesheets not included in the
  *      document--something purists would probably prefer. Just directly
- *      call HTMLPurifier_Filter_ExtractStyleBlocks->cleanCSS()
+ *      call ExtractStyleBlocks->cleanCSS()
  */
-class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
+class ExtractStyleBlocks extends Filter
 {
     /**
-     * @type string
+     * @var string
      */
     public $name = 'ExtractStyleBlocks';
 
     /**
-     * @type array
+     * @var array
      */
-    private $_styleMatches = [];
+    private $styleMatches = [];
 
     /**
-     * @type csstidy
+     * @var \csstidy
      */
-    private $_tidy;
+    private $tidy;
 
     /**
-     * @type ID
+     * @var ID
      */
-    private $_id_attrdef;
+    private $idAttrdef;
 
     /**
-     * @type Ident
+     * @var Ident
      */
-    private $_class_attrdef;
+    private $classAttrdef;
 
     /**
-     * @type Enum
+     * @var Enum
      */
-    private $_enum_attrdef;
+    private $enumAttrdef;
 
     public function __construct()
     {
-        $this->_tidy = new csstidy();
-        $this->_tidy->set_cfg('lowercase_s', false);
-        $this->_id_attrdef = new ID(true);
-        $this->_class_attrdef = new Ident();
-        $this->_enum_attrdef = new Enum([
+        $this->tidy = new \csstidy();
+        $this->tidy->set_cfg('lowercase_s', false);
+        $this->idAttrdef = new ID(true);
+        $this->classAttrdef = new Ident();
+        $this->enumAttrdef = new Enum([
             'first-child',
             'link',
             'visited',
@@ -86,36 +83,40 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
      */
     protected function styleCallback(array $matches): void
     {
-        $this->_styleMatches[] = $matches[1];
+        $this->styleMatches[] = $matches[1];
     }
 
     /**
      * Removes inline <style> tags from HTML, saves them for later use
      *
      * @param string              $html
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return string
      * @throws Exception
      * @todo Extend to indicate non-text/css style blocks
      */
-    public function preFilter(string $html, \HTMLPurifier\Config $config, Context $context): string
+    public function preFilter(string $html, Config $config, Context $context): string
     {
         $tidy = $config->get('Filter.ExtractStyleBlocks.TidyImpl');
         if ($tidy !== null) {
-            $this->_tidy = $tidy;
+            $this->tidy = $tidy;
         }
 
         // NB: this must be NON-greedy because if we have
         // <style>foo</style>  <style>bar</style>
         // we must not grab foo</style>  <style>bar
+        /**
+         * @psalm-suppress InvalidArgument
+         */
         $html = preg_replace_callback('#<style(?:\s.*)?>(.*)<\/style>#isU', [$this, 'styleCallback'], $html);
-        $style_blocks = $this->_styleMatches;
-        $this->_styleMatches = []; // reset
+        $style_blocks = $this->styleMatches;
+        $this->styleMatches = []; // reset
         $context->register('StyleBlocks', $style_blocks); // $context must not be reused
 
-        if ($this->_tidy) {
+        /* @phpstan-ignore-next-line */
+        if ($this->tidy) {
             foreach ($style_blocks as &$style) {
                 $style = $this->cleanCSS($style, $config, $context);
             }
@@ -130,13 +131,13 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
      * @warning Requires CSSTidy <http://csstidy.sourceforge.net/>
      *
      * @param string              $css CSS styling to clean
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return string Cleaned CSS
      * @throws Exception
      */
-    public function cleanCSS(string $css, \HTMLPurifier\Config $config, Context $context): string
+    public function cleanCSS(string $css, Config $config, Context $context): string
     {
         // prepare scope
         $scope = $config->get('Filter.ExtractStyleBlocks.Scope');
@@ -152,19 +153,28 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
             $css = substr($css, 4);
         }
 
-        if (strlen($css) > 3 && substr($css, -3) == '-->') {
+        if (\strlen($css) > 3 && substr($css, -3) === '-->') {
             $css = substr($css, 0, -3);
         }
 
         $css = trim($css);
-        set_error_handler('htmlpurifier_filter_extractstyleblocks_muteerrorhandler');
-        $this->_tidy->parse($css);
+        /**
+         * @psalm-suppress InvalidArgument
+         * @phpstan-ignore-next-line
+         * psalm/phpstan does not understand [$this, 'function'] is a callable
+         */
+        set_error_handler([$this, 'muteerrorhandler']);
+        $this->tidy->parse($css);
         restore_error_handler();
+
+        /** @var CSSDefinition $css_definition */
         $css_definition = $config->getDefinition('CSS');
+        /** @var HTMLDefinition $html_definition */
         $html_definition = $config->getDefinition('HTML');
+
         $new_css = [];
 
-        foreach ($this->_tidy->css as $k => $decls) {
+        foreach ($this->tidy->css as $k => $decls) {
             // $decls are all CSS declarations inside an @ selector
             $new_decls = [];
             foreach ($decls as $selector => $style) {
@@ -277,11 +287,11 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
                                 } else {
                                     $attrdef = null;
                                     if ($sdelim === '#') {
-                                        $attrdef = $this->_id_attrdef;
+                                        $attrdef = $this->idAttrdef;
                                     } elseif ($sdelim === '.') {
-                                        $attrdef = $this->_class_attrdef;
+                                        $attrdef = $this->classAttrdef;
                                     } elseif ($sdelim === ':') {
-                                        $attrdef = $this->_enum_attrdef;
+                                        $attrdef = $this->enumAttrdef;
                                     } else {
                                         throw new Exception('broken invariant sdelim and preg_split');
                                     }
@@ -350,11 +360,11 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
 
         // remove stuff that shouldn't be used, could be reenabled
         // after security risks are analyzed
-        $this->_tidy->css = $new_css;
-        $this->_tidy->import = [];
-        $this->_tidy->charset = null;
-        $this->_tidy->namespace = null;
-        $css = $this->_tidy->print->plain();
+        $this->tidy->css = $new_css;
+        $this->tidy->import = [];
+        $this->tidy->charset = '';
+        $this->tidy->namespace = '';
+        $css = $this->tidy->print->plain();
         // we are going to escape any special characters <>& to ensure
         // that no funny business occurs (i.e. </style> in a font-family prop).
         if ($config->get('Filter.ExtractStyleBlocks.Escaping')) {
@@ -366,5 +376,13 @@ class HTMLPurifier_Filter_ExtractStyleBlocks extends Filter
         }
 
         return $css;
+    }
+
+    /**
+     * Does nothing, only exists so we can mute the errorhandler.
+     */
+    public function muteerrorhandler(): void
+    {
+        // does nothing...
     }
 }

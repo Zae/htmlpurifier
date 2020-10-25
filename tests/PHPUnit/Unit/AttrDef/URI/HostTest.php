@@ -57,15 +57,15 @@ class HostTest extends TestCase
     }
 
     /**
-     * @return bool
+     * @test
+     * @group idna
      */
     public function testIDNA(): void
     {
         if (!\function_exists("idn_to_ascii")) {
-            $this->markTestSkipped('idn_to_ascii does not exist');
+            static::markTestSkipped('idn_to_ascii does not exist');
         }
 
-        $this->config->set('Core.EnableIDNA', true);
         $this->assertDef("\xE4\xB8\xAD\xE6\x96\x87.com.cn", "xn--fiq228c.com.cn");
         $this->assertDef("faß.de", "xn--fa-hia.de");
         $this->assertDef("\xe2\x80\x85.com", null); // rejected

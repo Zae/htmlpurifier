@@ -43,7 +43,7 @@ class Generator
      * Cache of HTMLDefinition during HTML output to determine whether or
      * not attributes should be minimized.
      *
-     * @var HTMLDefinition
+     * @var HTMLDefinition|null
      */
     private $def;
 
@@ -85,11 +85,10 @@ class Generator
 
     /**
      * @param Config  $config
-     * @param Context $context
      *
      * @throws Exception
      */
-    public function __construct(Config $config, Context $context)
+    public function __construct(Config $config)
     {
         $this->config = $config;
         $this->scriptFix = $config->get('Output.CommentScriptContents');
@@ -148,7 +147,7 @@ class Generator
 
             /**
              * @psalm-suppress InvalidCast
-             * @todo Install tidy as dev dependency so we can infer types in psalm?
+             * @phpstan-ignore-next-line
              */
             $html = (string)$tidy; // explicit cast necessary
         }

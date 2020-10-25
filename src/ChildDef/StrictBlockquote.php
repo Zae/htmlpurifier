@@ -44,8 +44,8 @@ class StrictBlockquote extends Required
      * @param Config $config
      *
      * @return array
-     * @note We don't want MakeWellFormed to auto-close inline elements since
-     *       they might be allowed.
+     * @note We don't want MakeWellFormed to auto-close inline elements since they might be allowed.
+     * @throws Exception
      */
     public function getAllowedElements(Config $config): array
     {

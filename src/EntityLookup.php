@@ -17,6 +17,14 @@ class EntityLookup
     public $table = [];
 
     /**
+     * EntityLookup constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
      * Sets up the entity lookup table from the serialized file contents.
      *
      * @param string|null $file

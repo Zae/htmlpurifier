@@ -11,6 +11,7 @@ use DOMNode;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\HTMLDefinition;
 use HTMLPurifier\Lexer;
 use HTMLPurifier\Queue;
 use HTMLPurifier\Token;
@@ -96,7 +97,8 @@ class DOMLex extends Lexer
 
         /**
          * @psalm-suppress InvalidArgument
-         * @todo fix? Some kind of psalm bug, where it doesn't understand array callback format?
+         * @phpstan-ignore-next-line
+         * @todo fix? Some kind of psalm/phpstan bug, where it doesn't understand array callback format?
          */
         set_error_handler([$this, 'muteErrorHandler']);
         // loadHTML() fails on PHP 5.3 when second parameter is given
@@ -203,7 +205,7 @@ class DOMLex extends Lexer
      *
      * @return string|null
      */
-    protected function getData($node): ?string
+    protected function getData(DOMNode $node): ?string
     {
         /**
          * @psalm-suppress TypeDoesNotContainType
@@ -313,7 +315,7 @@ class DOMLex extends Lexer
     /**
      * Converts a DOMNamedNodeMap of DOMAttr objects into an assoc array.
      *
-     * @param DOMNamedNodeMap $node_map DOMNamedNodeMap of DOMAttr objects.
+     * @param DOMNamedNodeMap|null $node_map DOMNamedNodeMap of DOMAttr objects.
      *
      * @return array Associative array of attributes.
      */
@@ -379,30 +381,23 @@ class DOMLex extends Lexer
     /**
      * Wraps an HTML fragment in the necessary HTML
      *
-     * @param string                $html
-     * @param Config                $config
-     * @param \HTMLPurifier\Context $context
+     * @param string  $html
+     * @param Config  $config
+     * @param Context $context
      *
-     * @param bool                  $use_div
+     * @param bool    $use_div
      *
      * @return string
      * @throws Exception
      */
     protected function wrapHTML(string $html, Config $config, Context $context, bool $use_div = true): string
     {
+        /** @var HTMLDefinition $def */
         $def = $config->getDefinition('HTML');
         $ret = '';
 
-        /**
-         * @psalm-suppress NullPropertyFetch
-         * @todo fix?
-         */
         if (!empty($def->doctype->dtdPublic) || !empty($def->doctype->dtdSystem)) {
             $ret .= '<!DOCTYPE html ';
-            /**
-             * @psalm-suppress NullPropertyFetch
-             * @todo fix?
-             */
             if (!empty($def->doctype->dtdPublic)) {
                 $ret .= 'PUBLIC "' . $def->doctype->dtdPublic . '" ';
             }

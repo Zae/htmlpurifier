@@ -60,17 +60,17 @@ class Native implements MathInterface
      * Rounds a number according to the number of sigfigs it should have,
      * using arbitrary precision when available.
      *
-     * @param string $n
+     * @param string $one
      * @param int    $sigfigs
      *
      * @return string
      */
-    public function round(string $n, int $sigfigs): string
+    public function round(string $one, int $sigfigs): string
     {
-        $new_log = (int)floor(log(abs((float)$n), 10)); // Number of digits left of decimal - 1
+        $new_log = (int)floor(log(abs((float)$one), 10)); // Number of digits left of decimal - 1
         $rp = $sigfigs - $new_log - 1; // Number of decimal places needed
 
-        return $this->scale(round((float)$n, $sigfigs - $new_log - 1), $rp + 1);
+        return $this->scale(round((float)$one, $sigfigs - $new_log - 1), $rp + 1);
     }
 
     /**

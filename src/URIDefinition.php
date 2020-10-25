@@ -72,8 +72,8 @@ class URIDefinition extends Definition
     }
 
     /**
-     * @param $filter
-     * @param $config
+     * @param URIFilter $filter
+     * @param Config    $config
      */
     public function addFilter(URIFilter $filter, Config $config): void
     {
@@ -172,7 +172,7 @@ class URIDefinition extends Definition
      *
      * @return bool
      */
-    public function filter(URI $uri, Config $config, Context $context): bool
+    public function filter(URI &$uri, Config $config, Context $context): bool
     {
         foreach ($this->filters as $name => $f) {
             $result = $f->filter($uri, $config, $context);

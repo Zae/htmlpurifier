@@ -38,7 +38,7 @@ class Interchange
     public function addDirective(Directive $directive): void
     {
         if (!$directive->id instanceof Id) {
-            throw new \Exception('Id on directive is null');
+            throw new Exception('Id on directive is null');
         }
 
         if (isset($this->directives[$i = $directive->id->toString()])) {

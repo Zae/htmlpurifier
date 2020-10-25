@@ -23,9 +23,8 @@ class Composite extends AttrDef
      * List of objects that may process strings.
      *
      * @var AttrDef[]
-     * @todo Make protected
      */
-    public $defs;
+    protected $defs;
 
     /**
      * @param AttrDef[] $defs List of HTMLPurifier_AttrDef objects

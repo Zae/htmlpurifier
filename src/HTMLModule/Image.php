@@ -6,8 +6,8 @@ namespace HTMLPurifier\HTMLModule;
 
 use HTMLPurifier\AttrDef\URI;
 use HTMLPurifier\AttrTransform\ImgRequired;
-use HTMLPurifier\HTMLModule;
 use HTMLPurifier\Config;
+use HTMLPurifier\HTMLModule;
 use HTMLPurifier\Exception;
 
 /**
@@ -24,11 +24,11 @@ class Image extends HTMLModule
     public $name = 'Image';
 
     /**
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      *
      * @throws Exception
      */
-    public function setup($config): void
+    public function setup(Config $config): void
     {
         $max = $config->get('HTML.MaxImgLength');
         $img = $this->addElement(

@@ -27,16 +27,23 @@ use function count;
  */
 class Zipper
 {
+    /**
+     * @var array|T[]
+     */
     public $front;
+
+    /**
+     * @var array|T[]
+     */
     public $back;
 
     /**
      * HTMLPurifier\HTMLPurifier_Zipper constructor.
      *
-     * @param array $front
-     * @param array $back
+     * @param array|T[] $front
+     * @param array|T[] $back
      */
-    public function __construct(array $front, array $back)
+    final public function __construct(array $front, array $back)
     {
         $this->front = $front;
         $this->back = $back;
@@ -46,9 +53,13 @@ class Zipper
      * Creates a zipper from an array, with a hole in the
      * 0-index position.
      *
-     * @param array to zipper-ify.
-     *
-     * @return array|array{Zipper, T} of zipper and element of first position.
+     * @param array $array to zipper-ify.
+//     * @psalm-param T[] $array
+//     * @phpstan-param T[] $array
+     * @todo: fix psalm param types, psalm bug?
+     * @return array of zipper and element of first position.
+     * @phpstan-return array{Zipper, T|null}
+     * @psalm-return array{Zipper, T|null}
      */
     public static function fromArray(array $array): array
     {
@@ -134,7 +145,7 @@ class Zipper
      * Delete contents of current hole, shifting hole to
      * next element.
      *
-     * @return T Original contents of new hole.
+     * @return T|null Original contents of new hole.
      */
     public function delete()
     {
@@ -195,7 +206,7 @@ class Zipper
      *
      * @param T     $t
      * @param int       $delete
-     * @param array     $replacement
+     * @param array|T[]     $replacement
      *
      * @return array|array{Zipper, T}
      */

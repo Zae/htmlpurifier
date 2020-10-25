@@ -13,7 +13,7 @@ use function is_null;
 /**
  * Decorator that, depending on a token, switches between two definitions.
  */
-class Switcher
+class Switcher implements AttrDefValidate
 {
     /**
      * @var string
@@ -43,11 +43,12 @@ class Switcher
     }
 
     /**
-     * @param string    $string
-     * @param Config    $config
-     * @param Context   $context
+     * @param string       $string
+     * @param Config|null  $config
+     * @param Context|null $context
      *
      * @return bool|string|null
+     * @throws \HTMLPurifier\Exception
      */
     public function validate(string $string, ?Config $config, ?Context $context)
     {

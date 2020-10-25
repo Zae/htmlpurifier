@@ -51,7 +51,7 @@ abstract class Token
     public $rewind;
 
     /**
-     * @var
+     * @var bool|null
      */
     public $carryover;
 

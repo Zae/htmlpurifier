@@ -10,6 +10,8 @@ use HTMLPurifier\Lexer\DOMLex;
 use HTMLPurifier\Lexer\DirectLex;
 
 use function extension_loaded;
+use function is_null;
+use function is_string;
 
 /**
  * Forgivingly lexes HTML (SGML-style) markup into tokens.
@@ -55,6 +57,8 @@ class Lexer
     /**
      * Whether or not this lexer implements line-number/column-number tracking.
      * If it does, set to true.
+     *
+     * @var bool
      */
     public $tracksLineNumbers = false;
 
@@ -86,6 +90,7 @@ class Lexer
      */
     public static function create(Config $config)
     {
+        /** @var Lexer|mixed $lexer */
         $lexer = $config->get('Core.LexerImpl');
 
         $needs_tracking =
@@ -93,10 +98,10 @@ class Lexer
             $config->get('Core.CollectErrors');
 
         $inst = null;
-        if (\is_object($lexer)) {
+        if ($lexer instanceof self) {
             $inst = $lexer;
         } else {
-            if (\is_null($lexer)) {
+            if (is_null($lexer)) {
                 do {
                     // auto-detection algorithm
                     if ($needs_tracking) {
@@ -120,6 +125,10 @@ class Lexer
                 } while (0);
             } // do..while so we can break
 
+            if (!is_string($lexer)) {
+                throw new Exception('Cannot instantiate unrecognized Lexer type');
+            }
+
             // instantiate recognized string names
             switch ($lexer) {
                 case 'DOMLex':
@@ -132,16 +141,14 @@ class Lexer
                     $inst = new _PH5P();
                     break;
                 default:
-                    throw new Exception(
-                        'Cannot instantiate unrecognized Lexer type ' .
-                            htmlspecialchars($lexer)
-                    );
+                    throw new Exception('Cannot instantiate unrecognized Lexer type ' . htmlspecialchars($lexer));
             }
         }
 
         /**
          * @psalm-suppress TypeDoesNotContainType
-         * @todo Psalm weirdness, probably because it can't find the _PHP5 class.
+         * @phpstan-ignore-next-line
+         * @todo Psalm/Phpstan weirdness, probably because it can't find the _PHP5 class.
          */
         if (!$inst) {
             throw new Exception('No lexer was instantiated');
@@ -268,9 +275,11 @@ class Lexer
      * @return Token[] array representation of HTML.
      *
      * @psalm-suppress InvalidReturnType
+     * @throws Exception
      */
     public function tokenizeHTML(string $string, Config $config, Context $context): array
     {
+        // fixme: just make the class / function actually abstract?
         throw new Exception('Call to abstract class');
     }
 

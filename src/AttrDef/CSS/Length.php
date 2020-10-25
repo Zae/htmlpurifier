@@ -16,18 +16,18 @@ use function strlen;
 class Length extends AttrDef
 {
     /**
-     * @var \HTMLPurifier\Length|string
+     * @var \HTMLPurifier\Length|null
      */
     protected $min;
 
     /**
-     * @var \HTMLPurifier\Length|string
+     * @var \HTMLPurifier\Length|null
      */
     protected $max;
 
     /**
-     * @param \HTMLPurifier\Length|string $min Minimum length, or null for no bound. String is also acceptable.
-     * @param \HTMLPurifier\Length|string $max Maximum length, or null for no bound. String is also acceptable.
+     * @param \HTMLPurifier\Length|string|null $min Minimum length, or null for no bound. String is also acceptable.
+     * @param \HTMLPurifier\Length|string|null $max Maximum length, or null for no bound. String is also acceptable.
      */
     public function __construct($min = null, $max = null)
     {

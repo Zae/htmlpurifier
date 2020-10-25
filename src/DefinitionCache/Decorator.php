@@ -29,8 +29,12 @@ class Decorator extends DefinitionCache
      */
     public $name;
 
+    /**
+     * Decorator constructor.
+     */
     public function __construct()
     {
+        // empty by choice.
     }
 
     /**
@@ -132,5 +136,22 @@ class Decorator extends DefinitionCache
     public function cleanup($config): bool
     {
         return $this->cache->cleanup($config);
+    }
+
+    /**
+     * @param string $decorator
+     * @return self
+     * @psalm-suppress LessSpecificReturnStatement
+     * @psalm-suppress MoreSpecificReturnType
+     */
+    public static function make(string $decorator): self
+    {
+        $class = sprintf(
+            "%s\\%s",
+            __CLASS__,
+            $decorator
+        );
+
+        return new $class();
     }
 }

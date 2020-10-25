@@ -20,36 +20,36 @@ use HTMLPurifier\Token\Text;
 class RemoveEmpty extends Injector
 {
     /**
-     * @var Context
+     * @var Context|null
      */
     private $context;
 
     /**
-     * @var Config
+     * @var Config|null
      */
     private $config;
 
     /**
-     * @var AttrValidator
+     * @var AttrValidator|null
      */
     private $attrValidator;
 
     /**
      * @var bool
      */
-    private $removeNbsp;
+    private $removeNbsp = false;
 
     /**
-     * @var bool
+     * @var array
      */
-    private $removeNbspExceptions;
+    private $removeNbspExceptions = [];
 
     /**
      * Cached contents of %AutoFormat.RemoveEmpty.Predicate
      *
      * @var array
      */
-    private $exclude;
+    private $exclude = [];
 
     /**
      * @param Config  $config
@@ -95,6 +95,10 @@ class RemoveEmpty extends Injector
             return;
         }
 
+        if ($this->inputZipper === null) {
+            return;
+        }
+
         $next = false;
         $deleted = 1; // the current tag
 
@@ -115,6 +119,10 @@ class RemoveEmpty extends Injector
             }
 
             break;
+        }
+
+        if ($this->attrValidator === null || $this->config === null || $this->context === null) {
+            return;
         }
 
         if (!$next || ($next instanceof End && $next->name === $token->name)) {

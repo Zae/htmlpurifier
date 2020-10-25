@@ -19,15 +19,19 @@ class FrameTarget extends Enum
     /**
      * @var array|bool
      */
-    public $valid_values = false; // uninitialized value
+    protected $valid_values = false; // uninitialized value
 
     /**
      * @var bool
      */
     protected $case_sensitive = false;
 
+    /**
+     * FrameTarget constructor.
+     */
     public function __construct()
     {
+        // empty by design
     }
 
     /**

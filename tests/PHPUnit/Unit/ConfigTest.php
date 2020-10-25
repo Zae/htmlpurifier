@@ -11,6 +11,7 @@ use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\DefinitionCacheFactory;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLDefinition;
+use HTMLPurifier\URIDefinition;
 use Mockery;
 use stdClass;
 
@@ -19,7 +20,7 @@ use stdClass;
  *
  * @package HTMLPurifier\Tests\Unit
  */
-class ConfigTestt extends TestCase
+class ConfigTest extends TestCase
 {
     /**
      * @var ConfigSchema
@@ -51,7 +52,7 @@ class ConfigTestt extends TestCase
         $this->schema->add('Element.IsotopeNames', [1 => 'protium', 2 => 'deuterium', 3 => 'tritium'], 'hash', false);
         $this->schema->add('Element.Object', new stdClass(), 'mixed', false);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
         $config->chatty = false;
 
@@ -123,7 +124,7 @@ class ConfigTestt extends TestCase
         $this->schema->addValueAliases('Instrument.Family', [
             'synth' => 'electronic']);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
         $config->chatty = false;
 
@@ -163,7 +164,7 @@ class ConfigTestt extends TestCase
         $this->schema->add('ReportCard.English', null, 'string', true);
         $this->schema->add('ReportCard.Absences', 0, 'int', false);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
         $config->chatty = false;
 
@@ -185,7 +186,7 @@ class ConfigTestt extends TestCase
         $this->schema->add('Home.Rug', 3, 'int', false);
         $this->schema->addAlias('Home.Carpet', 'Home.Rug');
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
         $config->chatty = false;
 
@@ -211,7 +212,7 @@ class ConfigTestt extends TestCase
         $this->schema->add('Variables.TangentialAcceleration', 'a_tan', 'string', false);
         $this->schema->add('Variables.AngularAcceleration', 'alpha', 'string', false);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
         $config->chatty = false;
 
@@ -240,7 +241,7 @@ class ConfigTestt extends TestCase
         $this->schema->add('Shortcut.Paste', 'v', 'istring', false);
         $this->schema->add('Shortcut.Cut', 'x', 'istring', false);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
 
         $config->loadIni(__DIR__ . '/../files/ConfigTest-loadIni.ini');
@@ -248,19 +249,18 @@ class ConfigTestt extends TestCase
         static::assertEquals('q', $config->get('Shortcut.Copy'));
         static::assertEquals('p', $config->get('Shortcut.Paste'));
         static::assertEquals('t', $config->get('Shortcut.Cut'));
-
     }
 
     /**
      * @test
      * @throws \HTMLPurifier\Exception
      */
-    public function test_getHTMLDefinition(): void
+    public function testGetHTMLDefinition(): void
     {
         // we actually want to use the old copy, because the definition
         // generation routines have dependencies on configuration values
 
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $config->set('HTML.Doctype', 'XHTML 1.0 Strict');
         $config->autoFinalize = false;
 
@@ -270,17 +270,19 @@ class ConfigTestt extends TestCase
         $def = $config->getHTMLDefinition();
         $def2 = $config->getHTMLDefinition();
         static::assertInstanceOf(HTMLDefinition::class, $def);
-        static::assertTrue($def === $def2);
+        static::assertSame($def, $def2);
         static::assertTrue($def->setup);
 
         $old_def = clone $def2;
 
         $config->set('HTML.Doctype', 'HTML 4.01 Transitional');
         $def = $config->getHTMLDefinition();
-        static::assertInstanceOf( HTMLDefinition::class, $def);
-        static::assertTrue($def !== $old_def);
+        static::assertInstanceOf(HTMLDefinition::class, $def);
+        static::assertNotSame($def, $old_def);
         static::assertTrue($def->setup);
 
+        $def = $config->getDefinition('HTML');
+        static::assertInstanceOf(HTMLDefinition::class, $def);
     }
 
     /**
@@ -289,7 +291,7 @@ class ConfigTestt extends TestCase
      */
     public function test_getHTMLDefinition_deprecatedRawError(): void
     {
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $config->chatty = false;
         // test deprecated retrieval of raw definition
         $config->set('HTML.DefinitionID', '\HTMLPurifier\ConfigTest->test_getHTMLDefinition()');
@@ -312,7 +314,7 @@ class ConfigTestt extends TestCase
     public function test_getHTMLDefinition_optimizedRawError(): void
     {
         $this->expectExceptionObject(new Exception('Cannot set optimized = true when raw = false'));
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $config->getHTMLDefinition(false, true);
     }
 
@@ -323,7 +325,7 @@ class ConfigTestt extends TestCase
     public function test_getHTMLDefinition_rawAfterSetupError(): void
     {
         $this->expectExceptionObject(new Exception('Cannot retrieve raw definition after it has already been setup'));
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $config->chatty = false;
         $config->getHTMLDefinition();
         $config->getHTMLDefinition(true);
@@ -338,7 +340,7 @@ class ConfigTestt extends TestCase
         $this->expectError();
         $this->expectErrorMessage('Useless DefinitionID declaration');
 //        $this->expectExceptionObject(new HTMLPurifier\HTMLPurifier_Exception('Inconsistent use of optimized and unoptimized raw definition retrievals'));
-        $config = \HTMLPurifier\Config::create(['HTML.DefinitionID' => '\HTMLPurifier\ConfigTest->test_getHTMLDefinition_inconsistentOptimizedError']);
+        $config = Config::create(['HTML.DefinitionID' => '\HTMLPurifier\ConfigTest->test_getHTMLDefinition_inconsistentOptimizedError']);
         $config->chatty = false;
         $config->getHTMLDefinition(true, false);
         $config->getHTMLDefinition(true, true);
@@ -351,7 +353,7 @@ class ConfigTestt extends TestCase
     public function test_getHTMLDefinition_inconsistentOptimizedError2(): void
     {
         $this->expectExceptionObject(new Exception('Inconsistent use of optimized and unoptimized raw definition retrievals'));
-        $config = \HTMLPurifier\Config::create(['HTML.DefinitionID' => '\HTMLPurifier\ConfigTest->test_getHTMLDefinition_inconsistentOptimizedError2']);
+        $config = Config::create(['HTML.DefinitionID' => '\HTMLPurifier\ConfigTest->test_getHTMLDefinition_inconsistentOptimizedError2']);
         $config->chatty = false;
         $config->getHTMLDefinition(true, true);
         $config->getHTMLDefinition(true, false);
@@ -363,7 +365,7 @@ class ConfigTestt extends TestCase
      */
     public function test_getHTMLDefinition_rawError(): void
     {
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $this->expectExceptionObject(new Exception('Cannot retrieve raw version without specifying %HTML.DefinitionID'));
         $def = $config->getHTMLDefinition(true, true);
     }
@@ -374,7 +376,7 @@ class ConfigTestt extends TestCase
      */
     public function test_getCSSDefinition(): void
     {
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $def = $config->getCSSDefinition();
         static::assertInstanceOf( CSSDefinition::class, $def);
     }
@@ -386,7 +388,7 @@ class ConfigTestt extends TestCase
     public function test_getDefinition(): void
     {
         $this->schema->add('Cache.DefinitionImpl', null, 'string', true);
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $this->expectExceptionObject(new Exception('Definition of Crust type not supported'));
         $config->getDefinition('Crust');
     }
@@ -402,9 +404,9 @@ class ConfigTestt extends TestCase
         $this->schema->add('Zoo.Camel', 0, 'int', false);
         $this->schema->add('Zoo.Others', [], 'list', false);
 
-        $config_manual = new \HTMLPurifier\Config($this->schema);
-        $config_loadabbr = new \HTMLPurifier\Config($this->schema);
-        $config_loadfull = new \HTMLPurifier\Config($this->schema);
+        $config_manual = new Config($this->schema);
+        $config_loadabbr = new Config($this->schema);
+        $config_loadfull = new Config($this->schema);
 
         $config_manual->set('Zoo.Aadvark', 3);
         $config_manual->set('Zoo.Boar', 5);
@@ -441,19 +443,19 @@ class ConfigTestt extends TestCase
         $this->schema->add('Cake.Sprinkles', 666, 'int', false);
         $this->schema->add('Cake.Flavor', 'vanilla', 'string', false);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->set('Cake.Sprinkles', 42);
 
         // test flat pass-through
-        $created_config = \HTMLPurifier\Config::create($config, $this->schema);
+        $created_config = Config::create($config, $this->schema);
         static::assertEquals($config, $created_config);
 
         // test loadArray
-        $created_config = \HTMLPurifier\Config::create(['Cake.Sprinkles' => 42], $this->schema);
+        $created_config = Config::create(['Cake.Sprinkles' => 42], $this->schema);
         static::assertEquals($config, $created_config);
 
         // test loadIni
-        $created_config = \HTMLPurifier\Config::create(__DIR__ . '/../files/ConfigTest-create.ini', $this->schema);
+        $created_config = Config::create(__DIR__ . '/../files/ConfigTest-create.ini', $this->schema);
         static::assertEquals($config, $created_config);
     }
 
@@ -466,7 +468,7 @@ class ConfigTestt extends TestCase
 
         $this->schema->add('Poem.Meter', 'iambic', 'string', false);
 
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->autoFinalize = false;
         $config->chatty = false;
 
@@ -518,7 +520,7 @@ class ConfigTestt extends TestCase
             ]
         ];
 
-        $config_expect = \HTMLPurifier\Config::create([
+        $config_expect = Config::create([
             'Pancake.Served' => false,
             'Toppings.Syrup' => false,
             'Toppings.Flavor' => 'juice',
@@ -526,7 +528,7 @@ class ConfigTestt extends TestCase
             'Toppings.Calories' => null
         ], $this->schema);
 
-        $config_result = \HTMLPurifier\Config::loadArrayFromForm(
+        $config_result = Config::loadArrayFromForm(
             $get, 'breakfast',
             ['Pancake.Served', 'Toppings', '-Toppings.Protected'],
             false, // mq fix
@@ -565,7 +567,7 @@ class ConfigTestt extends TestCase
         $this->schema->add('All.DefinitionRev', 2, 'int', false); // auto-blacklisted
 
         $input = ['Partial.Allowed', 'All', '-All.Blacklisted'];
-        $output = \HTMLPurifier\Config::getAllowedDirectivesForForm($input, $this->schema);
+        $output = Config::getAllowedDirectivesForForm($input, $this->schema);
         $expect = [
             ['Partial', 'Allowed'],
             ['All', 'Allowed']
@@ -581,7 +583,7 @@ class ConfigTestt extends TestCase
     public function testDeprecatedAPI(): void
     {
         $this->schema->add('Foo.Bar', 2, 'int', false);
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->chatty = false;
 
         $this->expectError();
@@ -603,9 +605,9 @@ class ConfigTestt extends TestCase
         $this->schema->add('Phantom.Masked', 25, 'int', false);
         $this->schema->add('Phantom.Unmasked', 89, 'int', false);
         $this->schema->add('Phantom.Latemasked', 11, 'int', false);
-        $config = new \HTMLPurifier\Config($this->schema);
+        $config = new Config($this->schema);
         $config->set('Phantom.Masked', 800);
-        $subconfig = \HTMLPurifier\Config::inherit($config);
+        $subconfig = Config::inherit($config);
         $config->set('Phantom.Latemasked', 100, 'int', false);
 
         static::assertEquals(800, $subconfig->get('Phantom.Masked'));
@@ -619,7 +621,7 @@ class ConfigTestt extends TestCase
      */
     public function testSerialize(): void
     {
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
         $config->set('HTML.Allowed', 'a');
         $config2 = unserialize($config->serialize());
 
@@ -695,7 +697,7 @@ class ConfigTestt extends TestCase
     {
         static::markTestSkipped('Fails, don\'t know why...');
 
-        $fake_config = \HTMLPurifier\Config::createDefault();
+        $fake_config = Config::createDefault();
         $fake_def = $fake_config->getHTMLDefinition();
         [$mock, $config] = $this->setupCacheMock('HTML');
 
@@ -724,6 +726,38 @@ class ConfigTestt extends TestCase
     }
 
     /**
+     * @test
+     */
+    public function testDeprecatedGetApi(): void
+    {
+        $this->expectError();
+        $this->expectErrorMessage("Using deprecated API: use \$config->get('key.deprecated') instead");
+
+        $config = Config::createDefault();
+        $config->get('key', "deprecated");
+    }
+
+    /**
+     * @test
+     */
+    public function getSerialTest(): void
+    {
+        $config = Config::createDefault();
+
+        static::assertEquals('9dc48447df9656a7a80d29d4c9bb6eb3e7bca312', $config->getSerial());
+    }
+
+    /**
+     * @test
+     */
+    public function getURIDefinitionTest(): void
+    {
+        $config = Config::createDefault();
+
+        static::assertInstanceOf(URIDefinition::class, $config->getURIDefinition());
+    }
+
+    /**
      * @param $type
      *
      * @return array
@@ -739,7 +773,7 @@ class ConfigTestt extends TestCase
         $mock = Mockery::mock(DefinitionCache::class);
         $mock->content_model = '123';
 
-        $config = \HTMLPurifier\Config::createDefault();
+        $config = Config::createDefault();
 
         $factory->expects()
                 ->create($type, $config)

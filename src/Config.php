@@ -112,7 +112,7 @@ class Config
      * what directives are allowed.
      * @param PropertyList $parent
      */
-    public function __construct(ConfigSchema $definition, ?PropertyList $parent = null)
+    final public function __construct(ConfigSchema $definition, ?PropertyList $parent = null)
     {
         $parent = $parent ?: $definition->defaultPlist;
         $this->plist = new PropertyList($parent);
@@ -219,6 +219,7 @@ class Config
             $this->triggerError(
                 /**
                  * @psalm-suppress PossiblyInvalidPropertyFetch
+                 * @phpstan-ignore-next-line
                  * @todo fix?
                  */
                 'Cannot get value from aliased directive, use real name ' . $d->key,
@@ -355,7 +356,9 @@ class Config
             return;
         }
 
-        if (!isset($this->def->info[$key])) {
+        if ($key === 'Core.EnableIDNA') {
+            $this->triggerError("Using deprecated directive: Core.EnableIDNA", E_USER_NOTICE);
+        } elseif (!isset($this->def->info[$key])) {
             $this->triggerError(
                 'Cannot set undefined directive ' . htmlspecialchars($key) . ' to value',
                 E_USER_WARNING
@@ -376,8 +379,10 @@ class Config
             }
 
             $this->aliasMode = true;
+            /* @phpstan-ignore-next-line */
             $this->set($def->key, $value);
             $this->aliasMode = false;
+            /* @phpstan-ignore-next-line */
             $this->triggerError("$key is an alias, preferred directive name is {$def->key}", E_USER_NOTICE);
             return;
         }
@@ -474,6 +479,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('HTML', $raw, $optimized);
     }
@@ -499,6 +505,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('CSS', $raw, $optimized);
     }
@@ -524,6 +531,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('URI', $raw, $optimized);
     }
@@ -608,7 +616,7 @@ class Config
                 "Cannot retrieve raw version without specifying %$type.DefinitionID"
             );
         }
-        
+
         if (!empty($this->definitions[$type])) {
             $def = $this->definitions[$type];
             if ($def->setup && !$optimized) {
@@ -631,7 +639,7 @@ class Config
                     'Optimization status of definition is unknown' . $extra
                 );
             }
-            
+
             if ($def->optimized !== $optimized) {
                 $msg = $optimized ? 'optimized' : 'unoptimized';
                 $extra = $this->chatty ?
@@ -698,6 +706,7 @@ class Config
         $def->optimized = $optimized;
 
         return $def;
+        /* @phpstan-ignore-next-line */
         throw new Exception('The impossible happened!');
     }
 
@@ -749,6 +758,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('HTML', true, true);
     }
@@ -763,6 +773,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('CSS', true, true);
     }
@@ -777,6 +788,7 @@ class Config
     {
         /**
          * @psalm-suppress LessSpecificReturnStatement
+         * @phpstan-ignore-next-line
          */
         return $this->getDefinition('URI', true, true);
     }
@@ -848,7 +860,7 @@ class Config
         $ret = [];
         foreach ($schema->info as $key => $def) {
             [$ns, $directive] = explode('.', $key, 2);
-            
+
             if ($allowed !== true) {
                 if (isset($blacklisted_directives["$ns.$directive"])) {
                     continue;
@@ -857,7 +869,7 @@ class Config
                     continue;
                 }
             }
-            
+
             if (\is_object($def) && isset($def->isAlias)) {
                 continue;
             }
@@ -880,7 +892,7 @@ class Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
-     * @param ConfigSchema $schema Schema to use, if not global copy
+     * @param ?ConfigSchema $schema Schema to use, if not global copy
      *
      * @return mixed
      */
@@ -921,7 +933,7 @@ class Config
      * @param string|bool $index Index/name that the config variables are in
      * @param array|bool $allowed List of allowed namespaces/directives
      * @param bool $mq_fix Boolean whether or not to enable magic quotes fix
-     * @param ConfigSchema $schema Schema to use, if not global copy
+     * @param ?ConfigSchema $schema Schema to use, if not global copy
      *
      * @return array
      */
@@ -1039,6 +1051,7 @@ class Config
             }
         }
 
+        /** @psalm-suppress ArgumentTypeCoercion */
         trigger_error($msg . $extra, $no);
     }
 
@@ -1054,7 +1067,7 @@ class Config
         $this->getDefinition('HTML');
         $this->getDefinition('CSS');
         $this->getDefinition('URI');
-        
+
         return serialize($this);
     }
 }

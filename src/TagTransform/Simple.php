@@ -21,13 +21,13 @@ use function is_null;
 class Simple extends TagTransform
 {
     /**
-     * @var string
+     * @var string|null
      */
     protected $style;
 
     /**
-     * @param string $transform_to Tag name to transform to.
-     * @param string $style        CSS style to add to the tag
+     * @param string      $transform_to Tag name to transform to.
+     * @param string|null $style        CSS style to add to the tag
      */
     public function __construct(string $transform_to, string $style = null)
     {

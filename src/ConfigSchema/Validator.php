@@ -23,14 +23,14 @@ use function is_string;
 class Validator
 {
     /**
-     * @var Interchange
+     * @var Interchange|null
      */
     protected $interchange;
 
     /**
      * @var array
      */
-    protected $aliases;
+    protected $aliases = [];
 
     /**
      * Context-stack to provide easy to read error messages.
@@ -68,7 +68,7 @@ class Validator
         // arrays, so we don't use the identical !== comparison
         foreach ($interchange->directives as $i => $directive) {
             if (!$directive->id instanceof Id) {
-                throw new \Exception('Id on directive is null');
+                throw new Exception('Id on directive is null');
             }
 
             $id = $directive->id->toString();
@@ -113,7 +113,7 @@ class Validator
     public function validateDirective(Directive $d): void
     {
         if (!$d->id instanceof Id) {
-            throw new \Exception('Id on directive is null');
+            throw new Exception('Id on directive is null');
         }
 
         $id = $d->id->toString();

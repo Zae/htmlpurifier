@@ -41,10 +41,10 @@ class Text extends Node
     /**
      * Constructor, accepts data and determines if it is whitespace.
      *
-     * @param string $data String parsed character data.
-     * @param bool   $is_whitespace
-     * @param int    $line
-     * @param int    $col
+     * @param string   $data String parsed character data.
+     * @param bool     $is_whitespace
+     * @param int|null $line
+     * @param int|null $col
      */
     public function __construct(string $data, bool $is_whitespace, ?int $line = null, ?int $col = null)
     {

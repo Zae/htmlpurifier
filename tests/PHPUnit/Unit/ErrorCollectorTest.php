@@ -17,7 +17,9 @@ use Mockery;
  */
 class ErrorCollectorTest extends TestCase
 {
-    protected $language, $generator, $line;
+    protected $language;
+    protected $generator;
+    protected $line;
     protected $collector;
 
     protected function setUp(): void
@@ -26,20 +28,20 @@ class ErrorCollectorTest extends TestCase
 
         $this->language = Mockery::mock(Language::class);
 
-//        $this->language->expects()
-//            ->getErrorName(E_ERROR)
-//            ->once()
-//            ->andReturn('Error');
+        $this->language->shouldReceive('getErrorName')
+            ->with(E_ERROR)
+            ->zeroOrMoreTimes()
+            ->andReturn('Error');
 
-//        $this->language->expects()
-//            ->getErrorName(E_WARNING)
-//            ->once()
-//            ->andReturn('Warning');
+        $this->language->shouldReceive('getErrorName')
+            ->with(E_WARNING)
+            ->zeroOrMoreTimes()
+            ->andReturn('Warning');
 
-//        $this->language->expects()
-//            ->getErrorName(E_NOTICE)
-//            ->once()
-//            ->andReturn('Notice');
+        $this->language->shouldReceive('getErrorName')
+            ->with(E_NOTICE)
+            ->zeroOrMoreTimes()
+            ->andReturn('E_NOTICE');
 
         // this might prove to be troublesome if we need to set config
         $this->generator = new Generator($this->config, $this->context);
@@ -57,14 +59,14 @@ class ErrorCollectorTest extends TestCase
     {
         $language = $this->language;
         $language->expects()
-            ->getMessage('message-1')
-            ->once()
-            ->andReturn('Message 1');
+                 ->getMessage('message-1')
+                 ->once()
+                 ->andReturn('Message 1');
 
         $language->expects()
-            ->formatMessage('message-2', [1 => 'param'])
-            ->once()
-            ->andReturn('Message 2');
+                 ->formatMessage('message-2', [1 => 'param'])
+                 ->once()
+                 ->andReturn('Message 2');
 
 //        $language->expects()
 //            ->formatMessage('ErrorCollector: At line', ['line' => 23])
@@ -104,10 +106,39 @@ class ErrorCollectorTest extends TestCase
     public function testNoErrors(): void
     {
         $this->language->expects()
-            ->getMessage('ErrorCollector: No errors')
-            ->andReturn('No errors');
+                       ->getMessage('ErrorCollector: No errors')
+                       ->andReturn('No errors');
 
         $formatted_result = '<p>No errors</p>';
+        static::assertEquals(
+            $formatted_result,
+            $this->collector->getHTMLFormatted($this->config)
+        );
+    }
+
+    /**
+     * @test
+     */
+    public function testHTMLFormatted(): void
+    {
+        $this->language->expects()
+                       ->getMessage('message-1')
+                       ->andReturn('MESSAGE ONE');
+
+        $this->language->expects()
+                       ->getMessage('message-2')
+                       ->andReturn('MESSAGE TWO');
+
+        $col = 20;
+        $this->context->register('CurrentCol', $col);
+
+        $this->line = 23;
+        $this->collector->send(E_ERROR, 'message-1');
+
+        $this->line = 24;
+        $this->collector->send(E_ERROR, 'message-2');
+
+        $formatted_result = '<ul><li><div><span class="error e1"><strong>Error</strong></span> <em class="location">Line 23, Column 20: </em> <strong class="description">MESSAGE ONE</strong> </div></li><li><div><span class="error e1"><strong>Error</strong></span> <em class="location">Line 24, Column 20: </em> <strong class="description">MESSAGE TWO</strong> </div></li></ul>';
         static::assertEquals(
             $formatted_result,
             $this->collector->getHTMLFormatted($this->config)
@@ -120,12 +151,12 @@ class ErrorCollectorTest extends TestCase
     public function testNoLineNumbers(): void
     {
         $this->language->expects()
-            ->getMessage('message-1')
-            ->andReturn('Message 1');
+                       ->getMessage('message-1')
+                       ->andReturn('Message 1');
 
         $this->language->expects()
-            ->getMessage('message-2')
-            ->andReturn('Message 2');
+                       ->getMessage('message-2')
+                       ->andReturn('Message 2');
 
         $this->collector->send(E_ERROR, 'message-1');
         $this->collector->send(E_ERROR, 'message-2');
@@ -156,17 +187,17 @@ class ErrorCollectorTest extends TestCase
         $current_token = new Start('a', ['href' => 'http://example.com'], 32);
 
         $this->language->expects()
-            ->formatMessage('message-data-token', ['CurrentToken' => $current_token])
-            ->once()
-            ->andReturn('Token message');
+                       ->formatMessage('message-data-token', ['CurrentToken' => $current_token])
+                       ->once()
+                       ->andReturn('Token message');
 
         $this->collector->send(E_NOTICE, 'message-data-token');
 
-        $current_attr  = 'href';
+        $current_attr = 'href';
         $this->language->expects()
-            ->formatMessage('message-attr', ['CurrentToken' => $current_token])
-            ->twice()
-            ->andReturn('$CurrentAttr.Name => $CurrentAttr.Value');
+                       ->formatMessage('message-attr', ['CurrentToken' => $current_token])
+                       ->twice()
+                       ->andReturn('$CurrentAttr.Name => $CurrentAttr.Value');
 
         // 1
         $this->collector->send(E_NOTICE, 'message-attr'); // test when context isn't available

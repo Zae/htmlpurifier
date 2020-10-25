@@ -16,7 +16,7 @@ namespace HTMLPurifier;
 abstract class DefinitionCache
 {
     /**
-     * @var string|null
+     * @var string
      */
     public $type;
 

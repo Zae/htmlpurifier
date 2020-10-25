@@ -23,7 +23,7 @@ class ErrorStruct
     /**
      * Type of this struct.
      *
-     * @var string
+     * @var int|null
      */
     public $type;
 
@@ -55,12 +55,20 @@ class ErrorStruct
     public $children = [];
 
     /**
-     * @param string|int $type
+     * ErrorStruct constructor.
+     */
+    final public function __construct()
+    {
+        // just here to finalize the constructor.
+    }
+
+    /**
+     * @param int $type
      * @param string     $id
      *
      * @return mixed
      */
-    public function getChild($type, string $id)
+    public function getChild(int $type, string $id)
     {
         if (!isset($this->children[$type][$id])) {
             $this->children[$type][$id] = new static();

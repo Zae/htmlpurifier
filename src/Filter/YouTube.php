@@ -2,13 +2,16 @@
 
 declare(strict_types=1);
 
+namespace HTMLPurifier\Filter;
+
+use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Filter;
 
 /**
  * Class HTMLPurifier_Filter_YouTube
  */
-class HTMLPurifier_Filter_YouTube extends Filter
+class YouTube extends Filter
 {
     /**
      * @type string
@@ -17,12 +20,12 @@ class HTMLPurifier_Filter_YouTube extends Filter
 
     /**
      * @param string              $html
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return string
      */
-    public function preFilter(string $html, \HTMLPurifier\Config $config, Context $context): string
+    public function preFilter(string $html, Config $config, Context $context): string
     {
         $pre_regex = '#<object[^>]+>.+?' .
                      '(?:http:)?//www.youtube.com/((?:v|cp)/[A-Za-z0-9\-_=]+).+?</object>#s';
@@ -33,12 +36,12 @@ class HTMLPurifier_Filter_YouTube extends Filter
 
     /**
      * @param string              $html
-     * @param \HTMLPurifier\Config $config
+     * @param Config $config
      * @param Context             $context
      *
      * @return string
      */
-    public function postFilter(string $html, \HTMLPurifier\Config $config, Context $context): string
+    public function postFilter(string $html, Config $config, Context $context): string
     {
         $post_regex = '#<span class="youtube-embed">((?:v|cp)/[A-Za-z0-9\-_=]+)</span>#';
 
