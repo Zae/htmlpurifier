@@ -113,6 +113,10 @@ class MakeWellFormed extends Strategy
         $e = $context->get('ErrorCollector', true);
         $i = false; // injector index
 
+        /**
+         * @psalm-suppress InvalidArgument
+         * @todo: psalm bug?
+         */
         [$zipper, $token] = Zipper::fromArray($tokens);
 
         if ($token === null) {
