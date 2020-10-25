@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Snapshots;
 
-use HTMLPurifier\Tests\Traits\TestUtilities;
+use HTMLPurifier\Tests\PHPUnit\Traits\TestUtilities;
 use PHPUnit\Framework\TestCase;
 use Spatie\Snapshots\MatchesSnapshots;
 
@@ -31,7 +31,7 @@ class FilesTest extends TestCase
 
         $files = $this->getFiles();
 
-        foreach($files as $file) {
+        foreach ($files as $file) {
             $this->assertMatchesTextSnapshot(
                 $htmlPurifier->purify(file_get_contents($file))
             );

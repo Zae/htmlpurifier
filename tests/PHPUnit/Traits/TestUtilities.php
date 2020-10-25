@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\Tests\Traits;
 
-use \HTMLPurifier\Config;
+use HTMLPurifier\Config;
 use HTMLPurifier\HTMLPurifier;
 
 /**
  * Trait TestUtilities
  *
- * @package PHPUnit\Traits
+ * @package HTMLPurifier\Tests\Traits
  */
 trait TestUtilities
 {
