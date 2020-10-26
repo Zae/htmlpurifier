@@ -7,8 +7,8 @@ namespace HTMLPurifier\HTMLModule;
 use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLModule;
-
 use HTMLPurifier\Log;
+
 use function count;
 use function is_null;
 
