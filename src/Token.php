@@ -68,7 +68,8 @@ abstract class Token
     public function __get(string $n)
     {
         if ($n === 'type') {
-            trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
+            Log::notice('Deprecated type property called; use instanceof');
+
             switch (\get_class($this)) {
                 case Start::class:
                     return 'start';

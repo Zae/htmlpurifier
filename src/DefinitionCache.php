@@ -91,8 +91,7 @@ abstract class DefinitionCache
     public function checkDefType(Definition $def): bool
     {
         if ($def->type !== $this->type) {
-            trigger_error("Cannot use definition of type {$def->type} in cache for {$this->type}");
-
+            Log::notice("Cannot use definition of type {$def->type} in cache for {$this->type}");
             return false;
         }
 

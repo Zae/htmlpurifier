@@ -8,6 +8,7 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\HTMLModule;
 
+use HTMLPurifier\Log;
 use function count;
 use function is_null;
 
@@ -109,10 +110,7 @@ class Tidy extends HTMLModule
         }
 
         if ($i === $c) {
-            trigger_error(
-                'Tidy level ' . htmlspecialchars($level) . ' not recognized',
-                E_USER_WARNING
-            );
+            Log::warning('Tidy level ' . htmlspecialchars($level) . ' not recognized');
 
             return [];
         }

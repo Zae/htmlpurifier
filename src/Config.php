@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace HTMLPurifier;
 
 use HTMLPurifier\VarParser\Flexible;
+use Psr\Log\LogLevel;
 
 /**
  * Configuration object that triggers customizable behavior.
@@ -190,7 +191,7 @@ class Config
         if ($a !== null) {
             $this->triggerError(
                 "Using deprecated API: use \$config->get('$key.$a') instead",
-                E_USER_WARNING
+                LogLevel::WARNING
             );
             $key = "$key.$a";
         }
@@ -203,7 +204,7 @@ class Config
             // can't add % due to SimpleTest bug
             $this->triggerError(
                 'Cannot retrieve value of undefined directive ' . htmlspecialchars($key),
-                E_USER_WARNING
+                LogLevel::WARNING
             );
 
             return;
@@ -223,7 +224,7 @@ class Config
                  * @todo fix?
                  */
                 'Cannot get value from aliased directive, use real name ' . $d->key,
-                E_USER_ERROR
+                LogLevel::ERROR
             );
 
             return;
@@ -237,7 +238,7 @@ class Config
                     $this->lock .
                     ' is active, this probably indicates a Definition setup method ' .
                     'is accessing directives that are not within its namespace',
-                    E_USER_ERROR
+                    LogLevel::ERROR
                 );
 
                 return;
@@ -266,7 +267,7 @@ class Config
             $this->triggerError(
                 'Cannot retrieve undefined namespace ' .
                 htmlspecialchars($namespace),
-                E_USER_WARNING
+                LogLevel::WARNING
             );
 
             return [];
@@ -347,7 +348,7 @@ class Config
             $directive = $value;
             $value = $a;
             $key = "$key.$directive";
-            $this->triggerError("Using deprecated API: use \$config->set('$key', ...) instead", E_USER_NOTICE);
+            $this->triggerError("Using deprecated API: use \$config->set('$key', ...) instead", LogLevel::NOTICE);
         } else {
             [$namespace] = explode('.', $key);
         }
@@ -357,11 +358,11 @@ class Config
         }
 
         if ($key === 'Core.EnableIDNA') {
-            $this->triggerError("Using deprecated directive: Core.EnableIDNA", E_USER_NOTICE);
+            $this->triggerError("Using deprecated directive: Core.EnableIDNA", LogLevel::NOTICE);
         } elseif (!isset($this->def->info[$key])) {
             $this->triggerError(
                 'Cannot set undefined directive ' . htmlspecialchars($key) . ' to value',
-                E_USER_WARNING
+                LogLevel::WARNING
             );
             return;
         }
@@ -373,7 +374,7 @@ class Config
             if ($this->aliasMode) {
                 $this->triggerError(
                     'Double-aliases not allowed, please fix ConfigSchema bug with' . $key,
-                    E_USER_ERROR
+                    LogLevel::ERROR
                 );
                 return;
             }
@@ -383,7 +384,7 @@ class Config
             $this->set($def->key, $value);
             $this->aliasMode = false;
             /* @phpstan-ignore-next-line */
-            $this->triggerError("$key is an alias, preferred directive name is {$def->key}", E_USER_NOTICE);
+            $this->triggerError("$key is an alias, preferred directive name is {$def->key}", LogLevel::NOTICE);
             return;
         }
 
@@ -408,7 +409,7 @@ class Config
             $this->triggerError(
                 'Value for ' . $key . ' is of invalid type, should be ' .
                 VarParser::getTypeName($type),
-                E_USER_WARNING
+                LogLevel::WARNING
             );
             return;
         }
@@ -423,7 +424,7 @@ class Config
                 $this->triggerError(
                     'Value not supported, valid values are: ' .
                     $this->listify($def->allowed),
-                    E_USER_WARNING
+                    LogLevel::WARNING
                 );
                 return;
             }
@@ -692,12 +693,12 @@ class Config
                     'cached version is available, and no raw operations are necessary).  See ' .
                     '<a href="http://htmlpurifier.org/docs/enduser-customize.html#optimized">' .
                     'Customize</a> for more details',
-                    E_USER_WARNING
+                    LogLevel::WARNING
                 );
             } else {
                 $this->triggerError(
                     'Useless DefinitionID declaration',
-                    E_USER_WARNING
+                    LogLevel::WARNING
                 );
             }
         }
@@ -998,7 +999,7 @@ class Config
     public function isFinalized(?string $error = null): bool
     {
         if ($this->finalized && $error) {
-            $this->triggerError($error, E_USER_ERROR);
+            $this->triggerError($error, LogLevel::ERROR);
         }
 
         return $this->finalized;
@@ -1030,10 +1031,12 @@ class Config
      * Produces a nicely formatted error message by supplying the
      * stack frame information OUTSIDE of \HTMLPurifier\Config.
      *
-     * @param string $msg An error message
-     * @param int $no An error number
+     * @param string $msg   An error message
+     * @param string $level The errorlevel
+     *
+     * @throws Exception
      */
-    protected function triggerError(string $msg, int $no): void
+    protected function triggerError(string $msg, string $level): void
     {
         // determine previous stack frame
         $extra = '';
@@ -1051,8 +1054,15 @@ class Config
             }
         }
 
-        /** @psalm-suppress ArgumentTypeCoercion */
-        trigger_error($msg . $extra, $no);
+        switch ($level) {
+            case LogLevel::EMERGENCY:
+            case LogLevel::ALERT:
+            case LogLevel::CRITICAL:
+            case LogLevel::ERROR:
+                throw new Exception("{$msg}{$extra}");
+            default:
+                Log::log($level, "{$msg}{$extra}");
+        }
     }
 
     /**

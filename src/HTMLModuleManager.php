@@ -223,13 +223,13 @@ class HTMLModuleManager
         }
 
         if (empty($module->name)) {
-            trigger_error('Module instance of ' . \get_class($module) . ' must have name');
+            Log::notice('Module instance of ' . \get_class($module) . ' must have name');
 
             return;
         }
 
         if (!$overload && isset($this->registeredModules[$module->name])) {
-            trigger_error('Overloading ' . $module->name . ' without explicit overload parameter', E_USER_WARNING);
+            Log::warning('Overloading ' . $module->name . ' without explicit overload parameter');
         }
 
         if (!$module instanceof HTMLModule) {

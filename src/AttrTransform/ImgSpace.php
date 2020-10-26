@@ -7,6 +7,7 @@ namespace HTMLPurifier\AttrTransform;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\AttrTransform;
+use HTMLPurifier\Log;
 
 /**
  * Pre-transform that changes deprecated hspace and vspace attributes to CSS
@@ -33,7 +34,7 @@ class ImgSpace extends AttrTransform
     {
         $this->attr = $attr;
         if (!isset($this->css[$attr])) {
-            trigger_error(htmlspecialchars($attr) . ' is not valid space attribute');
+            Log::notice(htmlspecialchars($attr) . ' is not valid space attribute');
         }
     }
 

@@ -105,7 +105,7 @@ class DefinitionCacheFactory
             $cache = new $class($type);
         } else {
             if ($method !== 'Serializer') {
-                trigger_error("Unrecognized DefinitionCache {$method}, using Serializer instead", E_USER_WARNING);
+                Log::warning("Unrecognized DefinitionCache {$method}, using Serializer instead");
             }
 
             $cache = new Serializer($type);

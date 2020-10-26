@@ -142,10 +142,8 @@ class ContentSets
          * @phpstan-ignore-next-line
          */
         if (\is_object($value)) {
-            trigger_error(
-                'Literal object child definitions should be stored in ' .
-                'ElementDef->child not ElementDef->content_model',
-                E_USER_NOTICE
+            Log::notice(
+                'Literal object child definitions should be stored in ElementDef->child not ElementDef->content_model'
             );
 
             return null;

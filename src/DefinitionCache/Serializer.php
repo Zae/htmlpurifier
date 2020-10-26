@@ -9,6 +9,7 @@ use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\Exception;
 
+use HTMLPurifier\Log;
 use function function_exists;
 
 /**
@@ -284,10 +285,7 @@ class Serializer extends DefinitionCache
         $chmod = $config->get('Cache.SerializerPermissions');
         if ($chmod === null) {
             if (!@mkdir($directory) && !is_dir($directory)) {
-                trigger_error(
-                    'Could not create directory ' . $directory . '',
-                    E_USER_WARNING
-                );
+                Log::warning("Could not create directory {$directory}");
 
                 return false;
             }
@@ -298,10 +296,8 @@ class Serializer extends DefinitionCache
         if (!is_dir($directory)) {
             $base = $this->generateBaseDirectoryPath($config);
             if (!is_dir($base)) {
-                trigger_error(
-                    'Base directory ' . $base . ' does not exist,
-                    please create or change using %Cache.SerializerPath',
-                    E_USER_WARNING
+                Log::warning(
+                    "Base directory {$base} does not exist, please create or change using %Cache.SerializerPath"
                 );
 
                 return false;
@@ -312,10 +308,7 @@ class Serializer extends DefinitionCache
             }
 
             if (!@mkdir($directory, $chmod) && !is_dir($directory)) {
-                trigger_error(
-                    'Could not create directory ' . $directory . '',
-                    E_USER_WARNING
-                );
+                Log::warning("Could not create directory {$directory}");
 
                 return false;
             }
@@ -349,10 +342,7 @@ class Serializer extends DefinitionCache
         if (!is_dir($dir)) {
             // generally, you'll want to handle this beforehand
             // so a more specific error message can be given
-            trigger_error(
-                'Directory ' . $dir . ' does not exist',
-                E_USER_WARNING
-            );
+            Log::warning("Directory {$dir} does not exist");
 
             return false;
         }
@@ -373,18 +363,10 @@ class Serializer extends DefinitionCache
                 $chmod |= 0777;
             }
 
-            trigger_error(
-                'Directory ' . $dir . ' not writable, ' .
-                'please chmod to ' . decoct($chmod),
-                E_USER_WARNING
-            );
+            Log::warning("Directory {$dir} not writable, please chmod to " . decoct($chmod));
         } else {
             // generic error message
-            trigger_error(
-                'Directory ' . $dir . ' not writable, ' .
-                'please alter file permissions',
-                E_USER_WARNING
-            );
+            Log::warning("Directory {$dir} not writable, please alter file permissions");
         }
 
         return false;

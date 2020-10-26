@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\VarParser;
 
+use HTMLPurifier\Log;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
 use HTMLPurifier\Exception;
@@ -130,7 +131,7 @@ class Flexible extends VarParser
                 }
 
                 if ($type === self::ALIST) {
-                    trigger_error('Array list did not have consecutive integer indexes', E_USER_WARNING);
+                    Log::warning('Array list did not have consecutive integer indexes');
 
                     return array_values($var);
                 }
@@ -138,10 +139,8 @@ class Flexible extends VarParser
                 if ($type === self::LOOKUP) {
                     foreach ($var as $key => $value) {
                         if ($value !== true) {
-                            trigger_error(
-                                "Lookup array has non-true value at key '$key'; " .
-                                'maybe your input array was not indexed numerically',
-                                E_USER_WARNING
+                            Log::warning(
+                                "Lookup array has non-true value at key '{$key}'; maybe your input array was not indexed numerically" //phpcs:ignore
                             );
                         }
                         $var[$key] = true;

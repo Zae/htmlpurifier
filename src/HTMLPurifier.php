@@ -136,10 +136,8 @@ class HTMLPurifier
      */
     public function addFilter(Filter $filter): void
     {
-        trigger_error(
-            'HTMLPurifier->addFilter() is deprecated, use configuration directives' .
-            ' in the Filter namespace or Filter.Custom',
-            E_USER_WARNING
+        Log::warning(
+            'HTMLPurifier->addFilter() is deprecated, use configuration directives in the Filter namespace or Filter.Custom' // phpcs:ignore
         );
 
         $this->filters[] = $filter;

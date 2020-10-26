@@ -91,8 +91,7 @@ class Encoder
         // is utf-8
         if (($code === static::ICONV_TRUNCATES) && $in === 'utf-8') {
             if ($max_chunk_size < 4) {
-                trigger_error('max_chunk_size is too small', E_USER_WARNING);
-
+                Log::warning('max_chunk_size is too small');
                 return null;
             }
 
