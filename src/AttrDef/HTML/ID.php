@@ -8,9 +8,8 @@ use HTMLPurifier\AttrDef;
 use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
-
 use HTMLPurifier\Log;
-use Psr\Log\LogLevel;
+
 use function is_null;
 
 /**

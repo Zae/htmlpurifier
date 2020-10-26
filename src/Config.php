@@ -7,6 +7,8 @@ namespace HTMLPurifier;
 use HTMLPurifier\VarParser\Flexible;
 use Psr\Log\LogLevel;
 
+use function count;
+
 /**
  * Configuration object that triggers customizable behavior.
  *
@@ -1043,9 +1045,9 @@ class Config
         if ($this->chatty) {
             $trace = debug_backtrace();
             // zip(tail(trace), trace) -- but PHP is not Haskell har har
-            for ($i = 0, $c = \count($trace); $i < $c - 1; $i++) {
+            for ($i = 0, $c = count($trace); $i < $c - 1; $i++) {
                 // XXX this is not correct on some versions of HTML Purifier
-                if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === '\HTMLPurifier\Config') {
+                if (isset($trace[$i + 1]['class']) && $trace[$i + 1]['class'] === static::class) {
                     continue;
                 }
                 $frame = $trace[$i];

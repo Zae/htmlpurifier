@@ -8,8 +8,8 @@ use HTMLPurifier\Definition;
 use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache;
 use HTMLPurifier\Exception;
-
 use HTMLPurifier\Log;
+
 use function function_exists;
 
 /**
