@@ -351,7 +351,7 @@ class HTMLDefinition extends Definition
             // emit errors
             foreach ($allowed_elements as $element => $d) {
                 $element = htmlspecialchars($element); // PHP doesn't escape errors, be careful!
-                trigger_error("Element '$element' is not supported $support", E_USER_WARNING);
+                Log::warning("Element '$element' is not supported $support");
             }
         }
 
@@ -395,10 +395,8 @@ class HTMLDefinition extends Definition
 
                     if ($delete) {
                         if ($this->info[$tag]->attr[$attr]->required) {
-                            trigger_error(
-                                "Required attribute '$attr' in element '$tag' " .
-                                "was not allowed, which means '$tag' will not be allowed either",
-                                E_USER_WARNING
+                            Log::warning(
+                                "Required attribute '$attr' in element '$tag' was not allowed, which means '$tag' will not be allowed either" // phpcs:ignore
                             );
                         }
 
@@ -417,26 +415,18 @@ class HTMLDefinition extends Definition
                             $element = htmlspecialchars($bits[0]);
                             $attribute = htmlspecialchars($bits[1]);
                             if (!isset($this->info[$element])) {
-                                trigger_error(
-                                    "Cannot allow attribute '$attribute' if element " .
-                                    "'$element' is not allowed/supported $support"
+                                Log::notice(
+                                    "Cannot allow attribute '$attribute' if element '$element' is not allowed/supported $support" // phpcs:ignore
                                 );
                             } else {
-                                trigger_error(
-                                    "Attribute '$attribute' in element '$element' not supported $support",
-                                    E_USER_WARNING
-                                );
+                                Log::warning("Attribute '$attribute' in element '$element' not supported $support");
                             }
                             break;
                         }
                         // otherwise fall through
                     case 1:
                         $attribute = htmlspecialchars($bits[0]);
-                        trigger_error(
-                            "Global attribute '$attribute' is not " .
-                            "supported in any elements $support",
-                            E_USER_WARNING
-                        );
+                        Log::warning("Global attribute '$attribute' is not supported in any elements $support");
                         break;
                 }
             }
@@ -463,10 +453,8 @@ class HTMLDefinition extends Definition
 
                 if (isset($forbidden_attributes["$tag.$attr"])) { // this segment might get removed eventually
                     // $tag.$attr are not user supplied, so no worries!
-                    trigger_error(
-                        "Error with $tag.$attr: tag.attr syntax not supported for " .
-                        'HTML.ForbiddenAttributes; use tag@attr instead',
-                        E_USER_WARNING
+                    Log::warning(
+                        "Error with $tag.$attr: tag.attr syntax not supported for HTML.ForbiddenAttributes; use tag@attr instead" // phpcs:ignore
                     );
                 }
             }
@@ -482,9 +470,8 @@ class HTMLDefinition extends Definition
             }
 
             if ($key[1] === '.') {
-                trigger_error(
-                    "Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead",
-                    E_USER_WARNING
+                Log::warning(
+                    "Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead"
                 );
             }
         }

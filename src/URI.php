@@ -112,10 +112,7 @@ class URI
             if (is_null($scheme_obj)) {
                 if ($def->defaultScheme !== null) {
                     // something funky happened to the default scheme object
-                    trigger_error(
-                        'Default scheme object "' . $def->defaultScheme . '" was not readable',
-                        E_USER_WARNING
-                    );
+                    Log::warning("Default scheme object \"{$def->defaultScheme}\" was not readable");
                 } // suppress error if it's null
 
                 return false;

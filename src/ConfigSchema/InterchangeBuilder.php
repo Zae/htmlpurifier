@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace HTMLPurifier\ConfigSchema;
 
+use HTMLPurifier\Log;
 use HTMLPurifier\VarParser\Native;
 use HTMLPurifier\VarParserException;
 use HTMLPurifier\VarParser;
@@ -265,7 +266,7 @@ class InterchangeBuilder
         $accessed = $hash->getAccessed();
         foreach ($hash as $k => $v) {
             if (!isset($accessed[$k])) {
-                trigger_error("String hash key '$k' not used by builder", E_USER_NOTICE);
+                Log::notice("String hash key '$k' not used by builder");
             }
         }
     }

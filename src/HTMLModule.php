@@ -215,7 +215,7 @@ class HTMLModule
             $this->info[$element] = new ElementDef();
             $this->info[$element]->standalone = false;
         } else {
-            trigger_error("Definition for $element already exists in module, cannot redefine");
+            Log::notice("Definition for $element already exists in module, cannot redefine");
         }
 
         return $this->info[$element];

@@ -192,12 +192,12 @@ class ConfigTest extends TestCase
 
         static::assertEquals(3, $config->get('Home.Rug'));
 
-        $this->expectError();
-        $this->expectErrorMessage('Cannot get value from aliased directive, use real name Home.Rug');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot get value from aliased directive, use real name Home.Rug');
         $config->get('Home.Carpet');
 
-        $this->expectError();
-        $this->expectErrorMessage('Home.Carpet is an alias, preferred directive name is Home.Rug');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Home.Carpet is an alias, preferred directive name is Home.Rug');
         $config->set('Home.Carpet', 999);
         static::assertEquals(999, $config->get('Home.Rug'));
     }
@@ -476,16 +476,16 @@ class ConfigTest extends TestCase
 
         $config->finalize();
 
-        $this->expectError();
-        $this->expectErrorMessage('Cannot set directive after finalization');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot set directive after finalization');
         $config->set('Poem.Meter', 'vedic');
 
-        $this->expectError();
-        $this->expectErrorMessage('Cannot load directives after finalization');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot load directives after finalization');
         $config->loadArray(['Poem.Meter' => 'octosyllable']);
 
-        $this->expectError();
-        $this->expectErrorMessage('Cannot load directives after finalization');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Cannot load directives after finalization');
         $config->loadIni(__DIR__ . '/ConfigTest-finalize.ini');
 
     }

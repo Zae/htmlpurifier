@@ -9,6 +9,8 @@ use HTMLPurifier\Config;
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
 
+use HTMLPurifier\Log;
+use Psr\Log\LogLevel;
 use function is_null;
 
 /**
@@ -69,11 +71,7 @@ class ID extends AttrDef
                 $string = $prefix . $string;
             }
         } elseif ($config->get('Attr.IDPrefixLocal') !== '') {
-            trigger_error(
-                '%Attr.IDPrefixLocal cannot be used unless ' .
-                '%Attr.IDPrefix is set',
-                E_USER_WARNING
-            );
+            Log::warning('%Attr.IDPrefixLocal cannot be used unless %Attr.IDPrefix is set');
         }
 
         if (!$this->selector && !is_null($context)) {

@@ -7,6 +7,7 @@ namespace HTMLPurifier\Strategy;
 use HTMLPurifier\Context;
 use HTMLPurifier\Generator;
 use HTMLPurifier\Injector;
+use HTMLPurifier\Log;
 use HTMLPurifier\Zipper;
 use HTMLPurifier\Strategy;
 use HTMLPurifier\Token;
@@ -183,7 +184,7 @@ class MakeWellFormed extends Strategy
                 continue;
             }
             array_splice($this->injectors, $ix, 1); // rm the injector
-            trigger_error("Cannot enable {$injector->name} injector because $error is not allowed", E_USER_WARNING);
+            Log::warning("Cannot enable {$injector->name} injector because $error is not allowed");
         }
 
         // -- end INJECTOR --

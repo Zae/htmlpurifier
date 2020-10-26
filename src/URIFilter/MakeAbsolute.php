@@ -7,6 +7,7 @@ namespace HTMLPurifier\URIFilter;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\Exception;
+use HTMLPurifier\Log;
 use HTMLPurifier\URIFilter;
 use HTMLPurifier\URI;
 use HTMLPurifier\Config;
@@ -53,11 +54,7 @@ class MakeAbsolute extends URIFilter
         }
 
         if (is_null($this->base)) {
-            trigger_error(
-                'URI.MakeAbsolute is being ignored due to lack of ' .
-                'value for URI.Base configuration',
-                E_USER_WARNING
-            );
+            Log::warning('URI.MakeAbsolute is being ignored due to lack of value for URI.Base configuration');
 
             return false;
         }

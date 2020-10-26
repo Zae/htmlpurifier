@@ -19,7 +19,8 @@
         "ext-libxml": "*",
         "ext-iconv": "*",
         "ext-exif": "*",
-        "symfony/polyfill-intl-idn": "^1.17"
+        "symfony/polyfill-intl-idn": "^1.17",
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "vimeo/psalm": "^3.0|^4.0",

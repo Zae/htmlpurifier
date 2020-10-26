@@ -6,6 +6,7 @@ namespace HTMLPurifier\ChildDef;
 
 use HTMLPurifier\Context;
 use HTMLPurifier\ChildDef;
+use HTMLPurifier\Log;
 use HTMLPurifier\Node\Element;
 use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
@@ -58,7 +59,7 @@ class Lists extends ChildDef
 
         // if li is not allowed, delete parent node
         if (!isset($config->getHTMLDefinition()->info['li'])) {
-            trigger_error('Cannot allow ul/ol without allowing li', E_USER_WARNING);
+            Log::warning('Cannot allow ul/ol without allowing li');
 
             return false;
         }
