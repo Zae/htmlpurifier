@@ -8,6 +8,7 @@ use HTMLPurifier\VarParser\Flexible;
 use Psr\Log\LogLevel;
 
 use function count;
+use function function_exists;
 
 /**
  * Configuration object that triggers customizable behavior.
@@ -950,7 +951,9 @@ class Config
         if ($index !== false) {
             $array = (isset($array[$index]) && \is_array($array[$index])) ? $array[$index] : [];
         }
-        $mq = $mq_fix && version_compare(PHP_VERSION, '7.4.0', '<') && function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc();
+
+        $mq = $mq_fix && PHP_VERSION_ID < 70400 &&
+              function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc();
 
         $allowed = static::getAllowedDirectivesForForm($allowed, $schema);
 
