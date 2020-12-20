@@ -744,7 +744,7 @@ class ConfigTest extends TestCase
     {
         $config = Config::createDefault();
 
-        static::assertEquals('9dc48447df9656a7a80d29d4c9bb6eb3e7bca312', $config->getSerial());
+        static::assertEquals('107d0c83f93fe4cef18d69daa7bcf7e4dd7e234f', $config->getSerial());
     }
 
     /**
