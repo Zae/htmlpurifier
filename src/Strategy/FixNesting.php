@@ -135,7 +135,7 @@ class FixNesting extends Strategy
                         $child,
                         // ToDo: I don't think it matters if it's def or child_def, but double check this...
                         $is_inline || (isset($def) && $def->descendants_are_inline),
-                        empty($def->excludes) ? $excludes : array_merge((array)$excludes, $def->excludes),
+                        empty($def->excludes) ? $excludes : array_merge($excludes, $def->excludes),
                         0
                     ];
                     break;

@@ -72,7 +72,7 @@ abstract class AttrDef implements AttrDef\AttrDefValidate
         $string = trim($string);
         $string = str_replace(["\n", "\t", "\r"], ' ', $string);
 
-        return (string)$string;
+        return $string;
     }
 
     /**

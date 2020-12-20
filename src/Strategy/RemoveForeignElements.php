@@ -84,7 +84,7 @@ class RemoveForeignElements extends Strategy
                 // DEFINITION CALL
 
                 // before any processing, try to transform the element
-                if (isset($token->name) && isset($definition->info_tag_transform[$token->name])) {
+                if (isset($definition->info_tag_transform[$token->name])) {
                     $original_name = $token->name;
                     // there is a transformation for this tag
                     // DEFINITION CALL

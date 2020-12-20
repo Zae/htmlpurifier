@@ -122,7 +122,7 @@ class MakeAbsolute extends URIFilter
             $uri->path = $this->base->path;
         } elseif (!is_null($uri->path) && $uri->path[0] !== '/') {
             // relative path, needs more complicated processing
-            $stack = explode('/', (string)$uri->path);
+            $stack = explode('/', $uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
 
             if ($new_stack[0] !== '' && !is_null($this->base->host)) {

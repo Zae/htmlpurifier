@@ -421,7 +421,12 @@ class MakeWellFormed extends Strategy
                                     break;
                                 }
 
-                                $wrapname = $definition->info[$token->name]->wrap ?? null;
+                                // fixme: null coalescing doesn't work because of the $token->name according to psalm.
+                                if (isset($definition->info[$token->name]->wrap)) {
+                                    $wrapname = $definition->info[$token->name]->wrap;
+                                } else {
+                                    $wrapname = null;
+                                }
                                 $wrapdef = $definition->info[$wrapname] ?? null;
 
                                 if (isset($wrapdef, $wrapdef->child)) {

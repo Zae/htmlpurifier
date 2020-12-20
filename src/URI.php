@@ -141,7 +141,7 @@ class URI
         // validate host
         if (!is_null($this->host)) {
             $host_def = new Host();
-            $this->host = $host_def->validate((string)$this->host, $config, $context);
+            $this->host = $host_def->validate($this->host, $config, $context);
         }
 
         // validate scheme
@@ -190,14 +190,14 @@ class URI
                 // path-absolute (hier and relative)
                 // http:/my/path
                 // /my/path
-                if (\strlen((string)$this->path) >= 2 && $this->path[1] === '/') {
+                if (\strlen($this->path) >= 2 && $this->path[1] === '/') {
                     // This could happen if both the host gets stripped
                     // out
                     // http://my/path
                     // //my/path
                     $this->path = '';
                 } else {
-                    $this->path = $segments_encoder->encode((string)$this->path);
+                    $this->path = $segments_encoder->encode($this->path);
                 }
             } elseif (!is_null($this->scheme)) {
                 // path-rootless (hier)

@@ -200,9 +200,7 @@ class Language
                         $generator = $this->context->get('Generator');
                     }
 
-                    if (isset($value->name)) {
-                        $subst["\$${i}.Name"] = $value->name;
-                    }
+                    $subst["\$${i}.Name"] = $value->name;
 
                     if (isset($value->data)) {
                         $subst["\$${i}.Data"] = $value->data;

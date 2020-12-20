@@ -29,7 +29,7 @@ class Id
      */
     public function toString(): string
     {
-        return (string)$this->key;
+        return $this->key;
     }
 
     /**

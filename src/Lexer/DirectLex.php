@@ -173,7 +173,7 @@ class DirectLex extends Lexer
                     $current_line += $this->substrCount($string, $nl, $cursor, $position_next_lt - $cursor);
                 }
                 $array[] = $token;
-                $cursor = (int)$position_next_lt + 1;
+                $cursor = $position_next_lt + 1;
                 $inside_tag = true;
                 continue;
             } elseif (!$inside_tag) {
@@ -252,7 +252,7 @@ class DirectLex extends Lexer
                         $current_line += $this->substrCount($string, $nl, $cursor, $strlen_segment);
                     }
                     $array[] = $token;
-                    $cursor = (int)($end ? $position_comment_end : $position_comment_end + 3);
+                    $cursor = ($end ? $position_comment_end : $position_comment_end + 3);
                     $inside_tag = false;
                     continue;
                 }

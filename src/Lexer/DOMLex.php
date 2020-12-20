@@ -191,6 +191,7 @@ class DOMLex extends Lexer
     {
         /**
          * @psalm-suppress TypeDoesNotContainType
+         * @psalm-suppress RedundantCondition
          * @todo fix? according to the documentation $node->nodeName can not be null, but maybe in older versions
          *       of libxml it can? Lets silence psalm and keep the fallbacks.
          */
@@ -209,6 +210,7 @@ class DOMLex extends Lexer
     {
         /**
          * @psalm-suppress TypeDoesNotContainType
+         * @psalm-suppress RedundantCondition
          * @todo fix? $node->nodeValue returns the value of textContent if NULL, contrary to the W3C spec tho, so
          *       lets keep the fallbacks, but silence psalm.
          */

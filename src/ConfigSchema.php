@@ -149,16 +149,17 @@ class ConfigSchema
     public function addValueAliases(string $key, array $aliases): void
     {
         if (!\is_object($this->info[$key]) || !isset($this->info[$key]->aliases)) {
-            /* @phpstan-ignore-next-line */
+            /**
+             * @psalm-suppress PossiblyInvalidPropertyAssignment
+             * @phpstan-ignore-next-line
+             * @todo: fix?
+             */
             $this->info[$key]->aliases = [];
         }
 
-        /**
-         * @psalm-suppress PossiblyInvalidPropertyFetch
-         * @todo: fix?
-         */
         foreach ($aliases as $alias => $real) {
             /**
+             * @psalm-suppress PossiblyInvalidPropertyAssignment
              * @psalm-suppress PossiblyInvalidPropertyFetch
              * @phpstan-ignore-next-line
              * @todo: fix?
@@ -178,7 +179,11 @@ class ConfigSchema
      */
     public function addAllowedValues(string $key, array $allowed): void
     {
-        /** @phpstan-ignore-next-line @todo fix? */
+        /**
+         * @psalm-suppress PossiblyInvalidPropertyAssignment
+         * @phpstan-ignore-next-line
+         * @todo fix?
+         */
         $this->info[$key]->allowed = $allowed;
     }
 
