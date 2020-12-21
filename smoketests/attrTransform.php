@@ -1,6 +1,11 @@
 <?php
 
-require 'common.php';
+declare(strict_types=1);
+
+use HTMLPurifier\Config;
+use HTMLPurifier\HTMLPurifier;
+
+require __DIR__ . '/common.php';
 
 ?><!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -36,37 +41,36 @@ require 'common.php';
 </div>
 <?php
 
-if (version_compare(PHP_VERSION, '5', '<')) exit('<p>Requires PHP 5.</p>');
+if (PHP_VERSION_ID < 70000) {
+    exit('<p>Requires PHP 7.</p>');
+}
 
-$xml = simplexml_load_file('attrTransform.xml');
+$xml = simplexml_load_string(file_get_contents('attrTransform.xml'));
 
 // attr transform enabled HTML Purifier
-$config = HTMLPurifier_Config::createDefault();
+$config = Config::createDefault();
 $config->set('HTML.Doctype', 'XHTML 1.0 Strict');
 $purifier = new HTMLPurifier($config);
 
-$title = isset($_GET['title']) ? $_GET['title'] : true;
+$title = $_GET['title'] ?? true;
 
 foreach ($xml->group as $group) {
     echo '<h2>' . $group['title'] . '</h2>';
     foreach ($group->sample as $sample) {
         $sample = (string) $sample;
-?>
-<div class="container">
-<div class="test html">
-    <?php echo $sample; ?>
-</div>
-<div class="test css">
-    <?php echo $purifier->purify($sample); ?>
-</div>
-</div>
-<?php
+        ?>
+        <div class="container">
+        <div class="test html">
+            <?= $sample ?>
+        </div>
+        <div class="test css">
+            <?= $purifier->purify($sample) ?>
+        </div>
+        </div>
+        <?php
     }
 }
 
 ?>
 </body>
 </html>
-<?php
-
-// vim: et sw=4 sts=4

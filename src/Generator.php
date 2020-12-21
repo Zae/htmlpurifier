@@ -292,7 +292,7 @@ class Generator
             // don't process user input with innerHTML or you don't plan
             // on supporting Internet Explorer.
             if ($this->innerHTMLFix) {
-                if (strpos($value, '`') !== false) {
+                if (strpos((string)$value, '`') !== false) {
                     // check if correct quoting style would not already be
                     // triggered
                     if (strcspn($value, '"\' <>') === \strlen($value)) {
@@ -302,7 +302,7 @@ class Generator
                 }
             }
 
-            $html .= $key . '="' . $this->escape($value) . '" ';
+            $html .= $key . '="' . $this->escape((string)$value) . '" ';
         }
 
         return rtrim($html);

@@ -1,6 +1,8 @@
 <?php
 
-require_once 'common.php';
+declare(strict_types=1);
+
+require_once __DIR__ . '/common.php';
 
 header('Content-type: text/html; charset=UTF-8');
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
@@ -24,14 +26,18 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 
 $dir = './';
 $dh  = opendir($dir);
-while (false !== ($filename = readdir($dh))) {
-    if ($filename[0] == '.') continue;
-    if (strpos($filename, '.php') === false) continue;
-    if ($filename == 'common.php') continue;
-    if ($filename == 'all.php') continue;
-    if ($filename == 'testSchema.php') continue;
+while (($filename = readdir($dh)) !== false) {
+    if (
+        $filename[0] === '.' ||
+        $filename === 'common.php' ||
+        $filename === 'all.php' ||
+        $filename === 'testSchema.php' ||
+        strpos($filename, '.php') === false
+    ) {
+        continue;
+    }
     ?>
-    <iframe src="<?php echo escapeHTML($filename); if (isset($_GET['standalone'])) {echo '?standalone';} ?>"></iframe>
+    <iframe title="" src="<?= escapeHTML($filename) ?>"></iframe>
     <?php
 }
 
@@ -39,6 +45,3 @@ while (false !== ($filename = readdir($dh))) {
 </div>
 </body>
 </html>
-<?php
-
-// vim: et sw=4 sts=4

@@ -1,6 +1,10 @@
 <?php
+    
+declare(strict_types=1);
 
-require_once 'common.php';
+require_once __DIR__ . '/common.php';
+
+use HTMLPurifier\HTMLPurifier;
 
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
 ?><!DOCTYPE html
@@ -36,10 +40,10 @@ for ($i = 0; $i < 256; $i++) {
     $pure_html = $purifier->purify($html);
 ?>
 <tr>
-    <td><?php echo $i; ?></td>
-    <td style="font-size:8pt;"><?php echo escapeHTML($html); ?></td>
-    <td style="font-size:8pt;"><?php echo escapeHTML($pure_html); ?></td>
-    <td><?php echo $pure_html; ?></td>
+    <td><?= $i ?></td>
+    <td style="font-size:8pt;"><?= escapeHTML($html) ?></td>
+    <td style="font-size:8pt;"><?= escapeHTML($pure_html) ?></td>
+    <td><?= $pure_html ?></td>
 </tr>
 <?php } ?>
 </tbody>
@@ -52,6 +56,3 @@ removed, as well as escaping quotes outside of tags, this is a non-threat.</p>
 
 </body>
 </html>
-<?php
-
-// vim: et sw=4 sts=4

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HTMLPurifier\Config;
 use HTMLPurifier\Exception;
 use HTMLPurifier\VarParser;
 
@@ -49,10 +50,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         string $name,
         ?string $doc_url = null,
         bool $compress = false
-    )
-    {
-        parent::__construct();
-
+    ) {
         $this->docURL = $doc_url;
         $this->name = $name;
         $this->compress = $compress;
@@ -97,7 +95,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
     /**
      * Returns HTML output for a configuration form
      *
-     * @param \HTMLPurifier\Config|array $config  Configuration object of current form state, or an array
+     * @param Config|array $config  Configuration object of current form state, or an array
      *                                           where [0] has an HTML namespace and [1] is being rendered.
      * @param array|bool                $allowed Optional namespace(s) and directives to restrict form to.
      * @param bool                      $render_controls
@@ -118,7 +116,7 @@ class HTMLPurifier_Printer_ConfigForm extends HTMLPurifier_Printer
         $this->genConfig = $gen_config;
         $this->prepareGenerator($gen_config);
 
-        $allowed = \HTMLPurifier\Config::getAllowedDirectivesForForm($allowed, $config->def);
+        $allowed = Config::getAllowedDirectivesForForm($allowed, $config->def);
         $all = [];
         foreach ($allowed as $key) {
             [$ns, $directive] = $key;
@@ -245,8 +243,6 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
      */
     public function __construct(HTMLPurifier_Printer $obj)
     {
-        parent::__construct();
-
         $this->obj = $obj;
     }
 
@@ -255,12 +251,12 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
      * @param string                    $directive
      * @param string                    $value
      * @param string                    $name
-     * @param \HTMLPurifier\Config|array $config
+     * @param Config|array $config
      *
      * @return string
      * @throws Exception
      */
-    public function render(string $ns, string $directive, string $value, string $name, string $config): string
+    public function render(string $ns, string $directive, $value, string $name, $config): string
     {
         if (is_array($config) && isset($config[0])) {
             $gen_config = $config[0];
@@ -300,7 +296,7 @@ class HTMLPurifier_Printer_ConfigForm_NullDecorator extends HTMLPurifier_Printer
         $ret .= $this->text(' or ');
         $ret .= $this->elementEmpty('br');
 
-        return $ret . $this->obj->render($ns, $directive, $value, $name, array($gen_config, $config));
+        return $ret . $this->obj->render($ns, $directive, $value, $name, [$gen_config, $config]);
     }
 }
 
@@ -324,12 +320,12 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
      * @param string                    $directive
      * @param string                    $value
      * @param string                    $name
-     * @param \HTMLPurifier\Config|array $config
+     * @param Config|array $config
      *
      * @return string
      * @throws Exception
      */
-    public function render(string $ns, string $directive, string $value, string $name, $config): string
+    public function render(string $ns, string $directive, $value, string $name, $config): string
     {
         if (is_array($config) && isset($config[0])) {
             $gen_config = $config[0];
@@ -411,7 +407,7 @@ class HTMLPurifier_Printer_ConfigForm_default extends HTMLPurifier_Printer
             $attr['cols'] = $this->cols;
             $attr['rows'] = $this->rows;
             $ret .= $this->start('textarea', $attr);
-            $ret .= $this->text($value);
+            $ret .= $this->text((string)$value);
             $ret .= $this->end('textarea');
         } else {
             $attr['value'] = $value;
@@ -433,12 +429,12 @@ class HTMLPurifier_Printer_ConfigForm_bool extends HTMLPurifier_Printer
      * @param string                    $directive
      * @param string                    $value
      * @param string                    $name
-     * @param \HTMLPurifier\Config|array $config
+     * @param Config|array $config
      *
      * @return string
      * @throws Exception
      */
-    public function render(string $ns, string $directive, string $value, string $name, $config): string
+    public function render(string $ns, string $directive, $value, string $name, $config): string
     {
         if (is_array($config) && isset($config[0])) {
             $gen_config = $config[0];

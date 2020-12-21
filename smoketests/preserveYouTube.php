@@ -1,6 +1,10 @@
 <?php
 
-require_once 'common.php';
+declare(strict_types=1);
+
+require_once __DIR__ . '/common.php';
+
+use HTMLPurifier\HTMLPurifier;
 
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
 ?><!DOCTYPE html
@@ -43,30 +47,26 @@ $string = '<object width="425" height="350"><param name="movie" value="http://ww
 
 $regular_purifier = new HTMLPurifier();
 
-$safeobject_purifier = new HTMLPurifier(array(
+$safeobject_purifier = new HTMLPurifier([
     'HTML.SafeObject' => true,
     'Output.FlashCompat' => true,
-));
+]);
 
 ?>
 <h2>Unpurified</h2>
 <p><a href="?break">Click here to see the unpurified version (breaks validation).</a></p>
 <div><?php
-if (isset($_GET['break'])) echo $string;
+if (isset($_GET['break'])) {
+    echo $string;
+}
 ?></div>
 
 <h2>Without YouTube exception</h2>
-<div><?php
-echo $regular_purifier->purify($string);
-?></div>
+<div><?= $regular_purifier->purify($string) ?></div>
 
 <h2>With SafeObject exception and flash compatibility</h2>
-<div><?php
-echo $safeobject_purifier->purify($string);
-?></div>
+<div><?= $safeobject_purifier->purify($string) ?></div>
 
 </body>
 </html>
 <?php
-
-// vim: et sw=4 sts=4

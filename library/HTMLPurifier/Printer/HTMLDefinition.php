@@ -79,7 +79,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
 
         $ret .= $this->start('tr');
         $ret .= $this->element('th', 'Global attributes');
-        $ret .= $this->element('td', $this->listifyAttr($def->info_global_attr), null, 0);
+        $ret .= $this->element('td', $this->listifyAttr($def->info_global_attr), [], false);
         $ret .= $this->end('tr');
 
         $ret .= $this->start('tr');
@@ -247,7 +247,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 'td',
                 '<em>Block</em>: ' .
                 $this->escape($this->listifyTagLookup($def->block->elements)),
-                null,
+                [],
                 false
             );
 
@@ -257,7 +257,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 'td',
                 '<em>Inline</em>: ' .
                 $this->escape($this->listifyTagLookup($def->inline->elements)),
-                null,
+                [],
                 false
             );
 
@@ -274,7 +274,7 @@ class HTMLPurifier_Printer_HTMLDefinition extends HTMLPurifier_Printer
                 'td',
                 '<em>' . ucfirst($def->type) . '</em>: ' .
                 $this->escape($this->listifyTagLookup($elements)),
-                null,
+                [],
                 false
             );
         }

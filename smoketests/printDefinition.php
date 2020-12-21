@@ -1,19 +1,24 @@
 <?php
 
-require_once 'common.php'; // load library
+declare(strict_types=1);
 
-require_once 'HTMLPurifier/Printer/HTMLDefinition.php';
-require_once 'HTMLPurifier/Printer/CSSDefinition.php';
-require_once 'HTMLPurifier/Printer/ConfigForm.php';
+use HTMLPurifier\Config;
 
-$config = HTMLPurifier_Config::loadArrayFromForm($_GET, 'config', 'HTML');
+require_once __DIR__ . '/common.php'; // load library
+
+require_once __DIR__ . '/../library/HTMLPurifier/Printer.php';
+require_once __DIR__ . '/../library/HTMLPurifier/Printer/HTMLDefinition.php';
+require_once __DIR__ . '/../library/HTMLPurifier/Printer/CSSDefinition.php';
+require_once __DIR__ . '/../library/HTMLPurifier/Printer/ConfigForm.php';
+
+$config = Config::loadArrayFromForm($_GET, 'config', 'HTML');
 
 // you can do custom configuration!
 if (file_exists('printDefinition.settings.php')) {
-    include 'printDefinition.settings.php';
+    include __DIR__ . '/printDefinition.settings.php';
 }
 
-$gen_config = HTMLPurifier_Config::createDefault();
+$gen_config = Config::createDefault();
 $printer_html_definition = new HTMLPurifier_Printer_HTMLDefinition();
 $printer_html_definition->prepareGenerator($gen_config);
 $printer_css_definition  = new HTMLPurifier_Printer_CSSDefinition();
@@ -66,9 +71,7 @@ list of items, HTML Purifier will take care of the rest (including
 transformation into a real array list or a lookup table).</p>
 
 <form method="get" action="" name="hp-configform">
-<?php
-    echo $printer_config_form->render($config, 'HTML');
-?>
+<?= $printer_config_form->render($config, 'HTML') ?>
 <p>* Some configuration directives make a distinction between an empty
 variable and a null variable. A whitelist, for example, will take an
 empty array as meaning <em>no</em> allowed elements, while checking
@@ -109,11 +112,9 @@ Null/Disabled will mean that user whitelisting functionality is disabled.</p>
 </dl>
 
 <h2>HTMLDefinition</h2>
-<?php echo $printer_html_definition->render($config) ?>
+<?= $printer_html_definition->render($config) ?>
 <h2>CSSDefinition</h2>
-<?php echo $printer_css_definition->render($config) ?>
+<?= $printer_css_definition->render($config) ?>
 </body>
 </html>
 <?php
-
-// vim: et sw=4 sts=4

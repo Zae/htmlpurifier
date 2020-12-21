@@ -1,16 +1,23 @@
 <?php
 
-require_once 'common.php';
+declare(strict_types=1);
+
+use HTMLPurifier\Config;
+use HTMLPurifier\HTMLPurifier;
+
+require_once __DIR__ . '/common.php';
 
 // todo : modularize the HTML in to separate files
 
-$allowed = array(
+$allowed = [
     'allElements' => true,
     'legacy' => true
-);
+];
 
-$page = isset($_GET['p']) ? $_GET['p'] : false;
-if (!isset($allowed[$page])) $page = false;
+$page = $_GET['p'] ?? false;
+if (!isset($allowed[$page])) {
+    $page = false;
+}
 
 $strict = isset($_GET['d']) ? (bool) $_GET['d'] : false;
 
@@ -30,10 +37,8 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
     <title>HTML Purifier Basic Smoketest</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <?php
-    if ($page) {
-        if (file_exists("basic/$page.css")) {
-            ?><link rel="stylesheet" href="basic/<?php echo $page ?>.css" type="text/css" /><?php
-        }
+    if ($page && file_exists("basic/$page.css")) {
+        ?><link rel="stylesheet" href="basic/<?= $page ?>.css" type="text/css" /><?php
     }
 ?>
 </head>
@@ -42,14 +47,14 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 
 if ($page) {
 ?>
-<div style="float:right;"><div><?php echo $strict ? 'Strict' : 'Loose'; ?>:
-<a href="?d=<?php echo (int) !$strict; ?>&amp;p=<?php echo $page ?>">Swap</a></div>
+<div style="float:right;"><div><?= $strict ? 'Strict' : 'Loose' ?>:
+<a href="?d=<?= (int)!$strict ?>&amp;p=<?= $page ?>">Swap</a></div>
 <a href="http://validator.w3.org/check?uri=referer"><img
         src="http://www.w3.org/Icons/valid-xhtml10"
         alt="Valid XHTML 1.0 Transitional" height="31" width="88" style="border:0;" /></a>
 </div>
 <?php
-    $config = HTMLPurifier_Config::createDefault();
+    $config = Config::createDefault();
     $config->set('Attr.EnableID', true);
     $config->set('HTML.Strict', $strict);
     $purifier = new HTMLPurifier($config);
@@ -60,7 +65,7 @@ if ($page) {
     <ul>
     <?php
     foreach ($allowed as $val => $b) {
-        ?><li><a href="?p=<?php echo $val ?>"><?php echo $val ?></a></li><?php
+        ?><li><a href="?p=<?= $val ?>"><?= $val ?></a></li><?php
     }
     ?></ul><?php
 }
@@ -68,6 +73,3 @@ if ($page) {
 ?>
 </body>
 </html>
-<?php
-
-// vim: et sw=4 sts=4

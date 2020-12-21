@@ -1,17 +1,23 @@
 <?php
 
-require_once 'common.php'; // load library
+declare(strict_types=1);
 
-require_once 'HTMLPurifier/Printer/ConfigForm.php';
+use HTMLPurifier\Config;
+use HTMLPurifier\HTMLPurifier;
 
-$config = HTMLPurifier_Config::loadArrayFromForm($_POST, 'config');
+require_once __DIR__ . '/common.php'; // load library
+require_once __DIR__ . '/../library/HTMLPurifier/Printer.php';
+require_once __DIR__ . '/../library/HTMLPurifier/Printer/ConfigForm.php';
+
+
+$config = Config::loadArrayFromForm($_POST, 'config');
 
 // you can do custom configuration!
 if (file_exists('allConfigForm.settings.php')) {
-    include 'allConfigForm.settings.php';
+    include __DIR__ . '/allConfigForm.settings.php';
 }
 
-$gen_config = HTMLPurifier_Config::createDefault();
+$gen_config = Config::createDefault();
 
 $printer_config_form = new HTMLPurifier_Printer_ConfigForm(
     'config',
@@ -19,7 +25,7 @@ $printer_config_form = new HTMLPurifier_Printer_ConfigForm(
 );
 
 $purifier = new HTMLPurifier($config);
-$html = isset($_POST['html']) ? $_POST['html'] : "";
+$html = $_POST['html'] ?? "";
 $purified = $purifier->purify($html);
 
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
@@ -57,19 +63,12 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 <table style="width:100%">
 <tr><th>Input</th><th>Output</th>
 <tr><td style="width:50%">
-<textarea name="html" style="width:100%" rows="15"><?php echo htmlspecialchars($html) ?></textarea>
+<textarea name="html" style="width:100%" rows="15"><?= htmlspecialchars($html) ?></textarea>
 </td><td style="width:50%">
-<textarea name="result" style="width:100%" rows="15"><?php echo htmlspecialchars($purified) ?></textarea>
+<textarea name="result" style="width:100%" rows="15"><?= htmlspecialchars($purified) ?></textarea>
 </td></tr>
 </table>
 <input type="submit" />
-<?php
-    echo $printer_config_form->render($config);
-?>
+<?= $printer_config_form->render($config) ?>
 </form>
-<pre><?php
-    echo htmlspecialchars(var_export($config->getAll(), true));
-?></pre>
-<?php
-
-// vim: et sw=4 sts=4
+<pre><?= htmlspecialchars(var_export($config->getAll(), true)) ?></pre>

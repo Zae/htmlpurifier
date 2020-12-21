@@ -1,15 +1,25 @@
 <?php
 
-require_once('common.php');
+declare(strict_types=1);
 
-function formatCode($string)
+use HTMLPurifier\Config;
+use HTMLPurifier\HTMLPurifier;
+
+require_once(__DIR__ . '/common.php');
+
+/**
+ * @param string $string
+ * @return string
+ */function formatCode(string $string): string
 {
     return
         str_replace(
             array("\t", '»', '\0(null)'),
             array('<strong>\t</strong>', '<span class="linebreak">»</span>', '<strong>\0</strong>'),
             escapeHTML(
-                str_replace("\0", '\0(null)',
+                str_replace(
+                    "\0",
+                    '\0(null)',
                     wordwrap($string, 28, " »\n", true)
                 )
             )
@@ -46,14 +56,16 @@ omitted for your convenience. Not all control characters are displayed.</p>
 <h2>Test</h2>
 <?php
 
-if (version_compare(PHP_VERSION, '5', '<')) exit('<p>Requires PHP 5.</p>');
+if (PHP_VERSION_ID < 70000) {
+    exit('<p>Requires PHP 7.</p>');
+}
 
-$xml = simplexml_load_file('xssAttacks.xml');
+$xml = simplexml_load_string(file_get_contents('xssAttacks.xml'));
 
 // programatically disallow google.com for URI evasion tests
 // not complete
-$config = HTMLPurifier_Config::createDefault();
-$config->set('URI.HostBlacklist', array('google.com'));
+$config = Config::createDefault();
+$config->set('URI.HostBlacklist', ['google.com']);
 $purifier = new HTMLPurifier($config);
 
 ?>
@@ -64,30 +76,40 @@ $purifier = new HTMLPurifier($config);
 
 $i = 0;
 foreach ($xml->attack as $attack) {
-    $code = $attack->code;
+    $code = (string)$attack->code;
 
     // custom code for null byte injection tests
-    if (substr($code, 0, 7) == 'perl -e') {
-        $code = substr($code, $i=strpos($code, '"')+1, strrpos($code, '"') - $i);
+    if (substr($code, 0, 7) === 'perl -e') {
+        $code = substr($code, $i = strpos($code, '"') + 1, strrpos($code, '"') - $i);
         $code = str_replace('\0', "\0", $code);
     }
 
     // disable vectors we cannot test in any meaningful way
-    if ($code == 'See Below') continue; // event handlers, whitelist defeats
-    if ($attack->name == 'OBJECT w/Flash 2') continue; // requires ActionScript
-    if ($attack->name == 'IMG Embedded commands 2') continue; // is an HTTP response
+    if ($code === 'See Below') {
+        continue; // event handlers, whitelist defeats
+    }
+    if ($attack->name === 'OBJECT w/Flash 2') {
+        continue; // requires ActionScript
+    }
+    if ($attack->name === 'IMG Embedded commands 2') {
+        continue; // is an HTTP response
+    }
 
     // custom code for US-ASCII, which couldn't be expressed in XML without encoding
-    if ($attack->name == 'US-ASCII encoding') $code = urldecode($code);
-?>
-    <tr<?php if ($i++ % 2) {echo ' class="even"';} ?>>
-        <td><?php echo escapeHTML($attack->name); ?></td>
-        <td><pre><?php echo formatCode($code); ?></pre></td>
+    if ($attack->name === 'US-ASCII encoding') {
+        $code = urldecode($code);
+    }
+    ?>
+    <tr<?php if ($i++ % 2) {
+        echo ' class="even"';
+       } ?>>
+        <td><?= escapeHTML((string)$attack->name) ?></td>
+        <td><pre><?= formatCode($code) ?></pre></td>
         <?php $pure_html = $purifier->purify($code); ?>
-        <td><pre><?php echo formatCode($pure_html); ?></pre></td>
-        <td><div class="scroll"><?php echo $pure_html ?></div></td>
+        <td><pre><?= formatCode($pure_html) ?></pre></td>
+        <td><div class="scroll"><?= $pure_html ?></div></td>
     </tr>
-<?php
+    <?php
 }
 
 ?>
@@ -96,5 +118,3 @@ foreach ($xml->attack as $attack) {
 </body>
 </html>
 <?php
-
-// vim: et sw=4 sts=4

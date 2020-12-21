@@ -1,6 +1,10 @@
 <?php
 
-require_once 'common.php';
+declare(strict_types=1);
+
+use HTMLPurifier\HTMLPurifier;
+
+require_once __DIR__ . '/common.php';
 
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
 ?><!DOCTYPE html
@@ -23,15 +27,10 @@ REFUGNO9zL0NglAAxPEfdLTs4BZM4DIO4C7OwQg2JoQ9LE1exdlYvBBeZ7jq
 ch9//q1uH4TLzw4d6+ErXMMcXuHWxId3KOETnnXXV6MJpcq2MLaI97CER3N0
 vr4MkhoXe0rZigAAAABJRU5ErkJggg==" alt="Red dot" />';
 
-$purifier = new HTMLPurifier(array('URI.AllowedSchemes' => 'data'));
+$purifier = new HTMLPurifier(['URI.AllowedSchemes' => 'data']);
 
 ?>
-<div><?php
-echo $purifier->purify($string);
-?></div>
+<div><?= $purifier->purify($string) ?></div>
 
 </body>
 </html>
-<?php
-
-// vim: et sw=4 sts=4

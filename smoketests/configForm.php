@@ -1,9 +1,17 @@
 <?php
+declare(strict_types=1);
 
-use HTMLPurifier\ConfigSchema\Builder\ConfigSchema;use HTMLPurifier\ConfigSchema\Builder\Xml;use HTMLPurifier\ConfigSchema\InterchangeBuilder;require_once 'common.php';
+use HTMLPurifier\Config;
+use HTMLPurifier\ConfigSchema\Builder\ConfigSchema;
+use HTMLPurifier\ConfigSchema\Builder\Xml;
+use HTMLPurifier\ConfigSchema\InterchangeBuilder;
+
+require_once __DIR__ . '/common.php';
+require_once __DIR__ . '/../library/HTMLPurifier/Printer.php';
+require_once __DIR__ . '/../library/HTMLPurifier/Printer/ConfigForm.php';
 
 // Setup environment
-require_once '../extras/HTMLPurifierExtras.auto.php';
+require_once __DIR__ . '/../extras/HTMLPurifierExtras.auto.php';
 $interchange = InterchangeBuilder::buildFromDirectory('test-schema/');
 $interchange->validate();
 
@@ -11,7 +19,7 @@ if (isset($_GET['doc'])) {
 
     // Hijack page generation to supply documentation
 
-    if (file_exists('test-schema.html') && !isset($_GET['purge'])) {
+    if (!isset($_GET['purge']) && file_exists('test-schema.html')) {
         echo file_get_contents('test-schema.html');
         exit;
     }
@@ -26,9 +34,9 @@ if (isset($_GET['doc'])) {
 
     $xslt = new ConfigDoc_HTMLXSLTProcessor();
     $xslt->importStylesheet("../configdoc/styles/$style.xsl");
-    $xslt->setParameters(array(
+    $xslt->setParameters([
       'css' => '../configdoc/styles/plain.css',
-    ));
+    ]);
     $html = $xslt->transformToHTML($configdoc_xml);
 
     unlink('test-schema.xml');
@@ -59,19 +67,14 @@ style="float:right;">
 $schema_builder = new ConfigSchema();
 $schema = $schema_builder->build($interchange);
 
-$config  = HTMLPurifier_Config::loadArrayFromForm($_GET, 'config', true, true, $schema);
+$config  = Config::loadArrayFromForm($_GET, 'config', true, true, $schema);
 $printer = new HTMLPurifier_Printer_ConfigForm('config', '?doc#%s');
-echo $printer->render(array(HTMLPurifier_Config::createDefault(), $config));
+echo $printer->render([Config::createDefault(), $config]);
 
 ?>
 </form>
 <pre>
-<?php
-echo htmlspecialchars(var_export($config->getAll(), true));
-?>
+<?= htmlspecialchars(var_export($config->getAll(), true)) ?>
 </pre>
 </body>
 </html>
-<?php
-
-// vim: et sw=4 sts=4
