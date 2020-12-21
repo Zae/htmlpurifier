@@ -1,13 +1,15 @@
 #!/usr/bin/php
 <?php
 
+declare(strict_types=1);
+
 use HTMLPurifier\ConfigSchema\Builder\ConfigSchema;
 use HTMLPurifier\ConfigSchema\InterchangeBuilder;
 use HTMLPurifier\ConfigSchema\Interchange;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/common.php';
-//require_once dirname(__FILE__) . '/../library/HTMLPurifier.auto.php';
+
 assertCli();
 
 /**
@@ -50,5 +52,3 @@ $schema = $schema_builder->build($interchange);
 echo "Saving schema... ";
 file_put_contents($target, serialize($schema));
 echo "done!\n";
-
-// vim: et sw=4 sts=4

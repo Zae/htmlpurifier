@@ -1,8 +1,10 @@
 #!/usr/bin/php
 <?php
 
-chdir(dirname(__FILE__));
-require_once 'common.php';
+declare(strict_types=1);
+
+chdir(__DIR__);
+require_once __DIR__ . '/common.php';
 assertCli();
 
 /**
@@ -18,10 +20,15 @@ assertCli();
 $entity_dir = '../docs/entities/';
 
 // defines the output file for the serialized content.
-$output_file = '../library/HTMLPurifier/EntityLookup/entities.ser';
+$output_file = '../src/EntityLookup/entities.ser';
 
-// courtesy of a PHP manual comment
-function unichr($dec)
+/**
+ * Courtesy of a PHP manual comment
+ *
+ * @param int $dec
+ * @return string
+ */
+function unichr(int $dec): string
 {
     if ($dec < 128) {
         $utf  = chr($dec);
@@ -36,40 +43,56 @@ function unichr($dec)
     return $utf;
 }
 
-if ( !is_dir($entity_dir) ) exit("Fatal Error: Can't find entity directory.\n");
-if ( file_exists($output_file) ) exit("Fatal Error: output file already exists.\n");
+if (!is_dir($entity_dir)) {
+    exit("Fatal Error: Can't find entity directory.\n");
+}
+
+if (file_exists($output_file)) {
+    exit("Fatal Error: output file already exists.\n");
+}
 
 $dh = @opendir($entity_dir);
-if ( !$dh ) exit("Fatal Error: Cannot read entity directory.\n");
+if (!$dh) {
+    exit("Fatal Error: Cannot read entity directory.\n");
+}
 
-$entity_files = array();
+$entity_files = [];
 while (($file = readdir($dh)) !== false) {
-    if (@$file[0] === '.') continue;
-    if (substr(strrchr($file, "."), 1) !== 'ent') continue;
+    if (@$file[0] === '.') {
+        continue;
+    }
+
+    if (substr(strrchr($file, "."), 1) !== 'ent') {
+        continue;
+    }
+
     $entity_files[] = $file;
 }
 closedir($dh);
 
-if ( !$entity_files ) exit("Fatal Error: No entity files to parse.\n");
+if (!$entity_files) {
+    exit("Fatal Error: No entity files to parse.\n");
+}
 
-$entity_table = array();
+$entity_table = [];
 $regexp = '/<!ENTITY\s+([A-Za-z0-9]+)\s+"&#(?:38;#)?([0-9]+);">/';
 
-foreach ( $entity_files as $file ) {
+foreach ($entity_files as $file) {
     $contents = file_get_contents($entity_dir . $file);
-    $matches = array();
+    $matches = [];
     preg_match_all($regexp, $contents, $matches, PREG_SET_ORDER);
     foreach ($matches as $match) {
-        $entity_table[$match[1]] = unichr($match[2]);
+        $entity_table[$match[1]] = unichr((int)$match[2]);
     }
 }
 
 $output = serialize($entity_table);
 
-$fh = fopen($output_file, 'w');
+$fh = fopen($output_file, 'wb');
+if (!$fh) {
+    throw new Exception('Could not open file for writing...');
+}
 fwrite($fh, $output);
 fclose($fh);
 
 echo "Completed successfully.";
-
-// vim: et sw=4 sts=4

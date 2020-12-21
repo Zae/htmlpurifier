@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 function assertCli()
 {
     if (PHP_SAPI !== 'cli' && !getenv('PHP_IS_CLI')) {
@@ -33,5 +35,3 @@ function postfix_is($comp, $subject)
 
 // Load useful stuff like FSTools
 require_once __DIR__ . '/../extras/HTMLPurifierExtras.auto.php';
-
-// vim: et sw=4 sts=4

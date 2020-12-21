@@ -1,12 +1,15 @@
 #!/usr/bin/php
 <?php
 
+declare(strict_types=1);
+
+use HTMLPurifier\Config;
 use HTMLPurifier\DefinitionCache\Serializer;
 
-require_once './vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-chdir(dirname(__FILE__));
-require_once 'common.php';
+chdir(__DIR__);
+require_once __DIR__ . '/common.php';
 assertCli();
 
 /**
@@ -22,14 +25,12 @@ assertCli();
 
 echo "Flushing cache... \n";
 
-require_once(dirname(__FILE__) . '/../library/HTMLPurifier.auto.php');
+$config = Config::createDefault();
 
-$config = HTMLPurifier_Config::createDefault();
-
-$names = array('HTML', 'CSS', 'URI', 'Test');
+$names = ['HTML', 'CSS', 'URI', 'Test'];
 if (isset($argv[1])) {
-    if (in_array($argv[1], $names)) {
-        $names = array($argv[1]);
+    if (in_array($argv[1], $names, true)) {
+        $names = [$argv[1]];
     } else {
         throw new Exception("Cache parameter {$argv[1]} is not a valid cache");
     }
@@ -42,5 +43,3 @@ foreach ($names as $name) {
 }
 
 echo "Cache flushed successfully.\n";
-
-// vim: et sw=4 sts=4
