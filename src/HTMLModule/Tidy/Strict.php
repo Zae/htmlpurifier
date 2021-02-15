@@ -20,7 +20,7 @@ class Strict extends XHTMLAndHTML4
     public $name = 'Tidy\\Strict';
 
     /**
-     * @var string
+     * @var string|null
      */
     public $defaultLevel = 'light';
 

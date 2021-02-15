@@ -35,11 +35,6 @@ class Lang extends AttrDef
         $subtags = explode('-', $string);
         $num_subtags = count($subtags);
 
-        /** @phpstan-ignore-next-line */
-        if ($num_subtags === 0) { // sanity check
-            return false;
-        }
-
         // process primary subtag : $subtags[0]
         $length = strlen($subtags[0]);
         switch ($length) {

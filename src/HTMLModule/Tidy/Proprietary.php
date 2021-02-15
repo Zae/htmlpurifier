@@ -19,7 +19,7 @@ class Proprietary extends Tidy
     public $name = 'Tidy\\Proprietary';
 
     /**
-     * @var string
+     * @var string|null
      */
     public $defaultLevel = 'light';
 

@@ -17,7 +17,7 @@ class Name extends Tidy
     public $name = 'Tidy\\Name';
 
     /**
-     * @var string
+     * @var string|null
      */
     public $defaultLevel = 'heavy';
 

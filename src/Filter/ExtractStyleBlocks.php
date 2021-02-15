@@ -31,7 +31,7 @@ use HTMLPurifier\HTMLDefinition;
 class ExtractStyleBlocks extends Filter
 {
     /**
-     * @var string
+     * @var string|null
      */
     public $name = 'ExtractStyleBlocks';
 

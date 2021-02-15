@@ -17,7 +17,7 @@ use function is_null;
 class FrameTarget extends Enum
 {
     /**
-     * @var array|bool
+     * @var array|false
      */
     protected $valid_values = false; // uninitialized value
 

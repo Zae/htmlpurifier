@@ -18,7 +18,7 @@ class XHTML extends Tidy
     public $name = 'Tidy\\XHTML';
 
     /**
-     * @var string
+     * @var string|null
      */
     public $defaultLevel = 'medium';
 

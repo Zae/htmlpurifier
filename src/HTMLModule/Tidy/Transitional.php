@@ -15,7 +15,7 @@ class Transitional extends XHTMLAndHTML4
     public $name = 'Tidy\\Transitional';
 
     /**
-     * @var string
+     * @var string|null
      */
     public $defaultLevel = 'heavy';
 }
