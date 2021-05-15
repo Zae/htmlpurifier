@@ -37,7 +37,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-suggest --prefer-dist
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
       - name: Run test suite
         run: composer run ${{ matrix.tools }}
@@ -76,7 +76,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-suggest --prefer-dist
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
 
       - name: Run test suite
         run: composer run ${{ matrix.tools }}
@@ -88,7 +88,7 @@ jobs:
       matrix:
         operating-system: [ ubuntu-latest ]
         php-versions: [ '8.0' ]
-        dependency-version: [ prefer-lowest, prefer-stable ]
+        dependency-version: [ prefer-stable ]
         tools: [ 'test', 'lint' ]
 
     name: PHP ${{ matrix.php-versions }} ${{ matrix.tools }} on ${{ matrix.operating-system }}
@@ -116,7 +116,7 @@ jobs:
         run: composer validate
 
       - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --no-interaction --no-suggest --prefer-dist --ignore-platform-reqs
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist --ignore-platform-reqs
 
       - name: Run test suite
         run: composer run ${{ matrix.tools }}
