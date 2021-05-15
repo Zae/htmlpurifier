@@ -42,6 +42,45 @@ jobs:
       - name: Run test suite
         run: composer run ${{ matrix.tools }}
 
+  test-php8:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
+        php-versions: [ '8.0' ]
+        dependency-version: [ prefer-stable ]
+        tools: [ 'test', 'lint' ]
+
+    name: PHP ${{ matrix.php-versions }} ${{ matrix.tools }} on ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: ctype, dom, libxml, xml, iconv, exif, bcmath, intl
+          coverage: pcov
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Check Composer Version
+        run: composer -V
+
+      - name: Check PHP Extensions
+        run: php -m
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Install dependencies
+        run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist --ignore-platform-reqs
+
+      - name: Run test suite
+        run: composer run ${{ matrix.tools }}
+
   misc:
     runs-on: ${{ matrix.operating-system }}
     strategy:
@@ -77,46 +116,6 @@ jobs:
 
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist
-
-      - name: Run test suite
-        run: composer run ${{ matrix.tools }}
-
-  future:
-    runs-on: ${{ matrix.operating-system }}
-    continue-on-error: true
-    strategy:
-      matrix:
-        operating-system: [ ubuntu-latest ]
-        php-versions: [ '8.0' ]
-        dependency-version: [ prefer-stable ]
-        tools: [ 'test', 'lint' ]
-
-    name: PHP ${{ matrix.php-versions }} ${{ matrix.tools }} on ${{ matrix.operating-system }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-versions }}
-          extensions: ctype, dom, libxml, xml, iconv, exif, bcmath, intl
-          coverage: pcov
-
-      - name: Check PHP Version
-        run: php -v
-
-      - name: Check Composer Version
-        run: composer -V
-
-      - name: Check PHP Extensions
-        run: php -m
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Install dependencies
-        run: composer update --${{ matrix.dependency-version }} --no-interaction --prefer-dist --ignore-platform-reqs
 
       - name: Run test suite
         run: composer run ${{ matrix.tools }}
